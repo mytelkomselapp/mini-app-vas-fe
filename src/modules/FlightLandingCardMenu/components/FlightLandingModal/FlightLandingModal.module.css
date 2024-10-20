@@ -1,0 +1,10 @@
+.container {
+  max-width: 425px;
+  margin: auto;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

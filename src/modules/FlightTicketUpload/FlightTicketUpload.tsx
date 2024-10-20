@@ -1,0 +1,181 @@
+import * as React from "react";
+import { ReactComponent as IconTicketUpload } from "../../assets/icon-ticket-upload.svg";
+import { ReactComponent as IconPlus } from "../../assets/ico-plus.svg";
+import { ReactComponent as IconDelete } from "../../assets/ico-delete.svg";
+import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
+import Show from "../../components/Show";
+import SelectUploadMedia from "./components/SelectUploadMedia";
+import useToggle from "../../hooks/useToggle";
+import { useFlightTicketForm } from "../../store/flight";
+import { FlightETicketByFlightIdData } from "../../network/types/response-props";
+import moment from "moment";
+import LoadingScreen from "../../components/LoadingScreen";
+import { useDeleteETicket, usePostUploadETicketFile } from "../../network";
+import { toast } from "../../components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
+import { cn } from "../../lib/utils";
+import { buttonClick } from "../../network/analytics/tracker";
+import { ExtFile } from "@files-ui/react";
+
+interface Props {
+  pageMode: "detail" | "create";
+  data?: FlightETicketByFlightIdData;
+}
+
+const FlightTicketUpload: React.FC<Props> = ({ data }) => {
+  const navigate = useNavigate();
+  const { setETicket, eTicket, planeNo, ticketName, error, setError } =
+    useFlightTicketForm();
+
+  const { active: visibleUploadMedia, setActive: toggleVisibleUploadMedia } =
+    useToggle();
+
+  const { mutateAsync: postUploadETicket, isLoading: isLoadingUploadFile } =
+    usePostUploadETicketFile();
+
+  const isTicketUploaded = !!eTicket;
+  const isShowDetailETicket = !!eTicket;
+
+  const { mutateAsync: deleteETicket, isLoading: loadingDeleteETicket } =
+    useDeleteETicket();
+
+  const handleAddImage = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+
+    if (visibleUploadMedia) return;
+
+    if (isTicketUploaded) return handleOpenTicket();
+
+    buttonClick("Add E-Ticket", "Upload E-Ticket", "Create ticket");
+    toggleVisibleUploadMedia(true);
+  };
+
+  const handleDeleteImage = async (
+    event: React.SyntheticEvent<HTMLOrSVGElement>
+  ) => {
+    event.stopPropagation();
+
+    buttonClick("Delete E-Ticket", "Delete E-Ticket", "Create ticket");
+
+    if (data) {
+      const deleteETicketData = await deleteETicket({ id: data.id });
+      if (deleteETicketData?.data?.meta?.status === "success") {
+        navigate("/flight/ticket-list", { replace: true });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+          className: "bg-[#fef2f4] text-solidRed",
+          duration: 3000,
+        });
+      }
+    } else {
+      setETicket(null);
+    }
+  };
+
+  const handleSelectImage = async (file: ExtFile) => {
+    try {
+      let formData = new FormData();
+      formData?.append("files", file?.file as File);
+
+      const uploadFile = await postUploadETicket(formData);
+      const dataFile = uploadFile?.data?.[0];
+      const isSuccessUpload = !!dataFile;
+
+      if (isSuccessUpload) {
+        setError({ ...error, eTicket: "" });
+        return setETicket({
+          file_ext: dataFile?.ext,
+          file_mime: dataFile?.mime,
+          file_url: dataFile?.url,
+        });
+      }
+    } catch (_) {
+      toast({
+        title: "Gagal Mengunggah Gambar",
+        description: "Pastikan koneksi internet anda tidak bermasalah",
+        className: "bg-[#fef2f4] text-solidRed",
+        duration: 3000,
+      });
+    }
+  };
+
+  const handleOpenTicket = () => {
+    if (!eTicket?.file_url) return;
+
+    const snackTicketName = ticketName?.split(" ")?.join("_")?.toLowerCase();
+    // window.open(eTicket?.file_url, "_blank");
+    return navigate("/flight/file-preview", {
+      state: {
+        fileUrl: eTicket?.file_url,
+        fileExt: eTicket?.file_ext,
+        fileName: snackTicketName,
+      },
+    });
+  };
+
+  if (isLoadingUploadFile) return <LoadingScreen text="Upload E-Ticket.." />;
+
+  return (
+    <>
+      <div
+        className={`flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] p-3 rounded-[12px] border ${
+          error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
+        }`}
+      >
+        <Show when={isShowDetailETicket}>
+          <div className="flex justify-between items-center">
+            <h1 className="text-sm font-semibold">Detail E-Ticket</h1>
+            <ChevronRight onClick={handleOpenTicket} />
+          </div>
+        </Show>
+
+        <div
+          onClick={handleAddImage}
+          className={cn("flex items-center justify-between", {
+            "cursor-pointer": !isTicketUploaded,
+          })}
+        >
+          <div className="flex gap-x-4 items-center">
+            <IconTicketUpload />
+            <Show
+              when={isTicketUploaded}
+              fallbackComponent={<p>Upload E-Ticket</p>}
+            >
+              <div className="flex flex-col justify-between gap-y-1">
+                <div className="flex gap-x-2 items-center">
+                  <p className="text-sm font-semibold">E-Ticket</p>
+                </div>
+                <p className="text-[10px] text-textSecondary">
+                  {moment(data?.ticket_date)?.format("DD MMM YYYY")} •{" "}
+                  {data?.flight_no ?? planeNo ?? "-"}
+                </p>
+              </div>
+            </Show>
+          </div>
+
+          <div>
+            <Show
+              when={isTicketUploaded && !loadingDeleteETicket}
+              fallbackComponent={<IconPlus />}
+            >
+              <IconDelete onClick={handleDeleteImage} />
+            </Show>
+          </div>
+        </div>
+
+        <SelectUploadMedia
+          open={visibleUploadMedia}
+          onClose={() => toggleVisibleUploadMedia(false)}
+          onSelectImage={handleSelectImage}
+        />
+      </div>
+      {error.eTicket && (
+        <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
+      )}
+    </>
+  );
+};
+
+export default FlightTicketUpload;

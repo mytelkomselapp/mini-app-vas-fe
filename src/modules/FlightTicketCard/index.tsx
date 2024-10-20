@@ -1,0 +1,58 @@
+import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
+import React from "react";
+import { FlightETicketData } from "../../network/types/response-props";
+import { useNavigate } from "react-router-dom";
+import { format, parseISO } from "date-fns";
+import { cardClick } from "../../network/analytics/tracker";
+
+interface FlightTicket {
+  ticket: FlightETicketData;
+}
+
+const FlightTicketCard: React.FC<FlightTicket> = ({ ticket }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/flight/ticket-detail/${ticket?.flight_id}`, {
+      state: {
+        ticket,
+      },
+    });
+  };
+
+  const formattedDate = format(
+    parseISO(ticket.ticket_date),
+    "dd MMM yyyy • HH:mm"
+  );
+
+  return (
+    <div
+      onClick={() => {
+        cardClick(
+          ticket?.ticket_name,
+          "My Ticket",
+          "My Ticket",
+          window.location.pathname
+        );
+        handleClick();
+      }}
+      className="bg-white p-4 rounded-2xl "
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <p className="text-primaryBlack text-sm font-semibold">
+            {ticket.ticket_name}
+          </p>
+          <p className="text-grey text-[10px]">
+            {formattedDate} • {ticket.flight_no}
+          </p>
+        </div>
+        <div>
+          <ChevronRight />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FlightTicketCard;

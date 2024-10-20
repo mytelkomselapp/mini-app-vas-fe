@@ -1,0 +1,56 @@
+import * as React from "react";
+import FlightLandingCardBanner from "./components/FlightLandingCardBanner";
+import FlightLandingMenu from "./components/FlightLandingMenu";
+import { CMSFlightLandingData } from "../../network/types/response-props";
+import { buttonClick } from "../../network/analytics/tracker";
+import { useNavigate } from "react-router-dom";
+
+interface Props {
+  data?: CMSFlightLandingData;
+  isLoading: boolean;
+}
+
+const FlightLandingCardMenu: React.FC<Props> = ({
+  data,
+  isLoading = false,
+}) => {
+  const navigate = useNavigate();
+  const dataFlightAppSection = data?.appsSection ?? [];
+  const dataFlightPromoSection = data?.promoSection;
+
+  const handleMenuClick = (targetUrl: string, title: string) => {
+    buttonClick(title, `Navigate to ${title}`, "", window.location.pathname);
+
+    if (title === "My Ticket") return navigate("/flight/ticket-list");
+
+    if (targetUrl) {
+      return window.open(targetUrl, "_blank");
+    }
+
+    return;
+  };
+
+  return (
+    <div
+      className="w-full bg-white relative rounded-t-2xl p-[16px]"
+      style={{ top: -16 }}
+    >
+      <p className="text-base">Travel Apps</p>
+
+      <div className="flex flex-row mt-3 justify-around">
+        <FlightLandingMenu
+          data={dataFlightAppSection}
+          isLoading={isLoading}
+          onClick={handleMenuClick}
+        />
+      </div>
+
+      <FlightLandingCardBanner
+        data={dataFlightPromoSection}
+        isLoading={isLoading}
+      />
+    </div>
+  );
+};
+
+export default FlightLandingCardMenu;
