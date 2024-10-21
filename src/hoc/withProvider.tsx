@@ -1,5 +1,6 @@
 import * as React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Toaster } from "../components/ui/toaster";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -10,13 +11,14 @@ const queryClient = new QueryClient({
   },
 });
 
-const withReactQuery =
+const withProvider =
   (WrappedComponents: React.ReactNode | any) => (props: any) => {
     return (
       <QueryClientProvider client={queryClient}>
         <WrappedComponents {...props} />
+        <Toaster />
       </QueryClientProvider>
     );
   };
 
-export default withReactQuery;
+export default withProvider;

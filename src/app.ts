@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withReactQuery } from "./hoc";
+import { withProvider } from "./hoc";
 
 interface AppProps {
   children: React.ReactNode;
@@ -11,4 +11,4 @@ class App extends React.Component<AppProps> {
   }
 }
 
-export default withReactQuery(App);
+export default withProvider(App);
