@@ -1,5 +1,6 @@
 import * as React from "react";
 import { withReactQuery } from "./hoc";
+import './app.scss'
 
 interface AppProps {
   children: React.ReactNode;

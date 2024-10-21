@@ -1,8 +1,10 @@
+import { Text, View } from "@tarojs/components";
+
 const Index = () => {
   return (
-    <div className="max-w-md mx-auto">
-      <span className="text-red-500 text-5xl">Hello World</span>
-    </div>
+  <View>
+    <Text className="text-red-500">Test</Text>
+  </View>
   );
 };
 

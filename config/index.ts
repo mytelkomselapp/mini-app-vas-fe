@@ -114,7 +114,9 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
             install: {
               plugin: UnifiedWebpackPluginV5,
               args: [{
-                appType: 'taro'
+                appType: 'taro',
+                // 下面个配置，会开启 rem -> rpx 的转化
+                rem2rpx: true
               }]
             }
           }
