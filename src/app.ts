@@ -1,16 +1,14 @@
-import { Component } from "react";
-import "./app.scss";
-
-import { ReactNode } from "react";
+import * as React from "react";
+import { withReactQuery } from "./hoc";
 
 interface AppProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-class App extends Component<AppProps> {
+class App extends React.Component<AppProps> {
   render() {
     return this.props.children;
   }
 }
 
-export default App;
+export default withReactQuery(App);
