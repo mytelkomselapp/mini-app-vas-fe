@@ -1,8 +1,11 @@
+import { withReactQuery } from "../../hoc";
 import { View, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useLoad } from "@tarojs/taro";
 
-export default function Index() {
+import { useFetchCMSLandingPage } from "../../network";
+
+const Index = () => {
   useLoad(() => {
     console.log("Page loaded.");
   });
@@ -10,6 +13,10 @@ export default function Index() {
   const navigateToLandingPagePesawat = () => {
     Taro.navigateTo({ url: "/pages/landingPagePesawat/index" });
   };
+
+  const { data } = useFetchCMSLandingPage();
+
+  console.log(data);
 
   return (
     <View className="index">
@@ -22,4 +29,6 @@ export default function Index() {
       </Button>
     </View>
   );
-}
+};
+
+export default withReactQuery(Index);
