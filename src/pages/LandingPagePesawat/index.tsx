@@ -1,4 +1,3 @@
-import { withReactQuery } from "../../hoc";
 import { View, Text, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useLoad } from "@tarojs/taro";
@@ -31,4 +30,4 @@ const Index = () => {
   );
 };
 
-export default withReactQuery(Index);
+export default Index;

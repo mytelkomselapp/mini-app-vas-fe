@@ -1,4 +1,5 @@
 import * as React from "react";
+import { withReactQuery } from "./hoc";
 
 interface AppProps {
   children: React.ReactNode;
@@ -10,4 +11,4 @@ class App extends React.Component<AppProps> {
   }
 }
 
-export default App;
+export default withReactQuery(App);
