@@ -1,3 +1,11 @@
-import ListFlight from "./ListPenerbangan";
+import { Text, View } from "@tarojs/components";
 
-export default ListFlight
+const Index = () => {
+  return (
+  <View>
+    <Text className="text-red-500">Test</Text>
+  </View>
+  );
+};
+
+export default Index;

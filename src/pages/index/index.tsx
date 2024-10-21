@@ -1,4 +1,5 @@
-import { Text, View } from "@tarojs/components";
+import { Button, Text, View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 
 const Index = () => {
   return (
