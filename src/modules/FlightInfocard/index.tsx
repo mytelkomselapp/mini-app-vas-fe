@@ -61,10 +61,7 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
               <>
                 <Image
                   src={Plane}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
+                  className="w-[24px] h-[24px]"
                 />
               </>
             ) : (
