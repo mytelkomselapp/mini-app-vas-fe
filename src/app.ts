@@ -1,5 +1,6 @@
 import * as React from "react";
 import { withReactQuery } from "./hoc";
+import './index.css'
 import './app.scss'
 
 interface AppProps {

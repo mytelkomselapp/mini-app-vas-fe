@@ -1,11 +1,13 @@
-import { Text, View } from "@tarojs/components";
+import React from "react";
 
-const Index = () => {
+const ListFlightLazy = React.lazy(() => import("./ListPenerbangan"));
+
+const ListFlight = () => {
   return (
-  <View>
-    <Text className="text-red-500">Test</Text>
-  </View>
+    <React.Suspense fallback={<></>}>
+      <ListFlightLazy />
+    </React.Suspense>
   );
 };
 
-export default Index;
+export default ListFlight;
