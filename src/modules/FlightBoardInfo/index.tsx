@@ -1,6 +1,7 @@
 import { FlightDetailData } from "../../network/types/response-props";
 import flightRoute from "../../assets/flight-route.png";
 import moment from "moment";
+import { Image } from "@tarojs/components";
 
 interface Props {
   data?: FlightDetailData;
@@ -37,9 +38,16 @@ const FlightFollowingNearby: React.FC<Props> = ({ data }) => {
         </div>
       </div>
 
-      <div className="absolute w-[111px] h-[32px] left-0 right-0 top-0 bottom-0 m-auto ">
-        <img src={flightRoute} />
-      </div>
+      <Image style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        margin: 'auto',
+        width: '111px',
+        height: '32px'
+      }} src={flightRoute} />
     </div>
   );
 };

@@ -1,1 +1,1 @@
-export { default as withReactQuery } from "./withReactQuery";
+export { default as withProvider } from "./withProvider";
