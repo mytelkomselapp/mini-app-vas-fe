@@ -1,13 +1,13 @@
 import React from "react";
-import { ReactComponent as AirplaneWithLine } from "../../assets/airplane-with-line.svg";
+import AirplaneWithLine from "../../assets/airplane-with-line.svg";
 import { cardClick } from "../../network/analytics/tracker";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { cn, flightStateAttribute } from "../../lib/utils";
-import IcoPlane from "../../assets/ico_plane.svg";
-import { ReactComponent as Plane } from "../../assets/ico_plane.svg";
+import Plane from "../../assets/ico_plane.svg";
 import { FlightDetailData } from "../../network/types/response-props";
 import Show from "../../components/Show";
+import { Image} from "@tarojs/components";
 
 interface FlightInfoCardProps {
   flightDetail?: FlightDetailData;
@@ -18,7 +18,7 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
   flightDetail,
   isRoamaxEligible,
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { className, label } = flightStateAttribute(flightDetail?.flight_state);
 
@@ -38,71 +38,71 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
       pageTitle,
       window.location.pathname
     );
-    navigate(
-      {
-        pathname: "/flight/detail",
-        search: `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`,
-      },
-      { state: { flightDetail } }
-    );
+    // navigate(
+    //   {
+    //     pathname: "/flight/detail",
+    //     search: `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`,
+    //   },
+    //   { state: { flightDetail } }
+    // );
   };
 
-  const handleImageError = (
-    event: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    event.currentTarget.src = IcoPlane;
-  };
+  // const handleImageError = (
+  //   event: React.SyntheticEvent<HTMLImageElement, Event>
+  // ) => {
+  //   // event.currentTarget.src = IcoPlane;
+  // };
   return (
     <div onClick={() => handleOnClick()}>
-      <div className="min-h-[104px] bg-white rounded-2xl p-3">
+      <div className=" bg-white rounded-[16px] p-[12px]">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-[8px]">
             {flightDetail?.flight_logo ? (
-              <img
-                src={flightDetail?.flight_logo}
-                className="w-6"
-                key={flightDetail?.flight_no}
-                onError={handleImageError}
-              />
+              <>
+                <Image
+                  src={Plane}
+                  className="w-[24px] h-[24px]"
+                />
+              </>
             ) : (
               <>
-                <Plane />
+                <span>Logo</span>
               </>
             )}
-            <p className="text-xs">{`${flightDetail?.flight_company} ${flightDetail?.flight_no}`}</p>
+            <p className="text-[12px]">{`${flightDetail?.flight_company} ${flightDetail?.flight_no}`}</p>
           </div>
-          <p
+          <span
             className={cn(
-              "px-2 py-1 rounded-full text-[8px] font-bold text-[#0050AE] first-letter:uppercase",
+              "px-[8px] py-[4px] rounded-full text-[8px] font-bold text-[#0050AE] first-letter:uppercase",
               className
             )}
           >
             {label}
-          </p>
+          </span>
         </div>
-        <div className="flex justify-between items-center pt-2">
+        <div className="flex justify-between items-center pt-[8px]">
           <div className="flex flex-col text-start">
-            <span className="font-medium">
+            <span className="text-[16px] font-medium">
               {extractTime(flightDetail?.departure_time)}
             </span>
-            <span>{flightDetail?.departure_code}</span>
+            <span className="text-[16px]">{flightDetail?.departure_code}</span>
           </div>
           <div className="flex flex-col items-center">
-            <AirplaneWithLine />
+            <Image src={AirplaneWithLine} className="w-[189px] h-[17px]" />
             <p className="text-[#9CA9B9] text-[10px] font-light">
               {convertMinutesToTime(flightDetail?.flight_duration || "")}
             </p>
           </div>
           <div className="flex flex-col text-end">
-            <span className="font-medium">
+            <span className="text-[16px] font-medium">
               {extractTime(flightDetail?.arrival_time)}
             </span>
-            <span>{flightDetail?.arrival_code}</span>
+            <span className="text-[16px]">{flightDetail?.arrival_code}</span>
           </div>
         </div>
         <Show when={isRoamaxEligible}>
-          <div className="mt-2">
-            <span className="text-[#008E53] text-[10px] font-bold bg-[#EDFCF0] px-2 py-[2px] rounded-[20px]">
+          <div className="flex mt-[8px]">
+            <span className="text-[#008E53] text-[10px] font-bold bg-[#EDFCF0] px-[8px] py-[2px] rounded-[20px]">
               RoaMAX Inflight Tersedia
             </span>
           </div>

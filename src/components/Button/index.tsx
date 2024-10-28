@@ -17,7 +17,7 @@ interface ButtonProps {
 
 const getButtonStyle = (style: string): string => {
   const base =
-    "min-h-12 font-normal py-2 px-4 w-full focus:outline-none rounded-[40px] font-sans ";
+    "min-h-[48px] font-normal py-[8px] px-[16px] w-full focus:outline-none rounded-[40px] font-sans ";
   switch (style) {
     case "primary":
       return base + "bg-solidRed text-white";
@@ -52,9 +52,13 @@ const Button: React.FC<ButtonProps> = ({
       {label}
       {isUseArrowIcon ? (
         style === "secondary" ? (
-          <ChevronRightRed />
+          // <ChevronRightRed />
+          <>
+          </>
         ) : (
-          <ChevronRight />
+          // <ChevronRight />
+          <>
+          </>
         )
       ) : (
         <></>

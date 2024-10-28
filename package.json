@@ -30,7 +30,8 @@
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
     "dev:jd": "npm run build:jd -- --watch",
-    "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch"
+    "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch",
+    "postinstall": "weapp-tw patch"
   },
   "browserslist": [
     "defaults and fully supports es6-module",
@@ -89,6 +90,7 @@
     "react-waypoint": "^10.3.0",
     "redux": "^5.0.1",
     "tailwind-merge": "^2.3.0",
+    "tailwindcss-rem-to-px": "^0.1.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -100,18 +102,21 @@
     "@tarojs/vite-runner": "4.0.6",
     "@types/react": "^18.0.0",
     "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
     "babel-preset-taro": "4.0.6",
     "eslint": "^8.57.0",
     "eslint-config-taro": "4.0.6",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.4.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.47",
     "react-refresh": "^0.14.0",
     "sass": "^1.75.0",
     "stylelint": "^16.4.0",
+    "tailwindcss": "^3.4.14",
     "terser": "^5.30.4",
     "typescript": "^5.4.5",
     "vite": "^4.5.5",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-svgr": "^4.2.0",
+    "weapp-tailwindcss": "^3.6.2"
   }
 }

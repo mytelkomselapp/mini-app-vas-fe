@@ -1,3 +1,13 @@
-import ListFlight from "./ListPenerbangan";
+import React from "react";
 
-export default ListFlight
+const ListFlightLazy = React.lazy(() => import("./ListPenerbangan"));
+
+const ListFlight = () => {
+  return (
+    <React.Suspense fallback={<></>}>
+      <ListFlightLazy />
+    </React.Suspense>
+  );
+};
+
+export default ListFlight;
