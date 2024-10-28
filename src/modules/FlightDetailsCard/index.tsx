@@ -1,9 +1,10 @@
 import { FlightDetailData } from "../../network/types/response-props";
 import { cn, flightStateAttribute } from "../../lib/utils";
-import IcoPlane from "../../assets/ico_plane.svg";
+// import IcoPlane from "../../assets/ico_plane.svg";
 import Show from "../../components/Show";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right-16px.svg";
-import { useNavigate } from "react-router-dom";
+import { Image } from "@tarojs/components";
+// import { ReactComponent as ChevronRight } from "../../assets/chevron-right-16px.svg";
+// import { useNavigate } from "react-router-dom";
 
 interface Props {
   data?: FlightDetailData;
@@ -12,15 +13,15 @@ interface Props {
 
 const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
   const { className, label } = flightStateAttribute(data?.flight_state);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ) => {
-    event.currentTarget.src = IcoPlane;
+    event.currentTarget.src = "IcoPlane";
   };
 
   const handleNavigatoToFlightInfo = () => {
-    navigate(`/flight/happiness-index/${data?.id}`);
+    // navigate(`/flight/happiness-index/${data?.id}`);
   };
 
   return (
@@ -35,18 +36,20 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
             onClick={handleNavigatoToFlightInfo}
           >
             <p className="text-xs">Selengkapnya</p>
-            <ChevronRight />
+            {/* <ChevronRight /> */}
           </div>
         </Show>
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2 px-4">
           {data?.flight_logo ? (
-            <img
+            <Image 
               src={data.flight_logo}
-              className="w-10"
+              style={{
+                width: '0.5rem',
+                height: '0.5rem',
+              }}
               key={data.flight_no}
-              onError={handleImageError}
             />
           ) : (
             <></>

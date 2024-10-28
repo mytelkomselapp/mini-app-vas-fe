@@ -1,4 +1,5 @@
 import * as React from "react";
+import { HashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient({
@@ -10,13 +11,15 @@ const queryClient = new QueryClient({
   },
 });
 
-const withReactQuery =
+const withProvider =
   (WrappedComponents: React.ReactNode | any) => (props: any) => {
     return (
-      <QueryClientProvider client={queryClient}>
-        <WrappedComponents {...props} />
-      </QueryClientProvider>
+      <HashRouter>
+        <QueryClientProvider client={queryClient}>
+          <WrappedComponents {...props} />
+        </QueryClientProvider>
+      </HashRouter>
     );
   };
 
-export default withReactQuery;
+export default withProvider;

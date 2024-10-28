@@ -1,4 +1,6 @@
+import Taro from "@tarojs/taro";
 import { clsx, type ClassValue } from "clsx";
+import { NavigateFunction } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -105,4 +107,19 @@ export const isValidEmail = (value: string) => {
   if (pattern.test(value)) return true;
 
   return false;
+};
+
+export const handleNavigate = (navigate: NavigateFunction, pathname: string, search: string, state: any) => {
+  Taro.navigateTo({
+    success: () => {
+      navigate(
+        {
+          pathname,
+          search,
+        },
+        { state: state, replace: true }
+      );
+    },
+    url: pathname + search,
+  })
 };

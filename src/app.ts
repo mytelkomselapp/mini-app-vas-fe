@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withReactQuery } from "./hoc";
+import { withProvider } from "./hoc";
 import './index.css'
 import './app.scss'
 
@@ -13,4 +13,4 @@ class App extends React.Component<AppProps> {
   }
 }
 
-export default withReactQuery(App);
+export default withProvider(App);
