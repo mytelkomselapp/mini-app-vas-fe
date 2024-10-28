@@ -3,11 +3,10 @@ const path = require("path");
 const config = {
   projectName: "miniweb-taro",
   date: "2023-10-01",
-  designWidth: 750,
+  designWidth: 375, // Set for mobile screen width to ensure consistency
   deviceRatio: {
-    "640": 2.34 / 2,
-    "750": 1,
-    "828": 1.81 / 2,
+    375: 2, // Standard mobile screen size with a responsive scaling ratio
+    750: 2, // Larger screens like iPhone with default scaling
   },
   sourceRoot: "src",
   outputRoot: "dist",

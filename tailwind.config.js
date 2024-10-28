@@ -1,9 +1,36 @@
 /** @type {import('tailwindcss').Config} */
+import remToPx from "tailwindcss-rem-to-px";
+const defaultTheme = require("tailwindcss/defaultTheme");
+function rem2px(input, fontSize = 16) {
+  if (input == null) {
+    return input;
+  }
+  switch (typeof input) {
+    case "object":
+      if (Array.isArray(input)) {
+        return input.map((val) => rem2px(val, fontSize));
+      } else {
+        const ret = {};
+        for (const key in input) {
+          ret[key] = rem2px(input[key]);
+        }
+        return ret;
+      }
+    case "string":
+      return input.replace(
+        /(\d*\.?\d+)rem$/,
+        (_, val) => parseFloat(val) * fontSize + "px"
+      );
+    default:
+      return input;
+  }
+}
+
 module.exports = {
   // 这里给出了一份 taro 通用示例，具体要根据你自己项目的目录结构进行配置
   // 比如你使用 vue3 项目，你就需要把 vue 这个格式也包括进来
   // 不在 content glob 表达式中包括的文件，在里面编写 tailwindcss class，是不会生成对应的 css 工具类的
-  content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   prefix: "",
   // 其他配置项 ...
   corePlugins: {
@@ -11,6 +38,7 @@ module.exports = {
     preflight: false,
   },
   theme: {
+    fontSize: rem2px(defaultTheme.fontSize),
     container: {
       center: true,
       padding: "2rem",
@@ -98,4 +126,5 @@ module.exports = {
       },
     },
   },
-}
+  plugins: [remToPx()],
+};
