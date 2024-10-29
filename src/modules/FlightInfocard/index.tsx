@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { cn, flightStateAttribute, handleNavigate } from "../../lib/utils";
 import Plane from "../../assets/ico_plane.svg";
+import IcoPlane from "../../assets/ico_plane.svg";
 import { FlightDetailData } from "../../network/types/response-props";
 import Show from "../../components/Show";
-import { Image} from "@tarojs/components";
+import { Image } from "@tarojs/components";
 
 interface FlightInfoCardProps {
   flightDetail?: FlightDetailData;
@@ -38,15 +39,20 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
       pageTitle,
       window.location.pathname
     );
-    
-    handleNavigate(navigate, "/pages/DetailPenerbangan/index", `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`, { flightDetail })
+
+    handleNavigate(
+      navigate,
+      "/pages/DetailPenerbangan/index",
+      `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`,
+      { flightDetail }
+    );
   };
 
-  // const handleImageError = (
-  //   event: React.SyntheticEvent<HTMLImageElement, Event>
-  // ) => {
-  //   // event.currentTarget.src = IcoPlane;
-  // };
+  const handleImageError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    event.currentTarget.src = IcoPlane;
+  };
   return (
     <div onClick={() => handleOnClick()}>
       <div className=" bg-white rounded-[16px] p-[12px]">
@@ -54,14 +60,16 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
           <div className="flex items-center gap-[8px]">
             {flightDetail?.flight_logo ? (
               <>
-                <Image
-                  src={Plane}
-                  className="w-[24px] h-[24px]"
+                <img
+                  src={flightDetail?.flight_logo}
+                  className="w-6"
+                  key={flightDetail?.flight_no}
+                  onError={handleImageError}
                 />
               </>
             ) : (
               <>
-                <span>Logo</span>
+                <Image src={Plane} className="w-[24px] h-[24px]" />
               </>
             )}
             <p className="text-[12px]">{`${flightDetail?.flight_company} ${flightDetail?.flight_no}`}</p>
