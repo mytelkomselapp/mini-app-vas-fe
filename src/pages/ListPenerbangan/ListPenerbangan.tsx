@@ -1,10 +1,8 @@
-import { BASE_API_URL } from "../../core/env";
 import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
 import Show from "../../components/Show";
 import { cn } from "../../lib/utils";
 import FlightInfoCard from "../../modules/FlightInfocard";
 import FlightRoamaxCard from "../../modules/FlightRoamaxCard";
-import FlightData from "./FlightData";
 import { FlightDetailData } from "@/network/types/response-props";
 import { useFetchFlightByCity } from "../../network";
 import { useLocation } from "react-router-dom";
