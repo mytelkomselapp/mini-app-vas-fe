@@ -1,9 +1,9 @@
 import React from "react";
 import AirplaneWithLine from "../../assets/airplane-with-line.svg";
 import { cardClick } from "../../network/analytics/tracker";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { cn, flightStateAttribute } from "../../lib/utils";
+import { cn, flightStateAttribute, handleNavigate } from "../../lib/utils";
 import Plane from "../../assets/ico_plane.svg";
 import { FlightDetailData } from "../../network/types/response-props";
 import Show from "../../components/Show";
@@ -18,7 +18,7 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
   flightDetail,
   isRoamaxEligible,
 }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { className, label } = flightStateAttribute(flightDetail?.flight_state);
 
@@ -38,13 +38,8 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
       pageTitle,
       window.location.pathname
     );
-    // navigate(
-    //   {
-    //     pathname: "/flight/detail",
-    //     search: `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`,
-    //   },
-    //   { state: { flightDetail } }
-    // );
+    
+    handleNavigate(navigate, "/pages/DetailPenerbangan/index", `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`, { flightDetail })
   };
 
   // const handleImageError = (

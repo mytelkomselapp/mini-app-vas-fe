@@ -1,4 +1,5 @@
 import * as React from "react";
+import { HashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "../components/ui/toaster";
 
