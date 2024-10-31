@@ -8,17 +8,19 @@ import { useFetchFlightByCity } from "../../network";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 
-const ListFlight = () => {
-  const originId = "2139"
-  const destinationId = "2179"
-  const date = "2024-11-24"
-  const origin = "Jakarta"
-  const destination = "Bali (Denpasar)"
-  const {
-    data: flightRawData,
-  } = useFetchFlightByCity(originId, destinationId, date);
+const ListPenerbangan = () => {
+  const originId = "2139";
+  const destinationId = "2179";
+  const date = "2024-11-24";
+  const origin = "Jakarta";
+  const destination = "Bali (Denpasar)";
+  const { data: flightRawData } = useFetchFlightByCity(
+    originId,
+    destinationId,
+    date
+  );
   const dateLabel = moment(date).format("DD MMMM YYYY");
-  
+
   const location = useLocation();
   const passedFlightsData = location.state?.flightsByNumberData;
   const bypassAPICall = !!passedFlightsData;
@@ -92,4 +94,4 @@ const ListFlight = () => {
   );
 };
 
-export default ListFlight;
+export default ListPenerbangan;
