@@ -20,10 +20,12 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const baseConfig: UserConfigExport<"vite"> = {
     projectName: "originTaro",
     date: "2024-10-19",
-    designWidth: 375, // Set for mobile screen width to ensure consistency
+    designWidth: 375,
     deviceRatio: {
-      375: 1, // Standard mobile screen size with a responsive scaling ratio
-      750: 1, // Larger screens like iPhone with default scaling
+      "375": 2,
+      "640": 1 / 2,
+      "750": 1 / 2,
+      "828": 1 / 2,
     },
     sourceRoot: "src",
     outputRoot: "dist",
@@ -48,9 +50,41 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
             },
           }),
         },
+        {
+          // 通过 vite 插件加载 postcss,
+          name: "postcss-config-loader-plugin",
+          config(config) {
+            // 加载 tailwindcss
+            if (typeof config.css?.postcss === "object") {
+              config.css?.postcss.plugins?.unshift(tailwindcss());
+            }
+          },
+        },
+        uvtw({
+          // rem转rpx
+          rem2rpx: true,
+          // 除了小程序这些，其他平台都 disable
+          disabled:
+            process.env.TARO_ENV === "h5" ||
+            process.env.TARO_ENV === "harmony" ||
+            process.env.TARO_ENV === "rn",
+        }),
       ],
     },
     mini: {
+      postcss: {
+        pxtransform: {
+          enable: true,
+          config: {},
+        },
+        cssModules: {
+          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+          config: {
+            namingPattern: "module", // 转换模式，取值为 global/module
+            generateScopedName: "[name]__[local]___[hash:base64:5]",
+          },
+        },
+      },
       webpackChain(chain) {
         chain.plugin("define").use(DefinePlugin, [
           {
