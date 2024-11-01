@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  @apply text-primaryBlack;
   --chips-text-color: #000;
   --chips-background-color: #fafafb;
   --chips-border-color: #dae0e9;
@@ -86,7 +87,7 @@ html {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  color: rgba(0, 0, 0, 0);
+color: rgba(0, 0, 0, 0);
   opacity: 1;
   display: block;
   background: url("./assets/ico_calendar.svg") no-repeat;

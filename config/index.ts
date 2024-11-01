@@ -5,12 +5,11 @@ import prodConfig from "./prod";
 import type { Plugin } from "vite";
 import tailwindcss from "tailwindcss";
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from "weapp-tailwindcss/vite";
+import { DefinePlugin } from "webpack";
 const { UnifiedWebpackPluginV5 } = require("weapp-tailwindcss/webpack");
 
-// https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const path = require("path");
-
   module.exports = {
     alias: {
       "@": path.resolve(__dirname, "..", "src"),
@@ -21,14 +20,16 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const baseConfig: UserConfigExport<"vite"> = {
     projectName: "originTaro",
     date: "2024-10-19",
-    designWidth: 375, // Set for mobile screen width to ensure consistency
+    designWidth: 375,
     deviceRatio: {
-      375: 1, // Standard mobile screen size with a responsive scaling ratio
-      750: 1, // Larger screens like iPhone with default scaling
+      "375": 2,
+      "640": 1 / 2,
+      "750": 1 / 2,
+      "828": 1 / 2,
     },
     sourceRoot: "src",
     outputRoot: "dist",
-    plugins: [],
+    plugins: ["@tarojs/plugin-html"],
     defineConstants: {},
     copy: {
       patterns: [],
@@ -38,6 +39,17 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     compiler: {
       type: "vite",
       vitePlugins: [
+        {
+          name: "define-process",
+          apply: "build",
+          config: () => ({
+            define: {
+              "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+              "process.env": JSON.stringify(process.env),
+              "process.browser": JSON.stringify(true),
+            },
+          }),
+        },
         {
           // 通过 vite 插件加载 postcss,
           name: "postcss-config-loader-plugin",
@@ -57,7 +69,7 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
             process.env.TARO_ENV === "harmony" ||
             process.env.TARO_ENV === "rn",
         }),
-      ] as Plugin[], // 从 vite 引入 type, 为了智能提示
+      ],
     },
     mini: {
       postcss: {
@@ -74,42 +86,13 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
         },
       },
       webpackChain(chain) {
-        chain.module
-          .rule("svg")
-          .test(/\.svg$/)
-          .use("babel-loader")
-          .loader("babel-loader")
-          .end()
-          .use("@svgr/webpack")
-          .loader("@svgr/webpack")
-          .options({
-            svgo: false,
-          });
-      },
-    },
-    h5: {
-      publicPath: "/",
-      staticDirectory: "static",
-
-      miniCssExtractPluginOption: {
-        ignoreOrder: true,
-        filename: "css/[name].[hash].css",
-        chunkFilename: "css/[name].[chunkhash].css",
-      },
-      postcss: {
-        autoprefixer: {
-          enable: true,
-          config: {},
-        },
-        cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
-          config: {
-            namingPattern: "module", // 转换模式，取值为 global/module
-            generateScopedName: "[name]__[local]___[hash:base64:5]",
+        chain.plugin("define").use(DefinePlugin, [
+          {
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+            "process.env": JSON.stringify(process.env),
+            "process.browser": JSON.stringify(true),
           },
-        },
-      },
-      webpackChain(chain) {
+        ]);
         chain.merge({
           plugin: {
             install: {
@@ -137,20 +120,30 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
           });
       },
     },
-    rn: {
-      appName: "taroDemo",
-      postcss: {
-        cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
-        },
+    h5: {
+      webpackChain(chain) {
+        chain.plugin("define").use(DefinePlugin, [
+          {
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+            "process.env": JSON.stringify(process.env),
+            "process.browser": JSON.stringify(true),
+          },
+        ]);
+        chain.module
+          .rule("svg")
+          .test(/\.svg$/)
+          .use("babel-loader")
+          .loader("babel-loader")
+          .end()
+          .use("@svgr/webpack")
+          .loader("@svgr/webpack")
+          .options({
+            svgo: false,
+          });
       },
     },
   };
-  if (process.env.NODE_ENV === "development") {
-    // 本地开发构建配置（不混淆压缩）
-    //  return merge({}, baseConfig, devConfig);
-    return merge({}, baseConfig);
-  }
-  // 生产构建配置（默认开启压缩混淆等）
-  return merge({}, baseConfig, prodConfig);
+
+  // Merge the base config with environment-specific configs
+  return merge(baseConfig, command === "build" ? prodConfig : devConfig);
 });
