@@ -69,6 +69,7 @@
     "@tarojs/taro": "^4.0.6",
     "@types/redux": "^3.6.0",
     "axios": "^1.7.7",
+    "axios-taro-adapter": "^0.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -92,6 +93,7 @@
     "redux": "^5.0.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-rem-to-px": "^0.1.1",
+    "taro-axios": "^1.1.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

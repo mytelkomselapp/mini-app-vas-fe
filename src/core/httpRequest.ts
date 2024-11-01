@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { BASE_API_URL, BASE_CMS_API_URL, BASE_CMS_TOKEN } from "./env";
 import { AxiosHTTPError } from "../network/types/api-response-container";
 import { serializeParam } from "./serializeParam";
+import { TaroAdapter } from "axios-taro-adapter"
 import { getCookie } from "../lib/utils";
 
 type API_SOURCE = "api" | "cms";
@@ -14,6 +15,7 @@ export type ENDPOINT_SOURCE = {
 
 const httpRequest = axios.create({
   timeout: 30000,
+  adapter: TaroAdapter
 });
 
 const requestHandler = async (requestConfig: any) => {
@@ -33,7 +35,7 @@ httpRequest.interceptors.request.use(
 );
 
 const generateBaseURL = (source: API_SOURCE, url: string) => {
-  if (source === "api") {
+  if (source === "api") { 
     return `${BASE_API_URL}${url}`;
   }
 
