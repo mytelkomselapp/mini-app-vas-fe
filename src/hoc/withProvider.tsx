@@ -1,7 +1,6 @@
 import * as React from "react";
 import { HashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Toaster } from "../components/ui/toaster";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,10 +14,11 @@ const queryClient = new QueryClient({
 const withProvider =
   (WrappedComponents: React.ReactNode | any) => (props: any) => {
     return (
-      <QueryClientProvider client={queryClient}>
-        <WrappedComponents {...props} />
-        <Toaster />
-      </QueryClientProvider>
+      <HashRouter>
+        <QueryClientProvider client={queryClient}>
+          <WrappedComponents {...props} />
+        </QueryClientProvider>
+      </HashRouter>
     );
   };
 
