@@ -1,4 +1,4 @@
-import { ENDPOINT_SOURCE } from "../../core/httpRequest";
+import { ENDPOINT_SOURCE } from "../core/httpRequest";
 
 const endpoints: ENDPOINT_SOURCE = {
   cmsFLightLanding: {

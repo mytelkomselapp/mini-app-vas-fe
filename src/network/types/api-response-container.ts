@@ -1,3 +1,4 @@
+import { RequestTask } from "@tarojs/taro";
 import { AxiosError, AxiosResponse } from "axios";
 
 export interface FlightAPIMeta {
@@ -16,7 +17,9 @@ export type HttpSuccessResponse<T> = Promise<
   AxiosResponse<ApiSuccessResponse<T>>
 >;
 
-export type HttpSuccessUploadResponse<T> = Promise<AxiosResponse<T>>;
+export type HttpSuccessUploadResponse<T> = RequestTask<
+  Promise<AxiosResponse<T>>
+>;
 
 export interface HTTPError {
   message: string;

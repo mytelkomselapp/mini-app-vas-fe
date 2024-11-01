@@ -29,6 +29,7 @@ const ListPenerbangan = () => {
   const flightList = bypassAPICall
     ? passedFlightsData?.flights
     : flightData?.data?.flights || [];
+
   return (
     <div className="flex flex-col bg-[#EFF1F4] h-screen overflow-hidden">
       <div className="p-4">

@@ -1,8 +1,7 @@
 import { defineConfig, type UserConfigExport } from "@tarojs/cli";
-import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
+// @ts-ignore
 import devConfig from "./dev";
 import prodConfig from "./prod";
-import type { Plugin } from "vite";
 import tailwindcss from "tailwindcss";
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from "weapp-tailwindcss/vite";
 import { DefinePlugin } from "webpack";
@@ -29,7 +28,11 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     },
     sourceRoot: "src",
     outputRoot: "dist",
-    plugins: ["@tarojs/plugin-html"],
+    plugins: [
+      "@tarojs/plugin-html",
+      "@taro-platform/axios-taro-adapter/taro-plugin",
+      // "@tarojs/plugin-http",
+    ],
     defineConstants: {},
     copy: {
       patterns: [],

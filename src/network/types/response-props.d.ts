@@ -123,7 +123,6 @@ export interface FlightFollowTracking {
 
 export interface FlightFreemiumPackageData {
   id: number;
-  keyword: string;
   name: string;
   quota: number;
   price: number;
@@ -272,7 +271,7 @@ export type FlightFreemiumUserPackageResponse =
 export type FlightETicketsResponse = HttpSuccessResponse<FlightETicketData[]>;
 export type FlightETicketByFlightIdResponse =
   HttpSuccessResponse<FlightETicketByFlightIdData>;
-export type FlightETicketUploadFIleResponse = HttpSuccessUploadResponse<
+export type FlightETicketUploadFileResponse = HttpSuccessUploadResponse<
   FlightETicketUploadFileData[]
 >;
 export type FlightCreateETicketResponse =

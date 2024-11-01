@@ -1,4 +1,5 @@
-import http from "../core";
+// @ts-nocheck
+import http from "../core/index";
 import {
   CMSFlightLandingPageResponse,
   FlightDetailResponse,
@@ -12,7 +13,6 @@ import {
   FlightFreemiumUserPackageResponse,
   FlightETicketByFlightIdResponse,
   FlightCreateETicketResponse,
-  FlightETicketUploadFIleResponse,
   FlightETicketsResponse,
   FlightDeleteETicketResponse,
   FlightClaimFreeTicketResponse,
@@ -20,6 +20,7 @@ import {
   FlightBuyFreemiumPackageResponse,
   FlightByCityResponse,
   ErrorLogBuyPackageResponse,
+  FlightETicketUploadFileResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -75,6 +76,7 @@ export const getFlightByCity = (
   arrival_city_id: string,
   date: string
 ): FlightByCityResponse => {
+  console.log({ endpoint: endpoints });
   return http.get(endpoints?.flightByCity, {
     departure_city_id,
     arrival_city_id,
@@ -128,13 +130,8 @@ export const postCreateETicket = (
 
 export const postUploadETicketFile = (
   payload: FormData
-): FlightETicketUploadFIleResponse => {
-  return http.post(
-    endpoints?.eTicketUploadFile,
-    payload,
-    {},
-    { timeout: 180000 }
-  );
+): FlightETicketUploadFileResponse => {
+  return http.post(endpoints?.eTicketUploadFile, payload, {});
 };
 
 export const deleteETicket = (
