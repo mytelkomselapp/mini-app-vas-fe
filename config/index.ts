@@ -30,7 +30,7 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     outputRoot: "dist",
     plugins: [
       "@tarojs/plugin-html",
-      "@taro-platform/axios-taro-adapter/taro-plugin",
+      // "@taro-platform/axios-taro-adapter/taro-plugin",
       // "@tarojs/plugin-http",
     ],
     defineConstants: {},

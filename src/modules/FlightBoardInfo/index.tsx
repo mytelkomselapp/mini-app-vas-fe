@@ -10,10 +10,8 @@ interface Props {
 const FlightFollowingNearby: React.FC<Props> = ({ data }) => {
   return (
     <div className="relative flex flex-row justify-between">
-      <div className="flex flex-col gap-2 text-left w-[124px]">
-        <p className="text-white text-base">
-          {formatTime(data?.departure_time)}
-        </p>
+      <div className="flex flex-col gap-2 text-left">
+        <p className="text-white text-base">{formatTime(data?.departure_time)}</p>
         <p className="text-white text-[40px] leading-[60px]">
           {data?.departure_code}
         </p>
@@ -25,7 +23,7 @@ const FlightFollowingNearby: React.FC<Props> = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 text-right w-[124px]">
+      <div className="flex flex-col gap-2 text-right">
         <p className="text-white text-base">{formatTime(data?.arrival_time)}</p>
         <p className="text-white text-[40px] leading-[60px]">
           {data?.arrival_code}
