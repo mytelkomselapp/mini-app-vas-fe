@@ -1,5 +1,5 @@
 //import { useParams } from "react-router-dom";
-import { ReactComponent as FlightIcon } from "../../assets/garuda.svg";
+import FlightIcon from "../../assets/garuda.svg";
 import Navbar from "../../components/Navbar";
 import FlightSeatInformation from "../../modules/FlightSeatInformation";
 import FlightSpecCard from "../../modules/FlightSpecCard";
@@ -29,7 +29,7 @@ const DetailPesawat = () => {
           </div>
           {/* @ts-ignore */}
           <FlightSpecCard data={[]} />
-          <FlightSeatInformation />
+          <img src={FlightSeatInformation} />
         </div>
       </div>
     </>

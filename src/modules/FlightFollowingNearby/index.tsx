@@ -1,5 +1,5 @@
 import { FlightDetailTrackData } from "../../network/types/response-props";
-import { ReactComponent as Flight } from "../../assets/flight-without-route.svg";
+import Flight from "../../assets/flight-without-route.svg";
 import moment from "moment";
 import IcoPlane from "../../assets/ico_plane.svg";
 
@@ -48,7 +48,7 @@ const FlightBoardInfo: React.FC<Props> = ({ data }) => {
             </p>
           </div>
         </div>
-        <Flight />
+        <img src={Flight} />
         <div className="flex flex-col gap-2 text-right w-[103px]">
           <p className="text-white text-2xl font-semibold">
             {data?.flight?.arrival_code || "-"}

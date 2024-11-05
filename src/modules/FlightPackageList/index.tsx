@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactComponent as PlaneIcon } from "../../assets/ico_plane_blue.svg";
+import PlaneIcon from "../../assets/ico_plane_blue.svg";
 import Show from "../../components/Show";
 import { FlightFreemiumPackageData } from "../../network/types/response-props";
 import Skeleton from "react-loading-skeleton";
@@ -82,7 +82,7 @@ const FlightPackageList: React.FC<Props> = ({ data, onClick, isLoading }) => {
               <div className="flex flex-row justify-between">
                 <div className="flex-col flex">
                   <div className="bg-[#EFEFFF] px-2 py-[2px] w-max rounded-lg flex justify-center items-center mb-2 gap-1">
-                    <PlaneIcon />
+                    <img src={PlaneIcon} />
                     <span className="text-[10px] text-[#14278C] font-sans">
                       Paket Travel
                     </span>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Sheet as BottomSheet } from "react-modal-sheet";
-import { ReactComponent as ArrowRight } from "../../assets/arrow-right.svg";
+import ArrowRight from "../../assets/arrow-right.svg";
 import style from "./FlightLandingModal.module.css";
 import { buttonClick } from "../../network/analytics/tracker";
 
@@ -65,7 +65,7 @@ const FlightLandingModal: React.FC<Props> = ({ open, onClose }) => {
                   Cari tiket untuk jelajahi indonesia
                 </p>
               </div>
-              <ArrowRight />
+              <img src={ArrowRight} />
             </div>
             <div
               className="rounded-md p-[16px] flex flex-row justify-between items-center bg-inactiveGrey"
@@ -78,7 +78,7 @@ const FlightLandingModal: React.FC<Props> = ({ open, onClose }) => {
                   Cari tiket untuk manca negara
                 </p>
               </div>
-              <ArrowRight />
+              <img src={ArrowRight} />
             </div>
           </div>
         </BottomSheet.Content>

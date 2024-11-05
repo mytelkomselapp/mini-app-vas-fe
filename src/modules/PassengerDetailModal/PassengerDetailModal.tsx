@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BottomSheet from "../..//..//../components/BottomSheet";
-import { ReactComponent as IconCalendar } from "../..//..//../assets/ico_calendar.svg";
+import IconCalendar from "../..//..//../assets/ico_calendar.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../..//..//../components/Button";
 import { Switch } from "../..//..//../components/ui/switch";
@@ -224,7 +224,8 @@ const PassengerDetailModal: React.FC<Props> = ({ open, onClose }) => {
               placeholder="Pilih tanggal"
               onClick={handleOpenCalendarModal}
             />
-            <IconCalendar
+            <img
+              src={IconCalendar}
               className="absolute right-4 cursor-pointer"
               onClick={handleOpenCalendarModal}
             />

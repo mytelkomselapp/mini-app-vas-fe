@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactComponent as IconCalendar } from "../../assets/ico_calendar.svg";
+import IconCalendar from "../../assets/ico_calendar.svg";
 import { useFlightTicketForm } from "../../store/flight";
 import useToggle from "../../hooks/useToggle";
 import { CalendarModal } from "../FlightForm";
@@ -90,7 +90,8 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
           placeholder="Tanggal Pergi"
           onClick={isDetailMode ? undefined : handleOpenCalendarModal}
         />
-        <IconCalendar
+        <img
+          src={IconCalendar}
           className="absolute right-4 cursor-pointer"
           onClick={isDetailMode ? undefined : handleOpenCalendarModal}
         />

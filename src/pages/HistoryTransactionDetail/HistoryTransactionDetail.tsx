@@ -1,7 +1,7 @@
 import Navbar from "../../components/Navbar";
 import FlightTransactionDetail from "./components/FlightTransactionDetail";
-import { ReactComponent as Voucher } from "../../assets/voucher.svg";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
+import Voucher from "../../assets/voucher.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
 import { useParams } from "react-router-dom";
 import Show from "../../components/Show";
 
@@ -38,10 +38,10 @@ const HistoryTransactionDetail = () => {
           <FlightTransactionDetail />
           <div className="flex items-center justify-between bg-white p-4 rounded-lg">
             <div className="flex items-center gap-2">
-              <Voucher />
+              <img src={Voucher} />
               <span className="text-sm">Lihat E-Voucher</span>
             </div>
-            <ChevronRight />
+            <img src={ChevronRight} />
           </div>
         </Show>
       </div>

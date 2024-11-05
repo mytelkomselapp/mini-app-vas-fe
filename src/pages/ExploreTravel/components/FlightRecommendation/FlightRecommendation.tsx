@@ -1,4 +1,4 @@
-import { ReactComponent as FlightIcon } from "../../assets/plane-red.svg";
+import FlightIcon from "../../assets/plane-red.svg";
 import Button from "../../components/Button";
 import { Progress } from "../../components/ui/progress";
 import FlightCard from "../../modules/FlightCard";
@@ -31,7 +31,7 @@ const FlightRecommendation: React.FC<Props> = ({ onClickAll, onClick }) => {
     <>
       <div className="flex space-x-2 items-center mb-4">
         <div>
-          <FlightIcon />
+          <img src={FlightIcon} />
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">Rekomendasi Penerbangan</span>

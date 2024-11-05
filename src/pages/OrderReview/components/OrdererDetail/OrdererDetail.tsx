@@ -2,7 +2,7 @@ import * as React from "react";
 
 import useToggle from "../..//../hooks/useToggle";
 
-import { ReactComponent as ChevronRight } from "../..//../assets/chevron-right.svg";
+import ChevronRight from "../..//../assets/chevron-right.svg";
 import { OrdererDataProps, useOrdererData } from "../..//../store/travel";
 
 import Card from "../..//../components/Card";
@@ -43,12 +43,12 @@ const OrdererDetail: React.FC = () => {
             {/* default value jika belum ada nama maka tanggal */}
             {orderer?.name ?? "Kamis, 5 Sep 2024"}
           </span>
-          <ChevronRight />
+          <img src={ChevronRight} />
         </div>
         <span className="text-sm">
           {renderPhoneNumberText()} • {renderEmailText()}
         </span>
-        <AlertWarning />
+        <img src={AlertWarning} />
       </div>
 
       <FormOrdererModal

@@ -1,10 +1,10 @@
 import Navbar from "../../components/Navbar";
-import { ReactComponent as EmptyBox } from "../../assets/empty-box.svg";
-import { ReactComponent as Transaction } from "../../assets/ico_transaction_red.svg";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
-import { ReactComponent as ArrowRight } from "../../assets/arrow-right.svg";
-import { ReactComponent as Plane } from "../../assets/plane-red.svg";
-import { ReactComponent as TrackFlight } from "../../assets/track-flight.svg";
+import EmptyBox from "../../assets/empty-box.svg";
+import Transaction from "../../assets/ico_transaction_red.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
+import ArrowRight from "../../assets/arrow-right.svg";
+import Plane from "../../assets/plane-red.svg";
+import TrackFlight from "../../assets/track-flight.svg";
 import { COMMERCE_TRAVEL } from "../../App";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,7 @@ const MyActivity = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-inactiveGrey">
       <div className="px-4 mb-4 bg-white">
-        <Navbar />
+        <img src={Navbar} />
       </div>
       <div className="px-4 pb-4">
         <span className="text-xl">Aktivitas Saya</span>
@@ -77,7 +77,7 @@ const MyActivity = () => {
               className="flex flex-col items-center justify-center text-center py-6 px-4 gap-3"
               onClick={() => setHistoryData(activityList)}
             >
-              <EmptyBox />
+              <img src={EmptyBox} />
               <span className="text-base font-semibold font-sans mt-1">
                 Belum ada aktifitas aktif
               </span>
@@ -104,10 +104,10 @@ const MyActivity = () => {
                 onClick={handleNavigateHistoryActivity}
               >
                 <div className="flex items-center gap-2">
-                  <Transaction />
+                  <img src={Transaction} />
                   <span className="text-sm">Pembelian Kamu</span>
                 </div>
-                <ChevronRight />
+                <img src={ChevronRight} />
               </div>
             </div>
           </>
@@ -133,7 +133,7 @@ const MyActivity = () => {
                 </div>
                 <div className="flex text-sm gap-2">
                   <span>Jakarta (CGK)</span>
-                  <ArrowRight />
+                  <img src={ArrowRight} />
                   <span>Singapura (SIN)</span>
                 </div>
                 <div className="text-sm">
@@ -150,10 +150,10 @@ const MyActivity = () => {
             onClick={handleNavigateHistoryActivity}
           >
             <div className="flex items-center gap-2">
-              <Transaction />
+              <img src={Transaction} />
               <span className="text-sm">Riwayat Pembelian Kamu</span>
             </div>
-            <ChevronRight />
+            <img src={ChevronRight} />
           </div>
         </div>
       </Show>

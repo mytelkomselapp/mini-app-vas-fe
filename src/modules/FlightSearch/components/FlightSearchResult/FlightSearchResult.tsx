@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/magnifying-glass.svg";
+import MagnifyingGlassIcon from "../../../../assets/magnifying-glass.svg";
 import { FlightSearchData } from "../../../../network/types/response-props";
 import { cn } from "../../../../lib/utils";
 import RenderVerticalList from "../../../../components/RenderVerticalList";
@@ -47,7 +47,7 @@ const FlightSearchResult: React.FC<Props> = ({ onSelect, data }) => {
               "py-[8px]": index > 0,
             })}
           >
-            <MagnifyingGlassIcon />
+            <img src={MagnifyingGlassIcon} />
             <p className="text-[13px]">{item?.city_name}</p>
           </div>
         </div>

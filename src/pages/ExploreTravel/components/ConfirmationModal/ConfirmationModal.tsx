@@ -1,7 +1,7 @@
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import React from "react";
-import { ReactComponent as ArrowRight } from "../../assets/chevron-right-16px.svg";
+import ArrowRight from "../../assets/chevron-right-16px.svg";
 import travelokaImg from "../../assets/traveloka-squared.png";
 
 interface Props {
@@ -62,7 +62,7 @@ const ConfirmationModal: React.FC<Props> = ({
               <div className="flex flex-row items-center ml-auto">
                 <span className="font-semibold text-xs">{"Rp1.989.000"}</span>
                 <span className="text-grey text-[10px]">{"/orang"}</span>
-                <ArrowRight className="ml-1" />
+                <img src={ArrowRight} className="ml-1" />
               </div>
             </div>
             <div className="h-[1px] w-full bg-dividerGrey opacity-[0.7] my-4" />

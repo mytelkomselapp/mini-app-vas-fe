@@ -1,5 +1,5 @@
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
-import { ReactComponent as ArrowRight } from "../../assets/arrow-right.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
+import ArrowRight from "../../assets/arrow-right.svg";
 import { useNavigate } from "react-router-dom";
 import { FlightDetailTrackData } from "../../network/types/response-props";
 import moment from "moment";
@@ -34,7 +34,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data }) => {
           <p className="text-white text-sm font-semibold">
             Lihat Semua Penerbangan
           </p>
-          <ChevronRight className="invert grayscale ml-auto" />
+          <img src={ChevronRight} className="invert grayscale ml-auto" />
         </div>
 
         {data?.slice(0, 3)?.map((val, i) => {
@@ -70,7 +70,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data }) => {
             >
               <div className="flex items-center gap-1">
                 <p className="font-semibold">{val?.flight?.departure_code}</p>
-                <ArrowRight />
+                <img src={ArrowRight} />
                 <p className="font-semibold">{val?.flight?.arrival_code}</p>
               </div>
               <div>
