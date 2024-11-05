@@ -1,8 +1,8 @@
 import React from "react";
-import { ReactComponent as IcoPlane } from "../../assets/ico_plane.svg";
-import { ReactComponent as IcoLove } from "../../assets/ico_love.svg";
-import { ReactComponent as IcoTime } from "../../assets/ico_time.svg";
-import { ReactComponent as Divider } from "../../assets/divider.svg";
+import IcoPlane from "../../assets/ico_plane.svg";
+import IcoLove from "../../assets/ico_love.svg";
+import IcoTime from "../../assets/ico_time.svg";
+import Divider from "../../assets/divider.svg";
 import { FlightFreemiumPackageData } from "../../network/types/response-props";
 import Show from "../../components/Show";
 
@@ -34,7 +34,7 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
       <div className="w-full bg-white px-4 py-5 rounded-2xl">
         <div className="flex gap-2">
           <div>
-            <IcoLove />
+            <img src={IcoLove} />
           </div>
           <div>
             <p className="font-bold text-sm text-blueNavy">Lacak Penerbangan</p>
@@ -44,11 +44,11 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
           </div>
         </div>
         <div className="py-3">
-          <Divider />
+          <img src={Divider} />
         </div>
         <div className="flex gap-2">
           <div>
-            <IcoPlane />
+            <img src={IcoPlane} />
           </div>
           <div>
             <p className="font-bold text-sm text-blueNavy">
@@ -60,11 +60,11 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
           </div>
         </div>
         <div className="py-3">
-          <Divider />
+          <img src={Divider} />
         </div>
         <div className="flex gap-2">
           <div>
-            <IcoTime />
+            <img src={IcoTime} />
           </div>
           <div>
             <Show when={data?.package_type === "quota"}>

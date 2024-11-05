@@ -1,5 +1,5 @@
-import { ReactComponent as FlightIcon } from "../../assets/garuda.svg";
-import { ReactComponent as ArrowRight } from "../../assets/chevron-right-16px.svg";
+import FlightIcon from "../../assets/garuda.svg";
+import ArrowRight from "../../assets/chevron-right-16px.svg";
 import travelokaImg from "../../assets/traveloka-squared.png";
 import { cn } from "../../lib/utils";
 
@@ -29,7 +29,7 @@ const FlightCard: React.FC<Props> = ({
       )}
       <div className="p-3 ">
         <div className="flex flex-row gap-2">
-          <FlightIcon className="h-6" />
+          <img src={FlightIcon} className="h-6" />
           <span className="text-xs">Garuda Indonesia</span>
         </div>
         <div className="flex justify-between mt-2">
@@ -52,7 +52,7 @@ const FlightCard: React.FC<Props> = ({
               <img src={travelokaImg} className="w-4 h-4" alt="traveloka" />
             </div>
 
-            <ArrowRight className="ml-1" />
+            <img src={ArrowRight} className="ml-1" />
           </div>
         </div>
       </div>

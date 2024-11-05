@@ -2,8 +2,8 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Info } from "../../assets/ico_info.svg";
-import { ReactComponent as CheckIcon } from "../../assets/ico_check.svg";
+import Info from "../../assets/ico_info.svg";
+import CheckIcon from "../../assets/ico_check.svg";
 import Checkbox from "../../components/Checkbox";
 import BaggageModal from "./components/BaggageModal";
 import useToggle from "../../hooks/useToggle";
@@ -21,7 +21,7 @@ const OrderSummary = () => {
   return (
     <div className="flex flex-col bg-inactiveGrey h-full">
       <div className="px-4 mb-4 bg-white">
-        <Navbar />
+        <img src={Navbar} />
       </div>
       <div className="px-4 pb-4">
         <span className="text-base">{"Selesaikan Pemesananmu"}</span>
@@ -60,7 +60,7 @@ const OrderSummary = () => {
               <div className="flex-col flex gap-2 text-xs bg-solidRed bg-opacity-5 p-4 mt-4">
                 <div className="flex items-center gap-2">
                   <div>
-                    <CheckIcon />
+                    <img src={CheckIcon} />
                   </div>
                   <span className="text-[10px]">
                     {
@@ -69,7 +69,7 @@ const OrderSummary = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-2 mt-[2px]">
-                  <CheckIcon />
+                  <img src={CheckIcon} />
                   <span className="text-[10px]">
                     {"Mencakup SEMUA alasan, termasuk alasan pribadi"}
                   </span>
@@ -113,7 +113,7 @@ const OrderSummary = () => {
         </Card>
 
         <Card className="mt-4 items-center gap-2 bg-solidRed bg-opacity-5">
-          <Info />
+          <img src={Info} />
           <div className="flex-row flex flex-1 text-xs justify-between items-center">
             <span>
               {

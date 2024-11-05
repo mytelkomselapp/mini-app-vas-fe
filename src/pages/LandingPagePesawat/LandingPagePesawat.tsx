@@ -17,7 +17,7 @@ import {
 } from "../../components/ui/carousel";
 import FlightFollowing from "../../modules/FlightFollowing";
 import FlightFollowingAll from "../../modules/FlightFollowingAll";
-import { ReactComponent as SearchIcon } from "../../assets/ico_search.svg";
+import SearchIcon from "../../assets/ico_search.svg";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
 
@@ -125,7 +125,7 @@ const LandingPagePesawat = () => {
                             current > 1 ? "opacity-[0.4]" : "opacity-1"
                           }
                         >
-                          <SearchIcon />
+                          <img src={SearchIcon} />
                         </div>
                       );
                   }
@@ -135,10 +135,10 @@ const LandingPagePesawat = () => {
           )}
         </div>
       </div>
-      <FlightLandingCardMenu
+      {/* <FlightLandingCardMenu
         isLoading={fetchingCMSLandingPage}
         data={dataFlight}
-      />
+      /> */}
     </React.Fragment>
   );
 };

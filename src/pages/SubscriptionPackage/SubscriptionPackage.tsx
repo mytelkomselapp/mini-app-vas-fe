@@ -1,10 +1,10 @@
 import * as React from "react";
-import { ReactComponent as LoveIcon } from "../../assets/ico_love_gradient.svg";
-import { ReactComponent as PlaneIcon } from "../../assets/ico_plane_gradient.svg";
+import LoveIcon from "../../assets/ico_love_gradient.svg";
+import PlaneIcon from "../../assets/ico_plane_gradient.svg";
 import Navbar, { NavColor } from "../../components/Navbar";
 import FlightPackageList from "../../modules/FlightPackageList";
 import { useFetchFreemiumPackage } from "../../network";
-import { ReactComponent as IconNotification } from "../../assets/ico-notification.svg";
+import IconNotification from "../../assets/ico-notification.svg";
 import Show from "../../components/Show";
 import Skeleton from "react-loading-skeleton";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
@@ -95,13 +95,13 @@ const SubscriptionPackage = () => {
           </span>
 
           <div className="flex gap-3 items-center mt-4">
-            <LoveIcon />
+            <img src={LoveIcon} />
             <span className="font-sans text-xs">
               Lacak penerbangan dengan mudah
             </span>
           </div>
           <div className="flex gap-3 items-center mt-[18px]">
-            <PlaneIcon />
+            <img src={PlaneIcon} />
             <span className="font-sans text-xs whitespace-pre leading-5">
               {
                 "Lihat detail pesawat dari bagasi, check in gate\ndan status penerbangan"
@@ -109,7 +109,7 @@ const SubscriptionPackage = () => {
             </span>
           </div>
           <div className="flex gap-3 items-center mt-[18px]">
-            <IconNotification />
+            <img src={IconNotification} />
             <span className="font-sans text-xs whitespace-pre leading-5">
               {"Dapatkan notifikasi informasi penerbangan"}
             </span>

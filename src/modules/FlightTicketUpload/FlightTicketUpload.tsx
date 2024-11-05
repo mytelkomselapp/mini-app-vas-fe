@@ -1,8 +1,8 @@
 import * as React from "react";
-import { ReactComponent as IconTicketUpload } from "../../assets/icon-ticket-upload.svg";
-import { ReactComponent as IconPlus } from "../../assets/ico-plus.svg";
-import { ReactComponent as IconDelete } from "../../assets/ico-delete.svg";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
+import IconTicketUpload from "../../assets/icon-ticket-upload.svg";
+import IconPlus from "../../assets/ico-plus.svg";
+import IconDelete from "../../assets/ico-delete.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
 import Show from "../../components/Show";
 import SelectUploadMedia from "./components/SelectUploadMedia";
 import useToggle from "../../hooks/useToggle";
@@ -127,7 +127,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
         <Show when={isShowDetailETicket}>
           <div className="flex justify-between items-center">
             <h1 className="text-sm font-semibold">Detail E-Ticket</h1>
-            <ChevronRight onClick={handleOpenTicket} />
+            <img src={ChevronRight} onClick={handleOpenTicket} />
           </div>
         </Show>
 
@@ -138,7 +138,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           })}
         >
           <div className="flex gap-x-4 items-center">
-            <IconTicketUpload />
+            <img src={IconTicketUpload} />
             <Show
               when={isTicketUploaded}
               fallbackComponent={<p>Upload E-Ticket</p>}
@@ -158,9 +158,9 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           <div>
             <Show
               when={isTicketUploaded && !loadingDeleteETicket}
-              fallbackComponent={<IconPlus />}
+              fallbackComponent={<img src={IconPlus} />}
             >
-              <IconDelete onClick={handleDeleteImage} />
+              <img src={IconDelete} onClick={handleDeleteImage} />
             </Show>
           </div>
         </div>

@@ -1,8 +1,8 @@
 // src/components/Button.tsx
 import { cn } from "../../lib/utils";
 import React from "react";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right-white.svg";
-import { ReactComponent as ChevronRightRed } from "../../assets/chevron-right-red.svg";
+import ChevronRight from "../../assets/chevron-right-white.svg";
+import ChevronRightRed from "../../assets/chevron-right-red.svg";
 
 type ButtonStyle = "primary" | "secondary";
 
@@ -52,11 +52,11 @@ const Button: React.FC<ButtonProps> = ({
       {label}
       {isUseArrowIcon ? (
         style === "secondary" ? (
-          // <ChevronRightRed />
+          // <img src={ChevronRightRed} />
           <>
           </>
         ) : (
-          // <ChevronRight />
+          // <img src={ChevronRight} />
           <>
           </>
         )

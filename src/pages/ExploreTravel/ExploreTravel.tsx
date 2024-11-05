@@ -1,10 +1,10 @@
 // Import necessary components
 import { COMMERCE_TRAVEL } from "../..//../App";
-import { ReactComponent as ArrowRightWhite } from "../..//../assets/arrow-right-white.svg";
+import ArrowRightWhite from "../..//../assets/arrow-right-white.svg";
 import bgLanding from "../..//../assets/bg/bg-travel-landing.png";
-import { ReactComponent as Edit } from "../..//../assets/ico-edit-white.svg";
-import { ReactComponent as Info } from "../..//../assets/ico-info-white.svg";
-import { ReactComponent as IconCalendar } from "../..//../assets/ico_calendar.svg";
+import Edit from "../..//../assets/ico-edit-white.svg";
+import Info from "../..//../assets/ico-info-white.svg";
+import IconCalendar from "../..//../assets/ico_calendar.svg";
 import Navbar from "../..//../components/Navbar";
 import useToggle from "../..//../hooks/useToggle";
 import { CalendarModal } from "../..//../modules/FlightForm";
@@ -22,7 +22,7 @@ import FlightRecommendation from "./components/FlightRecommendation";
 import Flights from "./components/Flights";
 import ConfirmationModal from "./components/ConfirmationModal";
 import FilterButton from "./components/FilterButton";
-import { ReactComponent as IconFilter } from "../..//../assets/ico-filter.svg";
+import IconFilter from "../..//../assets/ico-filter.svg";
 import FlightFilterBottomSheet from "../..//../components/FlightFilterBottomSheet";
 import PassengerDetailModal from "../..//../modules/PassengerDetailModal/PassengerDetailModal";
 import EditFlightModal from "./components/EditFlightModal";
@@ -140,7 +140,7 @@ const ExploreTravel = () => {
               {
                 content: (
                   <div className="flex justify-center items-center gap-x-[4px]">
-                    <IconFilter />
+                    <img src={IconFilter} />
                     Filter
                   </div>
                 ),
@@ -188,12 +188,12 @@ const ExploreTravel = () => {
               <span className="text-white text-sm font-semibold">
                 {"Jakarta (CGK)"}
               </span>
-              <ArrowRightWhite />
+              <img src={ArrowRightWhite} />
               <span className="text-white text-sm font-semibold">
                 {"Singapura (SIN)"}
               </span>
               <div className="ml-auto">
-                <Edit />
+                <img src={Edit} />
               </div>
             </div>
 
@@ -212,7 +212,7 @@ const ExploreTravel = () => {
               onClick={() => setCategory(ALL)}
               className={`flex gap-2 px-3 py-2 rounded-full text-white text-[10px] bg-[#FFFFFF20] w-full`}
             >
-              <Info />
+              <img src={Info} />
               {"Harga pada saat pemesanan dapat berubah."}
             </div>
           </div>
@@ -310,7 +310,7 @@ const ExploreTravel = () => {
               className="!ml-auto px-4 flex items-center justify-center relative top-[-4px]"
               onClick={handleOpenCalendarModal}
             >
-              <IconCalendar />
+              <img src={IconCalendar} />
             </button>
           </div>
           {renderCategoryContent()}

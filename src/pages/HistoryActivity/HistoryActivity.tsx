@@ -1,12 +1,12 @@
 import Navbar from "../../components/Navbar";
-import { ReactComponent as EmptyBox } from "../../assets/empty-box.svg";
+import EmptyBox from "../../assets/empty-box.svg";
 import Show from "../../components/Show";
 import React from "react";
 import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
 import { cn } from "../../lib/utils";
-import { ReactComponent as Plane } from "../../assets/plane-red.svg";
-import { ReactComponent as Hotel } from "../../assets/hotel.svg";
-import { ReactComponent as Carnaval } from "../../assets/carnaval.svg";
+import Plane from "../../assets/plane-red.svg";
+import Hotel from "../../assets/hotel.svg";
+import Carnaval from "../../assets/carnaval.svg";
 import { useNavigate } from "react-router-dom";
 import { COMMERCE_TRAVEL } from "../../App";
 
@@ -69,7 +69,7 @@ const HistoryActivity = () => {
               className="flex flex-col items-center justify-center text-center px-4 gap-3"
               onClick={() => setTransactionData(transactionList)}
             >
-              <EmptyBox />
+              <img src={EmptyBox} />
               <span className="text-base font-semibold font-sans mt-1">
                 Kamu belum pernah bertransaksi
               </span>

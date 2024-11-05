@@ -1,8 +1,8 @@
 // src/components/FlightForm.tsx
-import { ReactComponent as FreemiumFlight } from "../../assets/freemium-flight.svg";
-import { ReactComponent as CrownIcon } from "../../assets/ico_crown.svg";
+import FreemiumFlight from "../../assets/freemium-flight.svg";
+import CrownIcon from "../../assets/ico_crown.svg";
 import SwapIcon from "../../assets/ico_exchange.svg";
-import { ReactComponent as NotFound } from "../../assets/not_found.svg";
+import NotFound from "../../assets/not_found.svg";
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
@@ -224,7 +224,7 @@ const FlightForm: React.FC<Props> = ({
               background: "#479CFF26",
             }}
           >
-            <CrownIcon className="mt-[1px]" />
+            <img src={CrownIcon} className="mt-[1px]" />
             <span className="font-sans text-[10px] text-white font-semibold">
               {`${quotaLabel} Ikuti Penerbangan`}
             </span>
@@ -464,7 +464,7 @@ const EmptyModal = ({ open, onClose }: ErrorModal) => {
   return (
     <BottomSheet open={open} onClose={onClose}>
       <div className="flex justify-center flex-col text-center items-center">
-        <NotFound className="mt-1" />
+        <img src={NotFound} className="mt-1" />
         <span className="text-base font-semibold font-sans mt-1">
           Penerbangan tidak ditemukan
         </span>
@@ -489,7 +489,7 @@ export const FreemiumLimitModal = ({
   return (
     <BottomSheet open={open} onClose={onClose}>
       <div className="flex justify-center flex-col text-center items-center">
-        <FreemiumFlight className="my-2" />
+        <img src={FreemiumFlight} className="my-2" />
         <span className="text-base font-semibold font-sans mt-2 max-w-[332px]">
           Nikmati fitur ikuti penerbangan dan info penerbangan terkini
         </span>

@@ -3,7 +3,7 @@ import { flightStateAttribute } from "../../lib/utils";
 // import IcoPlane from "../../assets/ico_plane.svg";
 import Show from "../../components/Show";
 import { Image } from "@tarojs/components";
-// import { ReactComponent as ChevronRight } from "../../assets/chevron-right-16px.svg";
+// import ChevronRight from "../../assets/chevron-right-16px.svg";
 // import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -36,7 +36,7 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
             onClick={handleNavigatoToFlightInfo}
           >
             <p className="text-xs">Selengkapnya</p>
-            {/* <ChevronRight /> */}
+            {/* <img src={ChevronRight} /> */}
           </div>
         </Show>
       </div>
