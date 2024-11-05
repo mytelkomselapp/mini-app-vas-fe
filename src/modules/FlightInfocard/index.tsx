@@ -62,7 +62,10 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
               <>
                 <img
                   src={flightDetail?.flight_logo}
-                  className="w-6"
+                  style={{
+                    width: '1.5rem',
+                    height: '1.5rem',
+                  }}
                   key={flightDetail?.flight_no}
                   onError={handleImageError}
                 />
@@ -76,9 +79,12 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
           </div>
           <span
             className={cn(
-              "px-[8px] py-[4px] rounded-full text-[8px] font-bold text-[#0050AE] first-letter:uppercase",
+              "px-[8px] py-[4px] rounded-full font-bold text-[#0050AE] first-letter:uppercase",
               className
             )}
+            style={{
+              fontSize: "8px"
+            }}
           >
             {label}
           </span>
