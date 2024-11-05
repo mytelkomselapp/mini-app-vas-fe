@@ -1,25 +1,19 @@
 //import { useParams } from "react-router-dom";
-import { Image } from "@tarojs/components";
-// import Button from "../..//../components/Button";
+import { Button, Image, Switch } from "@tarojs/components";
+import { useEffect, useState } from "react";
 // import Navbar, { NavColor } from "../..//../components/Navbar";
-// import FlightBoardInfo from "../..//../modules/FlightBoardInfo";
-// import FlightDetailsCard from "../..//../modules/FlightDetailsCard";
-// import { ReactComponent as IconTicketUpload } from "../..//../assets/icon-ticket-upload.svg";
-import { ReactComponent as ArrowRight } from "../../../assets/arrow-right.svg";
-// import { ReactComponent as IconDelete } from "../..//../assets/ico-delete.svg";
+import ChevronRight from "../../assets/chevron-right.svg"
+import TicketUpload from "../../assets/icon-ticket-upload.svg"
+import IconDelete from "../../assets/ico-delete.svg";
 // import { ReactComponent as ChevronRight } from "../..//../assets/chevron-right.svg";
-// import { ReactComponent as IconPlus } from "../..//../assets/ico-plus-red.svg";
-// import { ReactComponent as IconSuccess } from "../..//../assets/ico_success_filled.svg";
-// import Navbar, { NavColor } from "../../components/Navbar";
-import { FlightDetailTrackData } from "../../network/types/response-props";
+import IconPlus from "../../assets/ico-plus-red.svg";
+// import { FlightDetailRawData, FlightDetailTrackData } from "../../network/types/response-props";
 import FlightBoardInfo from "../../modules/FlightBoardInfo";
-import { FreemiumLimitModal } from "../../modules/FlightForm";
+// import { FreemiumLimitModal } from "../../modules/FlightForm";
 import FlightDetailsCard from "../../modules/FlightDetailsCard";
 import Show from "../../components/Show";
-import { Switch } from "../../components/ui/switch";
-import { EventChannel } from "@tarojs/shared";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+
+import { useLocation, useSearchParams } from "react-router-dom";
 // import {
 //   useDeleteETicket,
 //   useFetchETicketByFlightId,
@@ -36,7 +30,10 @@ import { useLocation } from "react-router-dom";
 // import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 // import { useFlightTicketForm, useSaveTrackingPayload } from "@/store/flight";
 // import Show from "../..//../components/Show";
-// import moment from "moment";
+import moment from "moment";
+import useToggle from "@/hooks/useToggle";
+import { useFetchFlightDetail } from "../../network";
+import { FlightDetailRawData } from "../../network/types/response-props";
 // import { FreemiumLimitModal } from "@/modules/FlightForm";
 // import useToggle from "@/hooks/useToggle";
 // import { toast } from "@/components/ui/use-toast";
@@ -49,41 +46,39 @@ const USER_FREEMIUM_QUOTA = 5;
 
 const DetailPesawat = () => {
 
+  const [isFollowSwitch, setIsFollowSwitch] = useState(true);
+
+  const [searchParams] = useSearchParams();
   const location = useLocation();
-  const flightDetail = location.state?.flightDetail;
+  // const { active: visibleOffer, toggleActive: toggleOffer } = useToggle();
+  const passedFlightData = location.state?.flightDetail;
+  const bypassAPICall = !!passedFlightData;
+
+  const flightNumber = searchParams.get("id") || "";
+  const flightDate = searchParams.get("date") || "";
+  const departure = searchParams.get("departure") || "";
+  const arrival = searchParams.get("arrival") || "";
+
+  const { data: rawData, isFetching: fetchingFlightDetail } =
+    useFetchFlightDetail(
+      flightNumber,
+      flightDate,
+      departure,
+      arrival,
+      bypassAPICall
+    );
+
+  const flightRawData = rawData?.data as unknown as FlightDetailRawData;
+  const flightData = bypassAPICall
+    ? passedFlightData
+    : flightRawData?.data?.flight;
+
+  // const { data: dataPackageRaw, isLoading: isLoadingPackageList } =
+  //   useFetchFreemiumPackage();
   
-  // {
-  //   created_at: "2023-07-15T10:30:00Z",
-  //   flight_id: 12345,
-  //   insider_uuid: "abc123-def456-ghi789",
-  //   updated_at: "2023-07-15T11:45:00Z",
-  //   flight: {
-  //     id: "FL123",
-  //     user_id: "USER456",
-  //     flight_no: "GA456",
-  //     flight_company: "Garuda Indonesia",
-  //     flight_logo: "https://example.com/garuda-logo.png",
-  //     flight_generic: "Airbus A330",
-  //     flight_state: "On Time",
-  //     flight_duration: "2h 30m",
-  //     checkin_counter: "A1-A5",
-  //     boarding_gate: "G7",
-  //     arrival_gate: "D3",
-  //     baggage_carousel: "5",
-  //     departure: "Jakarta",
-  //     departure_airport: "Soekarno-Hatta International Airport",
-  //     departure_code: "CGK",
-  //     departure_terminal: "3",
-  //     departure_time: "2023-07-16T08:00:00Z",
-  //     arrival: "Bali",
-  //     arrival_airport: "Ngurah Rai International Airport",
-  //     arrival_code: "DPS",
-  //     arrival_terminal: "International",
-  //     arrival_time: "2023-07-16T10:30:00Z",
-  //     created_at: "2023-07-01T00:00:00Z",
-  //     updated_at: "2023-07-15T11:45:00Z"
-  //   }
-  // };
+  const formatDate = (date: string | undefined) => {
+    return date ? moment(date).format("DD MMM YY") : "-";
+  };
 
   const handleDelete = async () => {
     // const eTicketId = eTicketData?.data?.data?.id;
@@ -126,6 +121,8 @@ const DetailPesawat = () => {
     // } else {
     //   handleFollowFlight();
     // }
+
+    setIsFollowSwitch(!isFollowSwitch);
   };
 
   return (
@@ -133,18 +130,20 @@ const DetailPesawat = () => {
       <div className="bg-[#183E78] h-full p-8 bg-gradient-to-b from-[40vh] to-[60vh] from-[#183E78] to-white flex flex-col">
         {/* <Navbar color={NavColor.Light} hiddenAction={true} /> */}
         <div className="flex flex-col gap-8 my-4 flex-grow">
-          <FlightBoardInfo data={flightDetail} />
-          <FlightDetailsCard data={flightDetail} isRoamaxEligible={false} />
+          <FlightBoardInfo data={flightData} />
+          <FlightDetailsCard data={flightData} isRoamaxEligible={false} />
         </div>
 
         <Show when={true}>
-          <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] -mt-4 p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
+          <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
             <div className="flex justify-between items-center">
               <h1 className="text-sm font-semibold">Detail E-Ticket</h1>
-              {/* <ChevronRight onClick={handleOpenTicket} /> */}
               <Image 
-                style='width: 24px;height: 24px;'
-                src={"../../../assets/chevron-right.svg"} 
+                src={ChevronRight} 
+                style={{
+                  width: '24px',
+                  height: '24px'
+                }}
                 onClick={handleOpenTicket}
               />
             </div>
@@ -152,45 +151,48 @@ const DetailPesawat = () => {
             <div className="flex items-center justify-between">
               <div className="flex gap-x-4 items-center">
                 <Image 
-                  style='width: 48px;height: 49px;'
-                  src={"../../../assets/icon-ticket-upload.svg"} />
+                  src={TicketUpload} 
+                  style={{
+                    width: '48px',
+                    height: '49px'
+                  }}
+                />
                 <div className="flex flex-col justify-between gap-y-1">
                   <div className="flex gap-x-2 items-center">
                     <p className="text-sm font-semibold">
-                      {/* {flightData?.departure_code || "-"} */}
+                      {flightData?.departure_code || "-"}
                     </p>
                     {/* <ArrowRight /> */}
                     <p className="text-sm font-semibold">
-                      {/* {flightData?.arrival_code || "-"} */}
+                      {flightData?.arrival_code || "-"}
                     </p>
                   </div>
                   <p className="text-[10px] text-textSecondary">
-                    {/* {formatDate(flightData?.departure_time)} •{" "}
-                    {flightData?.flight_no || "-"} */}
+                    {formatDate(flightData?.departure_time)} •{" "}
+                    {flightData?.flight_no || "-"}
                   </p>
                 </div>
               </div>
 
-              <button data-action="delete" onClick={() => { }}>
-                <Show when={true}>
-                  {/* <IconDelete /> */}
+              <Show when={true}>
+                  <Image 
+                    src={IconDelete} 
+                    style={{
+                      width: '24px',
+                      height: '24px'
+                    }}
+                    onClick={handleDelete}
+                  />
                 </Show>
-              </button>
             </div>
           </div>
         </Show>
 
         <Show when={true}>
-          <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] -mt-4 p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
+          <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] mt-4 p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
             <div className="flex justify-between items-center">
               <h1 className="text-sm">Dapatkan Notifikasi Penerbangan</h1>
-              <Switch
-                id="follow-switch"
-                className="data-[state=checked]:bg-blueNavy data-[state=checked]:border-blueNavy data-[state=unchecked]:bg-inputGroup border-[#DAE0E9] border-2"
-                checked={true}
-                onCheckedChange={() => { }}
-                disabled={false}
-              />
+              <Switch checked={isFollowSwitch} onChange={handleFollowSwitch} color="#001A41"/>
             </div>
 
             <div className="flex items-center justify-between">
@@ -207,13 +209,19 @@ const DetailPesawat = () => {
           </Show> */}
 
           <Show when={true}>
-            <div className="flex flex-col gap-2 -mt-4">
+            <div className="flex flex-col gap-2 mt-4">
               <button
-                className="inline-flex justify-center items-center text-solidRed font-normal w-full font-sans"
+                className="inline-flex justify-center items-center text-solidRed font-normal w-full bg-transparent text-sm"
                 onClick={() => { }}
               >
-                Tambah Tiket&nbsp;
-                {/* <IconPlus /> */}
+                <span className="text-sm">Tambah Tiket&nbsp;</span>
+                <Image 
+                  src={IconPlus} 
+                  style={{
+                    width: '24px',
+                    height: '24px'
+                  }}
+                />
               </button>
             </div>
           </Show>

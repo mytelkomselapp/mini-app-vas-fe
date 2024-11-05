@@ -1,5 +1,5 @@
 import { FlightDetailData } from "../../network/types/response-props";
-import { cn, flightStateAttribute } from "../../lib/utils";
+import { flightStateAttribute } from "../../lib/utils";
 // import IcoPlane from "../../assets/ico_plane.svg";
 import Show from "../../components/Show";
 import { Image } from "@tarojs/components";
@@ -46,8 +46,8 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
             <Image 
               src={data.flight_logo}
               style={{
-                width: '0.5rem',
-                height: '0.5rem',
+                width: '1.5rem',
+                height: '1.5rem',
               }}
               key={data.flight_no}
             />
@@ -70,10 +70,7 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
           <div className="flex flex-col gap-1">
             <p className=" text-xs/[18px] text-[#757F90]">Flight Status</p>
             <p
-              className={cn(
-                "px-3 py-1 m-auto w-fit  rounded-[120px] text-[10px]/[14px] text-[#0050AE] font-semibold first-letter:uppercase",
-                className
-              )}
+              className={"px-3 py-1 m-auto w-fit rounded-[120px] text-[10px]/[14px] text-[#0050AE] font-semibold first-letter:uppercase bg-[#dfebfb] " + className}
             >
               {label}
             </p>

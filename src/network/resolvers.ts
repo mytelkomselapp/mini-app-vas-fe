@@ -36,13 +36,11 @@ export const useFetchFlightDetail = (
   date: string,
   departure: string,
   arrive: string,
-  bypass: boolean = false,
   enabled: boolean = true
 ) => {
   return useQuery(
     ["Fetch Flight Detail", flightNumber, date, departure, arrive],
     () => {
-      if (bypass) return;
       return getFlightDetail(flightNumber, date, departure, arrive);
     },
     {
