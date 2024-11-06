@@ -1,4 +1,4 @@
-import { ReactComponent as FlightIcon } from "../../assets/garuda.svg";
+import FlightIcon from "../../assets/garuda.svg";
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import moment from "moment";
@@ -42,7 +42,7 @@ const BaggageModal: React.FC<Props> = ({
 
         <div className="flex justify-between mt-2">
           <div className="flex flex-row items-center gap-2">
-            <FlightIcon />
+            <img src={FlightIcon} />
             <div className="flex flex-col">
               <span className="font-semibold text-sm">{"08:20 - 10:30"}</span>
               <span className="text-grey text-xs">{"CGK T1A - SIN 1"}</span>

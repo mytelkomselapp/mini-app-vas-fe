@@ -1,4 +1,4 @@
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
 import React from "react";
 import { FlightETicketData } from "../../network/types/response-props";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const FlightTicketCard: React.FC<FlightTicket> = ({ ticket }) => {
           </p>
         </div>
         <div>
-          <ChevronRight />
+          <img src={ChevronRight} />
         </div>
       </div>
     </div>

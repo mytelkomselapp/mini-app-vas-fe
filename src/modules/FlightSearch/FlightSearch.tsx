@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Sheet } from "react-modal-sheet";
 import style from "./FlightSearch.module.css";
-import { ReactComponent as ArrowLeft } from "../../assets/arrow-left.svg";
+import ArrowLeft from "../../assets/arrow-left.svg";
 import InputComponent from "./components/InputComponent";
 import FlightSearchHistory from "./components/FlightSearchHistory";
 import FlightSearchRecommendation from "./components/FlightSearchRecommendation";
@@ -136,7 +136,7 @@ const FlightSearch: React.FC<Props> = ({
       >
         <Sheet.Header>
           <div className="w-full flex gap-x-2 p-[16px] h-auto items-center">
-            <ArrowLeft onClick={handleClose} />
+            <img src={ArrowLeft} onClick={handleClose} />
             <div className="w-full">
               <InputComponent
                 isLoading={isLoading}

@@ -1,8 +1,8 @@
 // src/components/Button.tsx
 import { cn } from "../../lib/utils";
 import React from "react";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right-white.svg";
-import { ReactComponent as ChevronRightRed } from "../../assets/chevron-right-red.svg";
+import ChevronRight from "../../assets/chevron-right-white.svg";
+import ChevronRightRed from "../../assets/chevron-right-red.svg";
 
 type ButtonStyle = "primary" | "secondary";
 
@@ -17,7 +17,7 @@ interface ButtonProps {
 
 const getButtonStyle = (style: string): string => {
   const base =
-    "min-h-[48px] font-normal py-[8px] px-[16px] w-full focus:outline-none rounded-[40px] font-sans ";
+    "!min-h-[48px] font-normal !py-[8px] px-[16px] !w-full focus:outline-none rounded-[40px] font-sans ";
   switch (style) {
     case "primary":
       return base + "bg-solidRed text-white";
@@ -46,19 +46,18 @@ const Button: React.FC<ButtonProps> = ({
       onClick={!disabled ? onClick : () => {}}
       className={cn(
         disabled ? getButtonStyle("disabled") : getButtonStyle(style),
-        className
+        className,
+        "justify-center items-center flex"
       )}
     >
       {label}
       {isUseArrowIcon ? (
         style === "secondary" ? (
-          // <ChevronRightRed />
-          <>
-          </>
+          // <img src={ChevronRightRed} />
+          <></>
         ) : (
-          // <ChevronRight />
-          <>
-          </>
+          // <img src={ChevronRight} />
+          <></>
         )
       ) : (
         <></>

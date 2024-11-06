@@ -2,7 +2,7 @@ import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import { Switch } from "../../components/ui/switch";
 import moment from "moment";
-import { ReactComponent as Exchange } from "../../assets/ico_exchange_red.svg";
+import Exchange from "../../assets/ico_exchange_red.svg";
 
 interface TravelFlightFormProps {
   date: Date | undefined;
@@ -79,7 +79,7 @@ const TravelFlightForm = ({
         </div>
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <div className="bg-[#ffeced] rounded-full p-1">
-            <Exchange />
+            <img src={Exchange} />
           </div>
         </div>
 

@@ -1,8 +1,8 @@
-import { ReactComponent as Children } from "../../assets/children.svg";
-import { ReactComponent as Adult } from "../../assets/adult.svg";
-import { ReactComponent as Plus } from "../../assets/ico_plus.svg";
-import { ReactComponent as Minus } from "../../assets/ico_minus.svg";
-import { ReactComponent as Baby } from "../../assets/baby.svg";
+import Children from "../../assets/children.svg";
+import Adult from "../../assets/adult.svg";
+import Plus from "../../assets/ico_plus.svg";
+import Minus from "../../assets/ico_minus.svg";
+import Baby from "../../assets/baby.svg";
 import Button from "../../components/Button";
 
 interface TotalPeopleProps {
@@ -28,9 +28,9 @@ const TotalPeople = ({
         {Object.keys(counts).map((type) => (
           <div key={type} className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              {type === "adults" && <Adult />}
-              {type === "children" && <Children />}
-              {type === "babies" && <Baby />}
+              {type === "adults" && <img src={Adult} />}
+              {type === "children" && <img src={Children} />}
+              {type === "babies" && <img src={Baby} />}
               <span className="text-xs font-bold">
                 {type === "adults"
                   ? "Dewasa"
@@ -49,7 +49,7 @@ const TotalPeople = ({
                   )
                 }
               >
-                <Minus />
+                <img src={Minus} />
               </div>
               <div className="w-8 text-center">
                 {counts[type as "adults" | "children" | "babies"]}
@@ -63,7 +63,7 @@ const TotalPeople = ({
                   )
                 }
               >
-                <Plus />
+                <img src={Plus} />
               </div>
             </div>
           </div>

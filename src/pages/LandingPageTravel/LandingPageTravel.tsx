@@ -7,8 +7,8 @@ import { COMMERCE_TRAVEL } from "../../App";
 import FlightLandingMenu from "../../modules/FlightLandingCardMenu/components/FlightLandingMenu";
 import { buttonClick } from "../../network/analytics/tracker";
 import { useFetchCMSLandingPage } from "../../network";
-import { ReactComponent as ArrowRight } from "../../assets/chevron-right.svg";
-import { ReactComponent as IconTrx } from "../../assets/ico_transaction_red.svg";
+import ArrowRight from "../../assets/chevron-right.svg";
+import IconTrx from "../../assets/ico_transaction_red.svg";
 
 import {
   Carousel,
@@ -65,7 +65,7 @@ const LandingPageTravel = () => {
     if (isActivityAvailable) {
       return (
         <div className="bg-white w-full rounded-t-2xl py-6 px-[16px] mt-5">
-          <FlightActivityCard />
+          <img src={FlightActivityCard} />
         </div>
       );
     }

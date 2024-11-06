@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ChevronRight from "../../assets/chevron-right.svg"
 import TicketUpload from "../../assets/icon-ticket-upload.svg"
 import IconDelete from "../../assets/ico-delete.svg";
-// import { ReactComponent as ChevronRight } from "../..//../assets/chevron-right.svg";
+// import ChevronRight from "../..//../assets/chevron-right.svg";
 import IconPlus from "../../assets/ico-plus-red.svg";
 // import { FlightDetailRawData, FlightDetailTrackData } from "../../network/types/response-props";
 import FlightBoardInfo from "../../modules/FlightBoardInfo";
@@ -162,7 +162,7 @@ const DetailPesawat = () => {
                     <p className="text-sm font-semibold">
                       {flightData?.departure_code || "-"}
                     </p>
-                    {/* <ArrowRight /> */}
+                    {/* <img src={ArrowRight} /> */}
                     <p className="text-sm font-semibold">
                       {flightData?.arrival_code || "-"}
                     </p>

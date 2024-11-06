@@ -1,5 +1,5 @@
-import { ReactComponent as FlightIcon } from "../../assets/garuda.svg";
-import { ReactComponent as ArrowRight } from "../../assets/chevron-right-16px.svg";
+import FlightIcon from "../../assets/garuda.svg";
+import ArrowRight from "../../assets/chevron-right-16px.svg";
 import { cn, flightStateAttribute } from "../../lib/utils";
 
 const DUMMY_STATS = "schedule";
@@ -45,7 +45,7 @@ const FlightActivityCard: React.FC<Props> = ({ className }) => {
                 "flex flex-row gap-1 items-center px-2 py-1 m-auto w-fit  rounded-[120px] font-semibold uppercase bg-grey bg-opacity-25 text-[10px]"
               }
             >
-              <FlightIcon />
+              <img src={FlightIcon} />
               {"ga147"}
             </p>
 
@@ -82,7 +82,7 @@ const FlightActivityCard: React.FC<Props> = ({ className }) => {
           </div>
           <div className="ml-auto justify-end flex flex-row items-center gap-1">
             <span className="text-xs">{"Lihat E-Tiket"}</span>
-            <ArrowRight />
+            <img src={ArrowRight} />
           </div>
         </div>
       </div>
