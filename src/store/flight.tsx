@@ -1,8 +1,8 @@
-import { FollowFlightPayloadProps } from "../../network/types/request-payload";
+import { FollowFlightPayloadProps } from "../network/types/request-payload";
 import {
   CMSFlightLandingPopularCitiesSection,
   FlightETicketFileFormat,
-} from "../../network/types/response-props";
+} from "../network/types/response-props";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
