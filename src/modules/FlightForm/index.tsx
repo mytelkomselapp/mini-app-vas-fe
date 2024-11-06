@@ -285,7 +285,7 @@ const FlightForm: React.FC<Props> = ({
           handleSwap={handleSwap}
           handleOpenModal={handleVisibleFlightSearch}
         />
-        <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4 h-[52px]">
+        <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4">
           <InputField
             id="tanggal"
             parentClassName="w-full"
