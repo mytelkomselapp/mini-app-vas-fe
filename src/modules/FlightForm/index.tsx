@@ -197,7 +197,10 @@ const FlightForm: React.FC<Props> = ({
     setActiveSearchInput(name as ActiveSearchInput);
   };
 
-  const handleToggleBottomSheet = () => toggleVisibleCalendar();
+  const handleToggleBottomSheet = () => {
+    console.log("TOGGLE CLICKED");
+    toggleVisibleCalendar();
+  };
   const handleSaveDate = () => {
     setDatePlane(String(date));
     handleToggleBottomSheet();

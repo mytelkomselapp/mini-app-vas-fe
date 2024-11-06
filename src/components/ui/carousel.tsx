@@ -7,6 +7,7 @@ import useEmblaCarousel, {
 
 import { cn } from "../../lib/utils";
 import { Button } from "../../components/ui/button";
+import { View } from "@tarojs/components";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -133,16 +134,16 @@ const Carousel = React.forwardRef<
           canScrollNext,
         }}
       >
-        <div
-          ref={ref}
-          onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
-          role="region"
-          aria-roledescription="carousel"
-          {...props}
+        <View
+        // ref={ref}
+        // onKeyDownCapture={handleKeyDown}
+        // className={cn("relative", className)}
+        // role="region"
+        // aria-roledescription="carousel"
+        // {...props}
         >
           {children}
-        </div>
+        </View>
       </CarouselContext.Provider>
     );
   }
