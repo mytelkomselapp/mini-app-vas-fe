@@ -1,6 +1,6 @@
-import { ReactComponent as Failed } from "../../assets/failed.svg";
-import { ReactComponent as Thumbs } from "../../assets/thumbs-up.svg";
-import { ReactComponent as Pending } from "../../assets/waiting.svg";
+import Failed from "../../assets/failed.svg";
+import Thumbs from "../../assets/thumbs-up.svg";
+import Pending from "../../assets/waiting.svg";
 import Button from "../../components/Button";
 import LoadingScreen from "../../components/LoadingScreen";
 import Show from "../../components/Show";
@@ -87,14 +87,14 @@ const TransactionStatus = () => {
     switch (buyDetail?.isActive) {
       case "payment-success":
         return {
-          icon: <Thumbs />,
+          icon: <img src={Thumbs} />,
           title: "Transaksi Berhasil",
           subtitle: "Pembayaran kamu berhasil, paket telah diaktifkan",
           status: buyDetail?.isActive,
         };
       case "payment-failed":
         return {
-          icon: <Failed />,
+          icon: <img src={Failed} />,
           title: "Pembayaran Gagal",
           subtitle:
             "Verifikasi pembayaran tidak berhasil, silahkan ulangi pembayaran",
@@ -103,7 +103,7 @@ const TransactionStatus = () => {
       case "payment-waiting":
       case "payment-pending":
         return {
-          icon: <Pending />,
+          icon: <img src={Pending} />,
           title: "Transaksi dalam Proses",
           subtitle: "Mohon menuggu verifikasi pembayaran dan aktivasi paket",
           status: buyDetail?.isActive,
@@ -180,7 +180,7 @@ const TransactionStatus = () => {
                 </li>
 
                 <div className="absolute left-2 right-0 top-0 bottom-0">
-                  <Stroke />
+                  <img src={Stroke} />
                 </div>
                 <li className="flex items-center mt-[24px]">
                   <Circle

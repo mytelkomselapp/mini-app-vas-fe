@@ -2,8 +2,8 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as ChevronRight } from "../../assets/chevron-right.svg";
-import { ReactComponent as GarudaIcon } from "../../assets/garuda.svg";
+import ChevronRight from "../../assets/chevron-right.svg";
+import GarudaIcon from "../../assets/garuda.svg";
 import { OrdererDetail } from "./components";
 
 const OrderReview = () => {
@@ -15,7 +15,7 @@ const OrderReview = () => {
   return (
     <div className="flex flex-col bg-inactiveGrey h-full">
       <div className="px-4 mb-4 bg-white">
-        <Navbar />
+        <img src={Navbar} />
       </div>
       <div className="flex flex-col justify-between h-full">
         <div className="px-4 pb-4">
@@ -54,7 +54,7 @@ const OrderReview = () => {
           </Card>
 
           <span>{"Detail Pemesanan"}</span>
-          <OrdererDetail />
+          <img src={OrdererDetail} />
 
           <Card className="mt-4">
             <div className="flex-1 grid gap-y-2">
@@ -62,7 +62,7 @@ const OrderReview = () => {
                 <span className="text-sm font-semibold">
                   {"Kamis, 5 Sep 2024"}
                 </span>
-                <ChevronRight />
+                <img src={ChevronRight} />
               </div>
               <div className="flex-row flex flex-1 text-xs justify-between items-center">
                 <span className="text-xs text-grey">{"Penumpang 1"}</span>

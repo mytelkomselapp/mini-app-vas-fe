@@ -17,7 +17,7 @@ import {
 } from "../../components/ui/carousel";
 import FlightFollowing from "../../modules/FlightFollowing";
 import FlightFollowingAll from "../../modules/FlightFollowingAll";
-import { ReactComponent as SearchIcon } from "../../assets/ico_search.svg";
+import SearchIcon from "../../assets/ico_search.svg";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
 
@@ -79,7 +79,7 @@ const LandingPagePesawat = () => {
               setApi={setApi}
               opts={{ startIndex: nearestFlight?.length > 0 ? 1 : 0 }}
             >
-              <CarouselContent>
+              <CarouselContent className={"w-full"}>
                 <CarouselItem>
                   <FlightForm
                     data={dataFlight}
@@ -125,7 +125,7 @@ const LandingPagePesawat = () => {
                             current > 1 ? "opacity-[0.4]" : "opacity-1"
                           }
                         >
-                          <SearchIcon />
+                          <img src={SearchIcon} />
                         </div>
                       );
                   }

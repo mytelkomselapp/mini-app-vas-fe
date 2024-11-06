@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ReactComponent as ChevronUp } from "../../assets/chevron-up.svg";
+import ChevronUp from "../../assets/chevron-up.svg";
 
 import { cn } from "../../lib/utils";
 
@@ -30,7 +30,10 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <ChevronUp className="shrink-0 transition-transform duration-200" />
+      <img
+        src={ChevronUp}
+        className="shrink-0 transition-transform duration-200"
+      />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

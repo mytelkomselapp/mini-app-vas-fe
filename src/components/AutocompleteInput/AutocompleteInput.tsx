@@ -1,6 +1,6 @@
 import * as React from "react";
 import style from "./AutocompleteInput.module.css";
-import { ReactComponent as MagnifyingGlassIcon } from "../../assets/magnifying-glass.svg";
+import MagnifyingGlassIcon from "../../assets/magnifying-glass.svg";
 import { cn as classNames } from "../../lib/utils";
 import Show from "../../components/Show";
 import Dropdown from "./components/Dropdown";
@@ -79,7 +79,7 @@ const AutoCompleteInput: React.FC<Props> = ({
           <span className={style["loader"]} />
         </Show>
         <Show when={!isLoading}>
-          <MagnifyingGlassIcon />
+          <img src={MagnifyingGlassIcon} />
         </Show>
       </div>
       <Dropdown

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Button from "../..//..//../components/Button";
 import Navbar, { NavColor } from "../..//..//../components/Navbar";
-import { ReactComponent as GarudaIcon } from "../..//..//../assets/garuda.svg";
-import { ReactComponent as FlightIcon } from "../..//..//../assets/flight.svg";
-import { ReactComponent as FlightGlobeIcon } from "../..//..//../assets/flight-globe.svg";
-import { ReactComponent as TicketIcon } from "../..//..//../assets/ticket.svg";
-import { ReactComponent as ChevronRight } from "../..//..//../assets/chevron-right.svg";
+import GarudaIcon from "../..//..//../assets/garuda.svg";
+import FlightIcon from "../..//..//../assets/flight.svg";
+import FlightGlobeIcon from "../..//..//../assets/flight-globe.svg";
+import TicketIcon from "../..//..//../assets/ticket.svg";
+import ChevronRight from "../..//..//../assets/chevron-right.svg";
 import TravelOptionsModal from "./components/TravelOptionsModal";
-// import { ReactComponent as PlaneIcon } from '../..//..//../assets/ico-plane.svg';
+// import PlaneIcon from "../..//..//../assets/ico-plane.svg";
 
 const DetailTransaction: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -36,7 +36,7 @@ const DetailTransaction: React.FC = () => {
               <p className="text-lg mt-1">14:00</p>
             </div>
             <div className="mx-4">
-              <FlightIcon />
+              <img src={FlightIcon} />
             </div>
             <div className="text-right">
               <h2 className="text-2xl">T1 SIN</h2>
@@ -49,7 +49,7 @@ const DetailTransaction: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-center gap-2 text-sm text-textSecondary mb-4">
-            <GarudaIcon />
+            <img src={GarudaIcon} />
             <span>GA147 • Direct • 1h 50m</span>
           </div>
 
@@ -89,20 +89,20 @@ const DetailTransaction: React.FC = () => {
           <div className="p-4 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <FlightGlobeIcon />
+                <img src={FlightGlobeIcon} />
                 <span className="text-sm">Pantau Penerbangan</span>
               </div>
-              <ChevronRight />
+              <img src={ChevronRight} />
             </div>
           </div>
           <div className="w-full h-px bg-gray-200"></div>
           <div className="p-4 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <TicketIcon />
+                <img src={TicketIcon} />
                 <span className="text-sm">Lihat E-Ticket</span>
               </div>
-              <ChevronRight />
+              <img src={ChevronRight} />
             </div>
           </div>
         </div>

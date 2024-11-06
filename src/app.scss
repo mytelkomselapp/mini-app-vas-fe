@@ -1,7 +1,36 @@
-@use 'tailwindcss/base';
-@use 'tailwindcss/components';
-@use 'tailwindcss/utilities';
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
 // 不使用 sass 就这么写
 // @tailwind base;
 // @tailwind components;
 // @tailwind utilities;
+
+@font-face {
+  font-family: "TelkomselBatikSans";
+  font-weight: 400;
+  src: url(assets/fonts/TelkomselBatikSans-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "TelkomselBatikSans";
+  font-weight: 700;
+  src: url(assets/fonts/TelkomselBatikSans-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  src: url(assets/fonts/Poppins-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  src: url(assets/fonts/Poppins-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 700;
+  src: url(assets/fonts/Poppins-Bold.ttf) format("truetype");
+}

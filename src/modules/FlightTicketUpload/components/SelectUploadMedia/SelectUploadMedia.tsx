@@ -1,7 +1,7 @@
 import * as React from "react";
 import BottomSheet from "../../components/BottomSheet";
-import { ReactComponent as IconNews } from "../../assets/icon-news.svg";
-import { ReactComponent as IconImage } from "../../assets/ico-image.svg";
+import IconNews from "../../assets/icon-news.svg";
+import IconImage from "../../assets/ico-image.svg";
 import { FileInputButton, ExtFile } from "@files-ui/react";
 import { toast } from "../../components/ui/use-toast";
 import { buttonClick } from "../../network/analytics/tracker";
@@ -90,7 +90,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                   disableRipple
                   accept="application/pdf"
                 >
-                  <IconNews />
+                  <img src={IconNews} />
                 </FileInputButton>
               </div>
               <p className="text-xs text-textSecondary text-center">Document</p>
@@ -120,7 +120,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                 disableRipple
                 accept="image/png, image/jpeg, image/jpg"
               >
-                <IconImage />
+                <img src={IconImage} />
               </FileInputButton>
             </div>
             <p className="text-xs text-textSecondary text-center">Gallery</p>

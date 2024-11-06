@@ -1,6 +1,6 @@
 import React from "react";
-import { ReactComponent as Plane } from "../../assets/ico_plane_gray.svg";
-import { ReactComponent as Garuda } from "../../assets/garuda.svg";
+import Plane from "../../assets/ico_plane_gray.svg";
+import Garuda from "../../assets/garuda.svg";
 const AtraksiTransactionDetail = () => {
   return (
     <div className="flex flex-col bg-white p-4 rounded-xl gap-4">
@@ -19,7 +19,7 @@ const AtraksiTransactionDetail = () => {
               Soekarno-Hatta International Airport
             </span>
           </div>
-          <Plane />
+          <img src={Plane} />
           <div className="w-24 flex flex-col items-end">
             <span>T3 CGK</span>
             <span className="text-[10px] text-right line-clamp-2">
@@ -30,7 +30,7 @@ const AtraksiTransactionDetail = () => {
       </div>
       <div className="flex items-center justify-center gap-3">
         <div className="flex items-center py-1 px-2 bg-inactiveGrey rounded-2xl">
-          <Garuda />
+          <img src={Garuda} />
           <span className="text-[10px] font-bold">GA147</span>
         </div>
         <span className="text-[10px]">Direct</span>

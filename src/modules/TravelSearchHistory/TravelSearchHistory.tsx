@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactComponent as IconDelete } from "../../assets/ico-delete.svg";
+import IconDelete from "../../assets/ico-delete.svg";
 import { AutoCompleteDropdownOptionProps } from "../../components/AutocompleteInput/components/Dropdown/Dropdown";
 import Chips from "../../components/Chips";
 
@@ -26,7 +26,7 @@ const TravelSearchHistory: React.FC<TravelHistoryProps> = ({
     <div className="flex flex-col my-[16px] px-[16px]">
       <div className="flex justify-between items-center">
         <h1 className="text-[16px] font-normal">Pencarian Terakhir</h1>
-        <IconDelete onClick={onRemove} />
+        <img src={IconDelete} onClick={onRemove} />
       </div>
 
       <div className="flex flex-wrap gap-2 mt-[8px]">

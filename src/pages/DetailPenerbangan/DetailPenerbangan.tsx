@@ -364,7 +364,7 @@ const DetailPesawat = () => {
                     <p className="text-sm font-semibold">
                       {flightData?.departure_code || "-"}
                     </p>
-                    {/* <ArrowRight /> */}
+                    {/* <img src={ArrowRight} /> */}
                     <p className="text-sm font-semibold">
                       {flightData?.arrival_code || "-"}
                     </p>

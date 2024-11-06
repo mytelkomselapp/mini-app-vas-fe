@@ -1,25 +1,54 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "originTaro",
-  "description": "",
-  "appid": "mpzl347frqan32bl",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "enhance": false,
-    "compileHotReLoad": false,
-    "postcss": false,
-    "minified": false,
-    "newFeature": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "uploadWithSourceMap": true,
-    "uglifyFileName": true,
-    "remoteDebugLogEnable": true,
-    "prefetch": false
-  },
-  "compileType": "miniprogram",
-  "TCMPPappid": "mpzl347frqan32bl",
-  "scripts": {},
-  "condition": {}
+	"miniprogramRoot": "dist/",
+	"projectname": "originTaro",
+	"description": "",
+	"appid": "mpzl347frqan32bl",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"enhance": false,
+		"compileHotReLoad": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": true,
+		"remoteDebugLogEnable": true,
+		"prefetch": false
+	},
+	"compileType": "miniprogram",
+	"TCMPPappid": "mpzl347frqan32bl",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "LandingPage",
+					"pathName": "pages/LandingPagePesawat/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }
