@@ -1,7 +1,7 @@
 export default {
   pages: [
-    "pages/index/index", // Main page
-    "pages/LandingPagePesawat/index",
+    "pages/LandingPagePesawat/index", //Main Page as the first order
+    "pages/index/index",
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
     // other pages...

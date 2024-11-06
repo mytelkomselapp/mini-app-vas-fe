@@ -79,7 +79,7 @@ const LandingPagePesawat = () => {
               setApi={setApi}
               opts={{ startIndex: nearestFlight?.length > 0 ? 1 : 0 }}
             >
-              <CarouselContent>
+              <CarouselContent className={"w-full"}>
                 <CarouselItem>
                   <FlightForm
                     data={dataFlight}
@@ -135,10 +135,10 @@ const LandingPagePesawat = () => {
           )}
         </div>
       </div>
-      {/* <FlightLandingCardMenu
+      <FlightLandingCardMenu
         isLoading={fetchingCMSLandingPage}
         data={dataFlight}
-      /> */}
+      />
     </React.Fragment>
   );
 };
