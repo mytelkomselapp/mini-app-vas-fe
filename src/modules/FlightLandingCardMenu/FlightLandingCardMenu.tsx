@@ -32,7 +32,7 @@ const FlightLandingCardMenu: React.FC<Props> = ({
 
   return (
     <div
-      className="w-full bg-white relative rounded-t-2xl p-[16px]"
+      className="bg-white relative rounded-t-2xl p-[16px]"
       style={{ top: -16 }}
     >
       <p className="text-base">Travel Apps</p>

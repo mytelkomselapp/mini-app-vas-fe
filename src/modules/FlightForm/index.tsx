@@ -403,7 +403,7 @@ const Content = ({ tab, handleSwap, handleOpenModal }: ContentProps) => {
           <img
             src={SwapIcon}
             alt="swap-icon"
-            className="cursor-pointer"
+            className="cursor-pointer w-[27.83px] h-[27.83px]"
             onClick={handleClick}
           />
         </div>
