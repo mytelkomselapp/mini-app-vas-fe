@@ -20,6 +20,7 @@ import FlightFollowingAll from "../../modules/FlightFollowingAll";
 import SearchIcon from "../../assets/ico_search.svg";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
+import { View } from "@tarojs/components";
 
 const LandingPagePesawat = () => {
   // let { type } = useParams();
@@ -79,7 +80,7 @@ const LandingPagePesawat = () => {
               setApi={setApi}
               opts={{ startIndex: nearestFlight?.length > 0 ? 1 : 0 }}
             >
-              <CarouselContent className={"w-full"}>
+              <View style={{ width: "100%" }}>
                 <CarouselItem>
                   <FlightForm
                     data={dataFlight}
@@ -104,7 +105,7 @@ const LandingPagePesawat = () => {
                     <FlightFollowingAll data={nearestFlight} />
                   </CarouselItem>
                 )}
-              </CarouselContent>
+              </View>
               <div className="flex justify-center mt-2 mb-4 items-center gap-1">
                 {countItem?.map((_, i) => {
                   if (i > 1) {
