@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FlightDetailTrackData } from "../../network/types/response-props";
 import moment from "moment";
 import { cardClick, sectionClick } from "../../network/analytics/tracker";
+import { View } from "@tarojs/components";
 interface Props {
   data?: FlightDetailTrackData[];
   classNameProps?: string;
@@ -13,7 +14,7 @@ interface Props {
 const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
   const navigate = useNavigate();
   return (
-    <>
+    <View className="flex items-end">
       <div
         className={`p-4 pb-[18px] shadow-md rounded-2xl mt-4 ${classNameProps}`}
         style={{
@@ -84,7 +85,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
           );
         })}
       </div>
-    </>
+    </View>
   );
 };
 

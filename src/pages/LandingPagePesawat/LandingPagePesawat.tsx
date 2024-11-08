@@ -26,11 +26,13 @@ import CarouselTaro from "../../components/ui/carouselTaro";
 const LandingPagePesawat = () => {
   // let { type } = useParams();
   const { mutateAsync: claimFreeTicket, isSuccess } = usePostClaimFreeTicket();
+  console.log({ claimFreeTicket });
   const { data: dataRaw, isFetching: fetchingCMSLandingPage } =
     useFetchCMSLandingPage();
   const { data: dataRawTrackFlights, isLoading } = useFetchFlightTrack();
   const { buyPackageStatus: viewPageAction, data } =
     useUserPackageStatus(isSuccess);
+
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -48,21 +50,22 @@ const LandingPagePesawat = () => {
   const countItem = [...Array(count + 1)?.keys()];
   React.useEffect(() => {
     screenView(); //fire screen view tracker
+    claimFreeTicket();
   }, []);
 
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
+  // React.useEffect(() => {
+  //   if (!api) {
+  //     return;
+  //   }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
+  //   setCount(api.scrollSnapList().length);
+  //   setCurrent(api.selectedScrollSnap() + 1);
 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-    claimFreeTicket();
-  }, [api]);
+  //   api.on("select", () => {
+  //     setCurrent(api.selectedScrollSnap() + 1);
+  //   });
+  //   claimFreeTicket();
+  // }, [api]);
 
   return (
     <React.Fragment>
@@ -122,7 +125,7 @@ const LandingPagePesawat = () => {
             userType={data?.new_user}
           /> */}
           <View
-            className=" w-screen overflow-x-auto overflow-y-hidden mb-4"
+            className="w-screen overflow-x-auto overflow-y-hidden mb-4 flex items-end"
             style={{ display: "-webkit-inline-box" }}
           >
             <FlightForm
