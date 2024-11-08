@@ -31,6 +31,7 @@ import { PackageType, BuyPackageType } from "../../hooks/useUserPackageStatus";
 import { serializeParam } from "../../core/serializeParam";
 import { toast } from "../../components/ui/use-toast";
 import Calendar from "../../components/ui/calendar";
+import { View } from "@tarojs/components";
 
 type ActiveSearchInput = "kota-asal" | "kota-tujuan" | string;
 
@@ -118,6 +119,7 @@ const FlightForm: React.FC<Props> = ({
 
   /*forbidden means that user already have a package*/
   const isPremium = viewPageAction === "forbidden" && !isNewUser;
+  console.log({ viewPageAction, isNewUser });
 
   const activeTabClassName = (index: number, tab: number) => {
     return tab === index ? "font-semibold border-rute-active" : "opacity-[0.6]";
@@ -218,11 +220,11 @@ const FlightForm: React.FC<Props> = ({
     packageType === "unlimited" ? "Unlimited" : `Tersisa ${remainingQuota}x`;
 
   return (
-    <>
+    <View className="">
       <div className="mt-4">
         {isPremium && (
           <div
-            className="bg-gray-800 text-white py-2 px-4 rounded-t-[20px] h-[76px] w-full text-center gap-2 flex justify-center pt-[13px] relative z-0"
+            className="bg-gray-800 text-white py-2 px-4 rounded-t-[20px] h-[60px] text-center gap-2 flex justify-center pt-[13px] relative z-0"
             style={{
               backgroundBlendMode: "color-dodge, normal",
               backdropFilter: "blur(20px)",
@@ -230,91 +232,93 @@ const FlightForm: React.FC<Props> = ({
               background: "#479CFF26",
             }}
           >
-            <img src={CrownIcon} className="mt-[1px]" />
+            <img src={CrownIcon} className="mt-[1px] w-[15px] h-[12px]" />
             <span className="font-sans text-[10px] text-white font-semibold">
               {`${quotaLabel} Ikuti Penerbangan`}
             </span>
           </div>
         )}
       </div>
-      <div
-        className={`p-4 shadow-md rounded-2xl relative z-1 ${
-          isPremium ? "mt-[-36px]" : "mt-0"
-        } ${className}`}
-        style={{
-          backgroundBlendMode: "color-dodge, normal",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          background: "rgba(238, 238, 238, 0.44)",
-          minHeight: 303,
-        }}
-      >
-        <div className="mb-4 flex gap-[10px]">
-          <div
-            className={cn(
-              activeTabClassName(0, tab),
-              "text-rute-active pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
-            )}
-            onClick={() => {
-              onClickTab(0);
-              tabClick(data?.formTabTitle1, "", window.location.pathname);
-            }}
-          >
-            {data?.formTabTitle1}
-            {!tab ? (
-              <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
-            ) : null}
+      <View>
+        <div
+          className={`p-4 shadow-md rounded-2xl relative z-1 ${
+            isPremium ? "mt-[-36px]" : "mt-0"
+          } ${className}`}
+          style={{
+            backgroundBlendMode: "color-dodge, normal",
+            //  backdropFilter: "blur(12px)",
+            //WebkitBackdropFilter: "blur(12px)",
+            background: "rgb(128, 133, 148)",
+            minHeight: 303,
+          }}
+        >
+          <div className="mb-4 flex gap-[10px] z-1 relative">
+            <div
+              className={cn(
+                activeTabClassName(0, tab),
+                "text-rute-active pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
+              )}
+              onClick={() => {
+                onClickTab(0);
+                tabClick(data?.formTabTitle1, "", window.location.pathname);
+              }}
+            >
+              {data?.formTabTitle1}
+              {!tab ? (
+                <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
+              ) : null}
+            </div>
+
+            <div
+              className={cn(
+                activeTabClassName(1, tab),
+                "text-white pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
+              )}
+              onClick={() => {
+                onClickTab(1);
+                tabClick(data?.formTabTitle2, "", window.location.pathname);
+              }}
+            >
+              {data?.formTabTitle2}
+              {tab ? (
+                <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
+              ) : null}
+            </div>
           </div>
 
-          <div
-            className={cn(
-              activeTabClassName(1, tab),
-              "text-white pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
-            )}
-            onClick={() => {
-              onClickTab(1);
-              tabClick(data?.formTabTitle2, "", window.location.pathname);
-            }}
-          >
-            {data?.formTabTitle2}
-            {tab ? (
-              <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
-            ) : null}
+          <Content
+            tab={tab}
+            handleSwap={handleSwap}
+            handleOpenModal={handleVisibleFlightSearch}
+          />
+          <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4">
+            <InputField
+              id="tanggal"
+              parentClassName="w-full"
+              placeholder="Tanggal"
+              type={"text"}
+              value={
+                datePlane ? moment(datePlane).format("DD MMM YYYY") : undefined
+              }
+              caretColor="caret-transparent"
+              readOnly={true}
+              // onFocus={() => toggleVisibleCalendar()}
+              onClick={handleToggleBottomSheet}
+              autoComplete="off"
+            />
           </div>
-        </div>
 
-        <Content
-          tab={tab}
-          handleSwap={handleSwap}
-          handleOpenModal={handleVisibleFlightSearch}
-        />
-        <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4">
-          <InputField
-            id="tanggal"
-            parentClassName="w-full"
-            placeholder="Tanggal"
-            type={"text"}
-            value={
-              datePlane ? moment(datePlane).format("DD MMM YYYY") : undefined
+          <Button
+            disabled={
+              !tab
+                ? !(origin && destination && datePlane) || isFetching
+                : !(datePlane && IdPlane) || isFetching
             }
-            caretColor="caret-transparent"
-            readOnly={true}
-            // onFocus={() => toggleVisibleCalendar()}
-            onClick={handleToggleBottomSheet}
-            autoComplete="off"
+            label="Cek Penerbangan"
+            onClick={handleCheckFlight}
           />
         </div>
-
-        <Button
-          disabled={
-            !tab
-              ? !(origin && destination && datePlane) || isFetching
-              : !(datePlane && IdPlane) || isFetching
-          }
-          label="Cek Penerbangan"
-          onClick={handleCheckFlight}
-        />
-      </div>
+      </View>
 
       <FlightSearch
         open={visibleFlightSearchModal}
@@ -331,7 +335,7 @@ const FlightForm: React.FC<Props> = ({
         date={date}
       />
       <EmptyModal onClose={toggleVisibleError} open={visibleError} />
-    </>
+    </View>
   );
 };
 
