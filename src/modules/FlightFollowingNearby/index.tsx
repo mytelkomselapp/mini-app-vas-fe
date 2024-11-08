@@ -1,26 +1,36 @@
 import { FlightDetailTrackData } from "../../network/types/response-props";
 import Flight from "../../assets/flight-without-route.svg";
 import moment from "moment";
-import IcoPlane from "../../assets/ico_plane.svg";
+import IcoPlane from "../../assets/ico_plane_white.svg";
+import { Image } from "@tarojs/components";
+import { useEffect, useState } from "react";
 
 interface Props {
   data?: FlightDetailTrackData;
 }
 
 const FlightBoardInfo: React.FC<Props> = ({ data }) => {
-  const handleImageError = (
-    event: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    event.currentTarget.src = IcoPlane;
-    event.currentTarget.className = "invert grayscale";
+  const [srcPlane, setSrcPlane] = useState(IcoPlane);
+  const [classNamePlane, setClassNamePlane] = useState(
+    "!w-6 !h-6 bg-white rounded-2xl"
+  );
+  const [hasError, setHasError] = useState(false);
+  useEffect(() => {
+    setSrcPlane(data?.flight?.flight_logo);
+  }, [data]);
+
+  const handleImageError = () => {
+    setSrcPlane(IcoPlane);
+    setClassNamePlane("!w-6 !h-6");
+    setHasError(true);
   };
   return (
     <>
       <div className="flex items-center gap-2 flex-row">
         {data?.flight?.flight_logo ? (
-          <img
-            src={data?.flight?.flight_logo}
-            className="w-6 h-6 bg-white rounded-2xl"
+          <Image
+            src={hasError ? IcoPlane : srcPlane}
+            className={hasError ? "!w-6 !h-6" : classNamePlane}
             key={data?.flight?.flight_no}
             onError={handleImageError}
           />
@@ -48,7 +58,7 @@ const FlightBoardInfo: React.FC<Props> = ({ data }) => {
             </p>
           </div>
         </div>
-        <img src={Flight} />
+        <img src={Flight} className="w-6 h-6" />
         <div className="flex flex-col gap-2 text-right w-[103px]">
           <p className="text-white text-2xl font-semibold">
             {data?.flight?.arrival_code || "-"}

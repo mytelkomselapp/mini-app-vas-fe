@@ -11,9 +11,10 @@ import { cardClick } from "../../network/analytics/tracker";
 interface Props {
   data?: FlightDetailTrackData;
   viewPageAction?: BuyPackageType;
+  classNameProps?: string;
 }
 
-const FlightFollowing: React.FC<Props> = ({ data }) => {
+const FlightFollowing: React.FC<Props> = ({ data, classNameProps }) => {
   /*forbidden means that user already have a package*/
   // const isPremium = viewPageAction === "forbidden";
   const { className, label } = flightStateAttribute(data?.flight?.flight_state);
@@ -27,7 +28,7 @@ const FlightFollowing: React.FC<Props> = ({ data }) => {
   return (
     <>
       <div
-        className="p-4 pb-[22px] shadow-md rounded-2xl mt-4 min-h-[303px]"
+        className={`p-4 pb-[22px] shadow-md rounded-2xl mt-4 ${classNameProps}`}
         style={{
           backgroundBlendMode: "color-dodge, normal",
           backdropFilter: "blur(12px)",
@@ -58,7 +59,7 @@ const FlightFollowing: React.FC<Props> = ({ data }) => {
             <Button
               label={String(label) || "-"}
               className={cn(
-                "font-semibold w-full text-xs min-h-[34px] first-letter:uppercase",
+                "font-semibold w-full !text-[13px] first-letter:uppercase",
                 className
               )}
               onClick={() => {}}

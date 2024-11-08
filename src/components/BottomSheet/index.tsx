@@ -1,4 +1,5 @@
-import { Text, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
+import React from "react";
 import "./BottomSheet.scss";
 
 interface BottomSheetProps {
@@ -8,17 +9,18 @@ interface BottomSheetProps {
   fullHeight?: boolean;
 }
 
-const BottomSheet = ({
+const BottomSheet: React.FC<BottomSheetProps> = ({
   open,
   onClose,
   children,
   fullHeight = false,
-}: BottomSheetProps) => {
+}) => {
   return (
-    <>
-      {open && (
-        <View className="backdrop" onClick={onClose} /> // Close on backdrop click
-      )}
+    <View className={`bottom-sheet-container ${open ? "visible" : ""}`}>
+      {/* Backdrop overlay */}
+      {open && <View className="backdrop" onClick={onClose} />}
+
+      {/* Bottom Sheet */}
       <View
         className={`bottom-sheet ${open ? "open" : ""} ${
           fullHeight ? "full-height" : ""
@@ -29,7 +31,7 @@ const BottomSheet = ({
         </View>
         <View className="sheet-content">{children}</View>
       </View>
-    </>
+    </View>
   );
 };
 
