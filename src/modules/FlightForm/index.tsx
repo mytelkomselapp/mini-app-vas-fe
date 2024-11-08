@@ -6,7 +6,7 @@ import NotFound from "../../assets/not_found.svg";
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import { Calendar } from "../../components/ui/calendar";
+
 import useToggle from "../../hooks/useToggle";
 import { cn } from "../../lib/utils";
 import {
@@ -30,6 +30,7 @@ import FlightSearch from "../FlightSearch";
 import { PackageType, BuyPackageType } from "../../hooks/useUserPackageStatus";
 import { serializeParam } from "../../core/serializeParam";
 import { toast } from "../../components/ui/use-toast";
+import Calendar from "../../components/ui/calendar";
 
 type ActiveSearchInput = "kota-asal" | "kota-tujuan" | string;
 
@@ -444,13 +445,13 @@ export const CalendarModal = ({
   return (
     <BottomSheet open={open} onClose={onClose}>
       <Calendar
-        mode="single"
-        selected={date}
+        // mode="single"
+        // selected={date}
         onSelect={(val) => val && setDate(val)}
-        defaultMonth={moment(date).isValid() ? date : undefined}
-        className={"flex justify-center items-center"}
-        disabled={{ before: new Date() }}
-        fromMonth={new Date()}
+        //defaultMonth={moment(date).isValid() ? date : undefined}
+        //className={"flex justify-center items-center"}
+        // disabled={{ before: new Date() }}
+        // fromMonth={new Date()}
       />
       <div className={"flex mx-2 justify-center"}>
         <Button

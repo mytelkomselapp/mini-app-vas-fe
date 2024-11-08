@@ -47,7 +47,7 @@ const InputField: React.FC<InputFieldProps> = ({
           autoComplete={autoComplete}
           readOnly={readOnly}
           placeholderStyle="color: #757F90;"
-          className={`${width} rounded-lg focus:outline-none  focus:ring-blue-400 text-xs text-primaryBlack placeholder-grey border-transparent focus:border-transparent focus:ring-0 ${caretColor}`}
+          className={`${width} rounded-lg focus:outline-none  focus:ring-blue-400 text-xs text-primaryBlack placeholder-grey border-transparent focus:border-transparent focus:ring-0 font-sans ${caretColor}`}
         />
         {icon && <div className="absolute top-2 right-3">{icon}</div>}
       </div>
