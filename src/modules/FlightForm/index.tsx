@@ -65,6 +65,7 @@ interface Props {
   remainingQuota?: number;
   packageType?: PackageType;
   userType?: "new" | "old";
+  className?: string;
 }
 
 const FlightForm: React.FC<Props> = ({
@@ -73,6 +74,7 @@ const FlightForm: React.FC<Props> = ({
   remainingQuota,
   packageType,
   userType,
+  className,
 }) => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(0);
@@ -238,7 +240,7 @@ const FlightForm: React.FC<Props> = ({
       <div
         className={`p-4 shadow-md rounded-2xl relative z-1 ${
           isPremium ? "mt-[-36px]" : "mt-0"
-        }`}
+        } ${className}`}
         style={{
           backgroundBlendMode: "color-dodge, normal",
           backdropFilter: "blur(12px)",
