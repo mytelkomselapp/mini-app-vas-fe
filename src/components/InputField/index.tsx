@@ -1,4 +1,5 @@
 // src/components/InputField.tsx
+import { Input } from "@tarojs/components";
 import React from "react";
 
 interface InputFieldProps {
@@ -45,7 +46,8 @@ const InputField: React.FC<InputFieldProps> = ({
           onFocus={onFocus}
           autoComplete={autoComplete}
           readOnly={readOnly}
-          className={`${width} rounded-lg focus:outline-none  focus:ring-blue-400 text-xs text-primaryBlack placeholder-grey border-transparent focus:border-transparent focus:ring-0 ${caretColor}`}
+          placeholderStyle="color: #757F90;"
+          className={`${width} rounded-lg focus:outline-none  focus:ring-blue-400 text-xs text-primaryBlack placeholder-grey border-transparent focus:border-transparent focus:ring-0 font-sans ${caretColor}`}
         />
         {icon && <div className="absolute top-2 right-3">{icon}</div>}
       </div>

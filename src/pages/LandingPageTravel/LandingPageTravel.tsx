@@ -3,7 +3,7 @@ import * as React from "react";
 import "../../App.css";
 import InputComponent from "../../modules/FlightSearch/components/InputComponent";
 import { useNavigate } from "react-router-dom";
-import { COMMERCE_TRAVEL } from "../../App";
+import { COMMERCE_TRAVEL } from "../index/index";
 import FlightLandingMenu from "../../modules/FlightLandingCardMenu/components/FlightLandingMenu";
 import { buttonClick } from "../../network/analytics/tracker";
 import { useFetchCMSLandingPage } from "../../network";

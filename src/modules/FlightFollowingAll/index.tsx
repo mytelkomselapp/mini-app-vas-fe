@@ -1,19 +1,22 @@
-import ChevronRight from "../../assets/chevron-right.svg";
+import ChevronRight from "../../assets/chevron-right-white.svg";
 import ArrowRight from "../../assets/arrow-right.svg";
+
 import { useNavigate } from "react-router-dom";
 import { FlightDetailTrackData } from "../../network/types/response-props";
 import moment from "moment";
 import { cardClick, sectionClick } from "../../network/analytics/tracker";
+import { View } from "@tarojs/components";
 interface Props {
   data?: FlightDetailTrackData[];
+  classNameProps?: string;
 }
 
-const FlightFollowingAll: React.FC<Props> = ({ data }) => {
+const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
   const navigate = useNavigate();
   return (
-    <>
+    <View className="flex items-end">
       <div
-        className="p-4 pb-[18px] shadow-md rounded-2xl mt-4"
+        className={`p-4 pb-[18px] shadow-md rounded-2xl mt-4 ${classNameProps}`}
         style={{
           backgroundBlendMode: "color-dodge, normal",
           backdropFilter: "blur(12px)",
@@ -34,7 +37,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data }) => {
           <p className="text-white text-sm font-semibold">
             Lihat Semua Penerbangan
           </p>
-          <img src={ChevronRight} className="invert grayscale ml-auto" />
+          <img src={ChevronRight} className="ml-auto w-4 h-4" />
         </div>
 
         {data?.slice(0, 3)?.map((val, i) => {
@@ -70,7 +73,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data }) => {
             >
               <div className="flex items-center gap-1">
                 <p className="font-semibold">{val?.flight?.departure_code}</p>
-                <img src={ArrowRight} />
+                <img src={ArrowRight} className="w-4 h-4" />
                 <p className="font-semibold">{val?.flight?.arrival_code}</p>
               </div>
               <div>
@@ -82,7 +85,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data }) => {
           );
         })}
       </div>
-    </>
+    </View>
   );
 };
 

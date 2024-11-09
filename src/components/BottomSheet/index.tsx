@@ -1,40 +1,37 @@
-import { Sheet } from "react-modal-sheet";
-import style from "../../modules/FlightLandingCardMenu/components/FlightLandingModal/FlightLandingModal.module.css";
+import { View } from "@tarojs/components";
+import React from "react";
+import "./BottomSheet.scss";
+
 interface BottomSheetProps {
   open: boolean;
   onClose: () => void;
   children?: React.ReactNode;
-  disableDrag?: boolean;
-  detent?: "content-height" | "full-height";
+  fullHeight?: boolean;
 }
 
-const BottomSheet = ({
+const BottomSheet: React.FC<BottomSheetProps> = ({
   open,
   onClose,
   children,
-  disableDrag = false,
-  detent = "content-height",
-}: BottomSheetProps) => {
+  fullHeight = false,
+}) => {
   return (
-    <Sheet
-      isOpen={open}
-      onClose={onClose}
-      detent={detent}
-      className={open ? style["container"] : ""}
-      disableDrag={disableDrag}
-    >
-      <Sheet.Backdrop onTap={onClose} className={style["backdrop"]} />
-      <Sheet.Container className={"!rounded-t-[20px]"}>
-        <Sheet.Header>
-          <div className="flex flex-col items-center gap-y-2 justify-between py-[16px]">
-            <div className="bg-slate-200 rounded-md h-[6px] w-[50px]" />
-          </div>
-        </Sheet.Header>
-        <Sheet.Content className="mt-2">
-          <Sheet.Scroller>{children}</Sheet.Scroller>
-        </Sheet.Content>
-      </Sheet.Container>
-    </Sheet>
+    <View className={`bottom-sheet-container ${open ? "visible" : ""}`}>
+      {/* Backdrop overlay */}
+      {open && <View className="backdrop" onClick={onClose} />}
+
+      {/* Bottom Sheet */}
+      <View
+        className={`bottom-sheet ${open ? "open" : ""} ${
+          fullHeight ? "full-height" : ""
+        }`}
+      >
+        <View className="sheet-header">
+          <View className="drag-handle" />
+        </View>
+        <View className="sheet-content">{children}</View>
+      </View>
+    </View>
   );
 };
 
