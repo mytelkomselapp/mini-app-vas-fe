@@ -3,10 +3,13 @@ import Show from "../../components/Show";
 import { cn } from "../../lib/utils";
 import FlightInfoCard from "../../modules/FlightInfocard";
 import FlightRoamaxCard from "../../modules/FlightRoamaxCard";
+import NotFound from "../../assets/not_found.svg";
 import { FlightDetailData } from "@/network/types/response-props";
 import { useFetchFlightByCity } from "../../network";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import { Image } from "@tarojs/components";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const ListPenerbangan = () => {
   const originId = "2139";
@@ -14,7 +17,7 @@ const ListPenerbangan = () => {
   const date = "2024-11-24";
   const origin = "Jakarta";
   const destination = "Bali (Denpasar)";
-  const { data: flightRawData } = useFetchFlightByCity(
+  const { data: flightRawData, isFetching } = useFetchFlightByCity(
     originId,
     destinationId,
     date
@@ -48,10 +51,15 @@ const ListPenerbangan = () => {
         </div>
       </div>
       <Show
+        when={!isFetching}
+        fallbackComponent={<LoadingScreen text="Loading" />}
+      >
+      <Show
         when={flightList?.length > 0}
         fallbackComponent={
           <div className="flex justify-center min-h-[calc(100vh-11rem)]">
             <div className="flex flex-col items-center justify-center text-center">
+              <Image src={NotFound} className="w-[128px] h-[128px]"/>
               <span className="text-base font-semibold font-sans mt-1">
                 Penerbangan tidak ditemukan
               </span>
@@ -89,6 +97,7 @@ const ListPenerbangan = () => {
             </div>
           )}
         </RenderVerticalList>
+      </Show>
       </Show>
     </div>
   );
