@@ -71,6 +71,7 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
       ],
     },
     mini: {
+      debugReact: true,
       postcss: {
         pxtransform: {
           enable: true,

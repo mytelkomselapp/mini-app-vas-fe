@@ -1,11 +1,9 @@
 import * as React from "react";
-import { Sheet } from "react-modal-sheet";
-import style from "./FlightSearch.module.css";
+import "./FlightSearch.module.css";
 import ArrowLeft from "../../assets/arrow-left.svg";
 import InputComponent from "./components/InputComponent";
 import FlightSearchHistory from "./components/FlightSearchHistory";
 import FlightSearchRecommendation from "./components/FlightSearchRecommendation";
-import { cn as classNames } from "../../lib/utils";
 import Show from "../../components/Show";
 import useDebounce from "../../hooks/useDebounce";
 import FlightSearchResult from "./components/FlightSearchResult";
@@ -18,6 +16,8 @@ import {
 } from "../../store/flight";
 import { CMSFlightLandingPopularCitiesSection } from "../../network/types/response-props";
 import { toast } from "../../components/ui/use-toast";
+import BottomSheet from "../../components/BottomSheet";
+import { View } from "@tarojs/components";
 
 interface Props {
   open: boolean;
@@ -123,53 +123,81 @@ const FlightSearch: React.FC<Props> = ({
   );
 
   return (
-    <Sheet
-      isOpen={open}
-      disableDrag
+    <BottomSheet
+      showHeader={false}
+      fullHeight
+      open={open}
       onClose={handleClose}
-      detent="full-height"
-      animate={false}
-      className={style["modal"]}
+      containerClassname={"container"}
     >
-      <Sheet.Container
-        className={classNames("bg-inactiveGrey", style["container"])}
-      >
-        <Sheet.Header>
-          <div className="w-full flex gap-x-2 p-[16px] h-auto items-center">
-            <img src={ArrowLeft} onClick={handleClose} />
-            <div className="w-full">
-              <InputComponent
-                isLoading={isLoading}
-                value={keyword}
-                onChange={handleChangeKeyword}
-                onTyping={setIsTyping}
-              />
-            </div>
+      <View>
+        <div
+          style={{ marginBottom: 16 }}
+          className="flex gap-x-[8px] h-auto items-center"
+        >
+          <img
+            src={ArrowLeft}
+            onClick={handleClose}
+            style={{ width: "1.2rem", height: "1.2rem" }}
+          />
+          <InputComponent
+            isLoading={isLoading}
+            value={keyword}
+            onChange={handleChangeKeyword}
+            onTyping={setIsTyping}
+          />
+        </div>
+        <Show when={isShowRecommendation}>
+          <Show when={isShowSearchHistory}>
+            <FlightSearchHistory
+              data={dataFlightSearchHistory}
+              onSelect={handleSelect}
+              onRemove={handleRemoveHistory}
+            />
+          </Show>
+          <FlightSearchRecommendation
+            data={dataPopularCities}
+            onSelect={handleSelect}
+          />
+        </Show>
+        <Show when={isShowResult}>
+          <FlightSearchResult onSelect={handleSelect} data={dataFlightSearch} />
+        </Show>
+      </View>
+      {/* <div className="max-w-[90vw]">
+        <div className="w-full flex gap-x-2 h-auto items-center">
+          <img
+            src={ArrowLeft}
+            onClick={handleClose}
+            style={{ width: "1rem", height: "1rem" }}
+          />
+          <div className="w-full">
+            <InputComponent
+              isLoading={isLoading}
+              value={keyword}
+              onChange={handleChangeKeyword}
+              onTyping={setIsTyping}
+            />
           </div>
-        </Sheet.Header>
-        <Sheet.Content className="px-[16px] mt-[8px] flex flex-col gap-y-[24px]">
-          <Show when={isShowRecommendation}>
-            <Show when={isShowSearchHistory}>
-              <FlightSearchHistory
-                data={dataFlightSearchHistory}
-                onSelect={handleSelect}
-                onRemove={handleRemoveHistory}
-              />
-            </Show>
-            <FlightSearchRecommendation
-              data={dataPopularCities}
+        </div>
+        <Show when={isShowRecommendation}>
+          <Show when={isShowSearchHistory}>
+            <FlightSearchHistory
+              data={dataFlightSearchHistory}
               onSelect={handleSelect}
+              onRemove={handleRemoveHistory}
             />
           </Show>
-          <Show when={isShowResult}>
-            <FlightSearchResult
-              onSelect={handleSelect}
-              data={dataFlightSearch}
-            />
-          </Show>
-        </Sheet.Content>
-      </Sheet.Container>
-    </Sheet>
+          <FlightSearchRecommendation
+            data={dataPopularCities}
+            onSelect={handleSelect}
+          />
+        </Show>
+        <Show when={isShowResult}>
+          <FlightSearchResult onSelect={handleSelect} data={dataFlightSearch} />
+        </Show>
+      </div> */}
+    </BottomSheet>
   );
 };
 

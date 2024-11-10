@@ -47,10 +47,9 @@ const FlightLandingMenu: React.FC<Props> = ({
             onClick={handleClick}
           >
             <img
+              style={{ width: "2rem", height: "2rem" }}
               src={item?.iconUrl}
               alt={`icon ${item?.title}`}
-              width={40}
-              height={40}
               className="object-cover"
             />
             <p className={`${cn("text-xs", classNameText)}`}>{item?.title}</p>

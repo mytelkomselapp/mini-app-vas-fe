@@ -1,10 +1,12 @@
-import { FollowFlightPayloadProps } from "../../network/types/request-payload";
+// import { FollowFlightPayloadProps } from "../../network/types/request-payload";
+import { FollowFlightPayloadProps } from "../network/types/request-payload";
 import {
   CMSFlightLandingPopularCitiesSection,
   FlightETicketFileFormat,
-} from "../../network/types/response-props";
+} from "../network/types/response-props";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { TaroStorage } from "../lib/utils";
 
 export interface DestinationOriginProps {
   city: string;
@@ -103,7 +105,7 @@ export const useFlightSearchHistory = create<FlighSearchHistoryState>()(
     {
       name: "flight-search-history",
       version: 2, //force clear prev storage
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => TaroStorage),
     }
   )
 );
@@ -162,7 +164,7 @@ export const useWeboptinTokenData = create<WeboptinTokenSid>()(
       sid: null,
       setSid: (sid: number | null) => set(() => ({ sid })),
     }),
-    { name: "sid", storage: createJSONStorage(() => localStorage) }
+    { name: "sid", storage: createJSONStorage(() => TaroStorage) }
   )
 );
 
@@ -178,7 +180,7 @@ export const useSaveTrackingPayload = create<TrackState>()(
       setTrackFlight: (to: FollowFlightPayloadProps | null) =>
         set(() => ({ trackFlight: to })),
     }),
-    { name: "track-saved", storage: createJSONStorage(() => localStorage) }
+    { name: "track-saved", storage: createJSONStorage(() => TaroStorage) }
   )
 );
 

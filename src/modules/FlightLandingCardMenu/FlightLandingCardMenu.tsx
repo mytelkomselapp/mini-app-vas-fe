@@ -19,6 +19,7 @@ const FlightLandingCardMenu: React.FC<Props> = ({
   const dataFlightPromoSection = data?.promoSection;
 
   const handleMenuClick = (targetUrl: string, title: string) => {
+    console.log({ data: " TEST CLICK MENU", targetUrl });
     buttonClick(title, `Navigate to ${title}`, "", window.location.pathname);
 
     if (title === "My Ticket") return navigate("/flight/ticket-list");
