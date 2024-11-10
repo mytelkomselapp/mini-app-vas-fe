@@ -54,7 +54,7 @@ const MyTicketList = () => {
           when={upcomingETicket?.length > 0}
           fallbackComponent={
             <div className="flex flex-1 flex-col items-center justify-center text-center">
-               <img src={NotFound} className="w-[128px] h-[128px]"/>
+              <img src={NotFound} className="w-[128px] h-[128px]"/>
               <span className="text-base font-semibold font-sans mt-1">
                 Belum ada tiket ditambahkan
               </span>

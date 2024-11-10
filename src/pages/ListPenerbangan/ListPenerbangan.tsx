@@ -59,7 +59,7 @@ const ListPenerbangan = () => {
         fallbackComponent={
           <div className="flex justify-center min-h-[calc(100vh-11rem)]">
             <div className="flex flex-col items-center justify-center text-center">
-              <Image src={NotFound} className="w-[128px] h-[128px]"/>
+              <img src={NotFound} className="w-[128px] h-[128px]"/>
               <span className="text-base font-semibold font-sans mt-1">
                 Penerbangan tidak ditemukan
               </span>
