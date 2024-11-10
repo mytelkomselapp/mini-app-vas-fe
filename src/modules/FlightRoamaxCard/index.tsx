@@ -14,20 +14,21 @@ const FlightRoamaxCard = ({ isEligible, onClick }: FlightRoamaxCard) => {
       {isEligible ? (
         <div className="flex flex-col whitespace-pre space-y-[8px]">
           <span className="text-[12px]">{`Internetan lancar selama perjalanan\ndengan langganan RoaMAX VIP!`}</span>
-          <div className="flex">
+          <div className="max-w-[224px]">
             <Button
               label="Berlangganan RoaMAX VIP"
-              className="text-[12px] border-0 min-h-0 max-w-[224px]"
+              className="text-[12px] text-white"
             />
           </div>
         </div>
       ) : (
         <div className="flex flex-col whitespace-pre space-y-[8px]">
           <span className="text-[12px]">{`Internetan lancar selama perjalanan\ndengan paket roaming Telkomsel!`}</span>
-          <div>
+          <div className="max-w-[224px]">
             <Button
               label="Beli Paket Roaming"
-              className="text-[12px] min-h-0 max-w-[224px]"
+              className="text-[12px] text-white"
+              style="primary"
             />
           </div>
         </div>
