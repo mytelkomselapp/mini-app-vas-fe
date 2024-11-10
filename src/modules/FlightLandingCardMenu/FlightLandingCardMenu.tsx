@@ -1,4 +1,5 @@
 import * as React from "react";
+import Taro from "@tarojs/taro";
 import FlightLandingCardBanner from "./components/FlightLandingCardBanner";
 import FlightLandingMenu from "./components/FlightLandingMenu";
 import { CMSFlightLandingData } from "../../network/types/response-props";
@@ -22,7 +23,8 @@ const FlightLandingCardMenu: React.FC<Props> = ({
     console.log({ data: " TEST CLICK MENU", targetUrl });
     buttonClick(title, `Navigate to ${title}`, "", window.location.pathname);
 
-    if (title === "My Ticket") return navigate("/flight/ticket-list");
+    // if (title === "My Ticket") return navigate("/flight/ticket-list");
+    if (title === "My Ticket") return Taro.navigateTo({url: '/pages/MyTicketList/index'})
 
     if (targetUrl) {
       return window.open(targetUrl, "_blank");

@@ -4,6 +4,7 @@ export default {
     "pages/index/index",
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
+    "pages/MyTicketList/index",
     // other pages...
   ],
   window: {
