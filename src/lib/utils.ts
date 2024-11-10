@@ -2,6 +2,7 @@ import Taro from "@tarojs/taro";
 import { clsx, type ClassValue } from "clsx";
 import { NavigateFunction } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { StateStorage } from "zustand/middleware";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -109,7 +110,12 @@ export const isValidEmail = (value: string) => {
   return false;
 };
 
-export const handleNavigate = (navigate: NavigateFunction, pathname: string, search: string, state: any) => {
+export const handleNavigate = (
+  navigate: NavigateFunction,
+  pathname: string,
+  search: string,
+  state: any
+) => {
   Taro.navigateTo({
     success: () => {
       navigate(
@@ -121,5 +127,17 @@ export const handleNavigate = (navigate: NavigateFunction, pathname: string, sea
       );
     },
     url: pathname + search,
-  })
+  });
+};
+
+export const TaroStorage: StateStorage = {
+  setItem: (name: string, value: string) => {
+    return Taro.setStorageSync(name, value);
+  },
+  getItem: (name: string) => {
+    return Taro.getStorageSync(name);
+  },
+  removeItem: (name: string) => {
+    return Taro.removeStorageSync(name);
+  },
 };

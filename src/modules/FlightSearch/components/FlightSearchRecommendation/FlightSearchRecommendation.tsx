@@ -17,7 +17,9 @@ const FlightSearchRecommendation: React.FC<Props> = ({
   return (
     <div className="w-full flex flex-col gap-y-2">
       <div className="flex justify-between items-center">
-        <h1 className="text-sm font-semibold">Kota Populer</h1>
+        <h1 style={{ fontSize: 14 }} className="font-semibold">
+          Kota Populer
+        </h1>
       </div>
       <div className="flex gap-2 mt-[8px] flex-wrap">
         {data?.map((item, idx) => (

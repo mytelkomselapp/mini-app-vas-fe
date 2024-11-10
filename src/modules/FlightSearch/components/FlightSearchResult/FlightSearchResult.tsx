@@ -2,7 +2,7 @@ import * as React from "react";
 import MagnifyingGlassIcon from "../../../../assets/magnifying-glass.svg";
 import { FlightSearchData } from "../../../../network/types/response-props";
 import { cn } from "../../../../lib/utils";
-import RenderVerticalList from "../../../../components/RenderVerticalList";
+import RenderVerticalList from "../../../../components/RenderVerticalList/RenderVerticalList";
 import { DestinationOriginProps } from "../../../../store/flight";
 
 interface Props {
@@ -47,7 +47,10 @@ const FlightSearchResult: React.FC<Props> = ({ onSelect, data }) => {
               "py-[8px]": index > 0,
             })}
           >
-            <img src={MagnifyingGlassIcon} />
+            <img
+              src={MagnifyingGlassIcon}
+              style={{ height: "1rem", width: "1rem" }}
+            />
             <p className="text-[13px]">{item?.city_name}</p>
           </div>
         </div>
