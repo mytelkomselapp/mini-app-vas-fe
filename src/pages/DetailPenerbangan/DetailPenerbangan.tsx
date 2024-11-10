@@ -13,8 +13,9 @@ import FlightBoardInfo from "../../modules/FlightBoardInfo";
 // import { FreemiumLimitModal } from "../../modules/FlightForm";
 import FlightDetailsCard from "../../modules/FlightDetailsCard";
 import Show from "../../components/Show";
+import { getNavigateState } from "../../lib/utils";
+import Taro from "@tarojs/taro";
 
-import { useLocation, useSearchParams } from "react-router-dom";
 // import {
 //   useDeleteETicket,
 //   useFetchETicketByFlightId,
@@ -42,23 +43,24 @@ import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 // import { AxiosError } from "axios";
 // import { Switch } from "@/components/ui/switch";
 // import FlightRoamaxCard from "@/modules/FlightRoamaxCard";
+// import CreateDetailTicket from "../CreateDetailTicket";
 
 const USER_FREEMIUM_QUOTA = 5;
 
 const DetailPesawat = () => {
+  const searchParams = Taro.getCurrentInstance().router?.params;
 
-  const [isFollowSwitch, setIsFollowSwitch] = useState(true);
+  const currentPath = Taro.getCurrentInstance().router?.path || '';
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
 
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
   const { active: visibleOffer, toggleActive: toggleOffer } = useToggle();
-  const passedFlightData = location.state?.flightDetail;
-  const bypassAPICall = !!passedFlightData;
+  const passedFlightData = state?.flightDetail;
+  const enableAPICall = !passedFlightData;
 
-  const flightNumber = searchParams.get("id") || "";
-  const flightDate = searchParams.get("date") || "";
-  const departure = searchParams.get("departure") || "";
-  const arrival = searchParams.get("arrival") || "";
+  const flightNumber = searchParams?.id || "";
+  const flightDate = searchParams?.date || "";
+  const departure = searchParams?.departure || "";
+  const arrival = searchParams?.arrival || "";
 
   const { data: rawData, isFetching: fetchingFlightDetail } =
     useFetchFlightDetail(
@@ -66,13 +68,13 @@ const DetailPesawat = () => {
       flightDate,
       departure,
       arrival,
-      bypassAPICall
+      enableAPICall
     );
 
   const flightRawData = rawData?.data as unknown as FlightDetailRawData;
-  const flightData = bypassAPICall
-    ? passedFlightData
-    : flightRawData?.data?.flight;
+  const flightData = enableAPICall
+    ? flightRawData?.data?.flight
+    : passedFlightData;
 
   const { data: dataPackageRaw, isLoading: isLoadingPackageList } =
     useFetchFreemiumPackage();
@@ -154,10 +156,9 @@ const DetailPesawat = () => {
     setDepartureDate(flightDate);
     const flightId = dataFollowFlight?.data?.flight_id;
 
-    // TODO: navigate to create ticket page
-    // return navigate({
-    //   pathname: `/flight/create-ticket/${flightId}`,
-    // });
+    Taro.navigateTo({
+      url: "/pages/CreateDetailTicket/index/"+ flightId,
+    }); 
   };
 
   useEffect(() => {
@@ -211,10 +212,7 @@ const DetailPesawat = () => {
   const handleFollowFlight = useCallback(async () => {
     try {
       const data = await postFollowFlight(flightData);
-      console.log("data", data);
       const isTracked = data?.data?.data?.status === "tracked";
-
-      console.log("isTracked", isTracked);
 
       if (isTracked) {
         //tracker Follow flight
@@ -230,7 +228,6 @@ const DetailPesawat = () => {
         return refetchTrackedFlight();
       }
 
-      console.log("isLoadingPackageList", isLoadingPackageList);
       if (!isLoadingPackageList) {
         toggleOffer();
         return setTrackFlight(flightData);
@@ -336,10 +333,10 @@ const DetailPesawat = () => {
           <FlightDetailsCard data={flightData} isRoamaxEligible={false} />
         </div>
 
-        <Show when={true}>
+        <Show when={foundETicket}>
           <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
             <div className="flex justify-between items-center">
-              <h1 className="text-sm font-semibold">Detail E-Ticket</h1>
+              <span className="text-sm font-semibold">Detail E-Ticket</span>
               <Image 
                 src={ChevronRight} 
                 style={{
@@ -376,7 +373,7 @@ const DetailPesawat = () => {
                 </div>
               </div>
 
-              <Show when={true}>
+              <Show when={!loadingDeleteETicket}>
                   <Image 
                     src={IconDelete} 
                     style={{
@@ -390,10 +387,10 @@ const DetailPesawat = () => {
           </div>
         </Show>
 
-        <Show when={true}>
+        <Show when={followableFlight}>
           <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] mt-4 p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
             <div className="flex justify-between items-center">
-              <h1 className="text-sm">Dapatkan Notifikasi Penerbangan</h1>
+              <span className="text-sm">Dapatkan Notifikasi Penerbangan</span>
               <Switch checked={dataFollowFlight?.isFollowing} onChange={handleFollowSwitch} color="#001A41"/>
             </div>
 
@@ -410,11 +407,14 @@ const DetailPesawat = () => {
             </div>
           </Show> */}
 
-          <Show when={true}>
+          <Show when={!foundETicket}>
             <div className="flex flex-col gap-2 mt-4">
               <button
                 className="inline-flex justify-center items-center text-solidRed font-normal w-full bg-transparent text-sm"
-                onClick={() => { }}
+                onClick={() => {
+                  buttonClick("Add Ticket", "Add Ticket", "Detail", "/detail");
+                  handleAddTicket();
+                }}
               >
                 <span className="text-sm">Tambah Tiket&nbsp;</span>
                 <Image 
@@ -433,7 +433,7 @@ const DetailPesawat = () => {
       <FreemiumLimitModal
         onClose={toggleOffer}
         onProceed={onProceedPackage}
-        open={true}
+        open={visibleOffer}
         limitType={getLimitType()}
       />
     </>

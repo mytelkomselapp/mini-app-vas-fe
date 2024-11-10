@@ -41,7 +41,6 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
     );
 
     handleNavigate(
-      navigate,
       "/pages/DetailPenerbangan/index",
       `?id=${flightDetail?.flight_no}&date=${dateFlight}&departure=${flightDetail?.departure_code}&arrival=${flightDetail?.arrival_code}`,
       { flightDetail }
