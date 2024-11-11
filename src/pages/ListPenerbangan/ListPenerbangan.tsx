@@ -6,18 +6,18 @@ import FlightRoamaxCard from "../../modules/FlightRoamaxCard";
 import NotFound from "../../assets/not_found.svg";
 import { FlightDetailData } from "@/network/types/response-props";
 import { useFetchFlightByCity } from "../../network";
+import { useLocation } from "react-router-dom";
 import moment from "moment";
 import LoadingScreen from "../../components/LoadingScreen";
 import { useMemo } from "react";
 import Taro from "@tarojs/taro";
 
 const ListPenerbangan = () => {
-  const searchParams = Taro.getCurrentInstance().router?.params;
-  const originId = searchParams?.originId || '';
-  const destinationId = searchParams?.destinationId || '';
-  const date = searchParams?.date || '';
-  const origin = decodeURIComponent(searchParams?.origin || '');
-  const destination = decodeURIComponent(searchParams?.destination || '');
+  const originId = "2139";
+  const destinationId = "2179";
+  const date = "2024-11-24";
+  const origin = "Jakarta";
+  const destination = "Bali (Denpasar)";
   const { data: flightRawData, isFetching } = useFetchFlightByCity(
     originId,
     destinationId,
@@ -77,6 +77,7 @@ const ListPenerbangan = () => {
             data={flightList}
             keyIndex="id"
             pageSize={10}
+            bottomOffset={`-10%`}
           >
             {(item: FlightDetailData, index) => (
               <div
