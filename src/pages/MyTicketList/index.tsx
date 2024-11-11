@@ -1,3 +1,7 @@
-import MyTicketList from "./MyTicketList";
+import MyTicketList from './MyTicketList'
 
-export default MyTicketList
+const Index = () => {
+  return <MyTicketList />
+}
+
+export default Index

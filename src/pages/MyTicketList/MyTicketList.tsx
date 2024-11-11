@@ -1,16 +1,16 @@
-import Button from "../..//../components/Button";
-import Navbar from "../..//../components/Navbar";
-import FlightTicketCard from "../..//../modules/FlightTicketCard";
-import { FlightETicketData } from "../..//../network/types/response-props";
+import Button from "../../components/Button";
+import Navbar from "../../components/Navbar";
+import FlightTicketCard from "../../modules/FlightTicketCard";
+import { FlightETicketData } from "../../network/types/response-props";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as NotFound } from "../..//../assets/not_found.svg";
-import Show from "../..//../components/Show";
-import { cn } from "../..//../lib/utils";
-import RenderVerticalList from "../..//../components/RenderVerticalList/RenderVerticalList";
-import { useFetchETickets } from "../..//../network";
-import LoadingScreen from "../..//../components/LoadingScreen";
-import { buttonClick } from "../..//../network/analytics/tracker";
-import { useFlightTicketForm } from "../..//../store/flight";
+import NotFound from "../../assets/not_found.svg";
+import Show from "../../components/Show";
+import { cn } from "../../lib/utils";
+import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
+import { useFetchETickets } from "../../network";
+import LoadingScreen from "../../components/LoadingScreen";
+import { buttonClick } from "../../network/analytics/tracker";
+import { useFlightTicketForm } from "../../store/flight";
 
 const MyTicketList = () => {
   const navigate = useNavigate();
@@ -43,9 +43,9 @@ const MyTicketList = () => {
 
   return (
     <div className="flex flex-col h-screen pt-4 bg-inactiveGrey overflow-hidden">
-      <div className="px-4 mb-4">
+      {/* <div className="px-4 mb-4">
         <Navbar title="My Ticket" />
-      </div>
+      </div> */}
       <Show
         when={!isFetching}
         fallbackComponent={<LoadingScreen text="Loading" />}
@@ -54,7 +54,7 @@ const MyTicketList = () => {
           when={upcomingETicket?.length > 0}
           fallbackComponent={
             <div className="flex flex-1 flex-col items-center justify-center text-center">
-              <NotFound className="mt-1" />
+              <img src={NotFound} className="w-[128px] h-[128px]"/>
               <span className="text-base font-semibold font-sans mt-1">
                 Belum ada tiket ditambahkan
               </span>
@@ -81,21 +81,21 @@ const MyTicketList = () => {
             )}
           </RenderVerticalList>
         </Show>
+        <div className="mt-auto px-4 pb-8 pt-2 bg-inactiveGrey">
+          <Button
+            label="Tambah Ticket"
+            onClick={() => {
+              buttonClick(
+                "Add Ticket",
+                "Add Ticket",
+                "My Ticket",
+                window.location.pathname
+              );
+              handleAddTicket();
+            }}
+          />
+        </div>
       </Show>
-      <div className="mt-auto px-4 pb-8 pt-2 bg-inactiveGrey">
-        <Button
-          label="Tambah Ticket"
-          onClick={() => {
-            buttonClick(
-              "Add Ticket",
-              "Add Ticket",
-              "My Ticket",
-              window.location.pathname
-            );
-            handleAddTicket();
-          }}
-        />
-      </div>
     </div>
   );
 };
