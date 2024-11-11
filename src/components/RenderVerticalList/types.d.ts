@@ -1,6 +1,8 @@
 import { PropsWithChildren, ReactElement } from "react";
 
+// @ts-ignore
 export interface RenderVerticalListProps extends PropsWithChildren {
+  //  @ts-ignore
   data: T[];
   /* key identifier for list */
   keyIndex: string;
@@ -15,6 +17,10 @@ export interface RenderVerticalListProps extends PropsWithChildren {
   customLoadMoreComponent?: React.ReactNode;
   /* still under development for server side */
   onLoadMore?: () => void;
+  // @ts-ignore
   children: (item: T, index: number) => ReactElement;
+  /**
+   * @deprecated because waypoint not compatible with tarojs
+   */
   bottomOffset?: string | number;
 }
