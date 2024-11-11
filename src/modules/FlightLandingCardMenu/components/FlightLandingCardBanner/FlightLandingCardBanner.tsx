@@ -29,6 +29,8 @@ const FlightLandingCardBanner: React.FC<Props> = ({
       <Show when={!isLoading}>
         <div
           style={{
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
             backgroundImage: `url(${data?.backgroundImgUrl})`,
           }}
           data-url={data?.targetUrl}
