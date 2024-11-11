@@ -8,7 +8,6 @@ import { FlightDetailData } from "@/network/types/response-props";
 import { useFetchFlightByCity } from "../../network";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-import { Image } from "@tarojs/components";
 import LoadingScreen from "../../components/LoadingScreen";
 
 const ListPenerbangan = () => {
@@ -54,50 +53,50 @@ const ListPenerbangan = () => {
         when={!isFetching}
         fallbackComponent={<LoadingScreen text="Loading" />}
       >
-      <Show
-        when={flightList?.length > 0}
-        fallbackComponent={
-          <div className="flex justify-center min-h-[calc(100vh-11rem)]">
-            <div className="flex flex-col items-center justify-center text-center">
-              <img src={NotFound} className="w-[128px] h-[128px]"/>
-              <span className="text-base font-semibold font-sans mt-1">
-                Penerbangan tidak ditemukan
-              </span>
-              <span className="text-gray-500 text-xs font-normal font-sans whitespace-pre my-1">
-                {`Silakan cek kembali rute dan tanggal\npenerbangan yang kamu input`}
-              </span>
+        <Show
+          when={flightList?.length > 0}
+          fallbackComponent={
+            <div className="flex justify-center min-h-[calc(100vh-11rem)]">
+              <div className="flex flex-col items-center justify-center text-center">
+                <img src={NotFound} className="w-[128px] h-[128px]" />
+                <span className="text-base font-semibold font-sans mt-1">
+                  Penerbangan tidak ditemukan
+                </span>
+                <span className="text-gray-500 text-xs font-normal font-sans whitespace-pre my-1">
+                  {`Silakan cek kembali rute dan tanggal\npenerbangan yang kamu input`}
+                </span>
+              </div>
             </div>
-          </div>
-        }
-      >
-        <RenderVerticalList
-          data={flightList}
-          keyIndex="id"
-          pageSize={10}
-          bottomOffset={`-10%`}
+          }
         >
-          {(item: FlightDetailData, index) => (
-            <div
-              className={cn("px-4", {
-                "pb-[6px]": index === 0,
-                "py-[6px]": index > 0,
-                "pb-[52px]": index === flightList.length - 1,
-              })}
-            >
-              <Show when={index === 3}>
-                <div className="pb-4">
-                  <FlightRoamaxCard isEligible={true} key={`roamax-${index}`} />
-                </div>
-              </Show>
-              <FlightInfoCard
-                key={item.flight_no}
-                flightDetail={item}
-                isRoamaxEligible={index < 2}
-              />
-            </div>
-          )}
-        </RenderVerticalList>
-      </Show>
+          <RenderVerticalList
+            data={flightList}
+            keyIndex="id"
+            pageSize={10}
+            bottomOffset={`-10%`}
+          >
+            {(item: FlightDetailData, index) => (
+              <div
+                className={cn("px-4", {
+                  "pb-[6px]": index === 0,
+                  "py-[6px]": index > 0,
+                  "pb-[52px]": index === flightList.length - 1,
+                })}
+              >
+                <Show when={index === 3}>
+                  <div className="pb-4">
+                    <FlightRoamaxCard isEligible={true} key={`roamax-${index}`} />
+                  </div>
+                </Show>
+                <FlightInfoCard
+                  key={item.flight_no}
+                  flightDetail={item}
+                  isRoamaxEligible={index < 2}
+                />
+              </div>
+            )}
+          </RenderVerticalList>
+        </Show>
       </Show>
     </div>
   );
