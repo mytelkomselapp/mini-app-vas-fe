@@ -43,7 +43,7 @@ const InputComponent: React.FC<Props> = ({
   return (
     <div
       className={classNames(
-        "w-full flex gap-x-2 justify-between items-center rounded-[20px] py-[8px] px-[12px] bg-inputGroup",
+        "w-full flex gap-x-2 justify-between items-center rounded-[20px] py-[8px] px-[12px] bg-inputGroup h-[2rem]",
         style["container"],
         className
       )}
@@ -52,7 +52,11 @@ const InputComponent: React.FC<Props> = ({
         <span className={style["loader"]} />
       </Show>
       <Show when={!isLoading}>
-        <img src={MagnifyingGlassIcon} alt="magnifying-glass" />
+        <img
+          src={MagnifyingGlassIcon}
+          alt="magnifying-glass"
+          style={{ height: "1rem", width: "1rem" }}
+        />
       </Show>
       <input
         value={value}
@@ -60,13 +64,17 @@ const InputComponent: React.FC<Props> = ({
         onChange={handleChangeKeyword}
         type="text"
         className={classNames(
-          "w-[80%] h-[25px] bg-inputGroup text-xs text-[#001A41] font-medium",
+          "w-[75%] h-[1.2rem] bg-inputGroup text-xs text-[#001A41] font-medium",
           style["input"],
           classNameInput
         )}
       />
       {isShowClearButton && (
-        <img src={FailedFilledIcon} onClick={handleResetValue} />
+        <img
+          src={FailedFilledIcon}
+          onClick={handleResetValue}
+          style={{ height: "1rem", width: "1rem" }}
+        />
       )}
     </div>
   );

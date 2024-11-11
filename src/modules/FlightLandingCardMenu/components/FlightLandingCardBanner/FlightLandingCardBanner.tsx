@@ -29,6 +29,8 @@ const FlightLandingCardBanner: React.FC<Props> = ({
       <Show when={!isLoading}>
         <div
           style={{
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
             backgroundImage: `url(${data?.backgroundImgUrl})`,
           }}
           data-url={data?.targetUrl}
@@ -38,7 +40,7 @@ const FlightLandingCardBanner: React.FC<Props> = ({
           }}
           className={classNames(
             style["image-background"],
-            "rounded-2xl h-[160px] w-full flex flex-col justify-end p-[16px]"
+            "rounded-2xl h-[160px] w-[90%] flex flex-col justify-end p-[1rem]"
           )}
         >
           <div className="w-[50%] flex flex-col gap-y-1">

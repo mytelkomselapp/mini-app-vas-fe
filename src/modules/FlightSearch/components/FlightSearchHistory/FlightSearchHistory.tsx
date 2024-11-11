@@ -17,10 +17,13 @@ const FlightSearchHistory: React.FC<Props> = ({
   const handleSelect = (value: DestinationOriginProps) => onSelect?.(value);
 
   return (
-    <div className="w-full flex flex-col gap-y-2">
+    <div style={{ marginBottom: 16 }} className="w-full flex flex-col gap-y-2">
       <div className="flex justify-between items-center">
-        <h1 className="text-sm font-semibold">Pencarian Terakhir</h1>
+        <h1 style={{ fontSize: 14 }} className="text-sm font-semibold">
+          Pencarian Terakhir
+        </h1>
         <h1
+          style={{ fontSize: 13 }}
           onClick={onRemove}
           className="text-[13px] font-semibold text-solidRed cursor-pointer"
         >

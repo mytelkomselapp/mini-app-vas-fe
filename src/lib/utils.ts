@@ -2,6 +2,7 @@ import Taro from "@tarojs/taro";
 import { clsx, type ClassValue } from "clsx";
 import { NavigateFunction } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { StateStorage } from "zustand/middleware";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -115,7 +116,19 @@ export const handleNavigate = (pathname: string, search: string, state: any) => 
   }
   Taro.navigateTo({
     url: pathname + search,
-  })
+  });
+};
+
+export const TaroStorage: StateStorage = {
+  setItem: (name: string, value: string) => {
+    return Taro.setStorageSync(name, value);
+  },
+  getItem: (name: string) => {
+    return Taro.getStorageSync(name);
+  },
+  removeItem: (name: string) => {
+    return Taro.removeStorageSync(name);
+  },
 };
 
 export const getNavigateState = (pathname: string) => {

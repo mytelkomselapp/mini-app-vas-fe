@@ -220,11 +220,11 @@ const FlightForm: React.FC<Props> = ({
     packageType === "unlimited" ? "Unlimited" : `Tersisa ${remainingQuota}x`;
 
   return (
-    <View className="">
+    <View className="w-[308px] h-[308px]">
       <div className="mt-4">
         {isPremium && (
           <div
-            className="bg-gray-800 text-white py-2 px-4 rounded-t-[20px] h-[60px] text-center gap-2 flex justify-center pt-[13px] relative z-0"
+            className="bg-gray-800 text-white py-2 px-4 rounded-t-[20px] h-[50px] text-center gap-2 flex justify-center pt-[13px] relative z-0"
             style={{
               backgroundBlendMode: "color-dodge, normal",
               backdropFilter: "blur(20px)",
@@ -249,7 +249,7 @@ const FlightForm: React.FC<Props> = ({
             //  backdropFilter: "blur(12px)",
             //WebkitBackdropFilter: "blur(12px)",
             background: "rgb(128, 133, 148)",
-            minHeight: 303,
+            height: 303,
           }}
         >
           <div className="mb-4 flex gap-[10px] z-1 relative">
