@@ -110,7 +110,7 @@ export const isValidEmail = (value: string) => {
   return false;
 };
 
-export const handleNavigate = (pathname: string, search: string, state: any) => {
+export const handleNavigate = (pathname: string, search: string, state?: any) => {
   if (state) {
     Taro.setStorageSync(pathname, state);
   }

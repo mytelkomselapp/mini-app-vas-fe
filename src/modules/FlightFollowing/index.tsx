@@ -2,7 +2,7 @@ import Button from "../../components/Button";
 
 import FlightFollowingNearby from "../FlightFollowingNearby";
 import { FlightDetailTrackData } from "../../network/types/response-props";
-import { cn, flightStateAttribute } from "../../lib/utils";
+import { cn, flightStateAttribute, handleNavigate } from "../../lib/utils";
 import { BuyPackageType } from "../../hooks/useUserPackageStatus";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -46,12 +46,10 @@ const FlightFollowing: React.FC<Props> = ({ data, classNameProps }) => {
             "Followed Flights",
             window.location.pathname
           );
-          return navigate(
-            {
-              pathname: "/flight/detail",
-              search: `?id=${idPlane}&date=${dateFlight}&departure=${departureCode}&arrival=${arrivalCode}`,
-            },
-            { state: { flightDetail: data?.flight } }
+          return handleNavigate(  
+            "/pages/DetailPenerbangan/index",
+            `?id=${idPlane}&date=${dateFlight}&departure=${departureCode}&arrival=${arrivalCode}`,
+            { flightDetail: data?.flight }
           );
         }}
       >

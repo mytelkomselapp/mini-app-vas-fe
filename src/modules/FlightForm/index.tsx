@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 
 import useToggle from "../../hooks/useToggle";
-import { cn } from "../../lib/utils";
+import { cn, handleNavigate } from "../../lib/utils";
 import {
   DestinationOriginProps,
   useDestination,
@@ -147,10 +147,10 @@ const FlightForm: React.FC<Props> = ({
     });
 
     if (!tab) {
-      navigate({
-        pathname: "/flight/list",
-        search: `?${qParams}`,
-      });
+      handleNavigate(
+        "/pages/ListPenerbangan/index",
+        `?${qParams}`
+      );
     } else {
       const latestData = await refetch();
       const flightRawData = latestData?.data?.data
@@ -164,21 +164,17 @@ const FlightForm: React.FC<Props> = ({
         return toggleVisibleError();
       } else {
         if (hasMultipleFlights) {
-          navigate(
-            {
-              pathname: "/flight/list",
-              search: `?id=${IdPlane}&date=${dateFlight}`,
-            },
-            {
-              state: { flightsByNumberData: flightRawData },
-            }
+          handleNavigate(
+            "/pages/ListPenerbangan/index",
+            `?id=${IdPlane}&date=${dateFlight}`,
+            { flightsByNumberData: flightRawData }
           );
         } else {
           const foundFlight = flightRawData?.flights[0];
-          return navigate({
-            pathname: "/flight/detail",
-            search: `?id=${IdPlane}&date=${dateFlight}&departure=${foundFlight.departure_code}&arrival=${foundFlight.arrival_code}`,
-          });
+          return handleNavigate(
+            "/pages/DetailPenerbangan/index",
+            `?id=${IdPlane}&date=${dateFlight}&departure=${foundFlight.departure_code}&arrival=${foundFlight.arrival_code}`
+          );
         }
       }
     }
