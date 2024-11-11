@@ -33,7 +33,12 @@ const FlightSearchResult: React.FC<Props> = ({ onSelect, data }) => {
     );
 
   return (
-    <RenderVerticalList data={data} keyIndex="id" pageSize={18}>
+    <RenderVerticalList
+      data={data}
+      keyIndex="id"
+      pageSize={18}
+      containerClassName="h-[85vh]"
+    >
       {(item, index) => (
         <div
           className="border-b border-[#DAE0E9] cursor-pointer"

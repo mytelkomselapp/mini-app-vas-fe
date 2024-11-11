@@ -4,6 +4,7 @@ import { cn } from "../../lib/utils";
 import style from "./RenderVerticalList.module.css";
 import Show from "../Show";
 import { Waypoint } from "react-waypoint";
+import CustomInterceptor from "../CustomInterceptor";
 
 const RenderVerticalList: React.FC<RenderVerticalListProps> = ({
   data,
@@ -65,7 +66,10 @@ const RenderVerticalList: React.FC<RenderVerticalListProps> = ({
           </React.Suspense>
         </React.Fragment>
       ))}
-      <Waypoint onEnter={handleInterceptLoadMore} bottomOffset={bottomOffset} />
+      <Show when={!showLoadMore}>
+        <CustomInterceptor onEnter={handleInterceptLoadMore} />
+      </Show>
+      {/* <Waypoint onEnter={handleInterceptLoadMore} bottomOffset={bottomOffset} /> */}
       <Show when={showLoadMore}>
         <Show when={!!customLoadMoreComponent}>{customLoadMoreComponent}</Show>
         <Show when={!customLoadMoreComponent}>
