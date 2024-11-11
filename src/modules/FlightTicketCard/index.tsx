@@ -48,7 +48,7 @@ const FlightTicketCard: React.FC<FlightTicket> = ({ ticket }) => {
           </p>
         </div>
         <div>
-          <img src={ChevronRight} />
+          <img src={ChevronRight} className="w-6 h-6" />
         </div>
       </div>
     </div>
