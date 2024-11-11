@@ -1,6 +1,6 @@
 import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
 import Show from "../../components/Show";
-import { cn } from "../../lib/utils";
+import { cn, getNavigateState } from "../../lib/utils";
 import FlightInfoCard from "../../modules/FlightInfocard";
 import FlightRoamaxCard from "../../modules/FlightRoamaxCard";
 import NotFound from "../../assets/not_found.svg";
@@ -9,6 +9,8 @@ import { useFetchFlightByCity } from "../../network";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import LoadingScreen from "../../components/LoadingScreen";
+import { useMemo } from "react";
+import Taro from "@tarojs/taro";
 
 const ListPenerbangan = () => {
   const originId = "2139";
@@ -23,8 +25,10 @@ const ListPenerbangan = () => {
   );
   const dateLabel = moment(date).format("DD MMMM YYYY");
 
-  const location = useLocation();
-  const passedFlightsData = location.state?.flightsByNumberData;
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
+
+  const passedFlightsData = state?.flightsByNumberData;
   const bypassAPICall = !!passedFlightsData;
 
   const flightData = flightRawData?.data;
