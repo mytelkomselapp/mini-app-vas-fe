@@ -70,10 +70,7 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
               <>
                 <Image
                   src={hasError ? Plane : srcPlane}
-                  style={{
-                    width: '1.5rem',
-                    height: '1.5rem',
-                  }}
+                  className="w-6 h-6"
                   key={flightDetail?.flight_no}
                   onError={handleImageError}
                 />
