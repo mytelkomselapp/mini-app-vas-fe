@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AirplaneWithLine from "../../assets/airplane-with-line.svg";
 import { cardClick } from "../../network/analytics/tracker";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,12 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
   flightDetail,
   isRoamaxEligible,
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const [hasError, setHasError] = useState(false);
+  const [srcPlane, setSrcPlane] = useState(IcoPlane);
+  const [classNamePlane, setClassNamePlane] = useState(
+    "!w-[1.5rem] !h-[1.5rem]"
+  );
 
   const { className, label } = flightStateAttribute(flightDetail?.flight_state);
 
@@ -47,10 +52,14 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
     );
   };
 
-  const handleImageError = (
-    event: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    event.currentTarget.src = IcoPlane;
+  useEffect(() => {
+    setSrcPlane(flightDetail?.flight_logo);
+  }, [flightDetail]);
+
+  const handleImageError = () => {
+    setSrcPlane(Plane);
+    setClassNamePlane("!w-6 !h-6");
+    setHasError(true);
   };
   return (
     <div onClick={() => handleOnClick()}>
@@ -59,8 +68,8 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
           <div className="flex items-center gap-[8px]">
             {flightDetail?.flight_logo ? (
               <>
-                <img
-                  src={flightDetail?.flight_logo}
+                <Image
+                  src={hasError ? Plane : srcPlane}
                   style={{
                     width: '1.5rem',
                     height: '1.5rem',
