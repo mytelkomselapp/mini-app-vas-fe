@@ -35,7 +35,7 @@ const FlightFollowing: React.FC<Props> = ({ data, classNameProps }) => {
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           background: "rgba(238, 238, 238, 0.44)",
-          height: 303,
+          height: 338,
           margin: "16px 0 0 0",
           display: "flex",
         }}
@@ -46,7 +46,7 @@ const FlightFollowing: React.FC<Props> = ({ data, classNameProps }) => {
             "Followed Flights",
             window.location.pathname
           );
-          return handleNavigate(  
+          return handleNavigate(
             "/pages/DetailPenerbangan/index",
             `?id=${idPlane}&date=${dateFlight}&departure=${departureCode}&arrival=${arrivalCode}`,
             { flightDetail: data?.flight }
