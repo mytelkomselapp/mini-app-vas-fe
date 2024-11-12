@@ -15,6 +15,10 @@ import { ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 
 const LandingPagePesawat = () => {
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+
+  const [scrollElement, setScrollElement] = React.useState<string>("");
+
   const { mutateAsync: claimFreeTicket, isSuccess } = usePostClaimFreeTicket();
   const { data: dataRaw, isFetching: fetchingCMSLandingPage } =
     useFetchCMSLandingPage();
@@ -55,6 +59,12 @@ const LandingPagePesawat = () => {
   //   }
   // }, [dataTrackFlights]);
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setScrollElement("test-scroll");
+    }, 5000);
+  }, []);
+
   return (
     <React.Fragment>
       <View
@@ -69,11 +79,16 @@ const LandingPagePesawat = () => {
           </View>
 
           <ScrollView
+            fastDeceleration
+            enhanced
             className="w-[90vw] h-auto flex"
             scrollX
-            onScroll={handleScroll} // Handle scroll event
+            scrollAnimationDuration="0"
+            scrollWithAnimation={false}
+            scrollIntoView={scrollElement}
           >
             <View
+              ref={wrapperRef}
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -94,6 +109,7 @@ const LandingPagePesawat = () => {
               {!isLoading &&
                 nearestThreeFlight?.map((flight, index) => (
                   <View
+                    id="test-scroll"
                     key={index}
                     className="w-[300px] h-[auto] mx-2" // Set a fixed height for consistency
                     style={{
