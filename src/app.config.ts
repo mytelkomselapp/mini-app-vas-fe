@@ -5,12 +5,13 @@ export default {
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
     "pages/MyTicketList/index",
+    "pages/TransactionStatus/index",
     // other pages...
   ],
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "WeChat",
+    navigationBarTitleText: "Pantau Penerbangan",
     navigationBarTextStyle: "black",
   },
 };

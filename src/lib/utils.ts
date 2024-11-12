@@ -110,7 +110,11 @@ export const isValidEmail = (value: string) => {
   return false;
 };
 
-export const handleNavigate = (pathname: string, search: string, state?: any) => {
+export const handleNavigate = (
+  pathname: string,
+  search: string = "",
+  state?: any
+) => {
   if (state) {
     Taro.setStorageSync(pathname, state);
   }
@@ -132,7 +136,7 @@ export const TaroStorage: StateStorage = {
 };
 
 export const getNavigateState = (pathname: string) => {
-  const _pathname = pathname.startsWith('/') ? pathname : '/' + pathname;
+  const _pathname = pathname.startsWith("/") ? pathname : "/" + pathname;
   const state = Taro.getStorageSync(_pathname);
   Taro.removeStorageSync(_pathname);
   return state;

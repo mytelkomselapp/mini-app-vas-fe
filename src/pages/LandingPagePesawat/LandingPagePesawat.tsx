@@ -34,12 +34,14 @@ const LandingPagePesawat = () => {
       new Date(a?.flight?.departure_time) - new Date(b?.flight?.departure_time)
   );
   const nearestThreeFlight = nearestFlight?.slice(0, 3);
-
+  const sliderItems = [...Array(nearestThreeFlight.length + 2).keys()];
   const handleScroll = (e, forceValue) => {
     const scrollLeft = forceValue || e.detail.scrollLeft;
     const slideWidth = 300; // Adjust based on your slide width
     const newSlide = Math.round(scrollLeft / slideWidth);
-    setCurrentSlide(newSlide);
+    if (newSlide <= sliderItems?.length - 1) {
+      setCurrentSlide(newSlide);
+    }
   };
 
   React.useEffect(() => {
@@ -109,7 +111,7 @@ const LandingPagePesawat = () => {
 
               {!isLoading && nearestFlight?.length > 0 && (
                 <View
-                  className="w-[300px] h-[390px] ml-2 !mr-9" // Set a fixed height for consistency
+                  className="w-[300px] h-[390px] ml-2 " // Set a fixed height for consistency
                   style={{
                     height: "390px", // Ensure all cards have the same height
                   }}
@@ -125,7 +127,7 @@ const LandingPagePesawat = () => {
 
           {/* Dot Indicator */}
           <View className="flex justify-center mt-2 mb-4 items-center gap-1">
-            {[...Array(nearestThreeFlight.length + 2).keys()].map((_, i) => (
+            {sliderItems.map((_, i) => (
               <View
                 key={i}
                 className={`w-[6px] h-[6px] rounded-full ${

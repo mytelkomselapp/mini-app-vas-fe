@@ -1,3 +1,7 @@
 import TransactionStatus from "./TransactionStatus";
 
-export default TransactionStatus;
+const Index = () => {
+  return <TransactionStatus />;
+};
+
+export default Index;

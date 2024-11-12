@@ -4,6 +4,7 @@ import Taro from "@tarojs/taro";
 import DetailPenerbangan from "../DetailPenerbangan";
 import ListPenerbangan from "../ListPenerbangan";
 import LandingPagePesawat from "../LandingPagePesawat";
+import TransactionStatus from "../TransactionStatus/TransactionStatus";
 export const COMMERCE_TRAVEL = "/travel";
 export const FLIGHT_SPECIFIC = "/flight-specific";
 
@@ -30,6 +31,10 @@ const Index = () => {
         <Route
           path="../LandingPagePesawat/index"
           element={<LandingPagePesawat />}
+        />
+        <Route
+          path="../TransactionStatus/index"
+          element={<TransactionStatus />}
         />
       </Routes>
     </>
