@@ -22,7 +22,9 @@ const getButtonStyle = (style: string): string => {
     case "primary":
       return base + "bg-solidRed text-white";
     case "secondary":
-      return base + "bg-white text-solidRed border border-solidRed";
+      return (
+        base + "bg-white text-solidRed border-solid border border-solidRed"
+      );
     case "disabled":
       return (
         base +

@@ -14,6 +14,12 @@ import {
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import circleCheck from "./iconPaymentAssets/circle-check.svg";
+import cross from "./iconPaymentAssets/cross.svg";
+import hollowWhite from "./iconPaymentAssets/hollow-white.svg";
+import hollow from "./iconPaymentAssets/hollow.svg";
+import chevronRed from "./iconPaymentAssets/chevron-red.svg";
+import { View } from "@tarojs/components";
 
 const TransactionStatus = () => {
   interface PropTypes {
@@ -87,14 +93,14 @@ const TransactionStatus = () => {
     switch (buyDetail?.isActive) {
       case "payment-success":
         return {
-          icon: <img src={Thumbs} />,
+          icon: <img src={Thumbs} className="w-[88px] h-[88px]" />,
           title: "Transaksi Berhasil",
           subtitle: "Pembayaran kamu berhasil, paket telah diaktifkan",
           status: buyDetail?.isActive,
         };
       case "payment-failed":
         return {
-          icon: <img src={Failed} />,
+          icon: <img src={Failed} className="w-[88px] h-[88px]" />,
           title: "Pembayaran Gagal",
           subtitle:
             "Verifikasi pembayaran tidak berhasil, silahkan ulangi pembayaran",
@@ -103,7 +109,7 @@ const TransactionStatus = () => {
       case "payment-waiting":
       case "payment-pending":
         return {
-          icon: <img src={Pending} />,
+          icon: <img src={Pending} className="w-[88px] h-[88px]" />,
           title: "Transaksi dalam Proses",
           subtitle: "Mohon menuggu verifikasi pembayaran dan aktivasi paket",
           status: buyDetail?.isActive,
@@ -134,7 +140,7 @@ const TransactionStatus = () => {
   }, []);
 
   return (
-    <>
+    <View>
       <div className="text-[16px] font-sans bg-[#EFF1F4] flex flex-col items-center justify-center pt-4">
         Status Pembayaran
       </div>
@@ -180,7 +186,7 @@ const TransactionStatus = () => {
                 </li>
 
                 <div className="absolute left-2 right-0 top-0 bottom-0">
-                  <img src={Stroke} />
+                  <Stroke />
                 </div>
                 <li className="flex items-center mt-[24px]">
                   <Circle
@@ -262,32 +268,20 @@ const TransactionStatus = () => {
                 </span>
               </p>
             </div>
-            <p className="text-xs text-[#353941] mt-[32px]">
-              Punya pertanyaan tentang transaksi ini?
-            </p>
-            <p
-              className="text-xs text-solidRed mt-2 flex mb-[37px]"
-              onClick={() =>
-                window.open("https://my.telkomsel.com/app/chatbot", "_blank")
-              }
-            >
-              {"Dapatkan Bantuan"}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="ml-[1px]"
+            <div className="px-4">
+              <p className="text-xs text-[#353941] mt-[32px]">
+                Punya pertanyaan tentang transaksi ini?
+              </p>
+              <p
+                className="text-xs text-solidRed mt-2 flex mb-[37px]"
+                onClick={() =>
+                  window.open("https://my.telkomsel.com/app/chatbot", "_blank")
+                }
               >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M10.5075 7.56648C10.7215 7.81614 10.7215 8.18454 10.5075 8.4342L6.50747 13.1009C6.26786 13.3804 5.84699 13.4128 5.56744 13.1732C5.28789 12.9336 5.25552 12.5127 5.49513 12.2331L9.12325 8.00034L5.49513 3.76753C5.25552 3.48798 5.28789 3.06711 5.56744 2.8275C5.84699 2.58788 6.26786 2.62026 6.50747 2.89981L10.5075 7.56648Z"
-                  fill="#FF0025"
-                />
-              </svg>
-            </p>
+                {"Dapatkan Bantuan"}
+                <img src={chevronRed} alt="arrow" className="w-4 h-4" />
+              </p>
+            </div>
           </div>
         </div>
         <div className="text-center bg-white p-4">
@@ -346,7 +340,7 @@ const TransactionStatus = () => {
         </button> */}
         </div>
       </Show>
-    </>
+    </View>
   );
 };
 
@@ -368,67 +362,13 @@ const Circle = ({
       }`}
     >
       {type === "hollow" ? (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.8 8C4.8 9.76731 6.23269 11.2 8 11.2C9.76731 11.2 11.2 9.76731 11.2 8C11.2 6.23269 9.76731 4.8 8 4.8C6.23269 4.8 4.8 6.23269 4.8 8Z"
-            fill="#008E53"
-          />
-        </svg>
+        <img src={hollow} alt="hollow" />
       ) : type === "hollow-white" ? (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="Component 2">
-            <path
-              id="on process"
-              d="M13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8Z"
-              fill="#FAFAFB"
-              stroke="#EDECF0"
-              stroke-width="5"
-            />
-          </g>
-        </svg>
+        <img src={hollowWhite} alt="hollow-white" />
       ) : type === "cross" ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.0828 4.91716C10.9266 4.76095 10.6734 4.76095 10.5172 4.91716L8 7.43431L5.48284 4.91716C5.32663 4.76095 5.07337 4.76095 4.91716 4.91716C4.76095 5.07337 4.76095 5.32663 4.91716 5.48284L7.43432 8L4.91716 10.5172C4.76095 10.6734 4.76095 10.9266 4.91716 11.0828C5.07337 11.2391 5.32663 11.2391 5.48284 11.0828L8 8.56569L10.5172 11.0828C10.6734 11.2391 10.9266 11.2391 11.0828 11.0828C11.2391 10.9266 11.2391 10.6734 11.0828 10.5172L8.56569 8L11.0828 5.48284C11.2391 5.32663 11.2391 5.07337 11.0828 4.91716Z"
-            fill="#B70F17"
-          />
-        </svg>
+        <img src={cross} alt="cross" />
       ) : (
-        <svg
-          className="text-white w-3 h-3"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M5 13l4 4L19 7"
-          ></path>
-        </svg>
+        <img src={circleCheck} alt="circle-check" />
       )}
     </div>
   );

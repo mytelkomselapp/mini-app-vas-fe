@@ -5,6 +5,7 @@ export default {
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
     "pages/MyTicketList/index",
+    "pages/TransactionStatus/index",
     // other pages...
   ],
   window: {
