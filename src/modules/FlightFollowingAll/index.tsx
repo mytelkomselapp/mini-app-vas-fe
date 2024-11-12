@@ -72,9 +72,13 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
               }}
             >
               <div className="flex items-center gap-1">
-                <p className="font-semibold">{val?.flight?.departure_code}</p>
+                <p className="font-semibold text-sm">
+                  {val?.flight?.departure_code}
+                </p>
                 <img src={ArrowRight} className="w-4 h-4" />
-                <p className="font-semibold">{val?.flight?.arrival_code}</p>
+                <p className="font-semibold text-sm">
+                  {val?.flight?.arrival_code}
+                </p>
               </div>
               <div>
                 <p className="text-[10px] text-grey">
