@@ -119,7 +119,6 @@ const FlightForm: React.FC<Props> = ({
 
   /*forbidden means that user already have a package*/
   const isPremium = viewPageAction === "forbidden" && !isNewUser;
-  console.log({ viewPageAction, isNewUser });
 
   const activeTabClassName = (index: number, tab: number) => {
     return tab === index ? "font-semibold border-rute-active" : "opacity-[0.6]";
