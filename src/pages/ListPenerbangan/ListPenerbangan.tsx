@@ -86,15 +86,15 @@ const ListPenerbangan = () => {
                   "pb-[52px]": index === flightList.length - 1,
                 })}
               >
-                <Show when={index === 3}>
+                {/* <Show when={index === 3}>
                   <div className="pb-4">
                     <FlightRoamaxCard isEligible={true} key={`roamax-${index}`} />
                   </div>
-                </Show>
+                </Show> */}
                 <FlightInfoCard
                   key={item.flight_no}
                   flightDetail={item}
-                  isRoamaxEligible={index < 2}
+                  isRoamaxEligible={false}
                 />
               </div>
             )}
