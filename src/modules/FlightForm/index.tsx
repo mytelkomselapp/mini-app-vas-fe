@@ -119,7 +119,6 @@ const FlightForm: React.FC<Props> = ({
 
   /*forbidden means that user already have a package*/
   const isPremium = viewPageAction === "forbidden" && !isNewUser;
-  console.log({ viewPageAction, isNewUser });
 
   const activeTabClassName = (index: number, tab: number) => {
     return tab === index ? "font-semibold border-rute-active" : "opacity-[0.6]";
@@ -213,11 +212,11 @@ const FlightForm: React.FC<Props> = ({
     packageType === "unlimited" ? "Unlimited" : `Tersisa ${remainingQuota}x`;
 
   return (
-    <View className="w-[308px] h-[308px]">
-      <div className="mt-4">
+    <View className="w-[308px] h-[310px]">
+      <div className="mt-2">
         {isPremium && (
           <div
-            className="bg-gray-800 text-white py-2 px-4 rounded-t-[20px] h-[50px] text-center gap-2 flex justify-center pt-[13px] relative z-0"
+            className="bg-gray-800 text-white pb-2 px-4 rounded-t-[20px] h-[50px] text-center gap-2 flex justify-center pt-[8px] relative z-0"
             style={{
               backgroundBlendMode: "color-dodge, normal",
               backdropFilter: "blur(20px)",
@@ -242,7 +241,7 @@ const FlightForm: React.FC<Props> = ({
             //  backdropFilter: "blur(12px)",
             //WebkitBackdropFilter: "blur(12px)",
             background: "rgb(128, 133, 148)",
-            height: 303,
+            height: 317,
           }}
         >
           <div className="mb-4 flex gap-[10px] z-1 relative">

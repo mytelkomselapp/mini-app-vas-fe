@@ -22,7 +22,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           background: "rgba(238, 238, 238, 0.44)",
-          height: 303,
+          height: 340,
         }}
       >
         <div

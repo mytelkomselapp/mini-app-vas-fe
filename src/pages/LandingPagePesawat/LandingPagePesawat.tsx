@@ -11,18 +11,20 @@ import { screenView } from "../../network/analytics/tracker";
 import FlightFollowing from "../../modules/FlightFollowing";
 import FlightFollowingAll from "../../modules/FlightFollowingAll";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
-import { ScrollView, View } from "@tarojs/components";
+import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 
 const LandingPagePesawat = () => {
-  const wrapperRef = React.useRef<HTMLDivElement>(null);
-
   const [scrollElement, setScrollElement] = React.useState<string>("");
 
   const { mutateAsync: claimFreeTicket, isSuccess } = usePostClaimFreeTicket();
   const { data: dataRaw, isFetching: fetchingCMSLandingPage } =
     useFetchCMSLandingPage();
-  const { data: dataRawTrackFlights, isLoading } = useFetchFlightTrack();
+  const {
+    data: dataRawTrackFlights,
+    isLoading,
+    isFetched,
+  } = useFetchFlightTrack();
   const { buyPackageStatus: viewPageAction, data } =
     useUserPackageStatus(isSuccess);
 
@@ -39,7 +41,10 @@ const LandingPagePesawat = () => {
   );
   const nearestThreeFlight = nearestFlight?.slice(0, 3);
   const sliderItems = [...Array(nearestThreeFlight.length + 2).keys()];
-  const handleScroll = (e, forceValue) => {
+  const handleScroll = (
+    e: BaseEventOrig<{ scrollLeft: number }>,
+    forceValue?: number
+  ) => {
     const scrollLeft = forceValue || e.detail.scrollLeft;
     const slideWidth = 300; // Adjust based on your slide width
     const newSlide = Math.round(scrollLeft / slideWidth);
@@ -53,17 +58,12 @@ const LandingPagePesawat = () => {
     claimFreeTicket();
   }, []);
 
-  // React.useEffect(() => {
-  //   if (dataTrackFlights) {
-  //     handleScroll(null, 300);
-  //   }
-  // }, [dataTrackFlights]);
-
   React.useEffect(() => {
-    setTimeout(() => {
-      setScrollElement("test-scroll");
-    }, 5000);
-  }, []);
+    if (isFetched && dataTrackFlights?.length) {
+      setCurrentSlide(1);
+      setScrollElement("scroll-to-0");
+    }
+  }, [isFetched, dataTrackFlights]);
 
   return (
     <React.Fragment>
@@ -86,9 +86,9 @@ const LandingPagePesawat = () => {
             scrollAnimationDuration="0"
             scrollWithAnimation={false}
             scrollIntoView={scrollElement}
+            onScroll={handleScroll}
           >
             <View
-              ref={wrapperRef}
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -109,7 +109,7 @@ const LandingPagePesawat = () => {
               {!isLoading &&
                 nearestThreeFlight?.map((flight, index) => (
                   <View
-                    id="test-scroll"
+                    id={`scroll-to-${index}`}
                     key={index}
                     className="w-[300px] h-[auto] mx-2" // Set a fixed height for consistency
                     style={{
