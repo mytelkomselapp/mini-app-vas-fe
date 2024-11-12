@@ -8,6 +8,7 @@ import { useFetchWeboptinToken, usePostErrorBuyPackage } from "../../network";
 import { useWeboptinTokenData } from "../../store/flight";
 import { toast } from "../../components/ui/use-toast";
 import { screenView } from "../../network/analytics/tracker";
+import Taro from "@tarojs/taro";
 
 interface Package {
   state: {
@@ -57,7 +58,12 @@ const PackageDetail: React.FC = () => {
         setSid(package_id);
 
         if (tokenData) {
-          window.open(tokenData?.data?.url, "_self");
+          Taro.navigateTo({
+            url:
+              "/pages/Webview/index?url=" +
+              encodeURIComponent(tokenData?.data?.url),
+          });
+          //  window.open(tokenData?.data?.url, "_self");
           return;
         }
       } else {

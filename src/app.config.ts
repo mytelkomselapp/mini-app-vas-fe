@@ -6,6 +6,7 @@ export default {
     "pages/DetailPenerbangan/index",
     "pages/MyTicketList/index",
     "pages/TransactionStatus/index",
+    "pages/Webview/index",
     // other pages...
   ],
   window: {
