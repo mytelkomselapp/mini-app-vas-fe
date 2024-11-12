@@ -147,10 +147,7 @@ const FlightForm: React.FC<Props> = ({
     });
 
     if (!tab) {
-      handleNavigate(
-        "/pages/ListPenerbangan/index",
-        `?${qParams}`
-      );
+      handleNavigate("/pages/ListPenerbangan/index", `?${qParams}`);
     } else {
       const latestData = await refetch();
       const flightRawData = latestData?.data?.data
@@ -495,8 +492,8 @@ export const FreemiumLimitModal = ({
   return (
     <BottomSheet open={open} onClose={onClose}>
       <div className="flex justify-center flex-col text-center items-center">
-        <img src={FreemiumFlight} className="my-2" />
-        <span className="text-base font-semibold font-sans mt-2 max-w-[332px]">
+        <img src={FreemiumFlight} className="my-2 w-[121.86px] h-[99.247px]" />
+        <span className="text-[16px] font-semibold font-sans mt-2 max-w-[332px]">
           Nikmati fitur ikuti penerbangan dan info penerbangan terkini
         </span>
         <span className="text-grey text-xs font-normal font-sans whitespace-pre my-1">
