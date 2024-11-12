@@ -20,6 +20,7 @@ import hollowWhite from "./iconPaymentAssets/hollow-white.svg";
 import hollow from "./iconPaymentAssets/hollow.svg";
 import chevronRed from "./iconPaymentAssets/chevron-red.svg";
 import { View } from "@tarojs/components";
+import { handleNavigate } from "../../lib/utils";
 
 const TransactionStatus = () => {
   interface PropTypes {
@@ -300,9 +301,7 @@ const TransactionStatus = () => {
                   "Flight Tracking Status Payment",
                   "/payment-status"
                 );
-                navigate({
-                  pathname: "/flight/package",
-                });
+                handleNavigate("/pages/SubscriptionPackage/index");
               } else {
                 buttonClick(
                   "Check Flight",
@@ -310,9 +309,7 @@ const TransactionStatus = () => {
                   "Flight Tracking Status Payment",
                   "/payment-status"
                 );
-                navigate({
-                  pathname: "/flight/list-following",
-                });
+                handleNavigate("/pages/FlightFollowing/index");
               }
             }}
           />
@@ -327,9 +324,7 @@ const TransactionStatus = () => {
                 "Flight Tracking Status Payment",
                 "/payment-status"
               );
-              navigate({
-                pathname: "/flight",
-              });
+              handleNavigate("/pages/LandingPagePesawat/index");
             }}
           />
           {/* <button className="bg-red-500 text-white py-2 px-4 rounded-full mb-2 w-full">
