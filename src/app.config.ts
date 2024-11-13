@@ -7,6 +7,8 @@ export default {
     "pages/MyTicketList/index",
     "pages/TransactionStatus/index",
     "pages/Webview/index",
+    "pages/SubscriptionPackage/index",
+    "pages/PackageDetail/index",
     // other pages...
   ],
   window: {

@@ -82,7 +82,7 @@ const FlightPackageList: React.FC<Props> = ({ data, onClick, isLoading }) => {
               <div className="flex flex-row justify-between">
                 <div className="flex-col flex">
                   <div className="bg-[#EFEFFF] px-2 py-[2px] w-max rounded-lg flex justify-center items-center mb-2 gap-1">
-                    <img src={PlaneIcon} />
+                    <img className="w-[18px] h-[18px]" src={PlaneIcon} />
                     <span className="text-[10px] text-[#14278C] font-sans">
                       Paket Travel
                     </span>

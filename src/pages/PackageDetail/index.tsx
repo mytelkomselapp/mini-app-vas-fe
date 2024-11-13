@@ -1,3 +1,7 @@
 import PackageDetail from "./PackageDetail";
 
-export default PackageDetail
+const Index = () => {
+  return <PackageDetail />;
+};
+
+export default Index;

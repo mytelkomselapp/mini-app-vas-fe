@@ -1,3 +1,7 @@
 import SubscriptionPackage from "./SubscriptionPackage";
 
-export default SubscriptionPackage;
+const Index = () => {
+  return <SubscriptionPackage />;
+};
+
+export default Index;
