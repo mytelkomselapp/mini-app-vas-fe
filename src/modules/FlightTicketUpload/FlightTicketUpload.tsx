@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { buttonClick } from "../../network/analytics/tracker";
 import { ExtFile } from "@files-ui/react";
+import { Image, ITouchEvent } from "@tarojs/components";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -50,10 +51,8 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     toggleVisibleUploadMedia(true);
   };
 
-  const handleDeleteImage = async (
-    event: React.SyntheticEvent<HTMLOrSVGElement>
-  ) => {
-    event.stopPropagation();
+  const handleDeleteImage = async () => {
+    // event.stopPropagation();
 
     buttonClick("Delete E-Ticket", "Delete E-Ticket", "Create ticket");
 
@@ -138,7 +137,10 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           })}
         >
           <div className="flex gap-x-4 items-center">
-            <img src={IconTicketUpload} />
+            <Image
+              src={IconTicketUpload}
+              style={{ width: "48px", height: "49px" }}
+            />
             <Show
               when={isTicketUploaded}
               fallbackComponent={<p>Upload E-Ticket</p>}
@@ -158,18 +160,27 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           <div>
             <Show
               when={isTicketUploaded && !loadingDeleteETicket}
-              fallbackComponent={<img src={IconPlus} />}
+              fallbackComponent={
+                <Image
+                  src={IconPlus}
+                  style={{ width: "24px", height: "25px" }}
+                />
+              }
             >
-              <img src={IconDelete} onClick={handleDeleteImage} />
+              <Image
+                src={IconDelete}
+                style={{ width: "24px", height: "24px" }}
+                onClick={handleDeleteImage}
+              />
             </Show>
           </div>
         </div>
 
-        <SelectUploadMedia
+        {/* <SelectUploadMedia
           open={visibleUploadMedia}
           onClose={() => toggleVisibleUploadMedia(false)}
           onSelectImage={handleSelectImage}
-        />
+        /> */}
       </div>
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>

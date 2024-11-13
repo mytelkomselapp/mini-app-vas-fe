@@ -1,19 +1,11 @@
-import LoadingScreen from "../../components/LoadingScreen";
-import { screenView } from "../../network/analytics/tracker";
-import * as React from "react";
 
-const CreateDetailTicketLazy = React.lazy(() => import("./CreateDetailTicket"));
+import CreateDetailTicket from "./CreateDetailTicket";
 
-const CreateDetailTicketPage: React.FC = () => {
-  React.useEffect(() => {
-    screenView("Create Ticket"); //fire screen view tracker
-  }, []);
-
-  return (
-    <React.Suspense fallback={<LoadingScreen text="Loading..." />}>
-      <CreateDetailTicketLazy />
-    </React.Suspense>
-  );
+const Index = () => {
+    return (
+        <CreateDetailTicket />
+    );
 };
 
-export default CreateDetailTicketPage;
+export default Index;
+

@@ -168,9 +168,7 @@ const DetailPesawat = () => {
     setDepartureDate(flightDate);
     const flightId = dataFollowFlight?.data?.flight_id;
 
-    Taro.navigateTo({
-      url: "/pages/CreateDetailTicket/index/" + flightId,
-    });
+    handleNavigate("/pages/CreateDetailTicket/index", "?flight_id=" + flightId);
   };
 
   useEffect(() => {
