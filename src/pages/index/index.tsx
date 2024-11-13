@@ -5,6 +5,7 @@ import DetailPenerbangan from "../DetailPenerbangan";
 import ListPenerbangan from "../ListPenerbangan";
 import LandingPagePesawat from "../LandingPagePesawat";
 import TransactionStatus from "../TransactionStatus/TransactionStatus";
+import CreateDetailTicket from "../CreateDetailTicket";
 export const COMMERCE_TRAVEL = "/travel";
 export const FLIGHT_SPECIFIC = "/flight-specific";
 
@@ -35,6 +36,10 @@ const Index = () => {
         <Route
           path="../TransactionStatus/index"
           element={<TransactionStatus />}
+        />
+        <Route
+          path="../CreateDetailTicket/index"
+          element={<CreateDetailTicket />}
         />
       </Routes>
     </>

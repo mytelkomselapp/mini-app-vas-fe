@@ -1,3 +1,4 @@
+import { Text, View } from "@tarojs/components";
 import Button from "../../components/Button";
 import ContainerViewPort from "../../components/ContainerViewPort";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -16,14 +17,20 @@ import { useFlightTicketForm } from "../../store/flight";
 import moment from "moment";
 import * as React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Taro from "@tarojs/taro";
+import { useMemo } from "react";
+import { getNavigateState } from "../../lib/utils";
 
 const CreateDetailTicket: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { flight_id } = useParams<{ flight_id: string }>();
-  const stateData = location?.state?.ticket as FlightETicketByFlightIdData;
+  const flight_id = Taro.getCurrentInstance().router?.params?.flight_id;
+  console.log(flight_id, "flight_id");
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
+  const stateData = state?.ticket as FlightETicketByFlightIdData;
 
-  const pageMode = location.pathname.includes("detail") ? "detail" : "create";
+  const pageMode = currentPath.includes("detail") ? "detail" : "create";
+
   const pageTitle = pageMode === "detail" ? "Detail My Ticket" : "Tambah Tiket";
 
   const isDetailMode = pageMode === "detail";
@@ -137,17 +144,17 @@ const CreateDetailTicket: React.FC = () => {
 
   return (
     <ContainerViewPort>
-      <div className="flex flex-col justify-between bg-inactiveGrey w-full py-8 px-[16px] h-full overflow-hidden">
+      <View className="flex flex-col justify-between bg-inactiveGrey py-4 px-[16px] h-full overflow-hidden">
         <form encType="multipart/form-data">
           <div>
-            <Navbar
+            {/* <Navbar
               onBackCallback={handleBackCallback}
               hiddenAction
               title={pageTitle}
               className="my-0"
-            />
+            /> */}
 
-            <div className="flex flex-col my-[16px] rounded-[16px] bg-white min-h-[50px] p-4">
+            <div className="flex flex-col my-[8px] rounded-[16px] bg-white min-h-[50px] p-4">
               <FlightTicketForm pageMode={pageMode} />
               <FlightTicketUpload
                 pageMode={pageMode}
@@ -157,16 +164,16 @@ const CreateDetailTicket: React.FC = () => {
           </div>
         </form>
 
-        <Show when={!dataETicketByFlightId && !isDetailMode}>
+        {/* <Show when={!dataETicketByFlightId && !isDetailMode}> */}
           <Button label="Simpan" onClick={handleButtonClick} />
-        </Show>
+        {/* </Show> */}
 
-        <FlightTicketCreateSuccessModal
+        {/* <FlightTicketCreateSuccessModal
           open={visibleCreateSuccessModal}
           onClose={toggleVisibleCreateSuccessModal}
           onClickCTA={handleRedirectMyTicket}
-        />
-      </div>
+        /> */}
+      </View>
     </ContainerViewPort>
   );
 };

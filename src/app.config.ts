@@ -9,6 +9,7 @@ export default {
     "pages/Webview/index",
     "pages/SubscriptionPackage/index",
     "pages/PackageDetail/index",
+    "pages/CreateDetailTicket/index",
     // other pages...
   ],
   window: {

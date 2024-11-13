@@ -5,6 +5,7 @@ import useToggle from "../../hooks/useToggle";
 import { CalendarModal } from "../FlightForm";
 import moment from "moment";
 import { cn } from "../../lib/utils";
+import { Image } from "@tarojs/components";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -90,8 +91,9 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
           placeholder="Tanggal Pergi"
           onClick={isDetailMode ? undefined : handleOpenCalendarModal}
         />
-        <img
+        <Image
           src={IconCalendar}
+          style={{ width: "20px", height: "20px" }}
           className="absolute right-4 cursor-pointer"
           onClick={isDetailMode ? undefined : handleOpenCalendarModal}
         />

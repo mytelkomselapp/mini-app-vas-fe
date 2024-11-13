@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import Taro from "@tarojs/taro";
 
 type WindowResizeResult = {
   width: number;
@@ -6,30 +7,30 @@ type WindowResizeResult = {
 };
 
 /**
- * Hooks to get window width & height on resize layout
+ * Hook to get window width & height on resize layout for Taro
  * @returns {Object} `width` & `height`
  */
 const useWindowResize = (): WindowResizeResult => {
-  // Create initial width
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
-  // Create initial height
-  const [height, setHeight] = useState<number>(window.innerHeight);
+  // Get initial dimensions from Taro system info
+  const systemInfo = Taro.getSystemInfoSync();
+  
+  const [width, setWidth] = useState<number>(systemInfo.windowWidth);
+  const [height, setHeight] = useState<number>(systemInfo.windowHeight);
 
   useEffect(() => {
-    /**
-     * Get width & height on resize
-     */
     const updateSize = () => {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
+      const info = Taro.getSystemInfoSync();
+      setWidth(info.windowWidth);
+      setHeight(info.windowHeight);
     };
 
-    // Create event resize listener
-    window.addEventListener("resize", updateSize);
+    // Use Taro's event system
+    Taro.onWindowResize(updateSize);
 
-    // Destroy resize event listener on unmounted
-    return () => window.removeEventListener("resize", updateSize);
+    // Cleanup listener
+    return () => {
+      Taro.offWindowResize(updateSize);
+    };
   }, []);
 
   return { width, height };
