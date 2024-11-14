@@ -1,11 +1,12 @@
 import * as React from "react";
-import BottomSheet from "../../components/BottomSheet";
-import IconNews from "../../assets/icon-news.svg";
-import IconImage from "../../assets/ico-image.svg";
+import BottomSheet from "../../../../components/BottomSheet";
+import IconNews from "../../../../assets/icon-news.svg";
+import IconImage from "../../../../assets/ico-image.svg";
 import { FileInputButton, ExtFile } from "@files-ui/react";
-import { toast } from "../../components/ui/use-toast";
-import { buttonClick } from "../../network/analytics/tracker";
-import { getMobileOperatingSystem } from "../../lib/utils";
+import { toast } from "../../../../components/ui/use-toast";
+import { buttonClick } from "../../../../network/analytics/tracker";
+import { getMobileOperatingSystem } from "../../../../lib/utils";
+import { Image } from "@tarojs/components";
 
 export type SelectUploadMediaType = "gallery" | "camera" | "document";
 interface Props {
@@ -60,7 +61,7 @@ const SelectUploadMedia: React.FC<Props> = ({
     <BottomSheet open={open} onClose={onClose}>
       <div className="flex flex-col items-center gap-y-2 p-[16px] mt-2 w-full">
         <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[90%]">
-          <h1 className="text-base font-semibold">Upload E-Ticket</h1>
+          <p className="text-base font-semibold">Upload E-Ticket</p>
           <p className="text-xs text-textSecondary text-center">
             Pilih file untuk kamu upload
           </p>
@@ -90,7 +91,10 @@ const SelectUploadMedia: React.FC<Props> = ({
                   disableRipple
                   accept="application/pdf"
                 >
-                  <img src={IconNews} />
+                  <Image 
+                    src={IconNews} 
+                    style={{ width: "24px", height: "24px" }}
+                  />
                 </FileInputButton>
               </div>
               <p className="text-xs text-textSecondary text-center">Document</p>
@@ -120,7 +124,10 @@ const SelectUploadMedia: React.FC<Props> = ({
                 disableRipple
                 accept="image/png, image/jpeg, image/jpg"
               >
-                <img src={IconImage} />
+                <Image 
+                  src={IconImage} 
+                  style={{ width: "24px", height: "24px" }}
+                />
               </FileInputButton>
             </div>
             <p className="text-xs text-textSecondary text-center">Gallery</p>

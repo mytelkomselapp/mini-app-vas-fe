@@ -13,7 +13,6 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { useDeleteETicket, usePostUploadETicketFile } from "../../network";
 import { toast } from "../../components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-import { cn } from "../../lib/utils";
 import { buttonClick } from "../../network/analytics/tracker";
 import { ExtFile } from "@files-ui/react";
 import { Image, ITouchEvent } from "@tarojs/components";
@@ -119,7 +118,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   return (
     <>
       <div
-        className={`flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] p-3 rounded-[12px] border ${
+        className={`flex flex-col rounded-[16px] bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
         }`}
       >
@@ -132,9 +131,9 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
         <div
           onClick={handleAddImage}
-          className={cn("flex items-center justify-between", {
-            "cursor-pointer": !isTicketUploaded,
-          })}
+          className={`flex items-center justify-between ${
+            !isTicketUploaded ? "cursor-pointer" : ""
+          }`}
         >
           <div className="flex gap-x-4 items-center">
             <Image
@@ -157,7 +156,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
             </Show>
           </div>
 
-          <div>
+          <div className="flex items-center">
             <Show
               when={isTicketUploaded && !loadingDeleteETicket}
               fallbackComponent={
@@ -176,11 +175,11 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           </div>
         </div>
 
-        {/* <SelectUploadMedia
+        <SelectUploadMedia
           open={visibleUploadMedia}
           onClose={() => toggleVisibleUploadMedia(false)}
           onSelectImage={handleSelectImage}
-        /> */}
+        />
       </div>
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
