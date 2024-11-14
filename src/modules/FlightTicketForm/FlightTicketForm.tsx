@@ -4,8 +4,7 @@ import { useFlightTicketForm } from "../../store/flight";
 import useToggle from "../../hooks/useToggle";
 import { CalendarModal } from "../FlightForm";
 import moment from "moment";
-import { cn } from "../../lib/utils";
-import { Image } from "@tarojs/components";
+import { Image, View } from "@tarojs/components";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -63,14 +62,14 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
         value={ticketName}
         name="ticketName"
         type="text"
-        className={`h-[50px] text-sm w-full outline-none rounded-[12px] border px-4 ${
+        className={`h-[50px] text-sm outline-none rounded-[12px] border-solid border-[1px] px-4 ${
           error.ticketName ? "mb-2 border-solidRed" : "mb-4 border-gray-300"
         }`}
         placeholder="Nama Tiket"
         onChange={isDetailMode ? undefined : handleChangeInput}
       />
-      {error.ticketName && (
-        <div className="text-solidRed text-xs mb-4">{error.ticketName}</div>
+        {error.ticketName && (
+          <div className="text-solidRed text-xs mb-4">{error.ticketName}</div>
       )}
 
       <div
@@ -85,7 +84,7 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
           readOnly
           name="departureDate"
           type="text"
-          className={`h-[50px] text-sm w-full outline-none rounded-[12px] border px-4 ${
+          className={`h-[50px] text-sm w-full outline-none rounded-[12px] border-solid border-[1px] px-4 ${
             error.departureDate ? "border-solidRed" : "border-gray-300"
           }`}
           placeholder="Tanggal Pergi"
@@ -107,7 +106,7 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
         readOnly={isDetailMode}
         name="planeNo"
         type="text"
-        className={`h-[50px] text-sm w-full outline-none rounded-[12px] border px-4 ${
+        className={`h-[50px] text-sm outline-none rounded-[12px] border-solid border-[1px] px-4 ${
           error.planeNo ? "mb-2 border-solidRed" : "mb-4 border-gray-300"
         }`}
         placeholder="ID Pesawat"
