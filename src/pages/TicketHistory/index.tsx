@@ -1,3 +1,7 @@
 import TicketHistory from "./TicketHistory";
 
-export default TicketHistory
+const index = () => {
+  return <TicketHistory />
+}
+
+export default index
