@@ -12,7 +12,7 @@ interface FlightTicket {
 
 const FlightTicketCard: React.FC<FlightTicket> = ({ ticket }) => {
   const handleClick = () => {
-    handleNavigate('/pages/CreateDetailTicket/index', ``, {
+    handleNavigate('/pages/CreateDetailTicket/index', '?type=detail&flight_id=' + ticket?.flight_id, {
       state: ticket
     })
   };

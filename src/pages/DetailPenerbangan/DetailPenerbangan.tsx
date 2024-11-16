@@ -6,35 +6,18 @@ import ChevronRight from "../../assets/chevron-right.svg";
 import TicketUpload from "../../assets/icon-ticket-upload.svg";
 import IconDelete from "../../assets/ico-delete.svg";
 import IconSuccess from "../../assets/ico_success_filled.svg";
-// import { ReactComponent as ChevronRight } from "../..//../assets/chevron-right.svg";
 import IconPlus from "../../assets/ico-plus-red.svg";
-// import { FlightDetailRawData, FlightDetailTrackData } from "../../network/types/response-props";
 import FlightBoardInfo from "../../modules/FlightBoardInfo";
-// import { FreemiumLimitModal } from "../../modules/FlightForm";
 import FlightDetailsCard from "../../modules/FlightDetailsCard";
 import Show from "../../components/Show";
 import { getNavigateState, handleNavigate } from "../../lib/utils";
 import Taro from "@tarojs/taro";
 
-// import {
-//   useDeleteETicket,
-//   useFetchETicketByFlightId,
-//   useFetchFlightDetail,
-//   useFetchFlightTrack,
-//   useFetchFreemiumPackage,
-//   useFollowFlight,
-//   usePostClaimFreeTicket,
-//   useUnfollowFlight,
-// } from "@/network";
 import { buttonClick, screenView } from "../../network/analytics/tracker";
-// import { FlightDetailRawData } from "@/network/types/response-props";
-// import { useCallback, useEffect, useMemo } from "react";
-// import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import {
   useFlightTicketForm,
   useSaveTrackingPayload,
 } from "../../store/flight";
-// import Show from "../..//../components/Show";
 import moment from "moment";
 import useToggle from "../../hooks/useToggle";
 import {
@@ -49,13 +32,8 @@ import {
 } from "../../network";
 import { FlightDetailRawData } from "../../network/types/response-props";
 import { FreemiumLimitModal } from "../../modules/FlightForm";
-// import useToggle from "@/hooks/useToggle";
 import { toast } from "../../components/ui/use-toast";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
-// import { AxiosError } from "axios";
-// import { Switch } from "@/components/ui/switch";
-// import FlightRoamaxCard from "@/modules/FlightRoamaxCard";
-// import CreateDetailTicket from "../CreateDetailTicket";
 
 const USER_FREEMIUM_QUOTA = 5;
 
@@ -168,15 +146,14 @@ const DetailPesawat = () => {
     setDepartureDate(flightDate);
     const flightId = dataFollowFlight?.data?.flight_id;
 
-    handleNavigate("/pages/CreateDetailTicket/index", "?flight_id=" + flightId);
+    handleNavigate("/pages/CreateDetailTicket/index", "?type=create&flight_id=" + flightId);
   };
 
   useEffect(() => {
     screenView("Detail", "/detail"); //fire screen view tracker
     claimFreeTicket();
 
-    // TODO: check this
-    // setTrackFlight(null);
+    setTrackFlight(null);
   }, []);
 
   useEffect(() => {
@@ -258,8 +235,7 @@ const DetailPesawat = () => {
         console.log("package invalid");
         toggleOffer();
 
-        // TODO: check this
-        // setTrackFlight(flightData);
+        setTrackFlight(flightData);
       } else {
         toast({
           title: "Uh oh! Something went wrong.",

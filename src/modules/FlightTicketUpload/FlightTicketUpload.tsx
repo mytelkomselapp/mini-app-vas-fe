@@ -124,8 +124,12 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       >
         <Show when={isShowDetailETicket}>
           <div className="flex justify-between items-center">
-            <h1 className="text-sm font-semibold">Detail E-Ticket</h1>
-            <img src={ChevronRight} onClick={handleOpenTicket} />
+            <span className="text-sm font-semibold">Detail E-Ticket</span>
+            <Image
+              src={ChevronRight}
+              style={{ width: "24px", height: "24px" }}
+              onClick={handleOpenTicket}
+            />
           </div>
         </Show>
 

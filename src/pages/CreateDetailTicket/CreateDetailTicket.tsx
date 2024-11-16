@@ -24,12 +24,13 @@ import { getNavigateState } from "../../lib/utils";
 const CreateDetailTicket: React.FC = () => {
   const navigate = useNavigate();
   const flight_id = Taro.getCurrentInstance().router?.params?.flight_id;
-  console.log(flight_id, "flight_id");
+  const pageType = Taro.getCurrentInstance().router?.params?.type;
+
   const currentPath = Taro.getCurrentInstance().router?.path || "";
   const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
   const stateData = state?.ticket as FlightETicketByFlightIdData;
 
-  const pageMode = currentPath.includes("detail") ? "detail" : "create";
+  const pageMode = pageType === "detail" ? "detail" : "create";
 
   const pageTitle = pageMode === "detail" ? "Detail My Ticket" : "Tambah Tiket";
 
