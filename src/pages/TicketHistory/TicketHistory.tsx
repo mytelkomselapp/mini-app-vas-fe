@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar";
-import { ReactComponent as NotFound } from "../../assets/not_found.svg";
+import NotFound from "../../assets/not_found.svg";
 import { FlightETicketData } from "../../network/types/response-props";
 import FlightTicketCard from "../../modules/FlightTicketCard";
 import Show from "../../components/Show";
@@ -30,9 +30,9 @@ const TicketHistory = () => {
   });
   return (
     <div className="flex flex-col h-screen pt-4 bg-inactiveGrey overflow-hidden">
-      <div className="px-4 mb-4">
+      {/* <div className="px-4 mb-4">
         <Navbar title="My Ticket History" />
-      </div>
+      </div> */}
       <Show
         when={!isFetching}
         fallbackComponent={<LoadingScreen text="Loading" />}
@@ -41,7 +41,7 @@ const TicketHistory = () => {
           when={eTicketHistory?.length > 0}
           fallbackComponent={
             <div className="flex flex-1 flex-col items-center justify-center text-center">
-              <NotFound className="mt-1" />
+              <img src={NotFound} className="mt-1" />
               <span className="text-base font-semibold font-sans mt-1">
                 Belum ada tiket ditambahkan
               </span>

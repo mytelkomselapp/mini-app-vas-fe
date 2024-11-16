@@ -10,6 +10,7 @@ export default {
     "pages/SubscriptionPackage/index",
     "pages/PackageDetail/index",
     "pages/CreateDetailTicket/index",
+    "pages/TicketHistory/index"
     // other pages...
   ],
   window: {
