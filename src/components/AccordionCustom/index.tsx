@@ -9,7 +9,6 @@ interface AccordionCustomProps {
 
 const AccordionCustom: React.FC<AccordionCustomProps> = ({ trigger, children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("accordionOpen", isOpen)
 
   const toggleAccordion = () => {
     setIsOpen((prev) => !prev);
