@@ -1,20 +1,19 @@
 import Button from "../../components/Button";
-import Navbar from "../../components/Navbar";
+// import Navbar, { NavColor } from "../../components/Navbar";
 import FlightTicketCard from "../../modules/FlightTicketCard";
 import { FlightETicketData } from "../../network/types/response-props";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import NotFound from "../../assets/not_found.svg";
 import Show from "../../components/Show";
-import { cn } from "../../lib/utils";
+import { cn, handleNavigate } from "../../lib/utils";
 import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
 import { useFetchETickets } from "../../network";
 import LoadingScreen from "../../components/LoadingScreen";
 import { buttonClick } from "../../network/analytics/tracker";
 import { useFlightTicketForm } from "../../store/flight";
+import historyIcon from "../../assets/ico_history.svg"
 
 const MyTicketList = () => {
-  const navigate = useNavigate();
-
   const { data: eTicketRawData, isFetching } = useFetchETickets();
   const eTickets = eTicketRawData?.data?.data ?? [];
 
@@ -38,14 +37,28 @@ const MyTicketList = () => {
   const { resetFlightTicketState } = useFlightTicketForm();
   const handleAddTicket = () => {
     resetFlightTicketState();
-    navigate("/flight/create-ticket/0");
+    handleNavigate("/pages/CreateDetailTicket/index");
   };
 
   return (
     <div className="flex flex-col h-screen pt-4 bg-inactiveGrey overflow-hidden">
-      {/* <div className="px-4 mb-4">
-        <Navbar title="My Ticket" />
-      </div> */}
+      <div className="flex justify-end px-4 mb-4">
+        {/* <Navbar title="My Ticket List" rightContent={( <HistoryIcon
+          onClick={() => {
+            navigate({
+              pathname: "/flight/ticket-history",
+            });
+          }}
+        />)} color={NavColor.Light} /> */}
+        {/* <HistoryIcon
+          onClick={() => {
+            navigate({
+              pathname: "/flight/ticket-history",
+            });
+          }}
+        /> */}
+        <img src={historyIcon} className="w-6 h-6" onClick={() => handleNavigate('/pages/TicketHistory/index')} />
+      </div>
       <Show
         when={!isFetching}
         fallbackComponent={<LoadingScreen text="Loading" />}

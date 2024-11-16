@@ -4,20 +4,17 @@ import { FlightETicketData } from "../../network/types/response-props";
 import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import { cardClick } from "../../network/analytics/tracker";
+import { handleNavigate } from "../../lib/utils";
 
 interface FlightTicket {
   ticket: FlightETicketData;
 }
 
 const FlightTicketCard: React.FC<FlightTicket> = ({ ticket }) => {
-  const navigate = useNavigate();
-
   const handleClick = () => {
-    navigate(`/flight/ticket-detail/${ticket?.flight_id}`, {
-      state: {
-        ticket,
-      },
-    });
+    handleNavigate('/pages/CreateDetailTicket/index', ``, {
+      state: ticket
+    })
   };
 
   const formattedDate = format(
