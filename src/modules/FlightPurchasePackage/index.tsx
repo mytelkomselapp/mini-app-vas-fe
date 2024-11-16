@@ -1,3 +1,4 @@
+import AccordionCustom from "../../components/AccordionCustom";
 import Button from "../../components/Button";
 import {
   Accordion,
@@ -21,7 +22,7 @@ const FlightPurchasePackage: React.FC<FlightPackage> = ({
 }) => {
   return (
     <>
-      <Accordion className="bg-white" type="single" collapsible>
+      {/* <Accordion className="bg-white" type="single" collapsible>
         <AccordionItem className="bg-white" value="item-1">
           <AccordionTrigger className="bg-white">
             <div className="flex justify-between w-full bg-white ">
@@ -42,7 +43,28 @@ const FlightPurchasePackage: React.FC<FlightPackage> = ({
             </div>
           </AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion> */}
+      <AccordionCustom
+        trigger={
+          <>
+          <div className="flex justify-between">
+            <p className="font-bold text-sm">Harga Total</p>
+            <p className="font-bold text-sm">  {"Rp" + parseFloat(String(data?.price))?.toLocaleString("id") ||
+                  "0"}</p>
+          </div>
+          </>
+        }
+      >
+        <div className="flex items-center justify-between w-full">
+
+         <p className="text-xs">{data?.name}</p>
+              <p className="text-xs">
+                {"Rp" + parseFloat(String(data?.price))?.toLocaleString("id") ||
+                  "0"}
+              </p>
+                  </div>
+      </AccordionCustom>
+
       <Button
         label="Beli Sekarang"
         onClick={() => {

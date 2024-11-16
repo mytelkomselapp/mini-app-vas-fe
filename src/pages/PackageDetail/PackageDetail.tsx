@@ -1,7 +1,7 @@
 import Navbar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import FlightPurchasePackage from "../../modules/FlightPurchasePackage";
-import React from "react";
+import React, { useMemo } from "react";
 import { FlightFreemiumPackageData } from "../../network/types/response-props";
 import FlightPackageDetail from "../../modules/FlightPackageDetail";
 import { useFetchWeboptinToken, usePostErrorBuyPackage } from "../../network";
@@ -9,17 +9,12 @@ import { useWeboptinTokenData } from "../../store/flight";
 import { toast } from "../../components/ui/use-toast";
 import { screenView } from "../../network/analytics/tracker";
 import Taro from "@tarojs/taro";
-
-interface Package {
-  state: {
-    data: FlightFreemiumPackageData;
-  };
-}
+import { getNavigateState, TaroStorage } from "../../lib/utils";
 
 const PackageDetail: React.FC = () => {
-  const location = useLocation();
-  const { state } = location as Package;
-  const packageData = state?.data;
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
+  const packageData = state.flightDetail as FlightFreemiumPackageData;
 
   const { setSid } = useWeboptinTokenData();
 
@@ -56,12 +51,13 @@ const PackageDetail: React.FC = () => {
       if (fetchData?.data) {
         const tokenData = fetchData?.data?.data;
         setSid(package_id);
+        TaroStorage.setItem("sid", String(package_id))
 
-        if (tokenData) {
+        if (tokenData.data.url) {
           Taro.navigateTo({
             url:
               "/pages/Webview/index?url=" +
-              encodeURIComponent(tokenData?.data?.url),
+              encodeURIComponent(tokenData.data.url),
           });
           //  window.open(tokenData?.data?.url, "_self");
           return;
@@ -93,10 +89,10 @@ const PackageDetail: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col pt-2 bg-[#EFF1F4] h-full">
-        <div className="px-4">
+      <div className="flex flex-col pt-2 bg-[#EFF1F4] min-h-screen overflow-hidden no-scrollbar">
+        {/* <div className="px-4">
           <Navbar title="Detail Paket" />
-        </div>
+        </div> */}
         <div className="flex-grow px-4">
           <FlightPackageDetail data={packageData} />
         </div>

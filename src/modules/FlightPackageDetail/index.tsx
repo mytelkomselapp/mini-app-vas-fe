@@ -31,10 +31,10 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
           {"Rp" + parseFloat(String(data?.price))?.toLocaleString("id") || "0"}
         </p>
       </div>
-      <div className="w-full bg-white px-4 py-5 rounded-2xl">
+      <div className="bg-white px-4 py-5 rounded-2xl">
         <div className="flex gap-2">
           <div>
-            <img src={IcoLove} />
+            <img src={IcoLove} className="w-6 h-6" />
           </div>
           <div>
             <p className="font-bold text-sm text-blueNavy">Lacak Penerbangan</p>
@@ -44,11 +44,11 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
           </div>
         </div>
         <div className="py-3">
-          <img src={Divider} />
+          <img src={Divider} className="h-[1px]" />
         </div>
         <div className="flex gap-2">
           <div>
-            <img src={IcoPlane} />
+            <img src={IcoPlane} className="w-6 h-6" />
           </div>
           <div>
             <p className="font-bold text-sm text-blueNavy">
@@ -60,11 +60,11 @@ const FlightPackageDetail: React.FC<FlightPackage> = ({ data }) => {
           </div>
         </div>
         <div className="py-3">
-          <img src={Divider} />
+          <img src={Divider} className="h-[1px]" />
         </div>
         <div className="flex gap-2">
           <div>
-            <img src={IcoTime} />
+            <img src={IcoTime} className="w-6 h-6" />
           </div>
           <div>
             <Show when={data?.package_type === "quota"}>
