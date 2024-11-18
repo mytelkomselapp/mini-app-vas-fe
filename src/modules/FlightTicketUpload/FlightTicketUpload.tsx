@@ -14,8 +14,8 @@ import { useDeleteETicket, usePostUploadETicketFile } from "../../network";
 import { toast } from "../../components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { buttonClick } from "../../network/analytics/tracker";
-import { ExtFile } from "@files-ui/react";
-import { Image, ITouchEvent } from "@tarojs/components";
+import { Image } from "@tarojs/components";
+import { handleNavigate } from "../../lib/utils";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -58,7 +58,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     if (data) {
       const deleteETicketData = await deleteETicket({ id: data.id });
       if (deleteETicketData?.data?.meta?.status === "success") {
-        navigate("/flight/ticket-list", { replace: true });
+        handleNavigate("/pages/MyTicketList/index");
       } else {
         toast({
           title: "Uh oh! Something went wrong.",
@@ -72,12 +72,11 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
   };
 
-  const handleSelectImage = async (file: ExtFile) => {
-    try {
-      let formData = new FormData();
-      formData?.append("files", file?.file as File);
+  const handleSelectImage = async (filePath: string) => {
+    console.log("BEFORE UPLOAD");
 
-      const uploadFile = await postUploadETicket(formData);
+    try {
+      const uploadFile = await postUploadETicket(filePath);
       const dataFile = uploadFile?.data?.[0];
       const isSuccessUpload = !!dataFile;
 
@@ -89,7 +88,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           file_url: dataFile?.url,
         });
       }
-    } catch (_) {
+    } catch (err) {
       toast({
         title: "Gagal Mengunggah Gambar",
         description: "Pastikan koneksi internet anda tidak bermasalah",
@@ -113,12 +112,15 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     });
   };
 
-  if (isLoadingUploadFile) return <LoadingScreen text="Upload E-Ticket.." />;
+  if (isLoadingUploadFile)
+    return (
+      <LoadingScreen text="Upload E-Ticket.." customClassName="mx-[20px]" />
+    );
 
   return (
     <>
       <div
-        className={`flex flex-col rounded-[16px] bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
+        className={`flex flex-col  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
         }`}
       >
@@ -146,11 +148,11 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
             />
             <Show
               when={isTicketUploaded}
-              fallbackComponent={<p>Upload E-Ticket</p>}
+              fallbackComponent={<p className="text-[16px]">Upload E-Ticket</p>}
             >
               <div className="flex flex-col justify-between gap-y-1">
                 <div className="flex gap-x-2 items-center">
-                  <p className="text-sm font-semibold">E-Ticket</p>
+                  <p className="text-[10px] font-semibold">E-Ticket</p>
                 </div>
                 <p className="text-[10px] text-textSecondary">
                   {moment(data?.ticket_date)?.format("DD MMM YYYY")} •{" "}

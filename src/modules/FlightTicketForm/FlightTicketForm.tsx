@@ -4,7 +4,8 @@ import { useFlightTicketForm } from "../../store/flight";
 import useToggle from "../../hooks/useToggle";
 import { CalendarModal } from "../FlightForm";
 import moment from "moment";
-import { Image, View } from "@tarojs/components";
+import { Image } from "@tarojs/components";
+import "./FlightTicketForm.css";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -31,18 +32,20 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
 
   const isDetailMode = pageMode === "detail";
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputName = event?.target?.name ?? "";
+  const handleChangeTicketName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const inputValues = event?.target?.value ?? "";
 
-    if (inputName === "ticketName") {
-      setError({ ...error, ticketName: "" });
-      return setTicketName(inputValues);
-    }
-    if (inputName === "planeNo") {
-      setError({ ...error, planeNo: "" });
-      return setPlaneNo(inputValues);
-    }
+    setError({ ...error, ticketName: "" });
+    return setTicketName(inputValues);
+  };
+
+  const handleChangePlaneNo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValues = event?.target?.value ?? "";
+
+    setError({ ...error, planeNo: "" });
+    return setPlaneNo(inputValues);
   };
 
   const handleOpenCalendarModal = () => {
@@ -62,14 +65,16 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
         value={ticketName}
         name="ticketName"
         type="text"
-        className={`h-[50px] text-sm outline-none rounded-[12px] border-solid border-[1px] px-4 ${
+        className={`h-[50px] text-sm outline-none rounded-[12px] border-solid border-[1px] px-4 placeholder-grey placeholder-opacity-100 ${
           error.ticketName ? "mb-2 border-solidRed" : "mb-4 border-gray-300"
         }`}
         placeholder="Nama Tiket"
-        onChange={isDetailMode ? undefined : handleChangeInput}
+        onChange={isDetailMode ? undefined : handleChangeTicketName}
+        // @ts-ignore
+        placeholderStyle="color: #757F90;"
       />
-        {error.ticketName && (
-          <div className="text-solidRed text-xs mb-4">{error.ticketName}</div>
+      {error.ticketName && (
+        <div className="text-solidRed text-xs mb-4">{error.ticketName}</div>
       )}
 
       <div
@@ -84,11 +89,13 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
           readOnly
           name="departureDate"
           type="text"
-          className={`h-[50px] text-sm w-full outline-none rounded-[12px] border-solid border-[1px] px-4 ${
+          className={`h-[50px] text-sm w-full outline-none rounded-[12px] border-solid border-[1px] px-4 placeholder-grey placeholder-opacity-100 ${
             error.departureDate ? "border-solidRed" : "border-gray-300"
           }`}
           placeholder="Tanggal Pergi"
           onClick={isDetailMode ? undefined : handleOpenCalendarModal}
+          // @ts-ignore
+          placeholderStyle="color: #757F90;"
         />
         <Image
           src={IconCalendar}
@@ -110,7 +117,9 @@ const FlightTicketForm: React.FC<Props> = ({ pageMode }) => {
           error.planeNo ? "mb-2 border-solidRed" : "mb-4 border-gray-300"
         }`}
         placeholder="ID Pesawat"
-        onChange={isDetailMode ? undefined : handleChangeInput}
+        onChange={isDetailMode ? undefined : handleChangePlaneNo}
+        // @ts-ignore
+        placeholderStyle="color: #757F90;"
       />
       {error.planeNo && (
         <div className="text-solidRed text-xs mb-4">{error.planeNo}</div>

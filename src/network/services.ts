@@ -129,9 +129,9 @@ export const postCreateETicket = (
 };
 
 export const postUploadETicketFile = (
-  payload: FormData
+  filePath: string
 ): FlightETicketUploadFileResponse => {
-  return http.post(endpoints?.eTicketUploadFile, payload, {});
+  return http.uploadFile(endpoints?.eTicketUploadFile, filePath, {});
 };
 
 export const deleteETicket = (
