@@ -132,6 +132,34 @@ export const post = <T extends string | ArrayBuffer = any>(
 };
 
 /**
+ * handle HTTP POST to RestAPI
+ */
+export const uploadFile = <T extends string | ArrayBuffer = any>(
+  endpoint: {
+    endpoint: string;
+    source: API_SOURCE;
+  },
+  filePath: string
+) => {
+  /**
+   * Url endpoint
+   */
+  let url = generateBaseURL(endpoint?.source, endpoint?.endpoint);
+
+  const bearerToken = `Bearer ${generateToken(endpoint?.source)}`;
+
+  return Taro.uploadFile({
+    url,
+    filePath, // Path to the file
+    name: "files", // Form field name for the file
+    header: {
+      Authorization: bearerToken,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+/**
  * handle HTTP DELETE to RestAPI
  *
  * Notes: we not allowed to use `delete` as declaration any good name is welcome

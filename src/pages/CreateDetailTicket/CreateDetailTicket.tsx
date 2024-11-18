@@ -1,9 +1,7 @@
-import { Text, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import Button from "../../components/Button";
 import ContainerViewPort from "../../components/ContainerViewPort";
 import LoadingScreen from "../../components/LoadingScreen";
-import Navbar from "../../components/Navbar";
-import Show from "../../components/Show";
 import { toast } from "../../components/ui/use-toast";
 import useToggle from "../../hooks/useToggle";
 import FlightTicketCreateSuccessModal from "../../modules/FlightTicketCreateSuccessModal";
@@ -16,13 +14,12 @@ import { FlightETicketByFlightIdData } from "../../network/types/response-props"
 import { useFlightTicketForm } from "../../store/flight";
 import moment from "moment";
 import * as React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Taro from "@tarojs/taro";
 import { useMemo } from "react";
-import { getNavigateState } from "../../lib/utils";
+import { getNavigateState, handleNavigate } from "../../lib/utils";
+import Show from "../../components/Show";
 
 const CreateDetailTicket: React.FC = () => {
-  const navigate = useNavigate();
   const flight_id = Taro.getCurrentInstance().router?.params?.flight_id;
   const pageType = Taro.getCurrentInstance().router?.params?.type;
 
@@ -31,8 +28,6 @@ const CreateDetailTicket: React.FC = () => {
   const stateData = state?.ticket as FlightETicketByFlightIdData;
 
   const pageMode = pageType === "detail" ? "detail" : "create";
-
-  const pageTitle = pageMode === "detail" ? "Detail My Ticket" : "Tambah Tiket";
 
   const isDetailMode = pageMode === "detail";
 
@@ -115,14 +110,15 @@ const CreateDetailTicket: React.FC = () => {
     }
   };
 
+  const isShowButton = React.useMemo(() => {
+    return !isDetailMode;
+  }, [isDetailMode]);
+
   const handleRedirectMyTicket = () => {
     resetFlightTicketState();
     /* Note: why replace it so you can't go back to the create ticket page, when you want to open create ticket you have to go from the entry point */
-    navigate("/flight/ticket-list", { replace: true });
-  };
-
-  const handleBackCallback = () => {
-    resetFlightTicketState();
+    // navigate("/flight/ticket-list", { replace: true });
+    handleNavigate("/pages/LandingPagePesawat/index");
   };
 
   /* Prefilled form on detail page */
@@ -165,16 +161,15 @@ const CreateDetailTicket: React.FC = () => {
           </div>
         </form>
 
-        {/* <Show when={!dataETicketByFlightId && !isDetailMode}> */}
+        <Show when={isShowButton}>
           <Button label="Simpan" onClick={handleButtonClick} />
-        {/* </Show> */}
-
-        {/* <FlightTicketCreateSuccessModal
-          open={visibleCreateSuccessModal}
-          onClose={toggleVisibleCreateSuccessModal}
-          onClickCTA={handleRedirectMyTicket}
-        /> */}
+        </Show>
       </View>
+      <FlightTicketCreateSuccessModal
+        open={visibleCreateSuccessModal}
+        onClose={toggleVisibleCreateSuccessModal}
+        onClickCTA={handleRedirectMyTicket}
+      />
     </ContainerViewPort>
   );
 };

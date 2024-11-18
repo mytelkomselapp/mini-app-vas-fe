@@ -5,15 +5,19 @@ import IconImage from "../../../../assets/ico-image.svg";
 import { FileInputButton, ExtFile } from "@files-ui/react";
 import { toast } from "../../../../components/ui/use-toast";
 import { buttonClick } from "../../../../network/analytics/tracker";
-import { getMobileOperatingSystem } from "../../../../lib/utils";
-import { Image } from "@tarojs/components";
+import {
+  filePathToBlob,
+  getMobileOperatingSystem,
+} from "../../../../lib/utils";
+import { Image, View } from "@tarojs/components";
+import FileInput from "../../../../components/FileInput";
 
 export type SelectUploadMediaType = "gallery" | "camera" | "document";
 interface Props {
   open: boolean;
   onClose: () => void;
   onSelectAction?: (media: SelectUploadMediaType) => void;
-  onSelectImage: (file: File) => void;
+  onSelectImage: (filePath: string) => void;
 }
 
 const SelectUploadMedia: React.FC<Props> = ({
@@ -21,46 +25,57 @@ const SelectUploadMedia: React.FC<Props> = ({
   onClose,
   onSelectImage,
 }) => {
-  const handleOpenDocument = async (extFile: ExtFile[]) => {
-    const file = extFile?.[0];
-    const acceptedFormat = ["application/pdf"];
+  // const handleOpenDocument = async (extFile: ExtFile[]) => {
+  //   const file = extFile?.[0];
+  //   const acceptedFormat = ["application/pdf"];
 
-    if (acceptedFormat?.includes(file?.type ?? "")) {
-      onSelectImage?.(file as File);
-      return onClose?.();
-    }
+  //   if (acceptedFormat?.includes(file?.type ?? "")) {
+  //     onSelectImage?.(file as File);
+  //     return onClose?.();
+  //   }
 
-    toast({
-      title: "Gagal Mengunggah Document",
-      description: "Pastikan document berformat pdf",
-      className: "bg-[#fef2f4] text-solidRed",
-      duration: 3000,
-    });
-    onClose?.();
+  //   toast({
+  //     title: "Gagal Mengunggah Document",
+  //     description: "Pastikan document berformat pdf",
+  //     className: "bg-[#fef2f4] text-solidRed",
+  //     duration: 3000,
+  //   });
+  //   onClose?.();
+  // };
+
+  // const handleOpenGallery = async (extFile: ExtFile[]) => {
+  //   const file = extFile?.[0];
+  //   const acceptedFormat = ["image/jpg", "image/jpeg", "image/png"];
+
+  //   if (acceptedFormat?.includes(file?.type ?? "")) {
+  //     onSelectImage?.(file as File);
+  //     return onClose?.();
+  //   }
+
+  //   toast({
+  //     title: "Gagal Mengunggah Gambar",
+  //     description: "Pastikan gambar berformat jpg, jpeg atau png",
+  //     className: "bg-[#fef2f4] text-solidRed",
+  //     duration: 3000,
+  //   });
+  //   onClose?.();
+  // };
+
+  const handleSuccessOpenMedia = async (res: any) => {
+    onSelectImage?.(res?.tempFiles?.[0]?.path);
+    return onClose?.();
   };
 
-  const handleOpenGallery = async (extFile: ExtFile[]) => {
-    const file = extFile?.[0];
-    const acceptedFormat = ["image/jpg", "image/jpeg", "image/png"];
+  const handleSuccessOpenGallery = async (res: any) => {
+    onSelectImage?.(res?.tempFilePaths?.[0]);
 
-    if (acceptedFormat?.includes(file?.type ?? "")) {
-      onSelectImage?.(file as File);
-      return onClose?.();
-    }
-
-    toast({
-      title: "Gagal Mengunggah Gambar",
-      description: "Pastikan gambar berformat jpg, jpeg atau png",
-      className: "bg-[#fef2f4] text-solidRed",
-      duration: 3000,
-    });
-    onClose?.();
+    return onClose?.();
   };
 
   return (
     <BottomSheet open={open} onClose={onClose}>
-      <div className="flex flex-col items-center gap-y-2 p-[16px] mt-2 w-full">
-        <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[90%]">
+      <View>
+        <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[100%]">
           <p className="text-base font-semibold">Upload E-Ticket</p>
           <p className="text-xs text-textSecondary text-center">
             Pilih file untuk kamu upload
@@ -83,19 +98,22 @@ const SelectUploadMedia: React.FC<Props> = ({
                 data-type="document"
                 className="rounded-[16px] bg-inactiveGrey flex items-center justify-center w-[56px] h-[56px]"
               >
-                <FileInputButton
-                  variant="text"
-                  style={{ backgroundColor: "transparent" }}
-                  onChange={handleOpenDocument}
-                  maxFiles={1}
-                  disableRipple
-                  accept="application/pdf"
+                <FileInput
+                  type="file"
+                  config={{
+                    count: 1,
+                    type: "file",
+                    extension: ["pdf"],
+                    sizeType: ["original", "compressed"], // Allow original or compressed images
+                    sourceType: ["album", "camera"], //
+                    complete: handleSuccessOpenMedia,
+                    fail: (err) => {
+                      console.error("File selection failed:", err);
+                    },
+                  }}
                 >
-                  <Image 
-                    src={IconNews} 
-                    style={{ width: "24px", height: "24px" }}
-                  />
-                </FileInputButton>
+                  <img src={IconNews} style={{ width: 24, height: 24 }} />
+                </FileInput>
               </div>
               <p className="text-xs text-textSecondary text-center">Document</p>
             </div>
@@ -116,24 +134,25 @@ const SelectUploadMedia: React.FC<Props> = ({
               data-type="gallery"
               className="rounded-[16px] bg-inactiveGrey flex items-center justify-center w-[56px] h-[56px]"
             >
-              <FileInputButton
-                variant="text"
-                style={{ backgroundColor: "transparent" }}
-                onChange={handleOpenGallery}
-                maxFiles={1}
-                disableRipple
-                accept="image/png, image/jpeg, image/jpg"
+              <FileInput
+                type="image"
+                config={{
+                  count: 1, // Number of files to select
+                  sizeType: ["original", "compressed"], // Allow original or compressed images
+                  sourceType: ["album", "camera"], // Select from album or camera
+                  success: handleSuccessOpenGallery,
+                  fail: (err) => {
+                    console.error("File selection failed:", err);
+                  },
+                }}
               >
-                <Image 
-                  src={IconImage} 
-                  style={{ width: "24px", height: "24px" }}
-                />
-              </FileInputButton>
+                <img src={IconImage} style={{ width: 24, height: 24 }} />
+              </FileInput>
             </div>
             <p className="text-xs text-textSecondary text-center">Gallery</p>
           </div>
         </div>
-      </div>
+      </View>
     </BottomSheet>
   );
 };

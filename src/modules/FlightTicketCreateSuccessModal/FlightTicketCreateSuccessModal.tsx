@@ -3,6 +3,7 @@ import SuccessHandsIllustrator from "../../assets/success-hands.svg";
 import Button from "../../components/Button";
 import BottomSheet from "../../components/BottomSheet";
 import { buttonClick } from "../../network/analytics/tracker";
+import { View } from "@tarojs/components";
 
 interface Props {
   open: boolean;
@@ -27,17 +28,24 @@ const FlightTicketCreateSuccessModal: React.FC<Props> = ({
   };
 
   return (
-    <BottomSheet open={open} onClose={onClose} disableDrag>
-      <div className="flex flex-col items-center gap-y-2 p-[16px] mt-[16px] w-full">
-        <img src={SuccessHandsIllustrator} />
-        <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[90%]">
-          <h1 className="text-base font-semibold">Tambah tiket berhasil!</h1>
-          <p className="text-xs text-textSecondary text-center">
-            Tiket kamu sudah ditambahkan ke dalam halaman My Ticket
-          </p>
+    <BottomSheet open={open} onClose={onClose}>
+      <View>
+        <div className="flex flex-col items-center gap-y-2">
+          <img
+            src={SuccessHandsIllustrator}
+            style={{ width: 100, height: 100 }}
+          />
+          <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[90%]">
+            <h1 style={{ fontSize: 16 }} className="text-[12px] font-semibold">
+              Tambah tiket berhasil!
+            </h1>
+            <p className="text-[12px] text-textSecondary text-center">
+              Tiket kamu sudah ditambahkan ke dalam halaman My Ticket
+            </p>
+          </div>
+          <Button label="Lihat My Ticket" onClick={handleClick} />
         </div>
-        <Button label="Lihat My Ticket" onClick={handleClick} />
-      </div>
+      </View>
     </BottomSheet>
   );
 };

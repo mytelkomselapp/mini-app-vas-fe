@@ -34,6 +34,29 @@ export const urlToFile = (fileUrl: string, fileName: string) => {
   });
 };
 
+/**
+ * Convert file path to Blob or File
+ * @param {string} filePath - The local file path
+ * @returns {Promise<Blob>}
+ */
+export const filePathToBlob = (filePath) => {
+  return new Promise((resolve, reject) => {
+    const fs = Taro.getFileSystemManager();
+    fs.readFile({
+      filePath,
+      success: (res) => {
+        const blob = new Blob([res.data], { type: "image/jpeg" }); // Adjust MIME type as needed
+        console.log({ blob });
+        resolve(blob);
+      },
+      fail: (err) => {
+        console.error("Failed to read file:", err);
+        reject(err);
+      },
+    });
+  });
+};
+
 export const flightStateAttribute = (data: string | undefined) => {
   // Status: schedule/delay/cancel/diversion/return/departure/arrival/diverted
   switch (data) {
