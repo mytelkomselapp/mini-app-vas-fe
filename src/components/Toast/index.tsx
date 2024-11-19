@@ -1,4 +1,4 @@
-import { cn } from "../../lib/utils"; // pastikan fungsi `cn` tersedia di utils Anda
+import { cn } from "../../lib/utils";
 
 type ToastProps = {
     title: string;
