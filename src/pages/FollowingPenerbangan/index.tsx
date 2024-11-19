@@ -1,3 +1,7 @@
 import FollowingPenerbangan from "./FollowingPenerbangan";
 
-export default FollowingPenerbangan
+const Index = () => {
+    return <FollowingPenerbangan />
+}
+
+export default Index
