@@ -7,7 +7,9 @@ const HistoryTransactionDetailLazy = React.lazy(
 
 const HistoryTransactionDetail = () => {
   return (
-    <React.Suspense fallback={<LoadingScreen text="Loading..." />}>
+    <React.Suspense
+      fallback={<LoadingScreen text="Loading..." customClassName="mx-[20px]" />}
+    >
       <HistoryTransactionDetailLazy />
     </React.Suspense>
   );

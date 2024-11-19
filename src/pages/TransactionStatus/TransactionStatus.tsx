@@ -147,7 +147,9 @@ const TransactionStatus = () => {
       </div>
       <Show
         when={!loadingBuyPackage}
-        fallbackComponent={<LoadingScreen text="Loading..." />}
+        fallbackComponent={
+          <LoadingScreen text="Loading..." customClassName="mx-[20px]" />
+        }
       >
         <div className="flex flex-col items-center bg-[#EFF1F4] h-4/5">
           <div className="p-2 max-w-sm w-full">

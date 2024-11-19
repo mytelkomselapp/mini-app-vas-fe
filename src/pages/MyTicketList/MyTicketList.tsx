@@ -11,7 +11,7 @@ import { useFetchETickets } from "../../network";
 import LoadingScreen from "../../components/LoadingScreen";
 import { buttonClick } from "../../network/analytics/tracker";
 import { useFlightTicketForm } from "../../store/flight";
-import historyIcon from "../../assets/ico_history.svg"
+import historyIcon from "../../assets/ico_history.svg";
 
 const MyTicketList = () => {
   const { data: eTicketRawData, isFetching } = useFetchETickets();
@@ -57,17 +57,23 @@ const MyTicketList = () => {
             });
           }}
         /> */}
-        <img src={historyIcon} className="w-6 h-6" onClick={() => handleNavigate('/pages/TicketHistory/index')} />
+        <img
+          src={historyIcon}
+          className="w-6 h-6"
+          onClick={() => handleNavigate("/pages/TicketHistory/index")}
+        />
       </div>
       <Show
         when={!isFetching}
-        fallbackComponent={<LoadingScreen text="Loading" />}
+        fallbackComponent={
+          <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+        }
       >
         <Show
           when={upcomingETicket?.length > 0}
           fallbackComponent={
             <div className="flex flex-1 flex-col items-center justify-center text-center">
-              <img src={NotFound} className="w-[128px] h-[128px]"/>
+              <img src={NotFound} className="w-[128px] h-[128px]" />
               <span className="text-base font-semibold font-sans mt-1">
                 Belum ada tiket ditambahkan
               </span>

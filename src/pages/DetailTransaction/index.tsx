@@ -5,7 +5,9 @@ const ExploreTravelLazy = React.lazy(() => import("./DetailTransaction"));
 
 const ExploreTravel = () => {
   return (
-    <React.Suspense fallback={<LoadingScreen text="Loading..." />}>
+    <React.Suspense
+      fallback={<LoadingScreen text="Loading..." customClassName="mx-[20px]" />}
+    >
       <ExploreTravelLazy />
     </React.Suspense>
   );
