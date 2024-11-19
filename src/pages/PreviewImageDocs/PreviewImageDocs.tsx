@@ -97,7 +97,12 @@ const PreviewImageDocs: React.FC = () => {
             file={fileUrl}
             onLoadSuccess={onDocumentLoadSuccess}
             options={pdfOptions}
-            loading={<LoadingScreen text="Load content..." />}
+            loading={
+              <LoadingScreen
+                text="Load content..."
+                customClassName="mx-[20px]"
+              />
+            }
           >
             {Array.from(new Array(numPages), (_, index) => (
               <Page

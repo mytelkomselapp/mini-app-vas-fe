@@ -137,7 +137,8 @@ const CreateDetailTicket: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageMode, dataETicketByFlightId]);
 
-  if (isLoading) return <LoadingScreen text="Loading..." />;
+  if (isLoading)
+    return <LoadingScreen text="Loading..." customClassName="mx-[20px]" />;
 
   return (
     <ContainerViewPort>

@@ -13,11 +13,11 @@ import Taro from "@tarojs/taro";
 
 const ListPenerbangan = () => {
   const searchParams = Taro.getCurrentInstance().router?.params;
-  const originId = searchParams?.originId || '';
-  const destinationId = searchParams?.destinationId || '';
-  const date = searchParams?.date || '';
-  const origin = decodeURIComponent(searchParams?.origin || '');
-  const destination = decodeURIComponent(searchParams?.destination || '');
+  const originId = searchParams?.originId || "";
+  const destinationId = searchParams?.destinationId || "";
+  const date = searchParams?.date || "";
+  const origin = decodeURIComponent(searchParams?.origin || "");
+  const destination = decodeURIComponent(searchParams?.destination || "");
   const { data: flightRawData, isFetching } = useFetchFlightByCity(
     originId,
     destinationId,
@@ -55,7 +55,9 @@ const ListPenerbangan = () => {
       </div>
       <Show
         when={!isFetching}
-        fallbackComponent={<LoadingScreen text="Loading" />}
+        fallbackComponent={
+          <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+        }
       >
         <Show
           when={flightList?.length > 0}
@@ -73,11 +75,7 @@ const ListPenerbangan = () => {
             </div>
           }
         >
-          <RenderVerticalList
-            data={flightList}
-            keyIndex="id"
-            pageSize={10}
-          >
+          <RenderVerticalList data={flightList} keyIndex="id" pageSize={10}>
             {(item: FlightDetailData, index) => (
               <div
                 className={cn("px-4", {

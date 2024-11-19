@@ -26,7 +26,9 @@ const FollowingPenerbangan = () => {
       </div>
       <Show
         when={!isFetching}
-        fallbackComponent={<LoadingScreen text="Loading" />}
+        fallbackComponent={
+          <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+        }
       >
         <Show
           when={trackedFlights.length > 0}
