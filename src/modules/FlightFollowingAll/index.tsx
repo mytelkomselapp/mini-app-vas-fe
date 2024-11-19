@@ -6,6 +6,7 @@ import { FlightDetailTrackData } from "../../network/types/response-props";
 import moment from "moment";
 import { cardClick, sectionClick } from "../../network/analytics/tracker";
 import { View } from "@tarojs/components";
+import { handleNavigate } from "../../lib/utils";
 interface Props {
   data?: FlightDetailTrackData[];
   classNameProps?: string;
@@ -29,9 +30,10 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
           className="mb-4 flex items-center cursor-pointer"
           onClick={() => {
             sectionClick("See All Flight", "", "/detail");
-            navigate({
-              pathname: "/flight/list-following",
-            });
+            handleNavigate("/pages/FollowingPenerbangan/index")
+            // navigate({
+            //   pathname: "/flight/list-following",
+            // });
           }}
         >
           <p className="text-white text-sm font-semibold">

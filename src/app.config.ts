@@ -10,7 +10,8 @@ export default {
     "pages/SubscriptionPackage/index",
     "pages/PackageDetail/index",
     "pages/CreateDetailTicket/index",
-    "pages/TicketHistory/index"
+    "pages/TicketHistory/index",
+    "pages/FollowingPenerbangan/index"
     // other pages...
   ],
   window: {

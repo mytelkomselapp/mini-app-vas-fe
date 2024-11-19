@@ -1,12 +1,11 @@
 import Navbar from "../../components/Navbar";
-import "../../App.css";
 import FlightInfoCard from "../../modules/FlightInfocard";
 import { useFetchFlightTrack } from "../../network";
 import { FlightDetailTrackData } from "../../network/types/response-props";
 import { screenView } from "../../network/analytics/tracker";
 import { useEffect } from "react";
 import RenderVerticalList from "../../components/RenderVerticalList/RenderVerticalList";
-import { ReactComponent as NotFound } from "../../assets/not_found.svg";
+import NotFound from "../../assets/not_found.svg";
 import Show from "../../components/Show";
 import { cn } from "../../lib/utils";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -34,7 +33,7 @@ const FollowingPenerbangan = () => {
           fallbackComponent={
             <div className="flex justify-center min-h-[calc(100vh-11rem)]">
               <div className="flex flex-col items-center justify-center text-center">
-                <NotFound className="mt-1" />
+                <img src={NotFound} className="w-[128px] h-[128px]" />
                 <span className="text-base font-semibold font-sans mt-1">
                   Penerbangan tidak ditemukan
                 </span>
@@ -55,17 +54,8 @@ const FollowingPenerbangan = () => {
               >
                 <FlightInfoCard
                   key={flight.flight_no}
-                  flight_no={flight.flight_no}
-                  flight_logo={flight.flight_logo}
-                  flight_company={flight.flight_company}
-                  flight_state={flight.flight_state}
-                  flightId={flight.id}
-                  flight_duration={flight.flight_duration}
-                  departure_code={flight.departure_code}
-                  arrival_code={flight.arrival_code}
-                  departure_time={flight.departure_time}
-                  arrival_time={flight.arrival_time}
                   flightDetail={flight}
+                  isRoamaxEligible={false}
                 />
               </div>
             )}
