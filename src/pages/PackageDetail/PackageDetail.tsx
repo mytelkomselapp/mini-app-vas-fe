@@ -1,17 +1,33 @@
-import Navbar from "../../components/Navbar";
-import { useLocation } from "react-router-dom";
+// import Navbar from "../../components/Navbar";
 import FlightPurchasePackage from "../../modules/FlightPurchasePackage";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FlightFreemiumPackageData } from "../../network/types/response-props";
 import FlightPackageDetail from "../../modules/FlightPackageDetail";
 import { useFetchWeboptinToken, usePostErrorBuyPackage } from "../../network";
 import { useWeboptinTokenData } from "../../store/flight";
-import { toast } from "../../components/ui/use-toast";
 import { screenView } from "../../network/analytics/tracker";
 import Taro from "@tarojs/taro";
 import { getNavigateState, TaroStorage } from "../../lib/utils";
+import Toast from "../../components/Toast";
 
 const PackageDetail: React.FC = () => {
+  const [toast, setToast] = useState<{ title: string; description: string; status: "success" | "error"; duration: number } | null>(null);
+
+  const showToast = ({
+    title,
+    description,
+    status = "success",
+    duration = 3000,
+  }: {
+    title: string;
+    description: string;
+    status?: "success" | "error";
+    duration?: number;
+  }) => {
+    setToast({ title, description, status, duration });
+    setTimeout(() => setToast(null), duration);
+  };
+
   const currentPath = Taro.getCurrentInstance().router?.path || "";
   const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
   const packageData = state.flightDetail as FlightFreemiumPackageData;
@@ -48,16 +64,16 @@ const PackageDetail: React.FC = () => {
     try {
       const fetchData = await refetch();
 
-      if (fetchData?.data) {
+      if (fetchData?.data && package_id) {
         const tokenData = fetchData?.data?.data;
         setSid(package_id);
         TaroStorage.setItem("sid", String(package_id))
 
-        if (tokenData.data.url) {
+        if (tokenData?.data?.url) {
           Taro.navigateTo({
             url:
               "/pages/Webview/index?url=" +
-              encodeURIComponent(tokenData.data.url),
+              encodeURIComponent(tokenData?.data?.url),
           });
           //  window.open(tokenData?.data?.url, "_self");
           return;
@@ -65,19 +81,20 @@ const PackageDetail: React.FC = () => {
       } else {
         const errorData = fetchData?.error;
         const errorDescription = await PostLogErrorBuyPackage(errorData);
-        toast({
-          title: "Uh oh! Something went wrong.",
+        showToast({
+          title: "Uh oh! Something went wrong",
           description: errorDescription,
-          className: "bg-[#fef2f4] text-solidRed",
+          status: "error",
           duration: 3000,
         });
+
       }
     } catch (error: unknown) {
       const errorDescription = await PostLogErrorBuyPackage(error);
-      toast({
+      showToast({
         title: "Gagal Membeli Paket",
         description: errorDescription,
-        className: "bg-[#fef2f4] text-solidRed",
+        status: "error",
         duration: 3000,
       });
     }
@@ -102,6 +119,16 @@ const PackageDetail: React.FC = () => {
             onClick={handleBuyPackage}
             disabled={isFetching}
           />
+        </div>
+        <div>
+          {toast && (
+            <Toast
+              title={toast.title}
+              description={toast.description}
+              status={toast.status}
+              onClose={() => setToast(null)}
+            />
+          )}
         </div>
       </div>
     </>
