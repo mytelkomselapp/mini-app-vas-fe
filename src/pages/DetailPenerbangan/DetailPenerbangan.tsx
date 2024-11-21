@@ -295,14 +295,13 @@ const DetailPesawat = () => {
       ?.join("_")
       ?.toLowerCase();
 
-    // TODO: check this
-    // return navigate("/flight/file-preview", {
-    //   state: {
-    //     fileUrl: eTicket?.file_url,
-    //     fileExt: eTicket?.file_ext,
-    //     fileName: snackTicketName,
-    //   },
-    // });
+    return handleNavigate("/pages/PreviewImageDocs/index", "", {
+      state: {
+        fileUrl: eTicket?.file_url,
+        fileExt: eTicket?.file_ext,
+        fileName: snackTicketName,
+      },
+    });
   };
 
   const handleFollowSwitch = () => {
