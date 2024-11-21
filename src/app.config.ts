@@ -11,7 +11,8 @@ export default {
     "pages/PackageDetail/index",
     "pages/CreateDetailTicket/index",
     "pages/TicketHistory/index",
-    "pages/FollowingPenerbangan/index"
+    "pages/FollowingPenerbangan/index",
+    "pages/PreviewImageDocs/index",
     // other pages...
   ],
   window: {

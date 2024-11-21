@@ -1,19 +1,21 @@
 import Navbar from "../../components/Navbar";
 import * as React from "react";
-import { ReactComponent as ShareIcon } from "../../assets/ico-share.svg";
-import { useLocation } from "react-router-dom";
+import ShareIcon from "../../assets/ico-share.svg";
 import { Document, Page, pdfjs } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import useWindowSize from "../../hooks/useWindowSize";
 import Show from "../../components/Show";
 import LoadingScreen from "../../components/LoadingScreen";
-import { cn, urlToFile } from "../../lib/utils";
+import { cn, getNavigateState, urlToFile } from "../../lib/utils";
 import { toast } from "../../components/ui/use-toast";
+import { useMemo } from "react";
+import Taro from "@tarojs/taro";
+import { Image } from "@tarojs/components";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   "pdfjs-dist/build/pdf.worker.min.mjs",
+//   import.meta.url
+// ).toString();
 
 const pdfOptions = {
   cMapUrl: "/cmaps/",
@@ -27,8 +29,9 @@ export interface PreviewImageDocsProps {
 }
 
 const PreviewImageDocs: React.FC = () => {
-  const location = useLocation();
-  const stateData = location?.state as PreviewImageDocsProps;
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
+  const stateData = state?.state as PreviewImageDocsProps;
 
   const fileUrl = stateData?.fileUrl;
   const fileExt = stateData?.fileExt;
@@ -39,36 +42,36 @@ const PreviewImageDocs: React.FC = () => {
   const [numPages, setNumPages] = React.useState<number>();
 
   const handleCopyClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(fileUrl);
+    // try {
+    //   await navigator.clipboard.writeText(fileUrl);
 
-      toast({
-        title: "Copied",
-        description: "File url berhasil di copy",
-        className: "bg-[#479CFF]",
-        duration: 1000,
-      });
-    } catch (error) {
-      console.error("Error copying file url...");
-    }
+    //   toast({
+    //     title: "Copied",
+    //     description: "File url berhasil di copy",
+    //     className: "bg-[#479CFF]",
+    //     duration: 1000,
+    //   });
+    // } catch (error) {
+    //   console.error("Error copying file url...");
+    // }
   };
 
   const handleShareFile = async () => {
-    try {
-      const files = await urlToFile(fileUrl, fileName);
+    // try {
+    //   const files = await urlToFile(fileUrl, fileName);
 
-      if (!!navigator.share) {
-        return navigator.share({
-          title: "My E-Ticket",
-          text: "Berikut merupakan file My E-Ticket kamu",
-          files: [files] as File[],
-        });
-      }
+    //   if (!!navigator.share) {
+    //     return navigator.share({
+    //       title: "My E-Ticket",
+    //       text: "Berikut merupakan file My E-Ticket kamu",
+    //       files: [files] as File[],
+    //     });
+    //   }
 
-      return handleCopyClipboard();
-    } catch (error) {
-      console.error(error);
-    }
+    //   return handleCopyClipboard();
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const onDocumentLoadSuccess = ({
@@ -81,10 +84,14 @@ const PreviewImageDocs: React.FC = () => {
     <React.Fragment>
       <Navbar
         title="Detail E-Ticket"
-        className={cn(
-          "bg-white p-4 mt-0 mb-[4px] border-b-4 border-b-inactiveGrey"
-        )}
-        rightContent={<ShareIcon onClick={handleShareFile} />}
+        className={"bg-white p-4 mt-0 mb-[4px] border-b-4 border-b-inactiveGrey"}
+        rightContent={
+          <Image
+            src={ShareIcon}
+            style={{ width: "24px", height: "24px" }}
+            onClick={handleShareFile}
+          />
+        }
       />
       <div className="w-full h-auto max-w-[425px] overflow-x-hidden overflow-y-auto bg-inactiveGrey">
         <Show
@@ -93,7 +100,7 @@ const PreviewImageDocs: React.FC = () => {
             <img src={fileUrl} className="w-full h-full object-cover" />
           }
         >
-          <Document
+          {/* <Document
             file={fileUrl}
             onLoadSuccess={onDocumentLoadSuccess}
             options={pdfOptions}
@@ -111,7 +118,7 @@ const PreviewImageDocs: React.FC = () => {
                 width={width}
               />
             ))}
-          </Document>
+          </Document> */}
         </Show>
       </div>
     </React.Fragment>

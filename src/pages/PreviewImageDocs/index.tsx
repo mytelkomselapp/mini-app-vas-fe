@@ -1,16 +1,9 @@
-import LoadingScreen from "../../components/LoadingScreen";
-import * as React from "react";
+import PreviewImageDocs from "./PreviewImageDocs";
 
-const PreviewImageDocsLazy = React.lazy(() => import("./PreviewImageDocs"));
-
-const PreviewImageDocs: React.FC = () => {
-  return (
-    <React.Suspense
-      fallback={<LoadingScreen text="Loading..." customClassName="mx-[20px]" />}
-    >
-      <PreviewImageDocsLazy />
-    </React.Suspense>
-  );
+const Index = () => {
+    return (
+        <PreviewImageDocs />
+    );
 };
 
-export default PreviewImageDocs;
+export default Index;
