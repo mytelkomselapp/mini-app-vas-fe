@@ -241,7 +241,7 @@ const FlightForm: React.FC<Props> = ({
             //  backdropFilter: "blur(12px)",
             //WebkitBackdropFilter: "blur(12px)",
             background: "rgb(128, 133, 148)",
-            height: 317,
+            height: isPremium ? 317 : 350,
           }}
         >
           <div className="mb-4 flex gap-[10px] z-1 relative">
