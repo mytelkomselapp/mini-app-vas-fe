@@ -30,7 +30,7 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
           className="mb-4 flex items-center cursor-pointer"
           onClick={() => {
             sectionClick("See All Flight", "", "/detail");
-            handleNavigate("/pages/FollowingPenerbangan/index")
+            handleNavigate("/pages/FollowingPenerbangan/index");
             // navigate({
             //   pathname: "/flight/list-following",
             // });
@@ -64,12 +64,10 @@ const FlightFollowingAll: React.FC<Props> = ({ data, classNameProps }) => {
                   "Followed Flights",
                   window.location.pathname
                 );
-                return navigate(
-                  {
-                    pathname: "/flight/detail",
-                    search: `?id=${idPlane}&date=${dateFlight}&departure=${departureCode}&arrival=${arrivalCode}`,
-                  },
-                  { state: { flightDetail: val?.flight } }
+                return handleNavigate(
+                  "/pages/DetailPenerbangan/index",
+                  `?id=${idPlane}&date=${dateFlight}&departure=${departureCode}&arrival=${arrivalCode}`,
+                  { flightDetail: val?.flight }
                 );
               }}
             >
