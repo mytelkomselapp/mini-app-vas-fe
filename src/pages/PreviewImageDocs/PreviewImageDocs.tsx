@@ -33,10 +33,21 @@ const PreviewImageDocs: React.FC = () => {
   const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
   const stateData = state?.state as PreviewImageDocsProps;
 
+  console.log({ stateData, currentPath });
+
   const fileUrl = stateData?.fileUrl;
   const fileExt = stateData?.fileExt;
   const fileName = `${stateData?.fileName}${fileExt}`;
-  const isFileData = fileExt === ".pdf";
+  const isFileData = [
+    "doc",
+    "pdf",
+    "docx",
+    "xlsx",
+    "xls",
+    "ppt",
+    "pptx",
+    "pdf",
+  ]?.includes(fileExt);
 
   const { width } = useWindowSize();
   const [numPages, setNumPages] = React.useState<number>();
@@ -44,7 +55,6 @@ const PreviewImageDocs: React.FC = () => {
   const handleCopyClipboard = async () => {
     // try {
     //   await navigator.clipboard.writeText(fileUrl);
-
     //   toast({
     //     title: "Copied",
     //     description: "File url berhasil di copy",
@@ -59,7 +69,6 @@ const PreviewImageDocs: React.FC = () => {
   const handleShareFile = async () => {
     // try {
     //   const files = await urlToFile(fileUrl, fileName);
-
     //   if (!!navigator.share) {
     //     return navigator.share({
     //       title: "My E-Ticket",
@@ -67,7 +76,6 @@ const PreviewImageDocs: React.FC = () => {
     //       files: [files] as File[],
     //     });
     //   }
-
     //   return handleCopyClipboard();
     // } catch (error) {
     //   console.error(error);
@@ -80,11 +88,30 @@ const PreviewImageDocs: React.FC = () => {
     setNumPages(nextNumPages);
   };
 
+  React.useEffect(() => {
+    if (isFileData) {
+      Taro.downloadFile({
+        url: fileUrl,
+        success: function (res) {
+          const filePath = res.tempFilePath;
+          Taro.openDocument({
+            filePath: filePath,
+            success: function (res) {
+              console.log("File opened successfully");
+            },
+          });
+        },
+      });
+    }
+  }, [isFileData]);
+
   return (
     <React.Fragment>
       <Navbar
         title="Detail E-Ticket"
-        className={"bg-white p-4 mt-0 mb-[4px] border-b-4 border-b-inactiveGrey"}
+        className={
+          "bg-white p-4 mt-0 mb-[4px] border-b-4 border-b-inactiveGrey"
+        }
         rightContent={
           <Image
             src={ShareIcon}
@@ -97,7 +124,7 @@ const PreviewImageDocs: React.FC = () => {
         <Show
           when={isFileData}
           fallbackComponent={
-            <img src={fileUrl} className="w-full h-full object-cover" />
+            <img src={fileUrl} className="w-full h-[100vh] object-cover" />
           }
         >
           {/* <Document

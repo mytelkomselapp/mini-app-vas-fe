@@ -77,15 +77,19 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     try {
       const uploadFile = await postUploadETicket(filePath);
-      const dataFile = uploadFile?.data?.[0];
+      // @ts-ignore
+      const dataFile = JSON.parse(uploadFile?.data);
       const isSuccessUpload = !!dataFile;
 
+      console.log({ dataFile });
+
       if (isSuccessUpload) {
+        const theDataFile = dataFile?.[0];
         setError({ ...error, eTicket: "" });
         return setETicket({
-          file_ext: dataFile?.ext,
-          file_mime: dataFile?.mime,
-          file_url: dataFile?.url,
+          file_ext: theDataFile?.ext,
+          file_mime: theDataFile?.mime,
+          file_url: theDataFile?.url,
         });
       }
     } catch (err) {
@@ -102,6 +106,8 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     if (!eTicket?.file_url) return;
 
     const snackTicketName = ticketName?.split(" ")?.join("_")?.toLowerCase();
+
+    console.log({ fileUrl: eTicket?.file_url });
     // window.open(eTicket?.file_url, "_blank");
     return handleNavigate("/pages/PreviewImageDocs/index", "", {
       state: {
