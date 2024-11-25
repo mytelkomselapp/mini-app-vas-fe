@@ -145,13 +145,6 @@ const CreateDetailTicket: React.FC = () => {
       <View className="flex flex-col justify-between bg-inactiveGrey py-4 px-[16px] h-full overflow-hidden">
         <form encType="multipart/form-data">
           <div>
-            {/* <Navbar
-              onBackCallback={handleBackCallback}
-              hiddenAction
-              title={pageTitle}
-              className="my-0"
-            /> */}
-
             <div className="flex flex-col my-[8px] rounded-[16px] bg-white min-h-[50px] p-4">
               <FlightTicketForm pageMode={pageMode} />
               <FlightTicketUpload

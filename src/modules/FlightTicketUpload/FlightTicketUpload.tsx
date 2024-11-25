@@ -107,7 +107,6 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     const snackTicketName = ticketName?.split(" ")?.join("_")?.toLowerCase();
 
-    console.log({ fileUrl: eTicket?.file_url });
     // window.open(eTicket?.file_url, "_blank");
     return handleNavigate("/pages/PreviewImageDocs/index", "", {
       state: {

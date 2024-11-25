@@ -2,15 +2,12 @@ import * as React from "react";
 import BottomSheet from "../../../../components/BottomSheet";
 import IconNews from "../../../../assets/icon-news.svg";
 import IconImage from "../../../../assets/ico-image.svg";
-import { FileInputButton, ExtFile } from "@files-ui/react";
-import { toast } from "../../../../components/ui/use-toast";
 import { buttonClick } from "../../../../network/analytics/tracker";
-import {
-  filePathToBlob,
-  getMobileOperatingSystem,
-} from "../../../../lib/utils";
-import { Image, View } from "@tarojs/components";
+import { getMobileOperatingSystem } from "../../../../lib/utils";
+import { View } from "@tarojs/components";
 import FileInput from "../../../../components/FileInput";
+import Toast from "../../../../components/Toast";
+import Show from "../../../../components/Show";
 
 export type SelectUploadMediaType = "gallery" | "camera" | "document";
 interface Props {
@@ -25,49 +22,60 @@ const SelectUploadMedia: React.FC<Props> = ({
   onClose,
   onSelectImage,
 }) => {
-  // const handleOpenDocument = async (extFile: ExtFile[]) => {
-  //   const file = extFile?.[0];
-  //   const acceptedFormat = ["application/pdf"];
+  const [toast, setToast] = React.useState<{
+    title: string;
+    description: string;
+    status: "success" | "error";
+    duration: number;
+  } | null>(null);
 
-  //   if (acceptedFormat?.includes(file?.type ?? "")) {
-  //     onSelectImage?.(file as File);
-  //     return onClose?.();
-  //   }
-
-  //   toast({
-  //     title: "Gagal Mengunggah Document",
-  //     description: "Pastikan document berformat pdf",
-  //     className: "bg-[#fef2f4] text-solidRed",
-  //     duration: 3000,
-  //   });
-  //   onClose?.();
-  // };
-
-  // const handleOpenGallery = async (extFile: ExtFile[]) => {
-  //   const file = extFile?.[0];
-  //   const acceptedFormat = ["image/jpg", "image/jpeg", "image/png"];
-
-  //   if (acceptedFormat?.includes(file?.type ?? "")) {
-  //     onSelectImage?.(file as File);
-  //     return onClose?.();
-  //   }
-
-  //   toast({
-  //     title: "Gagal Mengunggah Gambar",
-  //     description: "Pastikan gambar berformat jpg, jpeg atau png",
-  //     className: "bg-[#fef2f4] text-solidRed",
-  //     duration: 3000,
-  //   });
-  //   onClose?.();
-  // };
+  const showToast = ({
+    title,
+    description,
+    status = "success",
+    duration = 3000,
+  }: {
+    title: string;
+    description: string;
+    status?: "success" | "error";
+    duration?: number;
+  }) => {
+    setToast({ title, description, status, duration });
+    setTimeout(() => setToast(null), duration);
+  };
 
   const handleSuccessOpenMedia = async (res: any) => {
-    onSelectImage?.(res?.tempFiles?.[0]?.path);
+    const fileData = res?.tempFiles?.[0];
+    const mimeType = fileData?.name?.split(".").pop() || "";
+
+    if (mimeType !== "pdf") {
+      return showToast({
+        title: "Gagal Mengunggah Document",
+        description: "Pastikan document berformat pdf",
+        status: "error",
+        duration: 3000,
+      });
+    }
+
+    onSelectImage?.(fileData?.path);
     return onClose?.();
   };
 
   const handleSuccessOpenGallery = async (res: any) => {
-    onSelectImage?.(res?.tempFilePaths?.[0]);
+    const fileData = res?.tempFiles?.[0];
+    const mimeType = fileData?.name?.split(".").pop() || "";
+    const acceptedFormat = ["jpg", "jpeg", "png"];
+
+    if (!acceptedFormat?.includes(mimeType)) {
+      return showToast({
+        title: "Gagal Mengunggah Gambar",
+        description: "Pastikan gambar berformat jpg, jpeg atau png",
+        status: "error",
+        duration: 3000,
+      });
+    }
+
+    onSelectImage?.(fileData?.path);
 
     return onClose?.();
   };
@@ -105,7 +113,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                     type: "file",
                     extension: ["pdf"],
                     sizeType: ["original", "compressed"], // Allow original or compressed images
-                    sourceType: ["album", "camera"], //
+                    sourceType: ["album", "camera", "environment", "user"], //
                     complete: handleSuccessOpenMedia,
                     fail: (err) => {
                       console.error("File selection failed:", err);
@@ -153,6 +161,15 @@ const SelectUploadMedia: React.FC<Props> = ({
           </div>
         </div>
       </View>
+
+      <Show when={!!toast}>
+        <Toast
+          title={toast?.title ?? ""}
+          description={toast?.description ?? ""}
+          status={toast?.status}
+          onClose={() => setToast(null)}
+        />
+      </Show>
     </BottomSheet>
   );
 };
