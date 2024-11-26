@@ -63,7 +63,8 @@ const SelectUploadMedia: React.FC<Props> = ({
 
   const handleSuccessOpenGallery = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
-    const mimeType = fileData?.name?.split(".").pop() || "";
+    const mimeType = fileData?.path?.split(".").pop() || "";
+
     const acceptedFormat = ["jpg", "jpeg", "png"];
 
     if (!acceptedFormat?.includes(mimeType)) {
