@@ -52,7 +52,6 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
   const handleDeleteImage = async (event) => {
     event.stopPropagation();
-    console.log({ data });
 
     buttonClick("Delete E-Ticket", "Delete E-Ticket", "Create ticket");
 
