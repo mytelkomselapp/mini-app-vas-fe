@@ -50,12 +50,12 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     toggleVisibleUploadMedia(true);
   };
 
-  const handleDeleteImage = async () => {
-    // event.stopPropagation();
+  const handleDeleteImage = async (event) => {
+    event.stopPropagation();
 
     buttonClick("Delete E-Ticket", "Delete E-Ticket", "Create ticket");
 
-    if (data) {
+    if (data?.id) {
       const deleteETicketData = await deleteETicket({ id: data.id });
       if (deleteETicketData?.data?.meta?.status === "success") {
         handleNavigate("/pages/MyTicketList/index");
@@ -80,8 +80,6 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       // @ts-ignore
       const dataFile = JSON.parse(uploadFile?.data);
       const isSuccessUpload = !!dataFile;
-
-      console.log({ dataFile });
 
       if (isSuccessUpload) {
         const theDataFile = dataFile?.[0];
