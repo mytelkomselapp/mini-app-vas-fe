@@ -123,18 +123,6 @@ export const sendAnalyticsEvent = async (event_name, event_params) => {
 
   const url = `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`;
 
-  // {
-  //   event_category: "Flight Commerce Activity",
-  //   button_name: "Check Flights",
-  //   button_purpose: "Check Flights",
-  //   page_location: "https://www.telkomsel.com/...",
-  //   page_title: "Redmi Note 12 Vs Redmi Note 12 Pro...",
-  //   page_referrer: "my_telkomsel_apps",
-  //   session_id: 1730166412,
-  //   engagement_time_msec: 1000,
-  //   debug_mode: 1,
-  // },
-
   try {
     const response = await Taro.request({
       url,
