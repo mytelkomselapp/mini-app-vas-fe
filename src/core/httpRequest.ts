@@ -54,7 +54,7 @@ const generateBaseURL = (source: API_SOURCE, url: string) => {
 const generateToken = (source: API_SOURCE) => {
   if (source === "api")
     /* Still looking for proper way to get token from storage / cookie*/
-    return BASE_APPS_TOKEN;
+    return Taro.getStorageSync("customParams");
 
   return BASE_CMS_TOKEN;
 };

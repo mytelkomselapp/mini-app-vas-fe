@@ -6,17 +6,17 @@ import "./app.scss";
 
 const App = ({ children }: { children: React.ReactNode }) => {
   useLaunch((options?: any) => {
-    console.log("App launched");
-
     const launchOptions = Taro.getLaunchOptionsSync();
-    console.log("Launch options:", launchOptions);
     const extendData = options?.extendData ?? {};
-
-    Taro.showToast({
-      title: JSON.stringify(extendData, null, 4),
-      icon: "none", // You can use 'success', 'loading', 'none', etc.
-      duration: 10000, // Duration in milliseconds
-    });
+    console.log({ extendData });
+    if (extendData) {
+      Taro.setStorageSync("customParams", extendData);
+    }
+    // Taro.showToast({
+    //   title: JSON.stringify(extendData, null, 4),
+    //   icon: "none", // You can use 'success', 'loading', 'none', etc.
+    //   duration: 10000, // Duration in milliseconds
+    // });
     // Perform initialization logic here
     if (launchOptions?.query) {
       console.log("Query parameters:", launchOptions.query);
