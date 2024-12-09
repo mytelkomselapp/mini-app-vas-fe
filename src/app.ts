@@ -9,7 +9,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
     const launchOptions = Taro.getLaunchOptionsSync();
     const extendData = options?.extendData ?? {};
     console.log({ extendData });
-    if (extendData) {
+    if (typeof extendData !== "object") {
       Taro.setStorageSync("customParams", extendData);
     }
     // Taro.showToast({
