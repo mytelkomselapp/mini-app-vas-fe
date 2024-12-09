@@ -20,10 +20,10 @@ const getButtonStyle = (style: string): string => {
     "!min-h-[48px] font-normal !py-[8px] px-[16px] !w-full focus:outline-none rounded-[40px] font-sans ";
   switch (style) {
     case "primary":
-      return base + "bg-solidRed text-white";
+      return base + "bg-[#ED0226] text-[#FFFFFF]";
     case "secondary":
       return (
-        base + "bg-white text-solidRed border-solid border border-solidRed"
+        base + "bg-[#FFFFFF] text-[#ED0226] border-solid border border-[#ED0226]"
       );
     case "disabled":
       return (
