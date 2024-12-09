@@ -1,37 +1,29 @@
 import * as React from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useLaunch } from "@tarojs/taro";
 import { withProvider } from "./hoc";
 import "./index.css";
 import "./app.scss";
 
-interface AppProps {
-  children: React.ReactNode;
-}
+const App = ({ children }: { children: React.ReactNode }) => {
+  useLaunch((options?: any) => {
+    console.log("App launched");
 
-class App extends React.Component<AppProps> {
-  componentDidMount() {
-    this.onLaunch();
-  }
-
-  onLaunch() {
-    // Retrieve extendData from the launch options
     const launchOptions = Taro.getLaunchOptionsSync();
-    const extendData = launchOptions?.query?.extendData;
+    console.log("Launch options:", launchOptions);
+    const extendData = options?.extendData ?? {};
 
     Taro.showToast({
-      title: JSON.stringify(launchOptions?.query),
+      title: JSON.stringify(extendData, null, 4),
       icon: "none", // You can use 'success', 'loading', 'none', etc.
       duration: 10000, // Duration in milliseconds
     });
-    console.log("App launched with extendData:", extendData);
-    // if (extendData) {
-    //   Taro.setStorageSync("customParams", extendData);
-    // }
-  }
+    // Perform initialization logic here
+    if (launchOptions?.query) {
+      console.log("Query parameters:", launchOptions.query);
+    }
+  });
 
-  render() {
-    return this.props.children;
-  }
-}
+  return children;
+};
 
 export default withProvider(App);
