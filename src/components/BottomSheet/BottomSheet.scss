@@ -1,4 +1,10 @@
-/* Backdrop to overlay content and close the sheet when tapped */
+/* Container for the bottom sheet and backdrop */
+.bottom-sheet-container {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Backdrop styling */
 .backdrop {
   position: fixed;
   top: 0;
@@ -6,7 +12,14 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 /* Bottom sheet styling */
@@ -19,24 +32,20 @@
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-
-  /* Hide bottom sheet offscreen by default */
-  transform: translateY(100%);
+  transform: translate3d(0, 100%, 0);
   transition: transform 0.3s ease;
+  will-change: transform;
+
+  &.open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.full-height {
+    height: 100vh;
+  }
 }
 
-/* When open, slide up the bottom sheet */
-.bottom-sheet.open {
-  transform: translateY(0);
-}
-
-/* Full-height option for the sheet */
-.full-height {
-  height: 100vh;
-}
-
-/* Header with drag handle */
+/* Header and drag handle styling */
 .sheet-header {
   padding: 16px;
   display: flex;
@@ -51,9 +60,10 @@
   border-radius: 4px;
 }
 
-/* Content area for the sheet */
+/* Content area with scrolling */
 .sheet-content {
   padding: 16px;
   overflow-y: auto;
-  //max-height: 70vh; /* Adjust to fit your design */
+  max-height: 70vh;
+  -webkit-overflow-scrolling: touch;
 }
