@@ -17,13 +17,13 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   onClose,
   children,
   fullHeight = false,
-  containerClassname,
+  containerClassname = "",
   showHeader = true,
 }) => {
   return (
     <View className={`bottom-sheet-container ${open ? "visible" : ""}`}>
       {/* Backdrop overlay */}
-      {open && <View className="backdrop" onClick={onClose} />}
+      <View className={`backdrop ${open ? "active" : ""}`} onClick={onClose} />
 
       {/* Bottom Sheet */}
       <View
@@ -31,11 +31,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           fullHeight ? "full-height" : ""
         }`}
       >
-        <Show when={showHeader}>
+        {showHeader && (
           <View className="sheet-header">
             <View className="drag-handle" />
           </View>
-        </Show>
+        )}
 
         <View className="sheet-content">{children}</View>
       </View>
