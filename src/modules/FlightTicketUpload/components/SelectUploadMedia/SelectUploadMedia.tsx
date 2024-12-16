@@ -46,16 +46,6 @@ const SelectUploadMedia: React.FC<Props> = ({
 
   const handleSuccessOpenMedia = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
-    const mimeType = fileData?.name?.split(".").pop() || "";
-
-    if (mimeType !== "pdf") {
-      return showToast({
-        title: "Gagal Mengunggah Document",
-        description: "Pastikan document berformat pdf",
-        status: "error",
-        duration: 3000,
-      });
-    }
 
     onSelectImage?.(fileData?.path);
     return onClose?.();
@@ -63,18 +53,6 @@ const SelectUploadMedia: React.FC<Props> = ({
 
   const handleSuccessOpenGallery = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
-    const mimeType = fileData?.path?.split(".").pop() || "";
-
-    const acceptedFormat = ["jpg", "jpeg", "png"];
-
-    if (!acceptedFormat?.includes(mimeType)) {
-      return showToast({
-        title: "Gagal Mengunggah Gambar",
-        description: "Pastikan gambar berformat jpg, jpeg atau png",
-        status: "error",
-        duration: 3000,
-      });
-    }
 
     onSelectImage?.(fileData?.path);
 
@@ -112,9 +90,6 @@ const SelectUploadMedia: React.FC<Props> = ({
                   config={{
                     count: 1,
                     type: "file",
-                    extension: ["pdf"],
-                    sizeType: ["original", "compressed"], // Allow original or compressed images
-                    sourceType: ["album", "camera", "environment", "user"], //
                     complete: handleSuccessOpenMedia,
                     fail: (err) => {
                       console.error("File selection failed:", err);

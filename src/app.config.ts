@@ -21,4 +21,5 @@ export default {
     navigationBarTitleText: "Pantau Penerbangan",
     navigationBarTextStyle: "black",
   },
+  requiredBackgroundModes: ["file"], // Background modes required
 };

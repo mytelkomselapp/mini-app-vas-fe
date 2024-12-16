@@ -12,7 +12,6 @@ import moment from "moment";
 import LoadingScreen from "../../components/LoadingScreen";
 import { useDeleteETicket, usePostUploadETicketFile } from "../../network";
 import { toast } from "../../components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 import { buttonClick } from "../../network/analytics/tracker";
 import { Image } from "@tarojs/components";
 import { handleNavigate } from "../../lib/utils";
@@ -23,7 +22,6 @@ interface Props {
 }
 
 const FlightTicketUpload: React.FC<Props> = ({ data }) => {
-  const navigate = useNavigate();
   const { setETicket, eTicket, planeNo, ticketName, error, setError } =
     useFlightTicketForm();
 
