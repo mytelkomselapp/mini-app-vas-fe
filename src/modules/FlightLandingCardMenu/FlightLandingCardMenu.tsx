@@ -28,8 +28,12 @@ const FlightLandingCardMenu: React.FC<Props> = ({
       return Taro.navigateTo({ url: "/pages/MyTicketList/index" });
 
     if (targetUrl) {
-      return Taro.navigateTo({
-        url: "/pages/Webview/index?url=" + targetUrl,
+      // return Taro.navigateTo({
+      //   url: "/pages/Webview/index?url=" + targetUrl,
+      // });
+      return Taro.navigateToMiniProgram({
+        appId: "app-k0i2ivij2k",
+        path: "https://tdwpreweb.telkomsel.com/app/flexible-iframe/traveloka-hotel-web",
       });
     }
 
