@@ -275,7 +275,7 @@ const FlightForm: React.FC<Props> = ({
               }}
             >
               {data?.formTabTitle2}
-              {tab ? (
+              {Boolean(tab) ? (
                 <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
               ) : null}
             </div>
