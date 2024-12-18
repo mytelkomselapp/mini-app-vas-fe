@@ -1,6 +1,6 @@
 import * as React from "react";
 import FlightLandingCardMenu from "../../modules/FlightLandingCardMenu";
-import FlightForm from "../../modules/FlightForm";
+import FlightForm, { CalendarModal } from "../../modules/FlightForm";
 import Navbar, { NavColor } from "../../components/Navbar";
 import {
   useFetchCMSLandingPage,
@@ -13,10 +13,14 @@ import FlightFollowingAll from "../../modules/FlightFollowingAll";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
 import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
+import useToggle from "../../hooks/useToggle";
+import moment from "moment";
+import { usePlaneDate } from "../../store/flight";
 
 const LandingPagePesawat = () => {
   const [scrollElement, setScrollElement] = React.useState<string>("");
-
+  const { active: visibleCalendar, toggleActive: toggleVisibleCalendar } =
+    useToggle();
   const { mutateAsync: claimFreeTicket, isSuccess } = usePostClaimFreeTicket();
   const { data: dataRaw, isFetching: fetchingCMSLandingPage } =
     useFetchCMSLandingPage();
@@ -27,9 +31,10 @@ const LandingPagePesawat = () => {
   } = useFetchFlightTrack();
   const { buyPackageStatus: viewPageAction, data } =
     useUserPackageStatus(isSuccess);
-
+  const datePlane = usePlaneDate((state) => state.date);
+  const setDatePlane = usePlaneDate((state) => state.setDate);
   const [currentSlide, setCurrentSlide] = React.useState(0);
-
+  const [date, setDate] = React.useState<Date>();
   const dataFlight = dataRaw?.data?.data;
   const title = dataFlight?.title;
   const subtitle = dataFlight?.subtitle;
@@ -64,7 +69,18 @@ const LandingPagePesawat = () => {
       setScrollElement("scroll-to-0");
     }
   }, [isFetched, dataTrackFlights]);
-
+  const handleDismissCalendar = () => {
+    setDate(moment(datePlane)?.toDate());
+    toggleVisibleCalendar();
+  };
+  const handleToggleBottomSheet = () => {
+    console.log("TOGGLE CLICKED");
+    toggleVisibleCalendar();
+  };
+  const handleSaveDate = () => {
+    setDatePlane(String(date));
+    handleToggleBottomSheet();
+  };
   return (
     <React.Fragment>
       <View
@@ -103,6 +119,7 @@ const LandingPagePesawat = () => {
                   remainingQuota={data?.quota}
                   packageType={data?.package_type}
                   userType={data?.new_user}
+                  onOpenCalendar={handleToggleBottomSheet}
                 />
               </View>
 
@@ -158,6 +175,13 @@ const LandingPagePesawat = () => {
       <FlightLandingCardMenu
         isLoading={fetchingCMSLandingPage}
         data={dataFlight}
+      />
+      <CalendarModal
+        open={visibleCalendar}
+        onClose={handleDismissCalendar}
+        handleSaveDate={handleSaveDate}
+        setDate={setDate}
+        date={date}
       />
     </React.Fragment>
   );

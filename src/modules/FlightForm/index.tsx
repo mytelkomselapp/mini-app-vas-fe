@@ -67,6 +67,7 @@ interface Props {
   packageType?: PackageType;
   userType?: "new" | "old";
   className?: string;
+  onOpenCalendar?: () => void;
 }
 
 const FlightForm: React.FC<Props> = ({
@@ -76,6 +77,7 @@ const FlightForm: React.FC<Props> = ({
   packageType,
   userType,
   className,
+  onOpenCalendar,
 }) => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(0);
@@ -195,8 +197,9 @@ const FlightForm: React.FC<Props> = ({
   };
 
   const handleToggleBottomSheet = () => {
-    console.log("TOGGLE CLICKED");
-    toggleVisibleCalendar();
+    // console.log("TOGGLE CLICKED");
+    // toggleVisibleCalendar();
+    onOpenCalendar?.();
   };
   const handleSaveDate = () => {
     setDatePlane(String(date));
@@ -319,13 +322,13 @@ const FlightForm: React.FC<Props> = ({
         name={activeSearchInput}
         dataPopularCities={data?.popularCitiesSection ?? []}
       />
-      <CalendarModal
+      {/* <CalendarModal
         open={visibleCalendar}
         onClose={handleDismissCalendar}
         handleSaveDate={handleSaveDate}
         setDate={setDate}
         date={date}
-      />
+      /> */}
       <EmptyModal onClose={toggleVisibleError} open={visibleError} />
     </View>
   );
