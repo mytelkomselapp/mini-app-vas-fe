@@ -13,14 +13,33 @@ import FlightFollowingAll from "../../modules/FlightFollowingAll";
 import bgLanding from "../../assets/bg/bg-airplane-hq.jpg";
 import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
+import FlightSearch from "../../modules/FlightSearch";
 import useToggle from "../../hooks/useToggle";
 import moment from "moment";
 import { usePlaneDate } from "../../store/flight";
+import {
+  DestinationOriginProps,
+  useDestination,
+  useOrigin,
+} from "../../store/flight";
+
+type ActiveSearchInput = "kota-asal" | "kota-tujuan" | string;
 
 const LandingPagePesawat = () => {
   const [scrollElement, setScrollElement] = React.useState<string>("");
+
   const { active: visibleCalendar, toggleActive: toggleVisibleCalendar } =
     useToggle();
+
+  const origin = useOrigin((state) => state.origin);
+  const destination = useDestination((state) => state.destination);
+
+  const setOrigin = useOrigin((state) => state.setOrigin);
+  const setDestination = useDestination((state) => state.setDestination);
+
+  const [activeSearchInput, setActiveSearchInput] =
+    React.useState<ActiveSearchInput>("");
+
   const { mutateAsync: claimFreeTicket, isSuccess } = usePostClaimFreeTicket();
   const { data: dataRaw, isFetching: fetchingCMSLandingPage } =
     useFetchCMSLandingPage();
@@ -33,6 +52,12 @@ const LandingPagePesawat = () => {
     useUserPackageStatus(isSuccess);
   const datePlane = usePlaneDate((state) => state.date);
   const setDatePlane = usePlaneDate((state) => state.setDate);
+
+  const {
+    active: visibleFlightSearchModal,
+    toggleActive: toggleVisibleFlightSearchModal,
+  } = useToggle();
+
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [date, setDate] = React.useState<Date>();
   const dataFlight = dataRaw?.data?.data;
@@ -81,6 +106,20 @@ const LandingPagePesawat = () => {
     setDatePlane(String(date));
     handleToggleBottomSheet();
   };
+
+  const handleSelectData = (
+    value: DestinationOriginProps,
+    name: ActiveSearchInput
+  ) => {
+    if (name === "kota-asal") return setOrigin(value);
+    if (name === "kota-tujuan") return setDestination(value);
+  };
+
+  const handleOpenSearchFlight = (name: string) => {
+    toggleVisibleFlightSearchModal();
+    setActiveSearchInput(name as ActiveSearchInput);
+  };
+
   return (
     <React.Fragment>
       <View
@@ -120,6 +159,7 @@ const LandingPagePesawat = () => {
                   packageType={data?.package_type}
                   userType={data?.new_user}
                   onOpenCalendar={handleToggleBottomSheet}
+                  onOpenSearchFlight={handleOpenSearchFlight}
                 />
               </View>
 
@@ -182,6 +222,13 @@ const LandingPagePesawat = () => {
         handleSaveDate={handleSaveDate}
         setDate={setDate}
         date={date}
+      />
+      <FlightSearch
+        open={visibleFlightSearchModal}
+        onClose={toggleVisibleFlightSearchModal}
+        onSelect={handleSelectData}
+        name={activeSearchInput}
+        dataPopularCities={dataFlight?.popularCitiesSection ?? []}
       />
     </React.Fragment>
   );
