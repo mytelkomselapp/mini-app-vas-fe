@@ -200,7 +200,7 @@ const LandingPagePesawat = () => {
 
           {/* Dot Indicator */}
           <View className="flex justify-center mt-2 mb-4 items-center gap-1">
-            {nearestThreeFlight?.length &&
+            {nearestThreeFlight?.length ? (
               sliderItems?.map((_, i) => (
                 <View
                   key={i}
@@ -208,7 +208,10 @@ const LandingPagePesawat = () => {
                     currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
                   }`}
                 />
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </View>
         </View>
       </View>

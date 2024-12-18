@@ -298,13 +298,13 @@ const FlightForm: React.FC<Props> = ({
             />
           </div>
         </View>
-        <CalendarModal
+        {/* <CalendarModal
           open={visibleCalendar}
           onClose={handleDismissCalendar}
           handleSaveDate={handleSaveDate}
           setDate={setDate}
           date={date}
-        />
+        /> */}
         <EmptyModal onClose={toggleVisibleError} open={visibleError} />
       </View>
     </React.Fragment>
