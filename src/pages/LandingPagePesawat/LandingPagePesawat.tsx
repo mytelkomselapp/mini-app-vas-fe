@@ -143,14 +143,15 @@ const LandingPagePesawat = () => {
 
           {/* Dot Indicator */}
           <View className="flex justify-center mt-2 mb-4 items-center gap-1">
-            {sliderItems?.map((_, i) => (
-              <View
-                key={i}
-                className={`w-[6px] h-[6px] rounded-full ${
-                  currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
-                }`}
-              />
-            ))}
+            {nearestThreeFlight?.length &&
+              sliderItems?.map((_, i) => (
+                <View
+                  key={i}
+                  className={`w-[6px] h-[6px] rounded-full ${
+                    currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
+                  }`}
+                />
+              ))}
           </View>
         </View>
       </View>
