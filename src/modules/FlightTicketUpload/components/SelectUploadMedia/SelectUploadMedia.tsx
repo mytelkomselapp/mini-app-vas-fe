@@ -71,7 +71,7 @@ const SelectUploadMedia: React.FC<Props> = ({
         <div className="flex flex-row justify-center gap-x-8">
           {getMobileOperatingSystem() !== "Android" && (
             <div
-              className="flex flex-col gap-y-2"
+              className="flex flex-col gap-y-2 justify-center items-center"
               onClick={() =>
                 buttonClick(
                   "Document",
@@ -99,12 +99,14 @@ const SelectUploadMedia: React.FC<Props> = ({
                   <img src={IconNews} style={{ width: 24, height: 24 }} />
                 </FileInput>
               </div>
-              <p className="text-xs text-textSecondary text-center">Document</p>
+              <p className="!text-xs !text-textSecondary text-center">
+                Document
+              </p>
             </div>
           )}
 
           <div
-            className="flex flex-col gap-y-2"
+            className="flex flex-col gap-y-2 justify-center items-center"
             onClick={() =>
               buttonClick(
                 "Gallery",
@@ -133,7 +135,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                 <img src={IconImage} style={{ width: 24, height: 24 }} />
               </FileInput>
             </div>
-            <p className="text-xs text-textSecondary text-center">Gallery</p>
+            <p className="!text-xs !text-textSecondary text-center">Gallery</p>
           </div>
         </div>
       </View>
