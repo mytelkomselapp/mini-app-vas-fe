@@ -1,6 +1,6 @@
 import * as React from "react";
 import FlightLandingCardMenu from "../../modules/FlightLandingCardMenu";
-import FlightForm from "../../modules/FlightForm";
+import FlightForm, { CalendarModal } from "../../modules/FlightForm";
 import Navbar, { NavColor } from "../../components/Navbar";
 import {
   useFetchCMSLandingPage,
@@ -15,6 +15,8 @@ import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import FlightSearch from "../../modules/FlightSearch";
 import useToggle from "../../hooks/useToggle";
+import moment from "moment";
+import { usePlaneDate } from "../../store/flight";
 import {
   DestinationOriginProps,
   useDestination,
@@ -25,6 +27,9 @@ type ActiveSearchInput = "kota-asal" | "kota-tujuan" | string;
 
 const LandingPagePesawat = () => {
   const [scrollElement, setScrollElement] = React.useState<string>("");
+
+  const { active: visibleCalendar, toggleActive: toggleVisibleCalendar } =
+    useToggle();
 
   const origin = useOrigin((state) => state.origin);
   const destination = useDestination((state) => state.destination);
@@ -45,6 +50,8 @@ const LandingPagePesawat = () => {
   } = useFetchFlightTrack();
   const { buyPackageStatus: viewPageAction, data } =
     useUserPackageStatus(isSuccess);
+  const datePlane = usePlaneDate((state) => state.date);
+  const setDatePlane = usePlaneDate((state) => state.setDate);
 
   const {
     active: visibleFlightSearchModal,
@@ -52,7 +59,7 @@ const LandingPagePesawat = () => {
   } = useToggle();
 
   const [currentSlide, setCurrentSlide] = React.useState(0);
-
+  const [date, setDate] = React.useState<Date>();
   const dataFlight = dataRaw?.data?.data;
   const title = dataFlight?.title;
   const subtitle = dataFlight?.subtitle;
@@ -87,6 +94,18 @@ const LandingPagePesawat = () => {
       setScrollElement("scroll-to-0");
     }
   }, [isFetched, dataTrackFlights]);
+  const handleDismissCalendar = () => {
+    setDate(moment(datePlane)?.toDate());
+    toggleVisibleCalendar();
+  };
+  const handleToggleBottomSheet = () => {
+    console.log("TOGGLE CLICKED");
+    toggleVisibleCalendar();
+  };
+  const handleSaveDate = () => {
+    setDatePlane(String(date));
+    handleToggleBottomSheet();
+  };
 
   const handleSelectData = (
     value: DestinationOriginProps,
@@ -139,6 +158,7 @@ const LandingPagePesawat = () => {
                   remainingQuota={data?.quota}
                   packageType={data?.package_type}
                   userType={data?.new_user}
+                  onOpenCalendar={handleToggleBottomSheet}
                   onOpenSearchFlight={handleOpenSearchFlight}
                 />
               </View>
@@ -180,7 +200,7 @@ const LandingPagePesawat = () => {
 
           {/* Dot Indicator */}
           <View className="flex justify-center mt-2 mb-4 items-center gap-1">
-            {nearestThreeFlight?.length &&
+            {nearestThreeFlight?.length ? (
               sliderItems?.map((_, i) => (
                 <View
                   key={i}
@@ -188,7 +208,10 @@ const LandingPagePesawat = () => {
                     currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
                   }`}
                 />
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </View>
         </View>
       </View>
@@ -196,7 +219,13 @@ const LandingPagePesawat = () => {
         isLoading={fetchingCMSLandingPage}
         data={dataFlight}
       />
-
+      <CalendarModal
+        open={visibleCalendar}
+        onClose={handleDismissCalendar}
+        handleSaveDate={handleSaveDate}
+        setDate={setDate}
+        date={date}
+      />
       <FlightSearch
         open={visibleFlightSearchModal}
         onClose={toggleVisibleFlightSearchModal}
