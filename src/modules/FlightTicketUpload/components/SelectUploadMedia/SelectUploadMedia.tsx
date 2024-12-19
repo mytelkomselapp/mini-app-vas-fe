@@ -14,7 +14,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onSelectAction?: (media: SelectUploadMediaType) => void;
-  onSelectImage: (filePath: string) => void;
+  onSelectImage: (filePath: string, source: "document" | "image") => void;
 }
 
 const SelectUploadMedia: React.FC<Props> = ({
@@ -47,14 +47,14 @@ const SelectUploadMedia: React.FC<Props> = ({
   const handleSuccessOpenMedia = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
 
-    onSelectImage?.(fileData?.path);
+    onSelectImage?.(fileData?.path, "document");
     return onClose?.();
   };
 
   const handleSuccessOpenGallery = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
 
-    onSelectImage?.(fileData?.path);
+    onSelectImage?.(fileData?.path, "image");
 
     return onClose?.();
   };

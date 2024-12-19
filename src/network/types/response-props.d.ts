@@ -213,6 +213,7 @@ export interface FlightETicketFileFormat {
   file_url: string;
   file_mime: string;
   file_ext: string;
+  source: "document" | "image";
 }
 
 export interface FlightClaimFreeTicket {
