@@ -127,10 +127,15 @@ const CreateDetailTicket: React.FC = () => {
       setTicketName(dataETicketByFlightId?.ticket_name ?? "");
       setDepartureDate(dataETicketByFlightId?.ticket_date ?? "");
       setPlaneNo(dataETicketByFlightId?.flight_no ?? "");
+
+      const mimeType = dataETicketByFlightId?.file_mime?.split("/")?.[0];
+      const isImage = ["image"]?.includes(mimeType);
+
       setETicket({
         file_ext: dataETicketByFlightId?.file_ext ?? "",
         file_mime: dataETicketByFlightId?.file_mime ?? "",
         file_url: dataETicketByFlightId?.file_url ?? "",
+        source: isImage ? "image" : "document",
       });
     }
 

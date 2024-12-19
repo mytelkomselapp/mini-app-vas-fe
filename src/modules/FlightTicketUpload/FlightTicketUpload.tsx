@@ -15,6 +15,7 @@ import { toast } from "../../components/ui/use-toast";
 import { buttonClick } from "../../network/analytics/tracker";
 import { Image } from "@tarojs/components";
 import { handleNavigate } from "../../lib/utils";
+import Taro from "@tarojs/taro";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -22,7 +23,7 @@ interface Props {
 }
 
 const FlightTicketUpload: React.FC<Props> = ({ data }) => {
-  const { setETicket, eTicket, planeNo, ticketName, error, setError } =
+  const { setETicket, eTicket, planeNo, error, setError } =
     useFlightTicketForm();
 
   const { active: visibleUploadMedia, setActive: toggleVisibleUploadMedia } =
@@ -70,9 +71,10 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
   };
 
-  const handleSelectImage = async (filePath: string) => {
-    console.log("BEFORE UPLOAD");
-
+  const handleSelectImage = async (
+    filePath: string,
+    source: "document" | "image"
+  ) => {
     try {
       const uploadFile = await postUploadETicket(filePath);
       // @ts-ignore
@@ -86,6 +88,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           file_ext: theDataFile?.ext,
           file_mime: theDataFile?.mime,
           file_url: theDataFile?.url,
+          source,
         });
       }
     } catch (err) {
@@ -101,13 +104,20 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   const handleOpenTicket = () => {
     if (!eTicket?.file_url) return;
 
-    const snackTicketName = ticketName?.split(" ")?.join("_")?.toLowerCase();
+    if (eTicket?.source === "image") {
+      return Taro.previewImage({
+        current: eTicket?.file_url,
+        urls: [eTicket?.file_url],
+      });
+    }
 
-    return handleNavigate("/pages/PreviewImageDocs/index", "", {
-      state: {
-        fileUrl: eTicket?.file_url,
-        fileExt: eTicket?.file_ext,
-        fileName: snackTicketName,
+    Taro.downloadFile({
+      url: eTicket?.file_url,
+      success: function (res) {
+        var filePath = res.tempFilePath;
+        Taro.openDocument({
+          filePath: filePath,
+        });
       },
     });
   };
