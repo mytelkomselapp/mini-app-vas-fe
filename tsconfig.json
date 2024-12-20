@@ -22,8 +22,10 @@
       // TS5090 leading './'
       "@/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "modules/*": ["./src/modules/*"]
-    }
+      "modules/*": ["./src/modules/*"],
+      "custom-taro": ["types/custom-taro.d.ts"]
+    },
+    "types": ["custom-taro"]
   },
   "include": ["./src", "./types", "./config"],
   "compileOnSave": false
