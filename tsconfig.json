@@ -23,7 +23,7 @@
       "@/*": ["./src/*"],
       "components/*": ["./src/components/*"],
       "modules/*": ["./src/modules/*"],
-      "custom-taro": ["types/custom-taro.d.ts"]
+      "custom-taro": ["./types/custom-taro.d.ts"]
     },
     "types": ["custom-taro"]
   },
