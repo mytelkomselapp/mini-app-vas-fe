@@ -1,6 +1,6 @@
 //import { useParams } from "react-router-dom";
-import { Button, Image, Switch } from "@tarojs/components";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Image, Switch } from "@tarojs/components";
+import { useCallback, useEffect, useMemo } from "react";
 // import Navbar, { NavColor } from "../..//../components/Navbar";
 import ChevronRight from "../../assets/chevron-right.svg";
 import TicketUpload from "../../assets/icon-ticket-upload.svg";
@@ -146,7 +146,10 @@ const DetailPesawat = () => {
     setDepartureDate(flightDate);
     const flightId = dataFollowFlight?.data?.flight_id;
 
-    handleNavigate("/pages/CreateDetailTicket/index", "?type=create&flight_id=" + flightId);
+    handleNavigate(
+      "/pages/CreateDetailTicket/index",
+      "?type=create&flight_id=" + flightId
+    );
   };
 
   useEffect(() => {
