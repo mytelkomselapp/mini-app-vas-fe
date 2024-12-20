@@ -16,6 +16,7 @@ import { buttonClick } from "../../network/analytics/tracker";
 import { Image } from "@tarojs/components";
 import { handleNavigate } from "../../lib/utils";
 import Taro from "@tarojs/taro";
+import Toast from "../../components/Toast";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -25,6 +26,28 @@ interface Props {
 const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   const { setETicket, eTicket, planeNo, error, setError } =
     useFlightTicketForm();
+
+  const [theToast, setTheToast] = React.useState<{
+    title: string;
+    description: string;
+    status: "success" | "error";
+    duration: number;
+  } | null>(null);
+
+  const showToast = ({
+    title,
+    description,
+    status = "success",
+    duration = 3000,
+  }: {
+    title: string;
+    description: string;
+    status?: "success" | "error";
+    duration?: number;
+  }) => {
+    setTheToast({ title, description, status, duration });
+    setTimeout(() => setTheToast(null), duration);
+  };
 
   const { active: visibleUploadMedia, setActive: toggleVisibleUploadMedia } =
     useToggle();
@@ -102,7 +125,13 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   };
 
   const handleOpenTicket = () => {
-    if (!eTicket?.file_url) return;
+    if (!eTicket?.file_url)
+      return showToast({
+        title: "ERROR OPEN FILE",
+        description: `File Url Not Found`,
+        duration: 3000,
+        status: "error",
+      });
 
     if (eTicket?.source === "image") {
       return Taro.previewImage({
@@ -200,6 +229,15 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
       )}
+
+      <Show when={!!theToast}>
+        <Toast
+          title={theToast?.title ?? ""}
+          description={theToast?.description ?? ""}
+          status={theToast?.status}
+          onClose={() => setTheToast(null)}
+        />
+      </Show>
     </>
   );
 };
