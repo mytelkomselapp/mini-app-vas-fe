@@ -66,6 +66,7 @@ interface Props {
   className?: string;
   onOpenCalendar?: () => void;
   onOpenSearchFlight: (name: string) => void;
+  containerClassName?: string;
 }
 
 const FlightForm: React.FC<Props> = ({
@@ -77,6 +78,7 @@ const FlightForm: React.FC<Props> = ({
   className,
   onOpenCalendar,
   onOpenSearchFlight,
+  containerClassName,
 }) => {
   const [tab, setTab] = useState<number>(0);
   const [date, setDate] = useState<Date>();
@@ -193,7 +195,7 @@ const FlightForm: React.FC<Props> = ({
 
   return (
     <React.Fragment>
-      <View className="w-[308px] h-[310px]">
+      <View className={cn("w-[308px] h-[310px]", containerClassName)}>
         <div className="mt-2">
           {isPremium && (
             <div

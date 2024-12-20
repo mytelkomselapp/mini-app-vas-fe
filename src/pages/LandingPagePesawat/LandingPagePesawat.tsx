@@ -151,7 +151,7 @@ const LandingPagePesawat = () => {
                 marginBottom: "32px",
               }}
             >
-              <View className="w-[300px] h-[390px] mr-4 mt-1 flex-grow">
+              <View className="w-full h-[390px] mr-4 mt-1 flex-grow">
                 <FlightForm
                   data={dataFlight}
                   viewPageAction={viewPageAction}
@@ -160,6 +160,9 @@ const LandingPagePesawat = () => {
                   userType={data?.new_user}
                   onOpenCalendar={handleToggleBottomSheet}
                   onOpenSearchFlight={handleOpenSearchFlight}
+                  containerClassName={
+                    nearestFlight?.length ? "w-[308px]" : "w-[90vw]"
+                  }
                 />
               </View>
 
