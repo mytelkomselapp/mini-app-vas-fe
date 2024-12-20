@@ -92,7 +92,12 @@ const SelectUploadMedia: React.FC<Props> = ({
                     type: "file",
                     complete: handleSuccessOpenMedia,
                     fail: (err) => {
-                      console.error("File selection failed:", err);
+                      showToast({
+                        title: "ERROR OPEN FILE",
+                        description: `${JSON.stringify(err, null, 2)}`,
+                        duration: 3000,
+                        status: "error",
+                      });
                     },
                   }}
                 >
