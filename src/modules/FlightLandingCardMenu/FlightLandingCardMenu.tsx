@@ -5,7 +5,6 @@ import FlightLandingMenu from "./components/FlightLandingMenu";
 import { CMSFlightLandingData } from "../../network/types/response-props";
 import { buttonClick } from "../../network/analytics/tracker";
 // import { useNavigate } from "react-router-dom";
-import TaroCustom from "../../../types/custom-taro";
 
 interface Props {
   data?: CMSFlightLandingData;
@@ -28,7 +27,7 @@ const FlightLandingCardMenu: React.FC<Props> = ({
       return Taro.navigateTo({ url: "/pages/MyTicketList/index" });
 
     if (targetUrl) {
-      TaroCustom.invokeNativePlugin({
+      Taro.invokeNativePlugin({
         api_name: "openWebView",
         data: {
           url: targetUrl,
