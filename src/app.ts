@@ -9,6 +9,11 @@ const App = ({ children }: { children: React.ReactNode }) => {
     const launchOptions = Taro.getLaunchOptionsSync();
     const extendData = options?.extendData ?? {};
     console.log({ extendData });
+
+    Taro.setEnableDebug({
+      enableDebug: true,
+    });
+
     if (typeof extendData !== "object") {
       Taro.setStorageSync("customParams", extendData);
     }
