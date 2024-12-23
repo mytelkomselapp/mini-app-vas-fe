@@ -102,10 +102,14 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   ) => {
     setTempImageUrl(filePath);
 
+    console.log({ filePath, title: "TEMP FILE PATH" });
+
     try {
       const uploadFile = await postUploadETicket(filePath);
+
       // @ts-ignore
       const dataFile = JSON.parse(uploadFile?.data);
+      console.log({ uploadFile, dataFile, title: "RESULT UPLOAD FILE" });
       const isSuccessUpload = !!dataFile;
 
       if (isSuccessUpload) {
@@ -234,11 +238,6 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           onSelectImage={handleSelectImage}
         />
       </div>
-
-      <p className="font-bold w-[200px] !text-[12px] !text-[#000] break-words">
-        {tempImageUrl} -- Remove SOON Only debugging
-      </p>
-
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
       )}
