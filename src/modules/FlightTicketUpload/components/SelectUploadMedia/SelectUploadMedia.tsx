@@ -91,14 +91,6 @@ const SelectUploadMedia: React.FC<Props> = ({
                     count: 1,
                     type: "all",
                     complete: handleSuccessOpenMedia,
-                    fail: (err) => {
-                      showToast({
-                        title: "ERROR OPEN FILE",
-                        description: `${JSON.stringify(err, null, 2)}`,
-                        duration: 3000,
-                        status: "error",
-                      });
-                    },
                   }}
                 >
                   <img src={IconNews} style={{ width: 24, height: 24 }} />

@@ -66,7 +66,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     if (visibleUploadMedia) return;
 
-    if (isTicketUploaded) return handleOpenTicket();
+    if (isTicketUploaded) return handleOpenTicket(eTicket?.file_url);
 
     buttonClick("Add E-Ticket", "Upload E-Ticket", "Create ticket");
     toggleVisibleUploadMedia(true);
@@ -124,11 +124,11 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
   };
 
-  const handleOpenTicket = () => {
-    if (!eTicket?.file_url) {
+  const handleOpenTicket = (fileUrl: string) => {
+    if (!fileUrl) {
       return showToast({
         title: "ERROR OPEN FILE",
-        description: `File Url Not Found`,
+        description: JSON.stringify(eTicket, null, 4),
         duration: 3000,
         status: "error",
       });
@@ -136,7 +136,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     if (eTicket?.source === "document") {
       return Taro.downloadFile({
-        url: eTicket?.file_url,
+        url: fileUrl,
         success: function (res) {
           var filePath = res.tempFilePath;
           Taro.openDocument({
@@ -147,7 +147,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
 
     return Taro.previewImage({
-      urls: [eTicket?.file_url],
+      urls: [fileUrl],
     });
   };
 
@@ -169,7 +169,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
             <Image
               src={ChevronRight}
               style={{ width: "24px", height: "24px" }}
-              onClick={handleOpenTicket}
+              onClick={() => handleOpenTicket(eTicket?.file_url ?? "")}
             />
           </div>
         </Show>
