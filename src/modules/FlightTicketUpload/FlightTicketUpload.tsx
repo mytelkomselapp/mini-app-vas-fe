@@ -34,6 +34,8 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     duration: number;
   } | null>(null);
 
+  const [tempImageUrl, setTempImageUrl] = React.useState<string>("");
+
   const showToast = ({
     title,
     description,
@@ -98,6 +100,15 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     filePath: string,
     source: "document" | "image"
   ) => {
+    showToast({
+      title: "Uploaded File",
+      description: filePath,
+      duration: 2000,
+      status: "success",
+    });
+
+    setTempImageUrl(filePath);
+
     try {
       const uploadFile = await postUploadETicket(filePath);
       // @ts-ignore
@@ -106,6 +117,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
       if (isSuccessUpload) {
         const theDataFile = dataFile?.[0];
+
         setError({ ...error, eTicket: "" });
         return setETicket({
           file_ext: theDataFile?.ext,
@@ -125,7 +137,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   };
 
   const handleOpenTicket = () => {
-    const fileUrl = eTicket?.file_url ?? "";
+    const fileUrl = eTicket?.file_url ?? tempImageUrl;
 
     if (!fileUrl) {
       return showToast({
@@ -136,20 +148,10 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       });
     }
 
-    if (eTicket?.source === "document") {
-      return Taro.downloadFile({
-        url: fileUrl,
-        success: function (res) {
-          var filePath = res.tempFilePath;
-          Taro.openDocument({
-            filePath: filePath,
-          });
-        },
-      });
-    }
-
-    return Taro.previewImage({
-      urls: [fileUrl],
+    return handleNavigate("/pages/PreviewImageDocs/index", "", {
+      state: {
+        fileUrl: fileUrl,
+      },
     });
   };
 
