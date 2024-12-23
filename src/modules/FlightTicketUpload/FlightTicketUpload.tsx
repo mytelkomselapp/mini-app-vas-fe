@@ -171,7 +171,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   return (
     <Show when={!isLoadingUploadFile}>
       <div
-        className={`flex flex-col overflow-hidden  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
+        className={`flex flex-col bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
         }`}
       >
