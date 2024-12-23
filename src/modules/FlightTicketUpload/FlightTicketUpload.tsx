@@ -100,13 +100,6 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     filePath: string,
     source: "document" | "image"
   ) => {
-    showToast({
-      title: "Uploaded File",
-      description: filePath,
-      duration: 2000,
-      status: "success",
-    });
-
     setTempImageUrl(filePath);
 
     try {
@@ -148,10 +141,20 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       });
     }
 
-    return handleNavigate("/pages/PreviewImageDocs/index", "", {
-      state: {
-        fileUrl: fileUrl,
-      },
+    if (eTicket?.source === "document") {
+      return Taro.downloadFile({
+        url: fileUrl,
+        success: function (res) {
+          var filePath = res.tempFilePath;
+          Taro.openDocument({
+            filePath: filePath,
+          });
+        },
+      });
+    }
+
+    return Taro.previewImage({
+      urls: [fileUrl],
     });
   };
 
@@ -164,7 +167,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   return (
     <Show when={!isLoadingUploadFile}>
       <div
-        className={`flex flex-col  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
+        className={`flex flex-col overflow-hidden  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
         }`}
       >
@@ -231,6 +234,11 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           onSelectImage={handleSelectImage}
         />
       </div>
+
+      <p className="font-bold w-[200px] !text-[12px] !text-[#000] break-words">
+        {tempImageUrl} -- Remove SOON Only debugging
+      </p>
+
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
       )}
