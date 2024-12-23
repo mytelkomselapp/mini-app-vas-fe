@@ -66,7 +66,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     if (visibleUploadMedia) return;
 
-    if (isTicketUploaded) return handleOpenTicket(eTicket?.file_url);
+    if (isTicketUploaded) return handleOpenTicket();
 
     buttonClick("Add E-Ticket", "Upload E-Ticket", "Create ticket");
     toggleVisibleUploadMedia(true);
@@ -124,7 +124,9 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
   };
 
-  const handleOpenTicket = (fileUrl: string) => {
+  const handleOpenTicket = () => {
+    const fileUrl = eTicket?.file_url ?? "";
+
     if (!fileUrl) {
       return showToast({
         title: "ERROR OPEN FILE",
@@ -151,13 +153,14 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     });
   };
 
-  if (isLoadingUploadFile)
+  if (isLoadingUploadFile) {
     return (
       <LoadingScreen text="Upload E-Ticket.." customClassName="mx-[20px]" />
     );
+  }
 
   return (
-    <>
+    <Show when={!isLoadingUploadFile}>
       <div
         className={`flex flex-col  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
@@ -169,7 +172,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
             <Image
               src={ChevronRight}
               style={{ width: "24px", height: "24px" }}
-              onClick={() => handleOpenTicket(eTicket?.file_url ?? "")}
+              onClick={handleOpenTicket}
             />
           </div>
         </Show>
@@ -238,7 +241,7 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
           onClose={() => setTheToast(null)}
         />
       </Show>
-    </>
+    </Show>
   );
 };
 
