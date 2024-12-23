@@ -164,7 +164,6 @@ export const uploadFile = <T extends string | ArrayBuffer = any>(
     name: "files", // Form field name for the file
     header: {
       Authorization: bearerToken,
-      "Content-Type": "multipart/form-data",
     },
   });
 };
