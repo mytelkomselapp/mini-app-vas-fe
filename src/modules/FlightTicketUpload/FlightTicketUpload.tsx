@@ -106,8 +106,10 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
 
     try {
       const uploadFile = await postUploadETicket(filePath);
+
       // @ts-ignore
       const dataFile = JSON.parse(uploadFile?.data);
+      console.log({ uploadFile, dataFile, title: "RESULT UPLOAD FILE" });
       const isSuccessUpload = !!dataFile;
 
       if (isSuccessUpload) {
