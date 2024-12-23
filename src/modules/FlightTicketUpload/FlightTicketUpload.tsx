@@ -125,29 +125,29 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   };
 
   const handleOpenTicket = () => {
-    if (!eTicket?.file_url)
+    if (!eTicket?.file_url) {
       return showToast({
         title: "ERROR OPEN FILE",
         description: `File Url Not Found`,
         duration: 3000,
         status: "error",
       });
+    }
 
-    if (eTicket?.source === "image") {
-      return Taro.previewImage({
-        current: eTicket?.file_url,
-        urls: [eTicket?.file_url],
+    if (eTicket?.source === "document") {
+      return Taro.downloadFile({
+        url: eTicket?.file_url,
+        success: function (res) {
+          var filePath = res.tempFilePath;
+          Taro.openDocument({
+            filePath: filePath,
+          });
+        },
       });
     }
 
-    Taro.downloadFile({
-      url: eTicket?.file_url,
-      success: function (res) {
-        var filePath = res.tempFilePath;
-        Taro.openDocument({
-          filePath: filePath,
-        });
-      },
+    return Taro.previewImage({
+      urls: [eTicket?.file_url],
     });
   };
 
