@@ -64,7 +64,7 @@ const SelectUploadMedia: React.FC<Props> = ({
       <View>
         <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[100%]">
           <p className="text-base font-semibold">Upload E-Ticket</p>
-          <p className="text-xs !text-[#757F90] text-center">
+          <p className="!text-[12px] !text-[#757F90] text-center">
             Pilih file untuk kamu upload
           </p>
         </div>
@@ -89,7 +89,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                   type="file"
                   config={{
                     count: 1,
-                    type: "file",
+                    type: "all",
                     complete: handleSuccessOpenMedia,
                     fail: (err) => {
                       showToast({
@@ -104,7 +104,9 @@ const SelectUploadMedia: React.FC<Props> = ({
                   <img src={IconNews} style={{ width: 24, height: 24 }} />
                 </FileInput>
               </div>
-              <p className="!text-xs !text-[#757F90] text-center">Document</p>
+              <p className="!text-[12px] !text-[#757F90] text-center">
+                Document
+              </p>
             </div>
           )}
 
@@ -138,7 +140,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                 <img src={IconImage} style={{ width: 24, height: 24 }} />
               </FileInput>
             </div>
-            <p className="!text-xs !text-[#757F90] text-center">Gallery</p>
+            <p className="!text-[12px] !text-[#757F90] text-center">Gallery</p>
           </div>
         </div>
       </View>
