@@ -22,6 +22,7 @@ import {
   useDestination,
   useOrigin,
 } from "../../store/flight";
+import iconSearch from "../../assets/ico_search.svg";
 
 type ActiveSearchInput = "kota-asal" | "kota-tujuan" | string;
 
@@ -204,14 +205,28 @@ const LandingPagePesawat = () => {
           {/* Dot Indicator */}
           <View className="flex justify-center mt-2 mb-4 items-center gap-1">
             {nearestThreeFlight?.length ? (
-              sliderItems?.map((_, i) => (
-                <View
-                  key={i}
-                  className={`w-[6px] h-[6px] rounded-full ${
-                    currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
-                  }`}
-                />
-              ))
+              sliderItems?.map((_, i) => {
+                console.log({ i });
+                if (i === 0)
+                  return (
+                    <img
+                      src={iconSearch}
+                      alt="icon-search"
+                      className={`w-[10px] h-[10px] ${
+                        currentSlide !== i ? "opacity-50" : "opacity-100"
+                      }`}
+                    />
+                  );
+                else
+                  return (
+                    <View
+                      key={i}
+                      className={`w-[6px] h-[6px] rounded-full ${
+                        currentSlide === i ? "bg-white" : "bg-[#FFFFFF59]"
+                      }`}
+                    />
+                  );
+              })
             ) : (
               <></>
             )}

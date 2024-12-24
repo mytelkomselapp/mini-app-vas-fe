@@ -62,28 +62,28 @@ export const flightStateAttribute = (data: string | undefined) => {
   switch (data) {
     case "delay":
       return {
-        className: "!text-[#FDA22B] !bg-[#fff1df]",
+        className: "!text-[#fda22b] !bg-[#fff1df]",
         label: data,
       };
     case "cancel":
       return {
-        className: "!text-[#ED0226] !bg-[#fef2f4]",
+        className: "!text-[#ed0226] !bg-[#fef2f4]",
         label: data + "ed",
       };
 
     case "arrival":
       return {
-        className: "!text-[#008E53] !bg-[#e5f4ee]",
+        className: "!text-[#008e53] !bg-[#e5f4ee]",
         label: "arrived",
       };
 
     case "schedule":
       return {
-        className: "!text-[#0050AE]  !bg-[#dfebfb]",
+        className: "!text-[#0452ad]  !bg-[#deebfb]",
         label: "On Schedule",
       };
     default:
-      return { className: "text-[#0050AE] !bg-[#dfebfb]", label: data };
+      return { className: "text-[#0452ad] !bg-[#dfebfb]", label: data };
   }
 };
 
