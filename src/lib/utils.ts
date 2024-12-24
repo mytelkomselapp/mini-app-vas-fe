@@ -79,11 +79,11 @@ export const flightStateAttribute = (data: string | undefined) => {
 
     case "schedule":
       return {
-        className: "!text-[#0050AE]  !bg-[#dfebfb]",
+        className: "!text-[#0452ad]  !bg-[#deebfb]",
         label: "On Schedule",
       };
     default:
-      return { className: "text-[#0050AE] !bg-[#dfebfb]", label: data };
+      return { className: "text-[#0452ad] !bg-[#dfebfb]", label: data };
   }
 };
 
