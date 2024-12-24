@@ -69,7 +69,7 @@ const DetailTransaction: React.FC = () => {
           </div>
 
           <div className="w-full mb-4">
-            <p className="px-3 py-1 w-full rounded-[120px] text-[10px]/[14px] text-[#0050AE] font-semibold first-letter:uppercase text-[#0050AE] bg-[#dfebfb] text-center">
+            <p className="px-3 py-1 w-full rounded-[120px] text-[10px]/[14px] text-[#0452ad] font-semibold first-letter:uppercase text-[#0452ad] bg-[#dfebfb] text-center">
               On Schedule
             </p>
           </div>

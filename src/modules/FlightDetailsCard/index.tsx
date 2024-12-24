@@ -43,11 +43,11 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2 px-4">
           {data?.flight_logo ? (
-            <Image 
+            <Image
               src={data.flight_logo}
               style={{
-                width: '1.5rem',
-                height: '1.5rem',
+                width: "1.5rem",
+                height: "1.5rem",
               }}
               key={data.flight_no}
             />
@@ -70,7 +70,10 @@ const FlightDetailsCard: React.FC<Props> = ({ data, isRoamaxEligible }) => {
           <div className="flex flex-col gap-1">
             <p className=" text-xs/[18px] text-[#757F90]">Flight Status</p>
             <p
-              className={"px-3 py-1 m-auto w-fit rounded-[120px] text-[10px]/[14px] text-[#0050AE] font-semibold first-letter:uppercase bg-[#dfebfb] " + className}
+              className={
+                "px-3 py-1 m-auto w-fit rounded-[120px] text-[10px]/[14px] text-[#0452ad] font-semibold first-letter:uppercase bg-[#dfebfb] " +
+                className
+              }
             >
               {label}
             </p>
