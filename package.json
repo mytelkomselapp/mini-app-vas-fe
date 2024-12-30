@@ -10,7 +10,7 @@
     "framework": "React"
   },
   "scripts": {
-    "dev": "NODE_ENV=development vite",
+    "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
     "build:weapp": "taro build --type weapp",
@@ -19,7 +19,8 @@
     "build:tt": "taro build --type tt",
     "build:h5": "taro build --type h5",
     "build:rn": "taro build --type rn",
-    "build:qq": "taro build --type qq",
+    "build:qq": "NODE_ENV=development taro build --type qq",
+    "build:qq-production": "NODE_ENV=production taro build --type qq",
     "build:jd": "taro build --type jd",
     "build:harmony-hybrid": "taro build --type harmony-hybrid",
     "dev:weapp": "NODE_ENV=development npm run build:weapp -- --watch",
@@ -29,6 +30,7 @@
     "dev:h5": "NODE_ENV=development npm run build:h5 -- --watch",
     "dev:rn": "NODE_ENV=development npm run build:rn -- --watch",
     "dev:qq": "NODE_ENV=development npm run build:qq -- --watch",
+    "dev:qq-prod": "NODE_ENV=production npm run build:qq -- --watch",
     "dev:jd": "NODE_ENV=development npm run build:jd -- --watch",
     "dev:harmony-hybrid": "NODE_ENV=development npm run build:harmony-hybrid -- --watch",
     "postinstall": "weapp-tw patch"
