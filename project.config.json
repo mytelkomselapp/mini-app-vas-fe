@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "originTaro",
   "description": "",
-  "appid": "mpzl347frqan32bl",
+  "appid": "mp537s0zmlw0tuun",
   "setting": {
     "urlCheck": false,
     "es6": false,
@@ -19,7 +19,7 @@
     "prefetch": false
   },
   "compileType": "miniprogram",
-  "TCMPPappid": "mpzl347frqan32bl",
+  "TCMPPappid": "mp537s0zmlw0tuun",
   "scripts": {
     "beforeCompile": "",
     "beforePreview": "",
@@ -38,7 +38,9 @@
       "current": -1,
       "list": []
     },
-    "downloadFileDomain": ["cdndev.mytsel.id"],
+    "downloadFileDomain": [
+      "cdndev.mytsel.id"
+    ],
     "miniprogram": {
       "current": 0,
       "list": [
