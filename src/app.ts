@@ -4,6 +4,8 @@ import { withProvider } from "./hoc";
 import "./index.css";
 import "./app.scss";
 
+const env = process.env.NODE_ENV;
+
 const App = ({ children }: { children: React.ReactNode }) => {
   useLaunch((options?: any) => {
     const launchOptions = Taro.getLaunchOptionsSync();
@@ -11,7 +13,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
     console.log({ extendData });
 
     Taro.setEnableDebug({
-      enableDebug: true,
+      enableDebug: env === "development",
     });
 
     if (typeof extendData !== "object") {
