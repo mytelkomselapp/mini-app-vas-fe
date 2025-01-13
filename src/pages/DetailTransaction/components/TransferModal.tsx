@@ -49,7 +49,7 @@ const TransferOptionsModal: React.FC<Props> = ({ open, onClose }) => {
       partner: "Traveloka",
       description: "Promo Akhir Tahun!",
       icon: TravelokaIcon,
-      style: "text-[#0050AE] bg-[#dfebfb]",
+      style: "text-[#0452ad] bg-[#dfebfb]",
     },
     {
       partner: "Bluebird",

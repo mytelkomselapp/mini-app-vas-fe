@@ -12,10 +12,11 @@ import moment from "moment";
 import LoadingScreen from "../../components/LoadingScreen";
 import { useDeleteETicket, usePostUploadETicketFile } from "../../network";
 import { toast } from "../../components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 import { buttonClick } from "../../network/analytics/tracker";
 import { Image } from "@tarojs/components";
 import { handleNavigate } from "../../lib/utils";
+import Taro from "@tarojs/taro";
+import Toast from "../../components/Toast";
 
 interface Props {
   pageMode: "detail" | "create";
@@ -23,9 +24,32 @@ interface Props {
 }
 
 const FlightTicketUpload: React.FC<Props> = ({ data }) => {
-  const navigate = useNavigate();
-  const { setETicket, eTicket, planeNo, ticketName, error, setError } =
+  const { setETicket, eTicket, planeNo, error, setError } =
     useFlightTicketForm();
+
+  const [theToast, setTheToast] = React.useState<{
+    title: string;
+    description: string;
+    status: "success" | "error";
+    duration: number;
+  } | null>(null);
+
+  const [tempImageUrl, setTempImageUrl] = React.useState<string>("");
+
+  const showToast = ({
+    title,
+    description,
+    status = "success",
+    duration = 3000,
+  }: {
+    title: string;
+    description: string;
+    status?: "success" | "error";
+    duration?: number;
+  }) => {
+    setTheToast({ title, description, status, duration });
+    setTimeout(() => setTheToast(null), duration);
+  };
 
   const { active: visibleUploadMedia, setActive: toggleVisibleUploadMedia } =
     useToggle();
@@ -72,22 +96,31 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
     }
   };
 
-  const handleSelectImage = async (filePath: string) => {
-    console.log("BEFORE UPLOAD");
+  const handleSelectImage = async (
+    filePath: string,
+    source: "document" | "image"
+  ) => {
+    setTempImageUrl(filePath);
+
+    console.log({ filePath, title: "TEMP FILE PATH" });
 
     try {
       const uploadFile = await postUploadETicket(filePath);
+
       // @ts-ignore
       const dataFile = JSON.parse(uploadFile?.data);
+      console.log({ uploadFile, dataFile, title: "RESULT UPLOAD FILE" });
       const isSuccessUpload = !!dataFile;
 
       if (isSuccessUpload) {
         const theDataFile = dataFile?.[0];
+
         setError({ ...error, eTicket: "" });
         return setETicket({
           file_ext: theDataFile?.ext,
           file_mime: theDataFile?.mime,
           file_url: theDataFile?.url,
+          source,
         });
       }
     } catch (err) {
@@ -101,29 +134,44 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
   };
 
   const handleOpenTicket = () => {
-    if (!eTicket?.file_url) return;
+    const fileUrl = eTicket?.file_url ?? tempImageUrl;
 
-    const snackTicketName = ticketName?.split(" ")?.join("_")?.toLowerCase();
+    if (!fileUrl) {
+      return showToast({
+        title: "ERROR OPEN FILE",
+        description: JSON.stringify(eTicket, null, 4),
+        duration: 3000,
+        status: "error",
+      });
+    }
 
-    // window.open(eTicket?.file_url, "_blank");
-    return handleNavigate("/pages/PreviewImageDocs/index", "", {
-      state: {
-        fileUrl: eTicket?.file_url,
-        fileExt: eTicket?.file_ext,
-        fileName: snackTicketName,
-      },
+    if (eTicket?.source === "document") {
+      return Taro.downloadFile({
+        url: fileUrl,
+        success: function (res) {
+          var filePath = res.tempFilePath;
+          Taro.openDocument({
+            filePath: filePath,
+          });
+        },
+      });
+    }
+
+    return Taro.previewImage({
+      urls: [fileUrl],
     });
   };
 
-  if (isLoadingUploadFile)
+  if (isLoadingUploadFile) {
     return (
       <LoadingScreen text="Upload E-Ticket.." customClassName="mx-[20px]" />
     );
+  }
 
   return (
-    <>
+    <Show when={!isLoadingUploadFile}>
       <div
-        className={`flex flex-col  bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
+        className={`flex flex-col bg-white min-h-[50px] p-3 rounded-[12px] border-solid border-[1px] ${
           error.eTicket ? "mb-2 border-red-500" : "mb-4 border-gray-300"
         }`}
       >
@@ -193,7 +241,16 @@ const FlightTicketUpload: React.FC<Props> = ({ data }) => {
       {error.eTicket && (
         <div className="text-red-500 text-xs mb-4">{error.eTicket}</div>
       )}
-    </>
+
+      <Show when={!!theToast}>
+        <Toast
+          title={theToast?.title ?? ""}
+          description={theToast?.description ?? ""}
+          status={theToast?.status}
+          onClose={() => setTheToast(null)}
+        />
+      </Show>
+    </Show>
   );
 };
 

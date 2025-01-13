@@ -10,7 +10,6 @@ import InputField from "../../components/InputField";
 import useToggle from "../../hooks/useToggle";
 import { cn, handleNavigate } from "../../lib/utils";
 import {
-  DestinationOriginProps,
   useDestination,
   useIDPlane,
   useOrigin,
@@ -25,8 +24,6 @@ import {
 } from "../../network/types/response-props";
 import moment from "moment";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FlightSearch from "../FlightSearch";
 import { PackageType, BuyPackageType } from "../../hooks/useUserPackageStatus";
 import { serializeParam } from "../../core/serializeParam";
 import { toast } from "../../components/ui/use-toast";
@@ -67,6 +64,9 @@ interface Props {
   packageType?: PackageType;
   userType?: "new" | "old";
   className?: string;
+  onOpenCalendar?: () => void;
+  onOpenSearchFlight: (name: string) => void;
+  containerClassName?: string;
 }
 
 const FlightForm: React.FC<Props> = ({
@@ -76,17 +76,12 @@ const FlightForm: React.FC<Props> = ({
   packageType,
   userType,
   className,
+  onOpenCalendar,
+  onOpenSearchFlight,
+  containerClassName,
 }) => {
-  const navigate = useNavigate();
   const [tab, setTab] = useState<number>(0);
   const [date, setDate] = useState<Date>();
-  const [activeSearchInput, setActiveSearchInput] =
-    React.useState<ActiveSearchInput>("");
-
-  const {
-    active: visibleFlightSearchModal,
-    toggleActive: toggleVisibleFlightSearchModal,
-  } = useToggle();
 
   const { active: visibleCalendar, toggleActive: toggleVisibleCalendar } =
     useToggle();
@@ -132,11 +127,6 @@ const FlightForm: React.FC<Props> = ({
     buttonClick("Check Flights", "Check Flights", "", window.location.pathname);
     const dateFlight = moment(datePlane).format("YYYY-MM-DD");
 
-    //  const isFreemiumLimit = true put logic in here
-    // if(isFreemiumLimit){
-    //   toggleOffer()
-    // }
-
     const qParams = serializeParam({
       origin: origin?.city,
       originId: origin?.cityId,
@@ -181,22 +171,14 @@ const FlightForm: React.FC<Props> = ({
     setOrigin(destination);
   };
 
-  const handleSelectData = (
-    value: DestinationOriginProps,
-    name: ActiveSearchInput
-  ) => {
-    if (name === "kota-asal") return setOrigin(value);
-    if (name === "kota-tujuan") return setDestination(value);
-  };
-
   const handleVisibleFlightSearch = (name: string) => {
-    toggleVisibleFlightSearchModal();
-    setActiveSearchInput(name as ActiveSearchInput);
+    onOpenSearchFlight(name);
   };
 
   const handleToggleBottomSheet = () => {
-    console.log("TOGGLE CLICKED");
-    toggleVisibleCalendar();
+    // console.log("TOGGLE CLICKED");
+    // toggleVisibleCalendar();
+    onOpenCalendar?.();
   };
   const handleSaveDate = () => {
     setDatePlane(String(date));
@@ -212,122 +194,122 @@ const FlightForm: React.FC<Props> = ({
     packageType === "unlimited" ? "Unlimited" : `Tersisa ${remainingQuota}x`;
 
   return (
-    <View className="w-[308px] h-[310px]">
-      <div className="mt-2">
-        {isPremium && (
+    <React.Fragment>
+      <View className={cn("w-[308px] h-[310px]", containerClassName)}>
+        <div className="mt-2">
+          {isPremium && (
+            <div
+              className="bg-gray-800 text-white pb-2 px-4 rounded-t-[20px] h-[50px] text-center gap-2 flex justify-center pt-[8px] relative z-0"
+              style={{
+                backgroundBlendMode: "color-dodge, normal",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                background: "#479CFF26",
+              }}
+            >
+              <img src={CrownIcon} className="mt-[1px] w-[15px] h-[12px]" />
+              <span className="font-sans text-[10px] text-white font-semibold">
+                {`${quotaLabel} Ikuti Penerbangan`}
+              </span>
+            </div>
+          )}
+        </div>
+        <View>
           <div
-            className="bg-gray-800 text-white pb-2 px-4 rounded-t-[20px] h-[50px] text-center gap-2 flex justify-center pt-[8px] relative z-0"
+            className={`p-4 shadow-md rounded-2xl relative z-1 ${
+              isPremium ? "mt-[-36px]" : "mt-0"
+            } ${className}`}
             style={{
               backgroundBlendMode: "color-dodge, normal",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "#479CFF26",
+              //  backdropFilter: "blur(12px)",
+              //WebkitBackdropFilter: "blur(12px)",
+              background: "rgb(128, 133, 148)",
+              height: isPremium ? 317 : 350,
             }}
           >
-            <img src={CrownIcon} className="mt-[1px] w-[15px] h-[12px]" />
-            <span className="font-sans text-[10px] text-white font-semibold">
-              {`${quotaLabel} Ikuti Penerbangan`}
-            </span>
-          </div>
-        )}
-      </div>
-      <View>
-        <div
-          className={`p-4 shadow-md rounded-2xl relative z-1 ${
-            isPremium ? "mt-[-36px]" : "mt-0"
-          } ${className}`}
-          style={{
-            backgroundBlendMode: "color-dodge, normal",
-            //  backdropFilter: "blur(12px)",
-            //WebkitBackdropFilter: "blur(12px)",
-            background: "rgb(128, 133, 148)",
-            height: isPremium ? 317 : 350,
-          }}
-        >
-          <div className="mb-4 flex gap-[10px] z-1 relative">
-            <div
-              className={cn(
-                activeTabClassName(0, tab),
-                "text-rute-active pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
-              )}
-              onClick={() => {
-                onClickTab(0);
-                tabClick(data?.formTabTitle1, "", window.location.pathname);
-              }}
-            >
-              {data?.formTabTitle1}
-              {!tab ? (
-                <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
-              ) : null}
+            <div className="mb-4 flex gap-[10px] z-1 relative">
+              <div
+                className={cn(
+                  activeTabClassName(0, tab),
+                  "text-rute-active pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
+                )}
+                onClick={() => {
+                  onClickTab(0);
+                  tabClick(data?.formTabTitle1, "", window.location.pathname);
+                }}
+              >
+                {data?.formTabTitle1}
+                {!tab ? (
+                  <div
+                    className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"}
+                  />
+                ) : null}
+              </div>
+
+              <div
+                className={cn(
+                  activeTabClassName(1, tab),
+                  "text-white pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
+                )}
+                onClick={() => {
+                  onClickTab(1);
+                  tabClick(data?.formTabTitle2, "", window.location.pathname);
+                }}
+              >
+                {data?.formTabTitle2}
+                {Boolean(tab) ? (
+                  <div
+                    className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"}
+                  />
+                ) : null}
+              </div>
             </div>
 
-            <div
-              className={cn(
-                activeTabClassName(1, tab),
-                "text-white pb-0 text-sm w-1/2 cursor-pointer bg-transparent justify-center flex-row text-center"
-              )}
-              onClick={() => {
-                onClickTab(1);
-                tabClick(data?.formTabTitle2, "", window.location.pathname);
-              }}
-            >
-              {data?.formTabTitle2}
-              {tab ? (
-                <div className={"border-b-2 w-1/4 mx-auto mt-1 rounded-2xl"} />
-              ) : null}
+            <Content
+              tab={tab}
+              handleSwap={handleSwap}
+              handleOpenModal={handleVisibleFlightSearch}
+            />
+            <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4">
+              <InputField
+                id="tanggal"
+                parentClassName="w-full"
+                placeholder="Tanggal"
+                type={"text"}
+                value={
+                  datePlane
+                    ? moment(datePlane).format("DD MMM YYYY")
+                    : undefined
+                }
+                caretColor="caret-transparent"
+                readOnly={true}
+                // onFocus={() => toggleVisibleCalendar()}
+                onClick={handleToggleBottomSheet}
+                autoComplete="off"
+              />
             </div>
-          </div>
 
-          <Content
-            tab={tab}
-            handleSwap={handleSwap}
-            handleOpenModal={handleVisibleFlightSearch}
-          />
-          <div className="mb-4 flex-row flex items-center bg-white rounded-2xl p-4">
-            <InputField
-              id="tanggal"
-              parentClassName="w-full"
-              placeholder="Tanggal"
-              type={"text"}
-              value={
-                datePlane ? moment(datePlane).format("DD MMM YYYY") : undefined
+            <Button
+              disabled={
+                !tab
+                  ? !(origin && destination && datePlane) || isFetching
+                  : !(datePlane && IdPlane) || isFetching
               }
-              caretColor="caret-transparent"
-              readOnly={true}
-              // onFocus={() => toggleVisibleCalendar()}
-              onClick={handleToggleBottomSheet}
-              autoComplete="off"
+              label="Cek Penerbangan"
+              onClick={handleCheckFlight}
             />
           </div>
-
-          <Button
-            disabled={
-              !tab
-                ? !(origin && destination && datePlane) || isFetching
-                : !(datePlane && IdPlane) || isFetching
-            }
-            label="Cek Penerbangan"
-            onClick={handleCheckFlight}
-          />
-        </div>
+        </View>
+        {/* <CalendarModal
+          open={visibleCalendar}
+          onClose={handleDismissCalendar}
+          handleSaveDate={handleSaveDate}
+          setDate={setDate}
+          date={date}
+        /> */}
+        <EmptyModal onClose={toggleVisibleError} open={visibleError} />
       </View>
-
-      <FlightSearch
-        open={visibleFlightSearchModal}
-        onClose={toggleVisibleFlightSearchModal}
-        onSelect={handleSelectData}
-        name={activeSearchInput}
-        dataPopularCities={data?.popularCitiesSection ?? []}
-      />
-      <CalendarModal
-        open={visibleCalendar}
-        onClose={handleDismissCalendar}
-        handleSaveDate={handleSaveDate}
-        setDate={setDate}
-        date={date}
-      />
-      <EmptyModal onClose={toggleVisibleError} open={visibleError} />
-    </View>
+    </React.Fragment>
   );
 };
 

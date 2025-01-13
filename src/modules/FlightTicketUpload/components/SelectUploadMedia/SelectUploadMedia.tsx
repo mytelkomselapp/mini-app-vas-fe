@@ -14,7 +14,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onSelectAction?: (media: SelectUploadMediaType) => void;
-  onSelectImage: (filePath: string) => void;
+  onSelectImage: (filePath: string, source: "document" | "image") => void;
 }
 
 const SelectUploadMedia: React.FC<Props> = ({
@@ -46,37 +46,15 @@ const SelectUploadMedia: React.FC<Props> = ({
 
   const handleSuccessOpenMedia = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
-    const mimeType = fileData?.name?.split(".").pop() || "";
 
-    if (mimeType !== "pdf") {
-      return showToast({
-        title: "Gagal Mengunggah Document",
-        description: "Pastikan document berformat pdf",
-        status: "error",
-        duration: 3000,
-      });
-    }
-
-    onSelectImage?.(fileData?.path);
+    onSelectImage?.(fileData?.path, "document");
     return onClose?.();
   };
 
   const handleSuccessOpenGallery = async (res: any) => {
     const fileData = res?.tempFiles?.[0];
-    const mimeType = fileData?.path?.split(".").pop() || "";
 
-    const acceptedFormat = ["jpg", "jpeg", "png"];
-
-    if (!acceptedFormat?.includes(mimeType)) {
-      return showToast({
-        title: "Gagal Mengunggah Gambar",
-        description: "Pastikan gambar berformat jpg, jpeg atau png",
-        status: "error",
-        duration: 3000,
-      });
-    }
-
-    onSelectImage?.(fileData?.path);
+    onSelectImage?.(fileData?.path, "image");
 
     return onClose?.();
   };
@@ -86,14 +64,14 @@ const SelectUploadMedia: React.FC<Props> = ({
       <View>
         <div className="flex flex-col items-center gap-y-1 mt-1 mb-4 w-[100%]">
           <p className="text-base font-semibold">Upload E-Ticket</p>
-          <p className="text-xs text-textSecondary text-center">
+          <p className="!text-[12px] !text-[#757F90] text-center">
             Pilih file untuk kamu upload
           </p>
         </div>
         <div className="flex flex-row justify-center gap-x-8">
           {getMobileOperatingSystem() !== "Android" && (
             <div
-              className="flex flex-col gap-y-2"
+              className="flex flex-col gap-y-2 justify-center items-center"
               onClick={() =>
                 buttonClick(
                   "Document",
@@ -111,25 +89,21 @@ const SelectUploadMedia: React.FC<Props> = ({
                   type="file"
                   config={{
                     count: 1,
-                    type: "file",
-                    extension: ["pdf"],
-                    sizeType: ["original", "compressed"], // Allow original or compressed images
-                    sourceType: ["album", "camera", "environment", "user"], //
+                    type: "all",
                     complete: handleSuccessOpenMedia,
-                    fail: (err) => {
-                      console.error("File selection failed:", err);
-                    },
                   }}
                 >
                   <img src={IconNews} style={{ width: 24, height: 24 }} />
                 </FileInput>
               </div>
-              <p className="text-xs text-textSecondary text-center">Document</p>
+              <p className="!text-[12px] !text-[#757F90] text-center">
+                Document
+              </p>
             </div>
           )}
 
           <div
-            className="flex flex-col gap-y-2"
+            className="flex flex-col gap-y-2 justify-center items-center"
             onClick={() =>
               buttonClick(
                 "Gallery",
@@ -158,7 +132,7 @@ const SelectUploadMedia: React.FC<Props> = ({
                 <img src={IconImage} style={{ width: 24, height: 24 }} />
               </FileInput>
             </div>
-            <p className="text-xs text-textSecondary text-center">Gallery</p>
+            <p className="!text-[12px] !text-[#757F90] text-center">Gallery</p>
           </div>
         </div>
       </View>

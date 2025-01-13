@@ -52,11 +52,21 @@ const generateBaseURL = (source: API_SOURCE, url: string) => {
 };
 
 const generateToken = (source: API_SOURCE) => {
-  if (source === "api")
-    /* Still looking for proper way to get token from storage / cookie*/
-    return BASE_APPS_TOKEN;
-
-  return BASE_CMS_TOKEN;
+  if (source === "api") {
+    try {
+      const value = Taro.getStorageSync("customParams");
+      if (value) {
+        return value;
+        // Do something with return value
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error: " + e);
+      // Do something when catch error
+    }
+  } else {
+    return BASE_CMS_TOKEN;
+  }
 };
 
 export const get = <T extends string | ArrayBuffer = any>(
@@ -154,7 +164,6 @@ export const uploadFile = <T extends string | ArrayBuffer = any>(
     name: "files", // Form field name for the file
     header: {
       Authorization: bearerToken,
-      "Content-Type": "multipart/form-data",
     },
   });
 };

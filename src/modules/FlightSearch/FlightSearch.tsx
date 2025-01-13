@@ -164,39 +164,6 @@ const FlightSearch: React.FC<Props> = ({
           <FlightSearchResult onSelect={handleSelect} data={dataFlightSearch} />
         </Show>
       </View>
-      {/* <div className="max-w-[90vw]">
-        <div className="w-full flex gap-x-2 h-auto items-center">
-          <img
-            src={ArrowLeft}
-            onClick={handleClose}
-            style={{ width: "1rem", height: "1rem" }}
-          />
-          <div className="w-full">
-            <InputComponent
-              isLoading={isLoading}
-              value={keyword}
-              onChange={handleChangeKeyword}
-              onTyping={setIsTyping}
-            />
-          </div>
-        </div>
-        <Show when={isShowRecommendation}>
-          <Show when={isShowSearchHistory}>
-            <FlightSearchHistory
-              data={dataFlightSearchHistory}
-              onSelect={handleSelect}
-              onRemove={handleRemoveHistory}
-            />
-          </Show>
-          <FlightSearchRecommendation
-            data={dataPopularCities}
-            onSelect={handleSelect}
-          />
-        </Show>
-        <Show when={isShowResult}>
-          <FlightSearchResult onSelect={handleSelect} data={dataFlightSearch} />
-        </Show>
-      </div> */}
     </BottomSheet>
   );
 };

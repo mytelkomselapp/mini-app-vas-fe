@@ -84,11 +84,11 @@ const FlightInfoCard: React.FC<FlightInfoCardProps> = ({
           </div>
           <span
             className={cn(
-              "px-[8px] py-[4px] rounded-full font-bold text-[#0050AE] first-letter:uppercase",
+              "px-[8px] py-[4px] rounded-full font-bold text-[#0452ad] first-letter:uppercase",
               className
             )}
             style={{
-              fontSize: "8px"
+              fontSize: "8px",
             }}
           >
             {label}

@@ -1,8 +1,6 @@
 // src/components/Button.tsx
 import { cn } from "../../lib/utils";
 import React from "react";
-import ChevronRight from "../../assets/chevron-right-white.svg";
-import ChevronRightRed from "../../assets/chevron-right-red.svg";
 
 type ButtonStyle = "primary" | "secondary";
 
@@ -20,10 +18,11 @@ const getButtonStyle = (style: string): string => {
     "!min-h-[48px] font-normal !py-[8px] px-[16px] !w-full focus:outline-none rounded-[40px] font-sans ";
   switch (style) {
     case "primary":
-      return base + "bg-solidRed text-white";
+      return base + "!bg-[#ED0226] !text-[#FFFFFF]";
     case "secondary":
       return (
-        base + "bg-white text-solidRed border-solid border border-solidRed"
+        base +
+        "bg-[#FFFFFF] text-[#ED0226] border-solid border border-[#ED0226]"
       );
     case "disabled":
       return (

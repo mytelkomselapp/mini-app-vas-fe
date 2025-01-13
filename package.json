@@ -10,7 +10,8 @@
     "framework": "React"
   },
   "scripts": {
-    "dev": "NODE_ENV=development vite",
+    "set-appid": "node setAppId.js",
+    "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
     "build:weapp": "taro build --type weapp",
@@ -19,7 +20,8 @@
     "build:tt": "taro build --type tt",
     "build:h5": "taro build --type h5",
     "build:rn": "taro build --type rn",
-    "build:qq": "taro build --type qq",
+    "build:qq": "cross-env NODE_ENV=development yarn run set-appid && NODE_ENV=development taro build --type qq",
+    "build:qq-production": "cross-env NODE_ENV=production yarn run set-appid && NODE_ENV=production taro build --type qq",
     "build:jd": "taro build --type jd",
     "build:harmony-hybrid": "taro build --type harmony-hybrid",
     "dev:weapp": "NODE_ENV=development npm run build:weapp -- --watch",
@@ -28,7 +30,8 @@
     "dev:tt": "NODE_ENV=development npm run build:tt -- --watch",
     "dev:h5": "NODE_ENV=development npm run build:h5 -- --watch",
     "dev:rn": "NODE_ENV=development npm run build:rn -- --watch",
-    "dev:qq": "NODE_ENV=development npm run build:qq -- --watch",
+    "dev:qq": "cross-env NODE_ENV=development yarn run set-appid && taro build --type qq -- --watch",
+    "dev:qq-production": "cross-env NODE_ENV=production yarn run set-appid && taro build --type qq -- --watch",
     "dev:jd": "NODE_ENV=development npm run build:jd -- --watch",
     "dev:harmony-hybrid": "NODE_ENV=development npm run build:harmony-hybrid -- --watch",
     "postinstall": "weapp-tw patch"
@@ -72,6 +75,7 @@
     "axios-taro-adapter": "^0.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cross-env": "^7.0.3",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.2.12",

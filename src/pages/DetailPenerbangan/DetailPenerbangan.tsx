@@ -1,5 +1,5 @@
 //import { useParams } from "react-router-dom";
-import { Button, Image, Switch } from "@tarojs/components";
+import { Image, Switch } from "@tarojs/components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 // import Navbar, { NavColor } from "../..//../components/Navbar";
 import ChevronRight from "../../assets/chevron-right.svg";
@@ -12,6 +12,7 @@ import FlightDetailsCard from "../../modules/FlightDetailsCard";
 import Show from "../../components/Show";
 import { getNavigateState, handleNavigate } from "../../lib/utils";
 import Taro from "@tarojs/taro";
+import "./DetailPenerbangan.scss"
 
 import { buttonClick, screenView } from "../../network/analytics/tracker";
 import {
@@ -146,7 +147,10 @@ const DetailPesawat = () => {
     setDepartureDate(flightDate);
     const flightId = dataFollowFlight?.data?.flight_id;
 
-    handleNavigate("/pages/CreateDetailTicket/index", "?type=create&flight_id=" + flightId);
+    handleNavigate(
+      "/pages/CreateDetailTicket/index",
+      "?type=create&flight_id=" + flightId
+    );
   };
 
   useEffect(() => {
@@ -304,7 +308,8 @@ const DetailPesawat = () => {
     });
   };
 
-  const handleFollowSwitch = () => {
+  const handleFollowSwitch = (e) => {
+    e.preventDefault();
     if (dataFollowFlight?.isFollowing) {
       handleUnfollowFlight();
     } else {
@@ -379,11 +384,14 @@ const DetailPesawat = () => {
           <div className="flex flex-col gap-y-2 rounded-[16px] bg-white min-h-[50px] mt-4 p-3 text-left shadow-[0_10px_34px_rgba(0,0,0,0.1)]">
             <div className="flex justify-between items-center">
               <span className="text-sm">Dapatkan Notifikasi Penerbangan</span>
-              <Switch
-                checked={dataFollowFlight?.isFollowing}
-                onChange={handleFollowSwitch}
-                color="#001A41"
-              />
+              <label className="switch">
+                <input 
+                  type="checkbox"
+                  checked={dataFollowFlight?.isFollowing}
+                  onChange={handleFollowSwitch}
+                />
+                <span className={`slider ${dataFollowFlight?.isFollowing ? 'slider-active' : ''}`}></span>
+              </label>
             </div>
 
             <div className="flex items-center justify-between">

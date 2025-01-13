@@ -26,7 +26,7 @@ const FlightSearchResult: React.FC<Props> = ({ onSelect, data }) => {
   if (isEmpty)
     return (
       <div className="w-full h-[90%] flex items-center justify-center">
-        <h1 className="text-xs text-textSecondary">
+        <h1 className="!text-[12px] text-textSecondary">
           Kata yang kamu cari tidak tersedia
         </h1>
       </div>
