@@ -1,6 +1,6 @@
 export default {
   pages: [
-    "pages/LandingPagePesawat/index", //Main Page as the first order
+    "pages/LandingPageRamadan/index", //Main Page as the first order
     "pages/index/index",
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",

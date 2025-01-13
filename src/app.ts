@@ -18,11 +18,11 @@ class App extends React.Component<AppProps> {
     const launchOptions = Taro.getLaunchOptionsSync();
     const extendData = launchOptions?.query?.extendData;
 
-    Taro.showToast({
-      title: JSON.stringify(launchOptions?.query),
-      icon: "none", // You can use 'success', 'loading', 'none', etc.
-      duration: 10000, // Duration in milliseconds
-    });
+    // Taro.showToast({
+    //   title: JSON.stringify(launchOptions?.query),
+    //   icon: "none", // You can use 'success', 'loading', 'none', etc.
+    //   duration: 10000, // Duration in milliseconds
+    // });
     console.log("App launched with extendData:", extendData);
     // if (extendData) {
     //   Taro.setStorageSync("customParams", extendData);

@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "originTaro",
+  "projectname": "ramadanTaro",
   "description": "",
   "appid": "mpzl347frqan32bl",
   "setting": {
@@ -45,7 +45,7 @@
         {
           "id": 0,
           "name": "LandingPage",
-          "pathName": "pages/LandingPagePesawat/index",
+          "pathName": "pages/LandingPageRamadan/index",
           "query": "",
           "scene": null
         }
