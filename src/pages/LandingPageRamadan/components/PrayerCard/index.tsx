@@ -14,7 +14,10 @@ const PrayerCard = () => {
         src={convex}
         className="absolute left-[43.9%] transform -translate-x-[43.9%] -top-3 w-[48px] h-20 z-50"
       />
-      <div className="max-w-md mx-auto rounded-lg shadow-lg relative overflow-hidden bg-white mt-6">
+      <div
+        className="max-w-md mx-auto rounded-lg relative overflow-hidden bg-white mt-6 "
+        style={{ boxShadow: "0px -16px 40px 0px rgba(227, 109, 40, 0.60)" }}
+      >
         <div className="p-6 pb-3">
           {/* Background Image */}
           <div

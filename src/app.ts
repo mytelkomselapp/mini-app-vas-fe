@@ -12,9 +12,9 @@ const App = ({ children }: { children: React.ReactNode }) => {
     const extendData = options?.extendData ?? {};
     console.log({ extendData });
 
-    Taro.setEnableDebug({
-      enableDebug: env === "development",
-    });
+    // Taro.setEnableDebug({
+    //   enableDebug: env === "development",
+    // });
 
     if (typeof extendData !== "object") {
       Taro.setStorageSync("customParams", extendData);

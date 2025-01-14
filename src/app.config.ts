@@ -18,7 +18,7 @@ export default {
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "Pantau Penerbangan",
+    navigationBarTitleText: "Ramadan Fitri",
     navigationBarTextStyle: "black",
   },
   requiredBackgroundModes: ["file"], // Background modes required

@@ -24,7 +24,7 @@ const activityList: ActivityCard[] = [
     transactionType: "flight",
   },
   {
-    label: "Pantau Penerbangan",
+    label: "Ramadan Fitri",
     transactionType: "trackFlight",
   },
   {
@@ -32,7 +32,7 @@ const activityList: ActivityCard[] = [
     transactionType: "flight",
   },
   {
-    label: "Pantau Penerbangan",
+    label: "Ramadan Fitri",
     transactionType: "trackFlight",
   },
   {
@@ -40,7 +40,7 @@ const activityList: ActivityCard[] = [
     transactionType: "flight",
   },
   {
-    label: "Pantau Penerbangan",
+    label: "Ramadan Fitri",
     transactionType: "trackFlight",
   },
 ];
@@ -93,7 +93,7 @@ const MyActivity = () => {
               />
               <Button
                 onClick={handleTrackFlight}
-                label="Pantau Penerbangan"
+                label="Ramadan Fitri"
                 style="secondary"
                 className="bg-transparent"
               />

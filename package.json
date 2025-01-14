@@ -30,8 +30,8 @@
     "dev:tt": "NODE_ENV=development npm run build:tt -- --watch",
     "dev:h5": "NODE_ENV=development npm run build:h5 -- --watch",
     "dev:rn": "NODE_ENV=development npm run build:rn -- --watch",
-    "dev:qq": "cross-env NODE_ENV=development yarn run set-appid && taro build --type qq -- --watch",
-    "dev:qq-production": "cross-env NODE_ENV=production yarn run set-appid && taro build --type qq -- --watch",
+    "dev:qq": "cross-env NODE_ENV=development yarn run set-appid && npm run build:qq -- --watch",
+    "dev:qq-production": "cross-env NODE_ENV=production yarn run set-appid && npm run build:qq -- --watch",
     "dev:jd": "NODE_ENV=development npm run build:jd -- --watch",
     "dev:harmony-hybrid": "NODE_ENV=development npm run build:harmony-hybrid -- --watch",
     "postinstall": "weapp-tw patch"

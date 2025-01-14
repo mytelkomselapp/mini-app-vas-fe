@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "ramadanTaro",
   "description": "",
-  "appid": "mp537s0zmlw0tuun",
+  "appid": "mpzl347frqan32bl",
   "setting": {
     "urlCheck": false,
     "es6": false,
@@ -19,7 +19,7 @@
     "prefetch": false
   },
   "compileType": "miniprogram",
-  "TCMPPappid": "mp537s0zmlw0tuun",
+  "TCMPPappid": "mpzl347frqan32bl",
   "scripts": {
     "beforeCompile": "",
     "beforePreview": "",

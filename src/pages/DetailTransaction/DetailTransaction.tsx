@@ -90,7 +90,7 @@ const DetailTransaction: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <img src={FlightGlobeIcon} />
-                <span className="text-sm">Pantau Penerbangan</span>
+                <span className="text-sm">Ramadan Fitri</span>
               </div>
               <img src={ChevronRight} />
             </div>

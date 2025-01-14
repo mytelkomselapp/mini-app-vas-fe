@@ -4,7 +4,6 @@ import FlightLandingCardBanner from "./components/FlightLandingCardBanner";
 import FlightLandingMenu from "./components/FlightLandingMenu";
 import { CMSFlightLandingData } from "../../network/types/response-props";
 import { buttonClick } from "../../network/analytics/tracker";
-// import { useNavigate } from "react-router-dom";
 
 interface Props {
   data?: CMSFlightLandingData;
@@ -15,14 +14,12 @@ const FlightLandingCardMenu: React.FC<Props> = ({
   data,
   isLoading = false,
 }) => {
-  // const navigate = useNavigate();
   const dataFlightAppSection = data?.appsSection ?? [];
   const dataFlightPromoSection = data?.promoSection;
 
   const handleMenuClick = (targetUrl: string, title: string) => {
     buttonClick(title, `Navigate to ${title}`, "", window.location.pathname);
 
-    // if (title === "My Ticket") return navigate("/flight/ticket-list");
     if (title === "My Ticket")
       return Taro.navigateTo({ url: "/pages/MyTicketList/index" });
 
@@ -39,18 +36,6 @@ const FlightLandingCardMenu: React.FC<Props> = ({
           console.error("invokeNativePlugin fail", err);
         },
       });
-
-      /* first opt */
-      // return Taro.navigateTo({
-      //   url: "/pages/Webview/index?url=" + targetUrl,
-      // });
-
-      /* second opt */
-      // const worker = createWorker("../../pages/Webview/webviewWorker");
-
-      // // Post message to the worker
-      // worker.postMessage({ targetUrl });
-
       return;
     }
 
