@@ -1,6 +1,7 @@
 export default {
   pages: [
     "pages/LandingPageRamadan/index", //Main Page as the first order
+    "pages/ArahKiblat/index",
     "pages/index/index",
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
@@ -21,5 +22,10 @@ export default {
     navigationBarTitleText: "Ramadan Fitri",
     navigationBarTextStyle: "black",
   },
-  requiredBackgroundModes: ["file"], // Background modes required
+  requiredBackgroundModes: ["file"],
+  permission: {
+    "scope.userLocation": {
+      desc: "Enable User Location in order to get the best feature",
+    },
+  }, // Background modes required
 };

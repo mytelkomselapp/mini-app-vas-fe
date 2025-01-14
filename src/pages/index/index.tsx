@@ -7,6 +7,7 @@ import LandingPagePesawat from "../LandingPagePesawat";
 import TransactionStatus from "../TransactionStatus/TransactionStatus";
 import CreateDetailTicket from "../CreateDetailTicket";
 import PreviewImageDocs from "../PreviewImageDocs";
+import ArahKiblat from "../ArahKiblat/ArahKiblat";
 export const COMMERCE_TRAVEL = "/travel";
 export const FLIGHT_SPECIFIC = "/flight-specific";
 
@@ -46,6 +47,7 @@ const Index = () => {
           path="../PreviewImageDocs/index"
           element={<PreviewImageDocs />}
         />
+        {/* <Route path="../ArahKiblat/index" element={<ArahKiblat />} /> */}
       </Routes>
     </>
   );

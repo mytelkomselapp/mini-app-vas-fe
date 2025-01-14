@@ -15,9 +15,10 @@ import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import PrayerCard from "./components/PrayerCard";
 import FeatureCard from "./components/FeatureCard";
+import { handleNavigate } from "../../lib/utils";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
-  { name: "Kiblat", icon: "🧭" },
+  { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
   { name: "Zakat", icon: "💰" },
   { name: "Sedekah", icon: "❤️" },
   { name: "Kirim Parsel", icon: "🎁" },
@@ -39,7 +40,14 @@ const LandingPageRamadan = () => {
       <div className="flex items-center justify-center w-full pt-4 mb-4">
         <div className="grid grid-cols-4 gap-2">
           {features.map((feature, index) => (
-            <FeatureCard key={index} icon={feature.icon} name={feature.name} />
+            <FeatureCard
+              key={index}
+              icon={feature.icon}
+              name={feature.name}
+              handleClick={
+                feature?.path ? () => handleNavigate(feature?.path) : {}
+              }
+            />
           ))}
         </div>
       </div>
