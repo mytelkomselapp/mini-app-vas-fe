@@ -10,7 +10,7 @@ const SpecialFilm = () => {
       <div
         className="rounded-2xl p-4  shadow-sm flex items-start space-x-2] min-w-40 w-40 h-[214px]"
         style={{
-          background: `linear-gradient(180deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%)`,
+          background: `linear-gradient(180deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%),url(https://placehold.co/600x400)`,
           backgroundSize: "cover", // or 'contain' depending on your needs
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

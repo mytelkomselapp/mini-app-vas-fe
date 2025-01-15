@@ -9,6 +9,7 @@ import SpecialCommerce from "./components/SpecialCommerce";
 import SpecialFilm from "./components/SpecialFilm";
 import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
+import NewsCardList from "./components/News";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
@@ -74,6 +75,21 @@ const LandingPageRamadan = () => {
           </Text>
         </View>
         <SpecialGame />
+
+        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
+          <Text className="font-batikSans font-bold text-base">
+            {"Kepoin Info Seputar Ramadan"}
+          </Text>
+          <img
+            src={arrowRight}
+            className="w-4 h-4 ml-2"
+            style={{
+              filter:
+                "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
+            }}
+          />
+        </View>
+        <NewsCardList />
       </View>
     </View>
   );
