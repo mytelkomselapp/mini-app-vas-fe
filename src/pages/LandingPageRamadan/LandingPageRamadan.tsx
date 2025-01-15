@@ -1,24 +1,14 @@
-import * as React from "react";
-import FlightLandingCardMenu from "../../modules/FlightLandingCardMenu";
-import FlightForm from "../../modules/FlightForm";
-import Navbar, { NavColor } from "../../components/Navbar";
-import {
-  useFetchCMSLandingPage,
-  useFetchFlightTrack,
-  usePostClaimFreeTicket,
-} from "../../network";
-import { screenView } from "../../network/analytics/tracker";
-import FlightFollowing from "../../modules/FlightFollowing";
-import FlightFollowingAll from "../../modules/FlightFollowingAll";
+import { Text, View } from "@tarojs/components";
+import arrowRight from "../../assets/arrow-right.svg";
 import bgLanding from "../../assets/bg/bg-ramadhan.svg";
-import { BaseEventOrig, ScrollView, Text, View } from "@tarojs/components";
-import useUserPackageStatus from "../../hooks/useUserPackageStatus";
-import PrayerCard from "./components/PrayerCard";
-import FeatureCard from "./components/FeatureCard";
 import { handleNavigate } from "../../lib/utils";
+import FeatureCard from "./components/FeatureCard";
+import PrayerCard from "./components/PrayerCard";
 import Promo from "./components/Promo";
 import SpecialCommerce from "./components/SpecialCommerce";
+import SpecialFilm from "./components/SpecialFilm";
 import SpecialPackage from "./components/SpecialPackage";
+import SpecialGame from "./components/SpecialGame";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
@@ -62,6 +52,28 @@ const LandingPageRamadan = () => {
         </Text>
         <SpecialCommerce />
         <SpecialPackage />
+        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
+          <Text className="font-batikSans font-bold text-base">
+            {"Film & Series Ramadan"}
+          </Text>
+          <img
+            src={arrowRight}
+            className="w-4 h-4 ml-2"
+            style={{
+              filter:
+                "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
+            }}
+          />
+        </View>
+
+        <SpecialFilm />
+
+        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
+          <Text className="font-batikSans font-bold text-base">
+            {"Ngabuburit Makin Seru"}
+          </Text>
+        </View>
+        <SpecialGame />
       </View>
     </View>
   );
