@@ -91,7 +91,7 @@ const Promo = () => {
         {promos.map((promo, index) => (
           <View
             key={index}
-            className={`w-80 min-w-[200px] rounded-lg  flex-shrink-0 ${
+            className={`w-[315px] min-w-[200px] rounded-lg  flex-shrink-0 ${
               index === promos?.length - 1 ? "pr-8" : ""
             }`}
           >
