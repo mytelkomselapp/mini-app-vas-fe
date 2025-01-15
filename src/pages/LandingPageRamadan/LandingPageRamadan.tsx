@@ -16,6 +16,7 @@ import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import PrayerCard from "./components/PrayerCard";
 import FeatureCard from "./components/FeatureCard";
 import { handleNavigate } from "../../lib/utils";
+import Promo from "./components/Promo";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
@@ -31,7 +32,7 @@ const LandingPageRamadan = () => {
     <View className="bg-white h-screen">
       <View
         style={{ backgroundImage: `url(${bgLanding})` }}
-        className="bg-cover bg-no-repeat bg-center"
+        className="bg-cover bg-no-repeat bg-center "
       >
         <View className="p-4">
           <PrayerCard />
@@ -51,6 +52,8 @@ const LandingPageRamadan = () => {
           ))}
         </div>
       </div>
+
+      <Promo />
     </View>
   );
 };

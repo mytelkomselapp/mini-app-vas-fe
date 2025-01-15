@@ -49,7 +49,7 @@ const PrayerCard = () => {
               </div>
 
               {/* Prayer Time */}
-              <div className="text-base font-bold text-gray-900">
+              <div className="text-base font-semibold text-gray-900 font-sans">
                 Zuhur 11:40 WIB
               </div>
 
