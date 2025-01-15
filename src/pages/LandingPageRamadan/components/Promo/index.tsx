@@ -5,7 +5,7 @@ import dummyPromoBackdrop from "../../../../assets/dummy-promo-backdrop.png";
 const Promo = () => {
   const promos = [
     {
-      title: "Promo Ramdahan Meriah",
+      title: "Promo Ramadan Meriah",
       badge: "Spesial Ramadan",
       time: "23:59:59",
 
@@ -105,9 +105,6 @@ const Promo = () => {
             <Badge badge={promo.badge} time={promo.time} />
             <View className="mt-0 pt-1 text-[12.5px] font-semibold font-sans">
               {promo.title}
-              {/* <Text className="text-[12px] font-semibold leading-[16px]">
-                {promo.title}
-              </Text> */}
             </View>
           </View>
         ))}

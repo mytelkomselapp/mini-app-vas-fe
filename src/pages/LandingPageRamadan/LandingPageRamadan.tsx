@@ -11,12 +11,13 @@ import { screenView } from "../../network/analytics/tracker";
 import FlightFollowing from "../../modules/FlightFollowing";
 import FlightFollowingAll from "../../modules/FlightFollowingAll";
 import bgLanding from "../../assets/bg/bg-ramadhan.svg";
-import { BaseEventOrig, ScrollView, View } from "@tarojs/components";
+import { BaseEventOrig, ScrollView, Text, View } from "@tarojs/components";
 import useUserPackageStatus from "../../hooks/useUserPackageStatus";
 import PrayerCard from "./components/PrayerCard";
 import FeatureCard from "./components/FeatureCard";
 import { handleNavigate } from "../../lib/utils";
 import Promo from "./components/Promo";
+import SpecialCommerce from "./components/SpecialCommerce";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
@@ -29,7 +30,7 @@ const features = [
 ];
 const LandingPageRamadan = () => {
   return (
-    <View className="bg-white h-screen">
+    <View className="bg-white h-full">
       <View
         style={{ backgroundImage: `url(${bgLanding})` }}
         className="bg-cover bg-no-repeat bg-center "
@@ -54,6 +55,12 @@ const LandingPageRamadan = () => {
       </div>
 
       <Promo />
+      <View className="p-4 pl-0">
+        <Text className="font-batikSans font-bold text-base pl-4">
+          {"Spesial Ramadan Untuk Kamu"}
+        </Text>
+        <SpecialCommerce />
+      </View>
     </View>
   );
 };
