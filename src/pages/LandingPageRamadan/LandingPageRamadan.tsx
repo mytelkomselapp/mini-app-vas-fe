@@ -18,6 +18,7 @@ import FeatureCard from "./components/FeatureCard";
 import { handleNavigate } from "../../lib/utils";
 import Promo from "./components/Promo";
 import SpecialCommerce from "./components/SpecialCommerce";
+import SpecialPackage from "./components/SpecialPackage";
 const features = [
   { name: "Cari Masjid", icon: "🏰" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
@@ -60,6 +61,7 @@ const LandingPageRamadan = () => {
           {"Spesial Ramadan Untuk Kamu"}
         </Text>
         <SpecialCommerce />
+        <SpecialPackage />
       </View>
     </View>
   );

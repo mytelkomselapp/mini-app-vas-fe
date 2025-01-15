@@ -103,7 +103,7 @@ const Promo = () => {
               />
             </View>
             <Badge badge={promo.badge} time={promo.time} />
-            <View className="mt-0 pt-1 text-[12.5px] font-semibold font-sans">
+            <View className="mt-0 pt-1 text-[12.8px] font-semibold font-sans">
               {promo.title}
             </View>
           </View>
