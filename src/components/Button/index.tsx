@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   style?: ButtonStyle;
   isUseArrowIcon?: boolean;
+  icon?: React.ReactNode;
 }
 
 const getButtonStyle = (style: string): string => {
@@ -41,6 +42,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   style = "primary",
   isUseArrowIcon = false,
+  icon,
 }) => {
   return (
     <button
@@ -63,6 +65,7 @@ const Button: React.FC<ButtonProps> = ({
       ) : (
         <></>
       )}
+      {icon ? icon : null}
     </button>
   );
 };
