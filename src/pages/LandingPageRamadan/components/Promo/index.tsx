@@ -78,7 +78,7 @@ const Promo = () => {
             className={`absolute top-0 ${redBadgePosition} translate-x-1/2 -translate-y-1/2 bg-textError text-white px-4 py-1 text-[10px] rounded-full flex items-center shadow-lg min-w-[130px]`}
           >
             Flash Sale: <Text className="ml-1 text-yellow-400">⚡</Text>
-            <Text className="ml-2">{countdown}</Text>
+            <Text className="ml-2 font-semibold">{countdown}</Text>
           </View>
         )}
       </View>
