@@ -58,6 +58,7 @@ const LandingPageRamadan = () => {
             {"Film & Series Ramadan"}
           </Text>
           <img
+            alt="arrow-right"
             src={arrowRight}
             className="w-4 h-4 ml-2"
             style={{
@@ -81,6 +82,7 @@ const LandingPageRamadan = () => {
             {"Kepoin Info Seputar Ramadan"}
           </Text>
           <img
+            alt="arrow-right"
             src={arrowRight}
             className="w-4 h-4 ml-2"
             style={{

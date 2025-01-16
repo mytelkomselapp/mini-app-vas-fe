@@ -16,7 +16,7 @@ interface ButtonProps {
 
 const getButtonStyle = (style: string): string => {
   const base =
-    "!min-h-[48px] font-normal !py-[8px] px-[16px] !w-full focus:outline-none rounded-[40px] font-sans ";
+    "min-h-[48px] font-normal py-[8px] px-[16px] !w-full focus:outline-none rounded-[40px] font-sans ";
   switch (style) {
     case "primary":
       return base + "!bg-[#ED0226] !text-[#FFFFFF]";

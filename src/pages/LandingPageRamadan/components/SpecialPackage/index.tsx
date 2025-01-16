@@ -1,10 +1,11 @@
-import { ScrollView, View } from "@tarojs/components";
+import { ScrollView, Text, View } from "@tarojs/components";
 import chevronRight from "../../../../assets/chevron-right.svg";
 import dummyEvermos from "../../../../assets/dummy-evermos.svg";
 import dummyProduct from "../../../../assets/dummy-product.png";
 import Button from "../../../../components/Button";
 import ribbonTail from "../../../../assets/ribbon-tail.svg";
-import illustration from "../../../../assets/section-reco-illustration.png";
+import illustration from "../../../../assets/section-reco-illustration-base.png";
+import { cn } from "../../../../lib/utils";
 const packages = [
   {
     title: "Super Seru",
@@ -27,12 +28,16 @@ const packages = [
   // Add more packages as needed
 ];
 const SpecialPackage = () => {
-  const handleBuy = () => {
-    console.log("Buy button clicked");
+  const handleClickAllOffer = () => {
+    console.log("View All offer button clicked");
   };
   const PackageCard = ({ title, size, duration, ribbonLabel }) => {
     return (
-      <div className="border border-solid border-gray-300 rounded-2xl p-2 bg-white shadow-sm flex items-center space-x-2 w-[135px] min-w-[135px] mt-6 relative ml-2">
+      <div
+        className={cn(
+          "border border-solid border-gray-300 rounded-2xl p-2 bg-white shadow-sm flex items-center space-x-2 w-[135px] min-w-[135px] mt-6 relative ml-2"
+        )}
+      >
         {/* Promo Label */}
         <div className="absolute -top-2 -left-[3px]">
           <div className="bg-blueNavy text-white px-3 py-1 rounded-md text-[10px]">
@@ -45,12 +50,12 @@ const SpecialPackage = () => {
         </div>
 
         {/* Content */}
-        <div className="mt-4">
+        <div className="mt-3">
           {/* Title */}
           <p className="text-xs">{title}</p>
           <div className="flex items-center flex-row mt-1">
             <p className="text-base font-semibold">{size}</p>
-            <span className="ml-1 text-[10px]">{duration}</span>
+            <span className="ml-1 text-[10px] text-grey">{duration}</span>
           </div>
 
           {/* Price Section */}
@@ -63,8 +68,8 @@ const SpecialPackage = () => {
 
           <Button
             label="Beli"
-            onClick={handleBuy}
-            className="mt-4 !min-h-[28px] !w-[115px] !px-0 !text-xs !font-semibold"
+            onClick={handleClickAllOffer}
+            className="mt-2 !min-h-[28px] !w-[115px] !px-0 !text-xs !font-semibold"
           />
         </div>
       </div>
@@ -73,21 +78,48 @@ const SpecialPackage = () => {
 
   return (
     <View
-      className=" bg-no-repeat bg-bottom"
+      className="bg-no-repeat h-[206px] relative w-screen"
       style={{
         backgroundImage: `url(${illustration})`,
         backgroundSize: "cover",
         backgroundColor:
           "linear-gradient(180deg, rgba(244, 244, 244, 0) 0%, rgba(244, 244, 244, 0.7) 100%)",
+        backgroundPositionX: "-8px",
       }}
     >
-      <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
+      <View className="mt-[14px] ml-4 w-[115px] leading-[20px] absolute">
+        <Text className="font-bold font-batikSans text-primaryRed whitespace-pre-wrap text-[16px]">
+          {"Tetap Jaga Tali Silaturahmi"}
+        </Text>
+      </View>
+      <ScrollView
+        className="overflow-x-scroll pl-4 w-[100vw] z-[2] relative"
+        scrollX
+      >
         <View className="flex flex-row space-x-4 ml-[40vw]">
-          {packages.map((pkg, index) => (
-            <PackageCard key={index} {...pkg} />
-          ))}
+          {packages.map((pkg, index) => {
+            return (
+              <>
+                <PackageCard {...pkg} />
+                {packages?.length - 1 === index ? (
+                  <div className="w-[80px] h-[10px] text-white">{"ABCD"}</div> //force width
+                ) : (
+                  <></>
+                )}
+              </>
+            );
+          })}
         </View>
       </ScrollView>
+      <View className="absolute left-5 bottom-5">
+        <Button
+          label="Lihat Semua"
+          style="secondary"
+          onClick={handleClickAllOffer}
+          icon={<img src={chevronRight} className="w-4 h-4 ml-[2px]" />}
+          className="mt-2 !min-h-[28px] !w-[115px] !px-2 !text-xs  text-blueNavy border-dividerGrey"
+        />
+      </View>
     </View>
   );
 };
