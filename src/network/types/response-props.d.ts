@@ -102,6 +102,12 @@ export interface FlightSearchCity {
   country: string;
 }
 
+export interface RamadhanSearchLocationProps {
+  id: number;
+  city: string;
+  address: string;
+}
+
 export interface FlightSearchData {
   airport_code: string;
   airport_name: string;

@@ -7,7 +7,16 @@ import notifOn from "../../../../assets/ico_alarm.svg";
 import chevronRight from "../../../../assets/chevron-right.svg";
 import mapPinGrey from "../../../../assets/map-pin-grey.svg";
 import convex from "../../../../assets/convex-masjid.svg";
+import { handleNavigate } from "../../../../lib/utils";
+import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
+
 const PrayerCard = () => {
+  const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
+
+  const handleSearchLocation = () => {
+    handleNavigate("/pages/RamadhanSearchLocation/index");
+  };
+
   return (
     <>
       <img
@@ -34,9 +43,12 @@ const PrayerCard = () => {
           <div className="relative z-10 text-center">
             <div>
               {/* Location */}
-              <div className="mt-8 text-xs text-gray-500 inline-flex justify-center items-center mb-3 rounded-full bg-white py-1 px-2 border-solid border-[1px] border-dividerGrey">
+              <div
+                onClick={handleSearchLocation}
+                className="mt-8 text-xs text-gray-500 inline-flex justify-center items-center mb-3 rounded-full bg-white py-1 px-2 border-solid border-[1px] border-dividerGrey"
+              >
                 <img src={mapPinGrey} className="w-4 h-4 mr-1" />
-                Pancoran
+                {dataRamadhanSearchLocation?.city || "Pancoran"}
                 <img
                   src={chevronRight}
                   className="w-4 h-4 ml-1"
