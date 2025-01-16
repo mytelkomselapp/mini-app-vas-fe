@@ -69,7 +69,7 @@ const SpecialPackage = () => {
           <Button
             label="Beli"
             onClick={handleClickAllOffer}
-            className="mt-2 !min-h-[28px] !w-[115px] !px-0 !text-xs !font-semibold"
+            className="mt-2 !min-h-[28px] !w-[120px] !px-0 !text-xs !font-semibold"
           />
         </div>
       </div>
@@ -93,16 +93,16 @@ const SpecialPackage = () => {
         </Text>
       </View>
       <ScrollView
-        className="overflow-x-scroll pl-4 w-[100vw] z-[2] relative"
+        className="overflow-x-scroll pl-4 w-[60vw] z-[2] absolute right-0 "
         scrollX
       >
-        <View className="flex flex-row space-x-4 ml-[40vw]">
+        <View className="flex flex-row space-x-4 ml-0">
           {packages.map((pkg, index) => {
             return (
               <>
                 <PackageCard {...pkg} />
                 {packages?.length - 1 === index ? (
-                  <div className="w-[80px] h-[10px] text-white">{"ABCD"}</div> //force width
+                  <div className="w-[50px] h-[10px] text-white">{"A"}</div> //force width
                 ) : (
                   <></>
                 )}
