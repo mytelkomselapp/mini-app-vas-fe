@@ -16,6 +16,7 @@ export default {
     "pages/FollowingPenerbangan/index",
     "pages/PreviewImageDocs/index",
     "pages/Dzikir/index",
+    "pages/DzikirDetail/index",
     // other pages...
   ],
   window: {

@@ -3,6 +3,14 @@ import { useState } from "react";
 import backdrop from "../../assets/backdrop-dzikir.png";
 import morning from "../../assets/morning.svg";
 import dawn from "../../assets/dawn.svg";
+import { handleNavigate } from "../../lib/utils";
+import { serializeParam } from "../../core/serializeParam";
+
+interface Surah {
+  period: string;
+  surahId: string;
+}
+
 const Dzikir = () => {
   const [activeTab, setActiveTab] = useState("pagi");
 
@@ -18,6 +26,14 @@ const Dzikir = () => {
     "Mempercayakan Semua Urusan Kepada Allah",
     "Memenuhi Kewajiban untu Bersyukur Kepada Allah",
   ];
+
+  const handleClick = (origin: Surah) => {
+    const qParams = serializeParam({
+      period: origin?.period,
+      surahId: origin?.surahId,
+    });
+    handleNavigate("/pages/DzikirDetail/index", `?${qParams}`);
+  };
 
   return (
     <div className="max-w-md mx-auto overflow-hidden ">
@@ -52,8 +68,11 @@ const Dzikir = () => {
 
       <ul className="divide-y divide-gray-200 bg-white h-full pt-2">
         {dhikrList.map((item, index) => (
-          <>
-            <li key={index} className="py-4 px-6 flex items-center ">
+          <View
+            key={index}
+            onClick={() => handleClick({ period: activeTab, surahId: item })}
+          >
+            <li className="py-4 px-6 flex items-center ">
               <span className="w-6 h-6 flex items-center justify-center bg-[#FEF2F4] text-textError text-[14px] font-bold font-batikSans rounded-lg mr-4 p-1">
                 {index + 1}
               </span>
@@ -62,7 +81,7 @@ const Dzikir = () => {
             {index !== dhikrList?.length - 1 ? (
               <div className="w-10/12 h-[1px] bg-inactiveGrey rounded mx-auto" />
             ) : null}
-          </>
+          </View>
         ))}
       </ul>
     </div>

@@ -89,6 +89,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         solidRed: "#ED0226",
         successGreen: "#008E53",
+        mustard: "#FDA22B",
         primary: {
           DEFAULT: "#001A41",
           foreground: "white",
