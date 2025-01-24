@@ -17,7 +17,7 @@ const features = [
   { name: "Sedekah", icon: "❤️" },
   { name: "Kirim Parsel", icon: "🎁" },
   { name: "Catatan\nIbadah", icon: "📝" },
-  { name: "Dzikir", icon: "📖" },
+  { name: "Dzikir", icon: "📖", path: "/pages/Dzikir/index" },
   { name: "Kuis", icon: "❓" },
 ];
 const LandingPageRamadan = () => {
