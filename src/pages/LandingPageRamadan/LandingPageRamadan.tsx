@@ -11,7 +11,7 @@ import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
 const features = [
-  { name: "Cari Masjid", icon: "🏰" },
+  { name: "Cari Masjid", icon: "🏰" , path: "/pages/CariMasjid/index"},
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
   { name: "Zakat", icon: "💰" },
   { name: "Sedekah", icon: "❤️" },
