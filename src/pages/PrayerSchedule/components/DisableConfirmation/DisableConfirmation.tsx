@@ -1,0 +1,36 @@
+import { useState } from "react";
+import Button from "../../../../components/Button";
+import Warning from "../../../../assets/ico-warning.svg"
+import CalibrationAnimation from "../../../../assets/gif/calibration.gif"
+import { PrayerStatus, usePrayerNotification } from "../../../../store/ramadhan";
+
+interface ReminderSettingProps {
+    disableConfirmation: () => void
+    cancelDisable: () => void
+}
+
+const DisableConfirmation = ({ disableConfirmation, cancelDisable }: ReminderSettingProps) => {
+    return (
+        <>
+            <div className='flex flex-col items-center h-full'>
+                <img src={Warning} alt='Warning' width={100} height={100} />
+                <img src={CalibrationAnimation} alt='Confirmation' width={200} height={200} />
+                <span className='text-center text-[18px] font-batikSans font-bold'>Kamu yakin ingin menonaktifkan semua pengingat waktu sholat?</span>
+            </div>
+            <div className='mt-4 space-y-2'>
+                <Button
+                  label='Ya, Hentikan'
+                  onClick={disableConfirmation}
+                  className='border-0'
+                />
+                <Button
+                  onClick={cancelDisable}
+                  style='secondary'
+                  label='Tidak Jadi'
+                />
+            </div>
+        </>
+    );
+};
+
+export default DisableConfirmation;
