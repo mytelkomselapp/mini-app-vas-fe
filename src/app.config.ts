@@ -16,6 +16,8 @@ export default {
     "pages/TicketHistory/index",
     "pages/FollowingPenerbangan/index",
     "pages/PreviewImageDocs/index",
+    "pages/Dzikir/index",
+    "pages/DzikirDetail/index",
     // other pages...
   ],
   window: {
