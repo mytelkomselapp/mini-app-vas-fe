@@ -1,8 +1,6 @@
-import { useState } from "react";
 import Button from "../../../../components/Button";
 import Warning from "../../../../assets/ico-warning.svg"
 import CalibrationAnimation from "../../../../assets/gif/calibration.gif"
-import { PrayerStatus, usePrayerNotification } from "../../../../store/ramadhan";
 
 interface ReminderSettingProps {
     disableConfirmation: () => void

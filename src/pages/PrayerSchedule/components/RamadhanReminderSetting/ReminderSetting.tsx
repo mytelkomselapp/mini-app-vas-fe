@@ -4,6 +4,7 @@ import Unmute from "../../../../assets/ico-unmute.svg";
 import Stop from "../../../../assets/ico-stop.svg";
 import Notification from "../../../../assets/ico-notification-black.svg";
 import { PrayerStatus, usePrayerNotification } from "../../../../store/ramadhan";
+import Chips from "../../../../components/Chips";
 
 interface ReminderSettingProps {
     id: number | undefined;
@@ -61,13 +62,21 @@ const ReminderSetting = ({ id, currentStatus, toggleModal }: ReminderSettingProp
                 ))}
             </div>
             <div className='mt-4'>
-                <div>
-                    <span className='text-base'>Pengingat Sebelum Subuh</span>
+                <div className='flex justify-between'>
+                    <span className='text-sm font-semibold text-primaryBlack'>Pengingat Sebelum Subuh</span>
+                    <label className='switch'>
+                        <input
+                          type='checkbox'
+                        //   checked={!!isActive}
+                        //   onChange={toggleNotification}
+                        />
+                        <span className='slider'></span>
+                    </label>
                 </div>
                 <div className='flex gap-2'>
-                    <span className='text-base'>5 Menit</span>
-                    <span className='text-base'>10 Menit</span>
-                    <span className='text-base'>15 Menit</span>
+                    <Chips text='5 Menit' />
+                    <Chips text='10 Menit' />
+                    <Chips text='15 Menit' />
                 </div>
             </div>
             <div className='mt-4'>
