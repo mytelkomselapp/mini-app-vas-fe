@@ -4,6 +4,7 @@ import useToggle from "../../hooks/useToggle";
 import Button from "../../components/Button";
 import BottomSheet from '../../components/BottomSheet';
 import ChevronRight from "../../assets/chevron-right.svg";
+import MosqueIcon from "../../assets/ico_mosque.svg"
 
 
 interface MosqueListItemProps {
@@ -16,13 +17,13 @@ const MosqueListItem: React.FC<MosqueListItemProps> = ({ name, address, distance
   return (
     <View>
       <View className="flex flex-row items-center">
-        <View className="w-10 h-10 mr-3">
-          {/* <Image src="/mosque-icon.svg" className="w-full h-full" /> */}
+        <View className="flex flex-col w-10 h-10 mr-3 bg-[#fef2f4] rounded-[8px] p-2">
+          <Image src={MosqueIcon} className="w-full h-full" />
           <Text className="text-red-500 text-xs text-center">{distance}m</Text>
         </View>
         <View className="flex-1 flex flex-col">
           <Text className="text-[14px] text-primary font-semibold">{name}</Text>
-          <Text className="text-[14px] text-textSecondary">{address}</Text>
+          <Text className="text-[12px] text-textSecondary">{address}</Text>
         </View>
         <Image
           src={ChevronRight}
@@ -161,14 +162,14 @@ const CariMasjid: React.FC = () => {
         open={visibleSheet} 
         onClose={() => setVisibleSheet(false)}
         containerClassname="draggable"
-        snapPoints={[25, 50, 75, 100]}
+        snapPoints={[30, 60, 85]}
         initialSnap={1}
       >
-        <View className="flex flex-col">
+        <View className="flex flex-col p-4">
           <Text className="text-[14px] text-textSecondary mb-4">Terdapat {mosques.length} masjid di sekitarmu</Text>
           
           {/* Mosque List */}
-          <View className="h-[60vh]">
+          <View>
             {mosques.map(mosque => (
               <MosqueListItem
                 key={mosque.id}

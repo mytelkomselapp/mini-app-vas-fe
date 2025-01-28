@@ -1,21 +1,6 @@
-/* Container for the bottom sheet and backdrop */
-.bottom-sheet-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  z-index: 1000;
-  display: none;
-  
-  &.visible {
-    display: block;
-  }
-}
-
 /* Backdrop styling */
 .backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -23,16 +8,19 @@
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 0.3s ease-in-out;
   pointer-events: none;
+  z-index: 999;
+  display: none;
   
   &.active {
-    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+    // background-color: rgba(0, 0, 0, 0.5);
     pointer-events: auto;
   }
 }
 
 /* Bottom sheet styling */
 .bottom-sheet {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -40,14 +28,15 @@
   border-radius: 12px 12px 0 0;
   transform: translateY(100%);
   transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
-  height: 50%; // Default height
+  height: 50%;
+  z-index: 1000;
   
   &.open {
     transform: translateY(0);
   }
   
   &.full-height {
-    height: 100% !important;
+    height: 100%;
   }
 }
 
@@ -56,12 +45,14 @@
   padding: 8px 0;
   display: flex;
   justify-content: center;
+  pointer-events: auto !important;
   
   .drag-handle {
     width: 32px;
     height: 4px;
     background-color: #ddd;
     border-radius: 2px;
+    pointer-events: auto !important;
   }
 }
 
@@ -70,4 +61,26 @@
   height: calc(100% - 20px); // Adjust based on header height
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  pointer-events: auto !important;
+}
+
+/* Drag handle area */
+.drag-handle-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1001;
+  pointer-events: none;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    height: 40px;
+    pointer-events: auto;
+  }
 }
