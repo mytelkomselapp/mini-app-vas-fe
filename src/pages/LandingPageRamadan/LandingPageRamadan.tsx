@@ -10,7 +10,7 @@ import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
 const features = [
-  { name: "Cari Masjid", icon: "🏰" , path: "/pages/CariMasjid/index"},
+  { name: "Cari Masjid", icon: "🏰", path: "/pages/CariMasjid/index" },
   { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
   { name: "Zakat", icon: "💰" },
   { name: "Sedekah", icon: "❤️" },
@@ -63,7 +63,7 @@ const LandingPageRamadan = () => {
 
         <SpecialFilm />
 
-        <View className="flex flex-row items-center pl-4 mt-6 mb-2 justify-between">
+        <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
             {"Ngabuburit Makin Seru"}
           </Text>
@@ -73,7 +73,7 @@ const LandingPageRamadan = () => {
         </View>
         <SpecialGame />
 
-        <View className="flex flex-row items-center pl-4 mt-6 mb-2 justify-between">
+        <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
             {"Kepoin Info Seputar Ramadan"}
           </Text>

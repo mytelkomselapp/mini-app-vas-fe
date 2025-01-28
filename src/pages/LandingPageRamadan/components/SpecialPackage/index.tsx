@@ -1,9 +1,10 @@
-import { ScrollView, Text, View } from "@tarojs/components";
+import { ScrollView, Swiper, SwiperItem, Text, View } from "@tarojs/components";
 
 import Button from "../../../../components/Button";
 import ribbonTail from "../../../../assets/ribbon-tail.svg";
 import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
+import { useState } from "react";
 const packages = [
   {
     title: "Super Seru",
@@ -18,7 +19,13 @@ const packages = [
     ribbonLabel: "Promo",
   },
   {
-    title: "Internet OMG!",
+    title: "e-internet giga!",
+    size: "55 GB",
+    duration: "7 Hari",
+    ribbonLabel: "Best Deal",
+  },
+  {
+    title: "Roam OMG!",
     size: "55 GB",
     duration: "7 Hari",
     ribbonLabel: "Best Deal",
@@ -26,14 +33,19 @@ const packages = [
   // Add more packages as needed
 ];
 const SpecialPackage = () => {
+  const [current, setCurrent] = useState(0);
   const handleClickAllOffer = () => {
     console.log("View All offer button clicked");
   };
+  const handleSwiperChange = (e) => {
+    setCurrent(e.detail.current);
+  };
+
   const PackageCard = ({ title, size, duration, ribbonLabel }) => {
     return (
       <div
         className={cn(
-          "border border-solid border-gray-300 rounded-2xl pl-1 bg-white shadow-sm flex items-center space-x-1 w-[106px] min-w-[106px] h-[190px] mt-6 relative ml-2"
+          "border border-solid border-gray-300 rounded-2xl pl-1 bg-white shadow-sm flex items-center space-x-1 w-[106px] min-w-[106px] h-[190px] relative ml-2"
         )}
         style={{
           background: `url(${kv})`,
@@ -99,22 +111,44 @@ const SpecialPackage = () => {
           {"Lihat Semua"}
         </Text>
       </View>
-      <ScrollView className="overflow-x-scroll w-screen z-[2] ml-2" scrollX>
+
+      <Swiper
+        className="w-full h-[206px]  mt-4"
+        circular
+        autoplay
+        interval={3000}
+        displayMultipleItems={3}
+        onChange={handleSwiperChange}
+      >
+        {packages?.map((slide, key) => (
+          <SwiperItem key={key}>
+            <div className={`w-full h-full flex items-center justify-center`}>
+              <PackageCard {...slide} key={key} />
+            </div>
+          </SwiperItem>
+        ))}
+      </Swiper>
+
+      <div className="flex justify-center w-min absolute left-[45%] -bottom-[22%] transform -translate-x-1/2 p-[2px]">
+        {packages.map((_, index) => (
+          <div
+            key={index}
+            className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+              current === index
+                ? "bg-blueNavy w-4 h-1"
+                : "bg-[#001A4166] w-1 h-1"
+            }`}
+          ></div>
+        ))}
+      </div>
+
+      {/* <ScrollView className="overflow-x-scroll w-screen z-[2] ml-2" scrollX>
         <View className="flex flex-row space-x-3 ml-0">
           {packages.map((pkg, index) => {
             return <PackageCard {...pkg} key={index} />;
           })}
         </View>
-      </ScrollView>
-      {/* <View className="absolute left-5 bottom-5">
-        <Button
-          label="Lihat Semua"
-          style="secondary"
-          onClick={handleClickAllOffer}
-          icon={<img src={chevronRight} className="w-4 h-4 ml-[2px]" />}
-          className="mt-2 !min-h-[28px] !w-[115px] !px-2 !text-xs  text-blueNavy border-dividerGrey"
-        />
-      </View> */}
+      </ScrollView> */}
     </View>
   );
 };

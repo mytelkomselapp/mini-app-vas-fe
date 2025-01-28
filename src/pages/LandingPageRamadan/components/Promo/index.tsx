@@ -1,22 +1,29 @@
 import { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image } from "@tarojs/components";
-import dummyPromoBackdrop from "../../../../assets/dummy-promo-backdrop.png";
+import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
 
 const Promo = () => {
+  const [current, setCurrent] = useState(0);
   const promos = [
     {
       title: "Promo Ramadan Meriah",
       badge: "Spesial Ramadan",
       time: "23:59:59",
 
-      imgSrc: dummyPromoBackdrop, // Replace with actual image URL
+      imgSrc: "https://placehold.co/600x400", // Replace with actual image URL
     },
     {
       title: "Serba Lima Ribu",
       badge: "Hiburan",
       time: "19:50:10",
 
-      imgSrc: dummyPromoBackdrop, // Replace with actual image URL
+      imgSrc: "https://placehold.co/600x400", // Replace with actual image URL
+    },
+    {
+      title: "Serba Lima Ribu",
+      badge: "Hiburan",
+      time: "19:50:10",
+
+      imgSrc: "https://placehold.co/600x400", // Replace with actual image URL
     },
     // Add more promo objects as needed
   ];
@@ -85,8 +92,12 @@ const Promo = () => {
     );
   };
 
+  const handleSwiperChange = (e) => {
+    setCurrent(e.detail.current);
+  };
+
   return (
-    <>
+    <View className="relative">
       <View className="my-2 mx-4 flex items-center justify-between">
         <Text className="font-bold font-batikSans whitespace-pre-wrap text-[16px]">
           {"Penawaran Terbaik"}
@@ -95,31 +106,39 @@ const Promo = () => {
           {"Lihat Semua"}
         </Text>
       </View>
-      <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
-        <View className="flex flex-row space-x-4">
-          {promos.map((promo, index) => (
-            <View
-              key={index}
-              className={`w-[315px] min-w-[200px] rounded-lg  flex-shrink-0 ${
-                index === promos?.length - 1 ? "pr-8" : ""
-              }`}
-            >
-              <View>
-                <Image
-                  src={promo.imgSrc}
-                  className="w-full h-32 object-cover rounded-md"
-                  mode="aspectFill"
-                />
-              </View>
-              <Badge badge={promo.badge} time={promo.time} />
-              <View className="mt-0 pt-1 text-[12.8px] font-semibold font-sans">
-                {promo.title}
-              </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </>
+
+      <Swiper
+        className="w-full"
+        circular
+        autoplay
+        interval={3000}
+        onChange={handleSwiperChange}
+      >
+        {promos?.map((slide, key) => (
+          <SwiperItem key={key}>
+            <div className={`w-full h-full flex items-center justify-center`}>
+              <Image
+                src={slide?.imgSrc}
+                className="w-[91vw] h-32 object-cover rounded-md"
+                mode="aspectFill"
+              />
+            </div>
+          </SwiperItem>
+        ))}
+      </Swiper>
+      {/* Dot Indicator */}
+
+      <div className="flex justify-center mt-4 bg-[#00000040] rounded-2xl w-min absolute bottom-4 left-[45%] transform -translate-x-1/2 p-[2px]">
+        {promos.map((_, index) => (
+          <div
+            key={index}
+            className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+              current === index ? "bg-white w-4 h-1" : "bg-[#FFFFFF99] w-1 h-1"
+            }`}
+          ></div>
+        ))}
+      </div>
+    </View>
   );
 };
 
