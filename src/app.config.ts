@@ -1,9 +1,9 @@
 export default {
   pages: [
-    "pages/PrayerSchedule/index",
     "pages/LandingPageRamadan/index", //Main Page as the first order
     "pages/ArahKiblat/index",
     "pages/RamadhanSearchLocation/index",
+    "pages/PrayerSchedule/index",
     "pages/index/index",
     "pages/ListPenerbangan/index",
     "pages/DetailPenerbangan/index",
