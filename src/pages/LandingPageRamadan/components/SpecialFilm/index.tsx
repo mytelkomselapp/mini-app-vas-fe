@@ -1,16 +1,14 @@
-import { ScrollView, View } from "@tarojs/components";
-import chevronRight from "../../../../assets/chevron-right.svg";
-// import dummyEvermos from "../../../../assets/dummy-evermos.svg";
-
+import { ScrollView, Text, View } from "@tarojs/components";
 import maxStream from "../../../../assets/maxStream.png";
-import dummyPosterMovie from "../../../../assets/dummy-poster-movie.png";
+
 const SpecialFilm = () => {
   const Movie = () => {
     return (
       <div
-        className="rounded-2xl p-4  shadow-sm flex items-start space-x-2] min-w-40 w-40 h-[214px]"
+        className="rounded-lg shadow-sm flex items-start space-x-2 min-w-[106px] w-[106px] h-[159px]"
         style={{
-          background: `linear-gradient(180deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%),url(https://placehold.co/600x400)`,
+          background: `url(https://placehold.co/600x400)`,
+          // background: `linear-gradient(180deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%),url(https://placehold.co/600x400)`,
           backgroundSize: "cover", // or 'contain' depending on your needs
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -19,15 +17,17 @@ const SpecialFilm = () => {
         {/* Product Details */}
         <div className="flex-1">
           {/* Header */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <img src={maxStream} alt="Evermos" className="w-5 h-5 mr-1" />
-              <p className="text-[8px] font-semibold text-white">Maxstream</p>
-            </div>
-
-            <div className="bg-gray-800 text-white text-[8px] font-semibold px-2 py-1 rounded-full shadow-md">
-              02:15:00
-            </div>
+          <div className="flex bg-[#00000066] rounded-tl-lg rounded-br-lg items-center max-w-[90px] p-[2px]">
+            <img src={maxStream} alt="maxStream" className="w-4 h-4 mr-1" />
+            <p className="text-[10px] font-semibold text-white">Maxstream</p>
+          </div>
+          <div
+            className="flex mt-[95%] justify-end h-10 rounded-b-lg items-end"
+            style={{
+              background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 126.83%)`,
+            }}
+          >
+            <Text className="text-white text-[10px] mr-2 mb-2">{"2j 25m"}</Text>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ const SpecialFilm = () => {
 
   return (
     <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
-      <View className="flex flex-row space-x-4">
+      <View className="flex flex-row space-x-3">
         <Movie />
         <Movie />
         <Movie />

@@ -86,30 +86,40 @@ const Promo = () => {
   };
 
   return (
-    <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
-      <View className="flex flex-row space-x-4">
-        {promos.map((promo, index) => (
-          <View
-            key={index}
-            className={`w-[315px] min-w-[200px] rounded-lg  flex-shrink-0 ${
-              index === promos?.length - 1 ? "pr-8" : ""
-            }`}
-          >
-            <View>
-              <Image
-                src={promo.imgSrc}
-                className="w-full h-32 object-cover rounded-md"
-                mode="aspectFill"
-              />
-            </View>
-            <Badge badge={promo.badge} time={promo.time} />
-            <View className="mt-0 pt-1 text-[12.8px] font-semibold font-sans">
-              {promo.title}
-            </View>
-          </View>
-        ))}
+    <>
+      <View className="my-2 mx-4 flex items-center justify-between">
+        <Text className="font-bold font-batikSans whitespace-pre-wrap text-[16px]">
+          {"Penawaran Terbaik"}
+        </Text>
+        <Text className="whitespace-pre-wrap text-xs text-grey ">
+          {"Lihat Semua"}
+        </Text>
       </View>
-    </ScrollView>
+      <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
+        <View className="flex flex-row space-x-4">
+          {promos.map((promo, index) => (
+            <View
+              key={index}
+              className={`w-[315px] min-w-[200px] rounded-lg  flex-shrink-0 ${
+                index === promos?.length - 1 ? "pr-8" : ""
+              }`}
+            >
+              <View>
+                <Image
+                  src={promo.imgSrc}
+                  className="w-full h-32 object-cover rounded-md"
+                  mode="aspectFill"
+                />
+              </View>
+              <Badge badge={promo.badge} time={promo.time} />
+              <View className="mt-0 pt-1 text-[12.8px] font-semibold font-sans">
+                {promo.title}
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

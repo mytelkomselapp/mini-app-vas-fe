@@ -1,7 +1,5 @@
 import { ScrollView, View } from "@tarojs/components";
 import chevronRight from "../../../../assets/chevron-right.svg";
-import dummyEvermos from "../../../../assets/dummy-evermos.svg";
-import dummyProduct from "../../../../assets/dummy-product.png";
 const SpecialCommerce = () => {
   const ProductCard = () => {
     return (
@@ -12,7 +10,7 @@ const SpecialCommerce = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <img
-                src={dummyEvermos}
+                src={"https://placehold.co/600x400"}
                 alt="Evermos"
                 className="w-10 h-10 mr-2"
               />
@@ -33,7 +31,7 @@ const SpecialCommerce = () => {
           <div className="flex flex-row items-center">
             <div className="mt-3">
               <img
-                src={dummyProduct}
+                src={"https://placehold.co/600x400"}
                 alt="Product"
                 className="w-[92px] h-[92px] object-cover rounded-lg mr-2"
               />

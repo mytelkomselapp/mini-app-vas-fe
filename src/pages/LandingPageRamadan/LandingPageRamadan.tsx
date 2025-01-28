@@ -1,5 +1,4 @@
 import { Text, View } from "@tarojs/components";
-import arrowRight from "../../assets/arrow-right.svg";
 import bgLanding from "../../assets/bg/bg-ramadhan.svg";
 import { handleNavigate } from "../../lib/utils";
 import FeatureCard from "./components/FeatureCard";
@@ -48,48 +47,39 @@ const LandingPageRamadan = () => {
 
       <Promo />
       <View className="p-4 pl-0">
-        <Text className="font-batikSans font-bold text-base pl-4">
+        <Text className="font-batikSans font-bold text-[14px] pl-4">
           {"Spesial Ramadan Untuk Kamu"}
         </Text>
         <SpecialCommerce />
         <SpecialPackage />
-        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
-          <Text className="font-batikSans font-bold text-base">
+        <View className="flex flex-row items-center pl-4 mt-14 mb-2 justify-between">
+          <Text className="font-batikSans font-bold text-[14px]">
             {"Film & Series Ramadan"}
           </Text>
-          <img
-            alt="arrow-right"
-            src={arrowRight}
-            className="w-4 h-4 ml-2"
-            style={{
-              filter:
-                "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
-            }}
-          />
+          <Text className="whitespace-pre-wrap text-xs text-grey ">
+            {"Lihat Semua"}
+          </Text>
         </View>
 
         <SpecialFilm />
 
-        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
-          <Text className="font-batikSans font-bold text-base">
+        <View className="flex flex-row items-center pl-4 mt-6 mb-2 justify-between">
+          <Text className="font-batikSans font-bold text-[14px]">
             {"Ngabuburit Makin Seru"}
+          </Text>
+          <Text className="whitespace-pre-wrap text-xs text-grey ">
+            {"Lihat Semua"}
           </Text>
         </View>
         <SpecialGame />
 
-        <View className="flex flex-row items-center pl-4 mt-4 justify-between">
-          <Text className="font-batikSans font-bold text-base">
+        <View className="flex flex-row items-center pl-4 mt-6 mb-2 justify-between">
+          <Text className="font-batikSans font-bold text-[14px]">
             {"Kepoin Info Seputar Ramadan"}
           </Text>
-          <img
-            alt="arrow-right"
-            src={arrowRight}
-            className="w-4 h-4 ml-2"
-            style={{
-              filter:
-                "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
-            }}
-          />
+          <Text className="whitespace-pre-wrap text-xs text-grey ">
+            {"Lihat Semua"}
+          </Text>
         </View>
         <NewsCardList />
       </View>
