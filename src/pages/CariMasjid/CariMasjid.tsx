@@ -2,7 +2,7 @@ import { CoverView, Map, View, Text, Image } from '@tarojs/components'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import useToggle from "../../hooks/useToggle";
 import Button from "../../components/Button";
-import BottomSheet from '../../components/BottomSheet';
+import TransparentBottomSheet from '../../components/TransparentBottomSheet';
 import ChevronRight from "../../assets/chevron-right.svg";
 import MosqueIcon from "../../assets/ico_mosque.svg"
 
@@ -158,36 +158,38 @@ const CariMasjid: React.FC = () => {
         </CoverView>
       </Map>
 
-      <BottomSheet 
+      <TransparentBottomSheet 
         open={visibleSheet} 
         onClose={() => setVisibleSheet(false)}
         containerClassname="draggable"
-        snapPoints={[30, 60, 85]}
+        snapPoints={[35, 60, 85]}
         initialSnap={1}
       >
-        <View className="flex flex-col">
-          <Text className="text-[14px] text-textSecondary mb-4">Terdapat {mosques.length} masjid di sekitarmu</Text>
-          
-          {/* Mosque List */}
+        <View className="flex flex-col h-full justify-between">
           <View>
-            {mosques.map(mosque => (
-              <MosqueListItem
-                key={mosque.id}
-                name={mosque.name}
-                address={mosque.address}
-                distance={mosque.distance}
-              />
-            ))}
+            <Text className="text-[14px] text-textSecondary mb-4">Terdapat {mosques.length} masjid di sekitarmu</Text>
+            
+            {/* Mosque List */}
+            <View>
+              {mosques.map(mosque => (
+                <MosqueListItem
+                  key={mosque.id}
+                  name={mosque.name}
+                  address={mosque.address}
+                  distance={mosque.distance}
+                />
+              ))}
+            </View>
           </View>
 
           <Button 
             label="Tampilkan Lebih Banyak" 
             onClick={() => setVisibleSheet(false)}  
             style="secondary"
-            className="mt-4"
+            className="mb-8"
           />
         </View>
-      </BottomSheet>
+      </TransparentBottomSheet>
     </View>
   );
 };
