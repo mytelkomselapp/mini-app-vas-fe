@@ -165,7 +165,7 @@ const CariMasjid: React.FC = () => {
         snapPoints={[30, 60, 85]}
         initialSnap={1}
       >
-        <View className="flex flex-col p-4">
+        <View className="flex flex-col">
           <Text className="text-[14px] text-textSecondary mb-4">Terdapat {mosques.length} masjid di sekitarmu</Text>
           
           {/* Mosque List */}

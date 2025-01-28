@@ -42,7 +42,7 @@
 
 /* Header and drag handle styling */
 .sheet-header {
-  padding: 8px 0;
+  padding: 16px;
   display: flex;
   justify-content: center;
   pointer-events: auto !important;
@@ -58,6 +58,7 @@
 
 /* Content area with scrolling */
 .sheet-content {
+  padding: 16px;
   height: calc(100% - 20px); // Adjust based on header height
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
