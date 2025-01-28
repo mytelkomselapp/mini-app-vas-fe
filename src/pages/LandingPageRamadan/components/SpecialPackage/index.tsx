@@ -1,10 +1,8 @@
 import { ScrollView, Text, View } from "@tarojs/components";
-import chevronRight from "../../../../assets/chevron-right.svg";
-import dummyEvermos from "../../../../assets/dummy-evermos.svg";
-import dummyProduct from "../../../../assets/dummy-product.png";
+
 import Button from "../../../../components/Button";
 import ribbonTail from "../../../../assets/ribbon-tail.svg";
-
+import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
 const packages = [
   {
@@ -37,6 +35,12 @@ const SpecialPackage = () => {
         className={cn(
           "border border-solid border-gray-300 rounded-2xl pl-1 bg-white shadow-sm flex items-center space-x-1 w-[106px] min-w-[106px] h-[190px] mt-6 relative ml-2"
         )}
+        style={{
+          background: `url(${kv})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
       >
         {/* Promo Label */}
         <div className="absolute -top-2 -left-[3px]">
@@ -98,16 +102,7 @@ const SpecialPackage = () => {
       <ScrollView className="overflow-x-scroll w-screen z-[2] ml-2" scrollX>
         <View className="flex flex-row space-x-3 ml-0">
           {packages.map((pkg, index) => {
-            return (
-              <>
-                <PackageCard {...pkg} />
-                {packages?.length - 1 === index ? (
-                  <div className="w-[50px] h-[10px] text-white">{"A"}</div> //force width
-                ) : (
-                  <></>
-                )}
-              </>
-            );
+            return <PackageCard {...pkg} key={index} />;
           })}
         </View>
       </ScrollView>
