@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import compass from "../../assets/compass-new.svg";
 import compassActive from "../../assets/compass-active-new.svg";
 import kabahIndicator from "../../assets/kabah-indicator.svg";
-import bgLanding from "../../assets/backdrop-compass.svg";
+import bgLanding from "../../assets/backdrop-compass.png";
 import mapPinWhite from "../../assets/map-pin-white.svg";
 import calibrateIllustration from "../../assets/calibrate-illustration.svg";
 import iconPhoneRed from "../../assets/icon-phone-red.svg";

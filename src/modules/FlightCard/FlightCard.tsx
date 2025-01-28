@@ -1,4 +1,4 @@
-import FlightIcon from "../../assets/garuda.svg";
+import FlightIcon from "../../assets/mosque.svg";
 import ArrowRight from "../../assets/chevron-right-16px.svg";
 import travelokaImg from "../../assets/traveloka-squared.png";
 import { cn } from "../../lib/utils";
