@@ -1,5 +1,5 @@
 //import { useParams } from "react-router-dom";
-import FlightIcon from "../../assets/garuda.svg";
+import FlightIcon from "../../assets/mosque.svg";
 import Navbar from "../../components/Navbar";
 import FlightSeatInformation from "../../modules/FlightSeatInformation";
 import FlightSpecCard from "../../modules/FlightSpecCard";

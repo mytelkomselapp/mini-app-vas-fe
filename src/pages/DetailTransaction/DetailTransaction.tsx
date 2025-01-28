@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../..//..//../components/Button";
 import Navbar, { NavColor } from "../..//..//../components/Navbar";
-import GarudaIcon from "../..//..//../assets/garuda.svg";
+import GarudaIcon from "../..//..//../assets/mosque.svg";
 import FlightIcon from "../..//..//../assets/flight.svg";
 import FlightGlobeIcon from "../..//..//../assets/flight-globe.svg";
 import TicketIcon from "../..//..//../assets/ticket.svg";

@@ -5,8 +5,6 @@ import { ReactComponent as TicketIcon } from "../../assets/ticket.svg";
 import { ReactComponent as BluebirdIcon } from "../../assets/bluebird.svg";
 import { ReactComponent as GojekIcon } from "../../assets/gojek.svg";
 import { ReactComponent as TravelinIcon } from "../../assets/travelin.svg";
-import { ReactComponent as BlueskyIcon } from "../../assets/bluesky.svg";
-import { ReactComponent as SaphireIcon } from "../../assets/saphire.svg";
 
 import TransferOptionsModal from "./TransferModal";
 
@@ -69,7 +67,7 @@ const TravelOptionsModal: React.FC<Props> = ({ open, onClose }) => {
       title: "Airport Lounge",
       description: "Nikmati kenyamanan eksklusif sebelum penerbangan.",
       icon: "plane",
-      partners: [BlueskyIcon, SaphireIcon],
+      partners: [],
       showModal: false,
       setModal: () => {},
     },

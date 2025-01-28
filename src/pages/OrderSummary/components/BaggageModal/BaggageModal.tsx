@@ -1,4 +1,4 @@
-import FlightIcon from "../../assets/garuda.svg";
+import FlightIcon from "../../assets/mosque.svg";
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import moment from "moment";

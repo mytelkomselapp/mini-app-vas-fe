@@ -1,6 +1,6 @@
 import React from "react";
 import Plane from "../../assets/ico_plane_gray.svg";
-import Garuda from "../../assets/garuda.svg";
+import Garuda from "../../assets/mosque.svg";
 const FlightTransactionDetail = () => {
   return (
     <div className="flex flex-col bg-white p-4 rounded-xl gap-4">

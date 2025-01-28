@@ -3,7 +3,7 @@ import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import ChevronRight from "../../assets/chevron-right.svg";
-import GarudaIcon from "../../assets/garuda.svg";
+import GarudaIcon from "../../assets/mosque.svg";
 import { OrdererDetail } from "./components";
 
 const OrderReview = () => {

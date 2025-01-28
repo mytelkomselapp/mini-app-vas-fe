@@ -1,5 +1,4 @@
-import React from "react";
-import mosque from "../../../../assets/bg-mosque.svg";
+import mosque from "../../../../assets/bg-mosque.png";
 import lampLeft from "../../../../assets/group-lampoon-left.svg";
 import lampRight from "../../../../assets/group-lampoon-right.svg";
 import bedug from "../../../../assets/bedug.png";
