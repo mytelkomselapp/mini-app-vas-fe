@@ -11,11 +11,11 @@ const DisableConfirmation = ({ disableConfirmation, cancelDisable }: ReminderSet
     return (
         <>
             <div className='flex flex-col items-center h-full'>
-                <img src={Warning} alt='Warning' width={100} height={100} />
-                <img src={CalibrationAnimation} alt='Confirmation' width={200} height={200} />
+                <img src={Warning} alt='Warning' style={{width: '100px', height: '100px'}} />
+                {/* <img src={CalibrationAnimation} alt='Confirmation' width={200} height={200} /> */}
                 <span className='text-center text-[18px] font-batikSans font-bold'>Kamu yakin ingin menonaktifkan semua pengingat waktu sholat?</span>
             </div>
-            <div className='mt-4 space-y-2'>
+            <div className='mt-4 flex flex-col gap-2'>
                 <Button
                   label='Ya, Hentikan'
                   onClick={disableConfirmation}

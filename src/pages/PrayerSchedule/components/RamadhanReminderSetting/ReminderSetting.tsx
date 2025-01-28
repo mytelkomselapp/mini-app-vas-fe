@@ -47,16 +47,17 @@ const ReminderSetting = ({ id, currentStatus, toggleModal }: ReminderSettingProp
                       className='flex items-center justify-between gap-4 cursor-pointer'
                     >
                         <div className='flex items-center gap-2'>
-                            <img src={option.icon} alt={option.label} />
+                            <img src={option.icon} alt={option.label} style={{ width: '24px', height: '24px' }} />
                             <span className='text-base py-4'>{option.label}</span>
                         </div>
                         <input
                           type='radio'
+                          color='black'
                           name='reminder'
                           value={option.value}
                           checked={selectedOption === option.value}
                           onChange={() => handleOptionChange(option.value as PrayerStatus)}
-                          className='form-radio accent-black w-5 h-5'
+                          className=' accent-black w-5 h-5 appearance-none'
                         />
                     </label>
                 ))}

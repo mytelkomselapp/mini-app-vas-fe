@@ -73,12 +73,12 @@ const PrayerSchedule = () => {
         switch (status) {
             case "adzan":
             case "bedug":
-                return <img src={Unmute} alt='Unmute Icon' />;
+                return <img src={Unmute} style={{ width: '16px', height: '16px' }} alt='Unmute Icon' />;
             case "notifikasi":
-                return <img src={Notification} alt='Notification Icon' />;
+                return <img src={Notification} style={{ width: '16px', height: '16px' }} alt='Notification Icon' />;
             case "tidak-aktif":
             default:
-                return <img src={Stop} alt='Mute Icon' />;
+                return <img src={Stop} style={{ width: '16px', height: '16px' }} alt='Mute Icon' />;
         }
     };
 
@@ -98,7 +98,7 @@ const PrayerSchedule = () => {
             />
             <View className='flex flex-col gap-4 px-4 pt-14 z-10 relative'>
                 <View className='flex items-center gap-2'>
-                    <img src={Pin} />
+                    <img src={Pin} style={{ width: '16px', height: '16px' }}/>
                     <span className='text-white text-[12px] line-clamp-1'>Pancoran</span>
                 </View>
                 <View className='flex flex-col'>
@@ -111,14 +111,14 @@ const PrayerSchedule = () => {
                       className='flex gap-1 border-2 border-white rounded-full px-4 py-2'
                     >
                         <span className='text-white font-semibold border-2 border-white text-[12px]'>Cari Masjid</span>
-                        <img src={Mosque} />
+                        <img src={Mosque} style={{ width: '16px', height: '16px' }} />
                     </div>
                     <div
                       style={{ border: `1px solid white` }}
                       className='flex items-center gap-1  border-2 border-white rounded-full px-4 py-2'
                     >
                         <span className='text-white font-semibold border-2 border-white text-[12px]'>Kiblat</span>
-                        <img src={Compass} />
+                        <img src={Compass} style={{ width: '16px', height: '16px' }} />
                     </div>
                 </View>
             </View>
@@ -199,7 +199,7 @@ const PrayerSchedule = () => {
             <BottomSheet showHeader={false} open={reminderSetting} onClose={closeReminderSetting}>
                 <ReminderSetting toggleModal={toggleOpenReminderSetting} currentStatus={selectedStatus} id={selectedData} />
             </BottomSheet>
-            <BottomSheet containerClassname='h-[80vh] overflow-hidden' showHeader={false} open={disabledConfirmation} onClose={toggleDisabledConfirmation}>
+            <BottomSheet showHeader={false} open={disabledConfirmation} onClose={toggleDisabledConfirmation}>
                 <DisableConfirmation
                   disableConfirmation={confirmDisableNotification}
                   cancelDisable={toggleDisabledConfirmation}
