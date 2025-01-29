@@ -8,6 +8,7 @@ export default {
     "pages/PreviewImageDocs/index",
     "pages/Dzikir/index",
     "pages/DzikirDetail/index",
+    "pages/CatatanIbadah/index",
     // other pages...
   ],
   window: {
