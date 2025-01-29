@@ -164,3 +164,23 @@ export const getNavigateState = (pathname: string) => {
   Taro.removeStorageSync(_pathname);
   return state;
 };
+
+export const generateCalendarByMonth = (currentMonth: any) => {
+  const startOfMonth = currentMonth.clone().startOf("month");
+  const endOfMonth = currentMonth.clone().endOf("month");
+
+  const startOfWeek = startOfMonth.clone().startOf("week");
+  const endOfWeek = endOfMonth.clone().endOf("week");
+
+  const days = [];
+  let day = startOfWeek.clone();
+
+  while (day.isBefore(endOfWeek, "day")) {
+    days.push(day.clone() as never);
+    day.add(1, "day");
+  }
+
+  days?.shift();
+
+  return days;
+};
