@@ -1,0 +1,31 @@
+.custom-radio-button {
+    width: 15PX;
+    height: 15PX;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: white;
+  
+    .checked-dot {
+      width: 11PX;
+      height: 11PX;
+      border-radius: 50%;
+      background-color: transparent;
+    }
+  
+    &.selected {
+      border-color: #000;
+  
+      .checked-dot {
+        background-color: black;
+      }
+    }
+  
+    &:hover {
+      border-color: #555;
+    }
+  }
+  
