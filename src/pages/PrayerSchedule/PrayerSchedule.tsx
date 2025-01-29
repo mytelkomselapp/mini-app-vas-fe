@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState } from 'react';
 import { View } from '@tarojs/components';
 import bgLanding from "../../assets/bg/bg-prayer-schedule.png";
-import Mosque from "../../assets/ico_mosque.svg";
+import Mosque from "../../assets/ico_mosque_white.svg";
 import Compass from "../../assets/ico-compass-ramadhan.svg";
 import Notification from "../../assets/ico-notification-black.svg";
 import Pin from "../../assets/icon-map-pin-fill.svg";
