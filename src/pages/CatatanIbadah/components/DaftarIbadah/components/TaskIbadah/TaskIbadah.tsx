@@ -46,7 +46,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
           style={generateBorder(activeTab === "morning")}
           className={generateClassname(activeTab === "morning")}
         >
-          <img src={MorningIcon} />
+          <img width="20px" height="20px" src={MorningIcon} />
           Pagi
         </div>
         <div
@@ -54,7 +54,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
           style={generateBorder(activeTab === "afternoon")}
           className={generateClassname(activeTab === "afternoon")}
         >
-          <img src={AfternoonIcon} />
+          <img width="20px" height="20px" src={AfternoonIcon} />
           Siang
         </div>
         <div
@@ -62,7 +62,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
           style={generateBorder(activeTab === "night")}
           className={generateClassname(activeTab === "night")}
         >
-          <img src={NightIcon} />
+          <img width="20px" height="20px" src={NightIcon} />
           Malam
         </div>
       </div>
@@ -92,7 +92,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center h-[65%]">
+              <div className="flex justify-center items-center h-[60%]">
                 <p className="text-[10px] text-white font-bold">
                   Sholat Tahajud
                 </p>
@@ -115,7 +115,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center h-[65%]">
+              <div className="flex justify-center items-center h-[60%]">
                 <p className="text-[10px] text-white font-bold">Sahur</p>
               </div>
             </div>
@@ -136,7 +136,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center h-[65%]">
+              <div className="flex justify-center items-center h-[60%]">
                 <p className="text-[10px] text-white font-bold">Sholat Subuh</p>
               </div>
             </div>
@@ -157,7 +157,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-center h-[65%]">
+              <div className="flex justify-center items-center h-[60%]">
                 <p className="text-[10px] text-white font-bold">
                   Sedekah Subuh
                 </p>
