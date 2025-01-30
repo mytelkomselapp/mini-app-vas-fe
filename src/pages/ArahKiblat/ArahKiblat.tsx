@@ -64,12 +64,12 @@ const ArahKiblat: React.FC = () => {
     });
 
     // Simulating compass rotation (replace this with a real API like Taro's onCompassChange if needed)
-    const interval = setInterval(() => {
-      setAngle((prev) => (prev + 10) % 360); // Increment the angle by 10 degrees every second
-    }, 1000);
-
+    // const interval = setInterval(() => {
+    //   setAngle((prev) => (prev + 10) % 360); // Increment the angle by 10 degrees every second
+    // }, 1000);
+    console.log({ angle });
     return () => {
-      clearInterval(interval);
+      //clearInterval(interval);
       Taro.stopCompass({
         success: () => {
           console.log("Compass stopped successfully.");
