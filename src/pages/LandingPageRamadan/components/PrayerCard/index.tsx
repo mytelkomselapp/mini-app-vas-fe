@@ -13,7 +13,9 @@ const PrayerCard = () => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
 
   const handleSearchLocation = () => {
-    handleNavigate("/pages/RamadhanSearchLocation/index");
+    handleNavigate(
+      "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+    );
   };
 
   return (

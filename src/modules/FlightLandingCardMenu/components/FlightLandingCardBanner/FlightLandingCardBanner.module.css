@@ -1,9 +1,0 @@
-.image-background {
-  background-size: 80vw 100%;
-}
-
-@media only screen and (min-width: 768px) {
-  .image-background {
-    background-size: 392rpx 100%;
-  }
-}
