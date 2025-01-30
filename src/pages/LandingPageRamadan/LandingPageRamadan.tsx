@@ -15,7 +15,7 @@ const features = [
   { name: "Zakat", icon: "💰" },
   { name: "Sedekah", icon: "❤️" },
   { name: "Kirim Parsel", icon: "🎁" },
-  { name: "Catatan\nIbadah", icon: "📝" },
+  { name: "Catatan\nIbadah", icon: "📝", path: "/pages/CatatanIbadah/index" },
   { name: "Dzikir", icon: "📖", path: "/pages/Dzikir/index" },
   { name: "Kuis", icon: "❓" },
 ];
