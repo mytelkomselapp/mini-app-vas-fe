@@ -1,5 +1,5 @@
 export default definePageConfig({
   navigationBarTitleText: "Jurnal Ibadah",
-  navigationBarBackgroundColor: "#b92127",
+  navigationBarBackgroundColor: "#d41f2c",
   navigationBarTextStyle: "#fff",
 });

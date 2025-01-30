@@ -184,3 +184,9 @@ export const generateCalendarByMonth = (currentMonth: any) => {
 
   return days;
 };
+
+export const svgToBase64 = (svgString) => {
+  return `data:image/svg+xml;base64,${btoa(
+    unescape(encodeURIComponent(svgString))
+  )}`;
+};

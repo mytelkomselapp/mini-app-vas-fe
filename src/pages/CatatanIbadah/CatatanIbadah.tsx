@@ -24,7 +24,7 @@ const CatatanIbadahPage = () => {
           <p className="text-[12px] font-bold text-white">Total Stamp</p>
           <div className="flex gap-x-[4px] items-center">
             <div className="rounded-full w-[24px] h-[24px] ">
-              <img src={StampIcon} />
+              <img src={StampIcon} width="20px" height="20px" />
             </div>
             <p className="text-[20px] font-bold text-white">0</p>
           </div>

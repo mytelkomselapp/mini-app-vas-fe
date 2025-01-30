@@ -1,5 +1,6 @@
 import { View } from "@tarojs/components";
 import * as React from "react";
+import "./DaftarIbadah.css";
 import ProgressReward from "../ProgressReward";
 import BlinkStart from "../../../../assets/blink-start.png";
 import TaskIbadah from "./components/TaskIbadah";
@@ -23,7 +24,7 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = () => {
           className="flex mt-[6px] justify-between items-center py-[12px] w-full h-[80px] rounded-[16px]"
         >
           <div className="flex flex-col justify-center w-[65%] h-full pl-[16px]">
-            <p className="text-[14px] whitespace-pre font-bold bg-gradient-to-r from-[#b90024] to-[#ed0226] bg-clip-text text-transparent">
+            <p className="text-[14px] whitespace-pre font-bold gradient-text text-transparent">
               {`Selesaikan ibadahmu dan\ndapatkan stamp hariannya!`}
             </p>
             <ProgressReward progress={10} />

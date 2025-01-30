@@ -56,6 +56,8 @@ const DateStamp: React.FC<DateStampProps> = () => {
 
     return (
       <img
+        width="24px"
+        height="24px"
         onClick={Action}
         src={Chevron}
         className={`cursor-pointer ${isDisabled ? "opacity-40" : ""}`}
@@ -106,6 +108,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
             {dayOfWeek.map((d: Moment, i: number) => {
               return (
                 <DayCard
+                  key={i}
                   isActive={d.isSame(moment(currentDay), "day")}
                   onClick={() => {
                     handleClickDate(d);
@@ -135,6 +138,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
             {listOfDay.map((d: Moment, i: number) => {
               return (
                 <DayCard
+                  key={i}
                   isActive={d.isSame(moment(currentDay), "day")}
                   onClick={() => {
                     handleClickDate(d);
