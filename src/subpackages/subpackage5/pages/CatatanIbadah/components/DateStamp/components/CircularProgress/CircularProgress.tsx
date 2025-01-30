@@ -1,7 +1,46 @@
-import { motion } from "framer-motion";
 import StampIcon from "../../../../../../../../assets/icon-stamp-gamehub.svg";
+import { svgToBase64 } from "../../../../../../../../lib/utils";
 
 const CircularProgress = ({ progress, number, isActive = false }) => {
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" width="100" height="100">
+  <circle stroke="#e5e7eb" stroke-width="6" fill="transparent" r="16" cx="20" cy="20" />
+  <circle
+    stroke="url(#grad1)"
+    stroke-width="6"
+    fill="transparent"
+    r="16"
+    cx="20"
+    cy="20"
+    stroke-dasharray="100"
+    stroke-linecap="round"
+    transform="rotate(-90 20 20)"
+    stroke-dashoffset="100 - ${progress}"
+    style="animation: progress-animation 1.5s linear forwards;"
+  />
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff0000; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff5733; stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <style>
+    @keyframes progress-animation {
+      from {
+        stroke-dashoffset: 100;
+      }
+      to {
+        stroke-dashoffset: ${
+          100 - progress
+        }; /* Adjust based on desired progress */
+      }
+    }
+  </style>
+</svg>`;
+
+  const svgCircularProgress = svgToBase64(svgString);
+
+  console.log({ svgCircularProgress });
+
   return (
     <div
       className={`flex flex-col pt-[6px] w-[42px] ${
@@ -9,50 +48,16 @@ const CircularProgress = ({ progress, number, isActive = false }) => {
       }  rounded-md items-center`}
     >
       <div className="relative w-[36px] h-[36px] overflow-hidden">
-        <svg className="w-full h-full" viewBox="0 0 40 40">
-          <circle
-            className="text-gray-200"
-            stroke="currentColor"
-            strokeWidth="6"
-            fill="transparent"
-            r="16"
-            cx="20"
-            cy="20"
-          />
-
-          <motion.circle
-            className="text-red-500"
-            stroke="url(#grad1)"
-            strokeWidth="6"
-            fill="transparent"
-            r="16"
-            cx="20"
-            cy="20"
-            strokeDasharray="100"
-            strokeDashoffset="100"
-            strokeLinecap="round"
-            transform="rotate(-90 20 20)"
-            animate={{ strokeDashoffset: 100 - progress }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop
-                offset="0%"
-                style={{ stopColor: "#ff0000", stopOpacity: 1 }}
-              />
-              <stop
-                offset="100%"
-                style={{ stopColor: "#ff5733", stopOpacity: 1 }}
-              />
-            </linearGradient>
-          </defs>
-        </svg>
-
+        <img src={svgCircularProgress} width="36px" height="36px" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="bg-white rounded-full flex items-center justify-center">
-            <img src={StampIcon} alt="Stamp Icon" />
+            <img
+              className="relative left-[-1px] top-[-1px]"
+              src={StampIcon}
+              alt="Stamp Icon"
+              width="18px"
+              height="18px"
+            />
           </div>
         </div>
       </div>
