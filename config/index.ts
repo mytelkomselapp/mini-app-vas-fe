@@ -6,6 +6,9 @@ import tailwindcss from "tailwindcss";
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from "weapp-tailwindcss/vite";
 import { DefinePlugin } from "webpack";
 const { UnifiedWebpackPluginV5 } = require("weapp-tailwindcss/webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const path = require("path");
@@ -86,6 +89,18 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
         },
       },
       webpackChain(chain) {
+        chain.optimization.usedExports(true); // Enable tree shaking
+        chain.optimization.minimize(true); // Enable minification
+        chain.plugin("clean").use(CleanWebpackPlugin);
+        chain.plugin("analyzer").use(BundleAnalyzerPlugin);
+        chain.plugin("compress").use(require("compression-webpack-plugin"), [
+          {
+            algorithm: "gzip", // Use gzip compression
+            test: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i,
+            threshold: 10240, // Compress files larger than 10KB
+            minRatio: 0.8,
+          },
+        ]);
         chain.plugin("define").use(DefinePlugin, [
           {
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),

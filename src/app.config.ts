@@ -1,15 +1,20 @@
 export default {
   pages: [
     "pages/LandingPageRamadan/index", //Main Page as the first order
-    "pages/ArahKiblat/index",
-    "pages/CariMasjid/index",
-    "pages/RamadhanSearchLocation/index",
-    "pages/index/index",
-    "pages/PreviewImageDocs/index",
-    "pages/Dzikir/index",
-    "pages/DzikirDetail/index",
-    "pages/CatatanIbadah/index",
     // other pages...
+  ],
+  subPackages: [
+    { root: "subpackages/subpackage1", pages: ["pages/ArahKiblat/index"] },
+    { root: "subpackages/subpackage2", pages: ["pages/CariMasjid/index"] },
+    {
+      root: "subpackages/subpackage3",
+      pages: ["pages/RamadhanSearchLocation/index"],
+    },
+    {
+      root: "subpackages/subpackage4",
+      pages: ["pages/Dzikir/index", "pages/DzikirDetail/index"],
+    },
+    { root: "subpackages/subpackage5", pages: ["pages/CatatanIbadah/index"] },
   ],
   window: {
     backgroundTextStyle: "light",

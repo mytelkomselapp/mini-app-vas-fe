@@ -110,6 +110,7 @@
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
     "babel-preset-taro": "4.0.6",
+    "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.57.0",
     "eslint-config-taro": "4.0.6",
     "eslint-plugin-react": "^7.34.1",
@@ -125,6 +126,7 @@
     "vite-plugin-svgr": "^4.2.0",
     "weapp-tailwindcss": "^3.6.2",
     "webpack": "^5.95.0",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^6.0.1"
   }

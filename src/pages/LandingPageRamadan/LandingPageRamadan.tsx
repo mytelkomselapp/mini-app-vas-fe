@@ -10,13 +10,29 @@ import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
 const features = [
-  { name: "Cari Masjid", icon: "🏰", path: "/pages/CariMasjid/index" },
-  { name: "Kiblat", icon: "🧭", path: "/pages/ArahKiblat/index" },
+  {
+    name: "Cari Masjid",
+    icon: "🏰",
+    path: "/subpackages/subpackage2/pages/CariMasjid/index",
+  },
+  {
+    name: "Kiblat",
+    icon: "🧭",
+    path: "/subpackages/subpackage1/pages/ArahKiblat/index",
+  },
   { name: "Zakat", icon: "💰" },
   { name: "Sedekah", icon: "❤️" },
   { name: "Kirim Parsel", icon: "🎁" },
-  { name: "Catatan\nIbadah", icon: "📝", path: "/pages/CatatanIbadah/index" },
-  { name: "Dzikir", icon: "📖", path: "/pages/Dzikir/index" },
+  {
+    name: "Catatan\nIbadah",
+    icon: "📝",
+    path: "/subpackages/subpackage5/pages/CatatanIbadah/index",
+  },
+  {
+    name: "Dzikir",
+    icon: "📖",
+    path: "/subpackages/subpackage4/pages/Dzikir/index",
+  },
   { name: "Kuis", icon: "❓" },
 ];
 const LandingPageRamadan = () => {
