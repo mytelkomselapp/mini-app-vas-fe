@@ -73,7 +73,7 @@ const ArahKiblat: React.FC = () => {
   }, []);
 
   const handleClose = () => setOpen(false);
-  const isAligned = Math.abs(qibla - angle) < 2;
+  const isAligned = qibla === angle;
   console.log({ qibla, angle, isAligned });
   return (
     <View className="bg-white h-screen flex">
@@ -97,9 +97,13 @@ const ArahKiblat: React.FC = () => {
           <img
             src={greenRectangle}
             alt="green-axis"
-            className="absolute w-[13px] h-[23px] object-cover"
+            className={
+              isAligned
+                ? "absolute w-[80px] h-[80px] object-cover"
+                : "absolute w-[13px] h-[23px]"
+            }
             style={{
-              top: "-16px", // Adjust this value to position the green axis correctly
+              top: isAligned ? "-30px" : "-16px", // Adjust this value to position the green axis correctly
               left: "50%",
               transform: "translateX(-50%)",
             }}

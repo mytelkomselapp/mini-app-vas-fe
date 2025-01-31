@@ -73,7 +73,7 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
         className={`bottom-sheet ${containerClassname} ${open ? "open" : ""} ${
           fullHeight ? "full-height" : ""
         }`}
-        style={{ height: `${currentHeight}%`, zIndex: 1 }}
+        style={{ height: `${currentHeight}%` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
