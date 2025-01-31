@@ -5,6 +5,8 @@ import Button from "../../../../components/Button";
 import TransparentBottomSheet from "../../../../components/TransparentBottomSheet";
 import ChevronRight from "../../../../assets/chevron-right.svg";
 import MosqueIcon from "../../../../assets/ico_mosque.svg";
+import { useEffect, useState } from "react";
+import Taro from "@tarojs/taro";
 
 interface MosqueListItemProps {
   name: string;
@@ -136,14 +138,40 @@ const mapMarkers = [normalCallout, ...customMarkers];
 
 const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
+  useEffect(() => {
+    // Get the user's current location
+    Taro.getLocation({
+      type: "wgs84",
+      success: (res) => {
+        setLatitude(res.latitude);
+        setLongitude(res.longitude);
+      },
+      fail: (err) => {
+        console.error("Failed to get location:", err);
+      },
+    });
+  }, []);
   return (
     <View className="bg-white h-screen flex">
       <Map
-        setting={{}}
+        setting={{
+          enableZoom: true,
+          enableScroll: true,
+          enableRotate: true,
+          enableOverlooking: true,
+          enable3D: true,
+          showLocation: true,
+        }}
+        enableZoom
+        enableScroll
+        optimize
+        scale={18}
         markers={mapMarkers}
-        latitude={23.096994}
-        longitude={113.32452}
+        latitude={latitude}
+        longitude={longitude}
         style={{ height: "100vh", width: "100vw" }}
       >
         <CoverView slot="callout">
