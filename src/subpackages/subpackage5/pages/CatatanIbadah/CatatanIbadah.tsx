@@ -6,12 +6,14 @@ import BackgroundImage from "../../../../components/BackgroundImage";
 import ButtonRedeem from "./components/ButtonRedeem/ButtonRedeem";
 import { DateStamp } from "./components";
 import DaftarIbadah from "./components/DaftarIbadah";
+import { handleNavigate } from "../../../../lib/utils";
 
 // bg - [#d0242c];
 
 const CatatanIbadahPage = () => {
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
+    handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index")
   };
 
   return (
