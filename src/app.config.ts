@@ -16,6 +16,7 @@ export default {
     },
     { root: "subpackages/subpackage5", pages: ["pages/CatatanIbadah/index"] },
     { root: "subpackages/subpackage6", pages: ["pages/PrayerSchedule/index"] },
+    { root: "subpackages/subpackage7", pages: ["pages/TukarHadiah/index"] },
   ],
   window: {
     backgroundTextStyle: "light",
