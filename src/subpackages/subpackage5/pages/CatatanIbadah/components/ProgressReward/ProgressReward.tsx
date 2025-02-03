@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import "./ProgressReward.css";
 import { Zap } from "lucide-react"; // Replace with your actual icon
 
 export interface ProgressRewardProps {
@@ -7,10 +7,12 @@ export interface ProgressRewardProps {
 
 const ProgressReward: React.FC<ProgressRewardProps> = ({ progress = 0 }) => {
   const milestones = [70, 100, 140];
+  const theProgress = progress > 100 ? 100 : progress;
 
   return (
-    <div className="w-full h-[20px] mt-4 rounded-[16px] bg-[#eff1f4] flex justify-between">
-      <div className="w-[20px] h-[20px] flex justify-center items-center rounded-full">
+    <div className="relative overflow-hidden w-full h-[20px] mt-4 rounded-[16px] bg-[#eff1f4] flex justify-between">
+      <div className={`absolute progress-bar h-[20px] w-[${theProgress}%]`} />
+      <div className="w-[20px] h-[20px] flex justify-center items-center rounded-full transition-all duration-1000 ease-in-out">
         <Zap size={16} />
       </div>
       <div

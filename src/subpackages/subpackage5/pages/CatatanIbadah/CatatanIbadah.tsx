@@ -1,4 +1,3 @@
-import * as React from "react";
 import { View } from "@tarojs/components";
 import BackgroundCatatanIbadah from "../../../../assets/bg/jurnal-ibadah-header.png";
 import StampIcon from "../../../../assets/stamp.svg";
@@ -6,8 +5,6 @@ import BackgroundImage from "../../../../components/BackgroundImage";
 import ButtonRedeem from "./components/ButtonRedeem/ButtonRedeem";
 import { DateStamp } from "./components";
 import DaftarIbadah from "./components/DaftarIbadah";
-
-// bg - [#d0242c];
 
 const CatatanIbadahPage = () => {
   const handleGoToRedeemPage = () => {
