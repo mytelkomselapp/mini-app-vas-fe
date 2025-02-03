@@ -66,7 +66,7 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
   return (
     <View className={`${open ? "visible" : ""}`}>
       {/* Backdrop overlay */}
-      <View className={`backdrop ${open ? "active" : ""}`} onClick={onClose} />
+      {/* <View className={`backdrop ${open ? "active" : ""}`} onClick={onClose} /> */}
 
       {/* Bottom Sheet */}
       <View

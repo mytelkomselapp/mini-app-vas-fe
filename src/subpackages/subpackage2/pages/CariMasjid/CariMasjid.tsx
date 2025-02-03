@@ -185,7 +185,7 @@ const CariMasjid: React.FC = () => {
 
       <TransparentBottomSheet
         open={visibleSheet}
-        onClose={() => setVisibleSheet(false)}
+        onClose={() => {}}
         containerClassname="draggable"
         snapPoints={[35, 60, 85]}
         initialSnap={1}
@@ -211,7 +211,7 @@ const CariMasjid: React.FC = () => {
 
           <Button
             label="Tampilkan Lebih Banyak"
-            onClick={() => setVisibleSheet(false)}
+            onClick={() => {}}
             style="secondary"
             className="mb-8"
           />
