@@ -7,30 +7,36 @@ import { generateCalendarByMonth } from "../../../../../../lib/utils";
 import moment, { Moment } from "moment";
 import DayCard from "./components/DayCard";
 import { StampPercentageDummy } from "../../constants";
+import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
 
 export interface DateStampProps {}
 
 const DateStamp: React.FC<DateStampProps> = () => {
-  const [currentView, setCurrentView] = React.useState<"all" | "weekly">(
-    "weekly"
-  );
-  const [currentWeek, setCurrentWeek] = React.useState<number>(1);
-  const [currentDay, setCurrentDay] = React.useState<Moment>(
-    moment("2025-02-01")
-  );
+  const {
+    currentDay,
+    currentView,
+    currentWeek,
+    setCurrentDay,
+    setCurrentView,
+    setCurrentWeek,
+  } = useDataCatatanIbadah();
 
-  const listOfDay = generateCalendarByMonth(moment("2025-02-01"));
+  const listOfDay = generateCalendarByMonth(moment("2025-03-01"));
   const dayOfWeek = React.useMemo(() => {
+    /** get data of march  */
+    const data = [...listOfDay]?.filter((data) =>
+      moment(data)?.isSame(currentDay, "month")
+    );
     /** why -1 because week 1 must start from zero */
     const startWeek = 7 * (currentWeek - 1);
 
-    return [...listOfDay]?.splice(startWeek, 7);
+    return data?.splice(startWeek, 7);
   }, [currentWeek, listOfDay]);
 
   const handleClickDate = (d: Moment) => {
     if (d.isBefore(currentDay, "month")) return;
 
-    setCurrentDay(d);
+    setCurrentDay(moment(d)?.format());
   };
 
   const handleNext = () => {
@@ -136,6 +142,10 @@ const DateStamp: React.FC<DateStampProps> = () => {
               </div>
             ))}
             {listOfDay.map((d: Moment, i: number) => {
+              const isSameMonth = moment(d)?.isSame("2025-03-01", "month");
+
+              if (!isSameMonth) return <div></div>;
+
               return (
                 <DayCard
                   key={i}

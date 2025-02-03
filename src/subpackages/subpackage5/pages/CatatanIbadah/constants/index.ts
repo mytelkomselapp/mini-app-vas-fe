@@ -1,3 +1,7 @@
+import BackgroundSholat from "../../../../../assets/bg/catatan-ibadah/bg-sholat.png";
+import BackgroundSahur from "../../../../../assets/bg/catatan-ibadah/bg-sahur.png";
+import BackgroundSedekah from "../../../../../assets/bg/catatan-ibadah/bg-sedekah-subuh.png";
+
 export const StampPercentageDummy = [
   { percentage: 5 },
   { percentage: 10 },
@@ -34,3 +38,78 @@ export const StampPercentageDummy = [
   { percentage: 88 },
   { percentage: 98 },
 ];
+
+export const DUMMY_CARD_TASK_IBADAH_LIST = {
+  morning: [
+    {
+      id: 1,
+      title: "Sholat Tahajud",
+      imageUrl: BackgroundSholat,
+      type: "morning",
+    },
+    {
+      id: 2,
+      title: "Sahur",
+      imageUrl: BackgroundSahur,
+      type: "morning",
+    },
+    {
+      id: 3,
+      title: "Sholat Subuh",
+      imageUrl: BackgroundSholat,
+      type: "morning",
+    },
+    {
+      id: 4,
+      title: "Sedekah Subuh",
+      imageUrl: BackgroundSedekah,
+      type: "morning",
+    },
+  ],
+  afternoon: [
+    {
+      id: 5,
+      title: "Sholat Dzuhur",
+      imageUrl: BackgroundSholat,
+      type: "afternoon",
+    },
+    {
+      id: 6,
+      title: "Sholat Asar",
+      imageUrl: BackgroundSholat,
+      type: "afternoon",
+    },
+    {
+      id: 7,
+      title: "Dzikir Petang",
+      imageUrl: BackgroundSedekah,
+      type: "afternoon",
+    },
+  ],
+  night: [
+    {
+      id: 8,
+      title: "Buka Puasa",
+      imageUrl: BackgroundSahur,
+      type: "night",
+    },
+    {
+      id: 8,
+      title: "Sholat Maghrib",
+      imageUrl: BackgroundSholat,
+      type: "night",
+    },
+    {
+      id: 9,
+      title: "Sholat Isya",
+      imageUrl: BackgroundSholat,
+      type: "night",
+    },
+    {
+      id: 10,
+      title: "Sholat Tarawih",
+      imageUrl: BackgroundSholat,
+      type: "night",
+    },
+  ],
+};

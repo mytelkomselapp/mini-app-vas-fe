@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { clsx, type ClassValue } from "clsx";
-import { NavigateFunction } from "react-router-dom";
+import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
 
@@ -189,4 +189,24 @@ export const svgToBase64 = (svgString) => {
   return `data:image/svg+xml;base64,${btoa(
     unescape(encodeURIComponent(svgString))
   )}`;
+};
+
+export const getCurrentDayRamadhan = () => {
+  return moment()?.isBefore("2025-03-01", "day")
+    ? "2025-03-01"
+    : moment()?.format();
+};
+
+export const getCurrentWeekRamadhan = (currentDay: string) => {
+  const days = moment(currentDay)?.date();
+  return Math.floor(days / 7) + 1;
+};
+
+export const getCurrentTaskStatus = (stateCurrentDay: string) => {
+  const currentDay = "2025-03-01";
+
+  if (moment(stateCurrentDay)?.isAfter(currentDay)) return "present";
+  if (moment(stateCurrentDay)?.isBefore(currentDay)) return "past";
+
+  return "today";
 };
