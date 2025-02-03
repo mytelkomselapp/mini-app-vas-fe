@@ -19,7 +19,7 @@ const DzikirDetail = () => {
       setStep(step - 1);
     }
   };
-
+  console.log({ step, totalSteps });
   const handleNext = () => {
     if (step < totalSteps) {
       setStep(step + 1);
@@ -42,10 +42,10 @@ const DzikirDetail = () => {
         }}
       >
         {/* {period + " " + surahId} */}
-        <ProgressBar progress={1} max={24} />
+        <ProgressBar progress={step} max={totalSteps} />
         <View className="mt-3">
           <Text className="text-white font-batikSans font-semibold">
-            {decodeURI(surahId)}
+            {decodeURIComponent(surahId)}
           </Text>
         </View>
         <View>
