@@ -17,6 +17,9 @@ const PrayerCard = () => {
       "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
     );
   };
+  const handleNavigatePrayerSetting = () => {
+    handleNavigate("/subpackages/subpackage6/pages/PrayerSchedule/index");
+  };
 
   return (
     <>
@@ -88,7 +91,10 @@ const PrayerCard = () => {
             <img src={notifOn} className="w-5 h-5 mr-1" />
             <span>Notifikasi adzan telah aktif</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div
+            className="flex items-center space-x-2"
+            onClick={handleNavigatePrayerSetting}
+          >
             <span>Atur</span>
             <img src={chevronRight} className="w-4 h-4" />
           </div>

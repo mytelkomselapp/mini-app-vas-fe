@@ -71,13 +71,13 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
       {/* Bottom Sheet */}
       <View
         className={`bottom-sheet ${containerClassname} ${open ? "open" : ""} ${
-            fullHeight ? "full-height" : ""
+          fullHeight ? "full-height" : ""
         }`}
         style={{ height: `${currentHeight}%` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        >
+      >
         {showHeader && (
           <View className="sheet-header">
             <View className="drag-handle" />
