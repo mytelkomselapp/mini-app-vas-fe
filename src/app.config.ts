@@ -20,9 +20,9 @@ export default {
   ],
   window: {
     backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
     navigationBarTitleText: "Ramadan Fitri",
-    navigationBarTextStyle: "black",
+    navigationBarBackgroundColor: "#d41f2c",
+    navigationBarTextStyle: "white",
   },
   requiredBackgroundModes: ["file"],
   permission: {

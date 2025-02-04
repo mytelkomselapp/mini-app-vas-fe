@@ -30,6 +30,7 @@ import {
   ErrorLogPayloadProps,
   FollowFlightPayloadProps,
   GetETicketPayloadProps,
+  NearestCityPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -153,4 +154,8 @@ export const errorLogBuyPackage = (
   payload: ErrorLogPayloadProps
 ): ErrorLogBuyPackageResponse => {
   return http.post(endpoints?.errorLogBuyPackage, payload);
+};
+
+export const getNearestCity = (payload: NearestCityPayloadProps): any => {
+  return http.get(endpoints?.nearestCity, payload);
 };

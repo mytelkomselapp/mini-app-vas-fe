@@ -3,6 +3,7 @@ import { View } from "@tarojs/components";
 import bgLanding from "../../../../assets/bg/bg-prayer-schedule.png";
 import Mosque from "../../../../assets/ico_mosque_white.svg";
 import Compass from "../../../../assets/ico-compass-ramadhan.svg";
+import ChevronDown from "../../../../assets/chevron-down-white.svg";
 import Notification from "../../../../assets/ico-notification-black.svg";
 import Pin from "../../../../assets/icon-map-pin-fill.svg";
 import RenderVerticalList from "../../../../components/RenderVerticalList/RenderVerticalList";
@@ -13,11 +14,13 @@ import Stop from "../../../../assets/ico-stop.svg";
 import {
   PrayerStatus,
   usePrayerNotification,
+  useRamadhanSearchLocation,
 } from "../../../../store/ramadhan";
 import Show from "../../../../components/Show";
 import "./PrayerSchedule.scss";
 import useToggle from "../../../../hooks/useToggle";
 import DisableConfirmation from "./components/DisableConfirmation";
+import { handleNavigate } from "../../../../lib/utils";
 
 interface Prayer {
   id: number;
@@ -31,7 +34,7 @@ const PrayerSchedule = () => {
   const [selectedStatus, setSelectedStatus] = useState<PrayerStatus>("adzan");
   const { isActive, setIsActive, prayerData } = usePrayerNotification();
   const [pendingToggle, setPendingToggle] = useState<boolean | null>(null);
-
+  const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
   const {
     active: reminderSetting,
     toggleActive: toggleOpenReminderSetting,
@@ -126,9 +129,22 @@ const PrayerSchedule = () => {
         className="absolute rounded-b-2xl"
       />
       <View className="flex flex-col gap-4 px-4 pt-14 z-10 relative">
-        <View className="flex items-center gap-2">
+        <View
+          className="flex items-center gap-2"
+          onClick={() =>
+            handleNavigate(
+              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+            )
+          }
+        >
           <img src={Pin} style={{ width: "16px", height: "16px" }} />
-          <span className="text-white text-[12px] line-clamp-1">Pancoran</span>
+          <span className="text-white text-[12px] line-clamp-1">
+            {dataRamadhanSearchLocation?.city || "Pancoran"}
+          </span>
+          <img
+            src={ChevronDown}
+            style={{ width: "10.67px", height: "5.33px" }}
+          />
         </View>
         <View className="flex flex-col">
           <span className="text-white font-semibold">Sholat Zuhur - 11:40</span>
@@ -139,7 +155,10 @@ const PrayerSchedule = () => {
         <View className="flex gap-2 pb-[56px]">
           <div
             style={{ border: `1px solid white` }}
-            className="flex gap-1 border-2 border-white rounded-full px-4 py-2"
+            className="flex gap-1 border-2 border-white rounded-full px-4 py-2 items-center"
+            onClick={() =>
+              handleNavigate("/subpackages/subpackage2/pages/CariMasjid/index")
+            }
           >
             <span className="text-white font-semibold border-2 border-white text-[12px]">
               Cari Masjid
@@ -149,6 +168,9 @@ const PrayerSchedule = () => {
           <div
             style={{ border: `1px solid white` }}
             className="flex items-center gap-1  border-2 border-white rounded-full px-4 py-2"
+            onClick={() =>
+              handleNavigate("/subpackages/subpackage1/pages/ArahKiblat/index")
+            }
           >
             <span className="text-white font-semibold border-2 border-white text-[12px]">
               Kiblat
@@ -160,7 +182,7 @@ const PrayerSchedule = () => {
       <View className="absolute -bottom-10 z-10  w-full ">
         <View className="bg-white py-[22px] px-4 flex items-center justify-between rounded-2xl mx-4">
           <div className="flex items-center gap-2">
-            <span className="text-[14px] font-semibold">Notifikasi</span>
+            <span className="text-[14px] font-semibold">Notifikasi Adzan</span>
             <Show
               when={!!isActive}
               fallbackComponent={
