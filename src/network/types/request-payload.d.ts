@@ -56,3 +56,8 @@ export interface ErrorLogPayloadProps {
   error_type: string;
   error_data: object;
 }
+
+export interface NearestCityPayloadProps {
+  latitude: number;
+  longitude: number;
+}

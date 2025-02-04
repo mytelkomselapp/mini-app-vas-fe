@@ -30,6 +30,7 @@ const RamadhanSearchLocation = () => {
 
   const handleChangeKeyword = (value: string) => {
     if (value?.length <= 0) {
+      setKeyword("");
       return setSearchData([]);
     }
 
@@ -67,7 +68,7 @@ const RamadhanSearchLocation = () => {
 
   return (
     <View className="bg-white min-h-[100vh] h-auto">
-      <div className="flex gap-x-[8px] py-[8px] px-[20px] h-auto items-center">
+      <div className="flex gap-x-[8px] py-[32px] px-[20px] h-auto items-center">
         <InputComponent
           isLoading={isLoading}
           value={keyword}

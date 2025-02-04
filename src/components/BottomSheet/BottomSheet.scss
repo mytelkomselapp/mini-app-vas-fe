@@ -69,3 +69,8 @@
   max-height: 70vh;
   -webkit-overflow-scrolling: touch;
 }
+
+.sheet-content-without-padding {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
