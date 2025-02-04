@@ -185,12 +185,12 @@ const CariMasjid: React.FC = () => {
 
       <TransparentBottomSheet
         open={visibleSheet}
-        onClose={() => setVisibleSheet(false)}
+        onClose={() => {}}
         containerClassname="draggable"
         snapPoints={[35, 60, 85]}
         initialSnap={1}
       >
-        <View className="flex flex-col h-full justify-between">
+        <View className="flex flex-col justify-between">
           <View>
             <Text className="text-[14px] text-textSecondary mb-4">
               Terdapat {mosques.length} masjid di sekitarmu
@@ -211,9 +211,8 @@ const CariMasjid: React.FC = () => {
 
           <Button
             label="Tampilkan Lebih Banyak"
-            onClick={() => setVisibleSheet(false)}
+            onClick={() => {}}
             style="secondary"
-            className="mb-8"
           />
         </View>
       </TransparentBottomSheet>
