@@ -9,6 +9,9 @@ import SpecialFilm from "./components/SpecialFilm";
 import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
+import { useFetchNearestCity } from "../../network";
+import { useEffect, useState } from "react";
+import Taro from "@tarojs/taro";
 const features = [
   {
     name: "Cari Masjid",
@@ -36,6 +39,39 @@ const features = [
   { name: "Kuis", icon: "❓" },
 ];
 const LandingPageRamadan = () => {
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const {
+    data: nearestCity,
+    isLoading,
+    refetch: refetchNearestCity,
+  } = useFetchNearestCity({ latitude, longitude }, false);
+
+  useEffect(() => {
+    if (latitude && longitude) {
+      fetchLocation();
+    }
+  }, [latitude, longitude]);
+
+  const fetchLocation = async () => {
+    await getLocation();
+    refetchNearestCity();
+  };
+
+  const getLocation = () => {
+    Taro.getLocation({
+      type: "wgs84",
+      success: (res) => {
+        setLatitude(res.latitude);
+        setLongitude(res.longitude);
+      },
+      fail: (err) => {
+        console.error("Failed to get location:", err);
+      },
+    });
+  };
+
+  console.log({ nearestCity, isLoading });
   return (
     <View className="bg-white h-full">
       <View

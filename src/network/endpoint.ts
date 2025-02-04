@@ -82,6 +82,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/error-log",
     source: "api",
   },
+  nearestCity: {
+    endpoint: "/api/v1/ramadhan/nearest-city",
+    source: "api",
+  },
 };
 
 export default endpoints;

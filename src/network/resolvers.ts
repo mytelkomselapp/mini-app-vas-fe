@@ -14,6 +14,7 @@ import {
   getFlightTrack,
   getFreemiumPackageList,
   getFreemiumUserPackage,
+  getNearestCity,
   getWeboptinToken,
   postBuyPackage,
   postClaimFreeTicket,
@@ -21,7 +22,10 @@ import {
   postTrackingFlight,
   postUploadETicketFile,
 } from "./services";
-import { GetETicketPayloadProps } from "./types/request-payload";
+import {
+  GetETicketPayloadProps,
+  NearestCityPayloadProps,
+} from "./types/request-payload";
 import { useState } from "react";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
@@ -198,5 +202,16 @@ export const useFetchWeboptinToken = (
     {
       enabled,
     }
+  );
+};
+
+export const useFetchNearestCity = (
+  payload: NearestCityPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch E Ticket By Flight ID"],
+    () => getNearestCity(payload),
+    { enabled }
   );
 };
