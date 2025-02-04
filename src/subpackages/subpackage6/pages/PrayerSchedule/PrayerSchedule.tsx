@@ -18,6 +18,7 @@ import Show from "../../../../components/Show";
 import "./PrayerSchedule.scss";
 import useToggle from "../../../../hooks/useToggle";
 import DisableConfirmation from "./components/DisableConfirmation";
+import { handleNavigate } from "../../../../lib/utils";
 
 interface Prayer {
   id: number;
@@ -139,7 +140,10 @@ const PrayerSchedule = () => {
         <View className="flex gap-2 pb-[56px]">
           <div
             style={{ border: `1px solid white` }}
-            className="flex gap-1 border-2 border-white rounded-full px-4 py-2"
+            className="flex gap-1 border-2 border-white rounded-full px-4 py-2 items-center"
+            onClick={() =>
+              handleNavigate("/subpackages/subpackage2/pages/CariMasjid/index")
+            }
           >
             <span className="text-white font-semibold border-2 border-white text-[12px]">
               Cari Masjid
@@ -149,6 +153,9 @@ const PrayerSchedule = () => {
           <div
             style={{ border: `1px solid white` }}
             className="flex items-center gap-1  border-2 border-white rounded-full px-4 py-2"
+            onClick={() =>
+              handleNavigate("/subpackages/subpackage1/pages/ArahKiblat/index")
+            }
           >
             <span className="text-white font-semibold border-2 border-white text-[12px]">
               Kiblat
@@ -160,7 +167,7 @@ const PrayerSchedule = () => {
       <View className="absolute -bottom-10 z-10  w-full ">
         <View className="bg-white py-[22px] px-4 flex items-center justify-between rounded-2xl mx-4">
           <div className="flex items-center gap-2">
-            <span className="text-[14px] font-semibold">Notifikasi</span>
+            <span className="text-[14px] font-semibold">Notifikasi Adzan</span>
             <Show
               when={!!isActive}
               fallbackComponent={
