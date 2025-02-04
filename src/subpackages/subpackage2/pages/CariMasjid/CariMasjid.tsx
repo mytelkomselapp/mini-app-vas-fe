@@ -190,7 +190,7 @@ const CariMasjid: React.FC = () => {
         snapPoints={[35, 60, 85]}
         initialSnap={1}
       >
-        <View className="flex flex-col h-full justify-between">
+        <View className="flex flex-col justify-between">
           <View>
             <Text className="text-[14px] text-textSecondary mb-4">
               Terdapat {mosques.length} masjid di sekitarmu
@@ -213,7 +213,6 @@ const CariMasjid: React.FC = () => {
             label="Tampilkan Lebih Banyak"
             onClick={() => {}}
             style="secondary"
-            className="mb-8"
           />
         </View>
       </TransparentBottomSheet>

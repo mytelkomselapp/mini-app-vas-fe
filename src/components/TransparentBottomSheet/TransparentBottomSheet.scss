@@ -58,11 +58,11 @@
   
   /* Content area with scrolling */
   .sheet-content {
-    padding: 16px;
-    height: calc(100% - 20px); // Adjust based on header height
+    height: calc(100% - 70px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     pointer-events: auto !important;
+    max-height: 100%;
   }
   
   /* Drag handle area */
