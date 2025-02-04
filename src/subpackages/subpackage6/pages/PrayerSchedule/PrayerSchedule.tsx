@@ -3,6 +3,7 @@ import { View } from "@tarojs/components";
 import bgLanding from "../../../../assets/bg/bg-prayer-schedule.png";
 import Mosque from "../../../../assets/ico_mosque_white.svg";
 import Compass from "../../../../assets/ico-compass-ramadhan.svg";
+import ChevronDown from "../../../../assets/chevron-down-white.svg";
 import Notification from "../../../../assets/ico-notification-black.svg";
 import Pin from "../../../../assets/icon-map-pin-fill.svg";
 import RenderVerticalList from "../../../../components/RenderVerticalList/RenderVerticalList";
@@ -13,6 +14,7 @@ import Stop from "../../../../assets/ico-stop.svg";
 import {
   PrayerStatus,
   usePrayerNotification,
+  useRamadhanSearchLocation,
 } from "../../../../store/ramadhan";
 import Show from "../../../../components/Show";
 import "./PrayerSchedule.scss";
@@ -32,7 +34,7 @@ const PrayerSchedule = () => {
   const [selectedStatus, setSelectedStatus] = useState<PrayerStatus>("adzan");
   const { isActive, setIsActive, prayerData } = usePrayerNotification();
   const [pendingToggle, setPendingToggle] = useState<boolean | null>(null);
-
+  const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
   const {
     active: reminderSetting,
     toggleActive: toggleOpenReminderSetting,
@@ -127,9 +129,22 @@ const PrayerSchedule = () => {
         className="absolute rounded-b-2xl"
       />
       <View className="flex flex-col gap-4 px-4 pt-14 z-10 relative">
-        <View className="flex items-center gap-2">
+        <View
+          className="flex items-center gap-2"
+          onClick={() =>
+            handleNavigate(
+              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+            )
+          }
+        >
           <img src={Pin} style={{ width: "16px", height: "16px" }} />
-          <span className="text-white text-[12px] line-clamp-1">Pancoran</span>
+          <span className="text-white text-[12px] line-clamp-1">
+            {dataRamadhanSearchLocation?.city || "Pancoran"}
+          </span>
+          <img
+            src={ChevronDown}
+            style={{ width: "10.67px", height: "5.33px" }}
+          />
         </View>
         <View className="flex flex-col">
           <span className="text-white font-semibold">Sholat Zuhur - 11:40</span>
