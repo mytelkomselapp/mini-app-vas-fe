@@ -24,6 +24,7 @@ export default {
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
+  lazyCodeLoading: "requiredComponents",
   requiredBackgroundModes: ["file"],
   permission: {
     "scope.userLocation": {
