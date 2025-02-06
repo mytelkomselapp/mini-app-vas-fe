@@ -19,6 +19,7 @@ import {
   postBuyPackage,
   postClaimFreeTicket,
   postCreateETicket,
+  postRegisterUser,
   postTrackingFlight,
   postUploadETicketFile,
 } from "./services";
@@ -214,4 +215,8 @@ export const useFetchNearestCity = (
     () => getNearestCity(payload),
     { enabled }
   );
+};
+
+export const usePostRegisterUser = () => {
+  return useMutation(["Post Register User"], postRegisterUser);
 };

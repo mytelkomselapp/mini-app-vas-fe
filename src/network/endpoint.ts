@@ -86,6 +86,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/ramadhan/nearest-city",
     source: "api",
   },
+  registerUser: {
+    endpoint: "/api/v1/user/register",
+    source: "api",
+  },
 };
 
 export default endpoints;

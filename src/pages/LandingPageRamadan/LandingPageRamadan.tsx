@@ -2,14 +2,14 @@ import { Text, View } from "@tarojs/components";
 import bgLanding from "../../assets/bg/bg-ramadhan.svg";
 import { handleNavigate } from "../../lib/utils";
 import FeatureCard from "./components/FeatureCard";
-import PrayerCard from "./components/PrayerCard";
+import PrayerCard, { PrayerCardProps } from "./components/PrayerCard";
 import Promo from "./components/Promo";
 import SpecialCommerce from "./components/SpecialCommerce";
 import SpecialFilm from "./components/SpecialFilm";
 import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
-import { useFetchNearestCity } from "../../network";
+import { usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 const features = [
@@ -39,31 +39,46 @@ const features = [
   { name: "Kuis", icon: "❓" },
 ];
 const LandingPageRamadan = () => {
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState("0");
+  const [longitude, setLongitude] = useState("0");
   const {
-    data: nearestCity,
-    isLoading,
-    refetch: refetchNearestCity,
-  } = useFetchNearestCity({ latitude, longitude }, false);
+    mutateAsync: doRegisterUser,
+    isLoading: isLoadingRegisterUser,
+    data: dataRawRegisterUser,
+  } = usePostRegisterUser();
+  const dataRegisterUser = dataRawRegisterUser?.data?.data;
+  const city = dataRegisterUser?.city?.city ?? "-";
+  const nearestPrayerTime =
+    (dataRegisterUser?.nearest_pray_time as PrayerCardProps) ?? {};
+  const notificationStatus = dataRegisterUser?.notification_status === "ON";
+  // const {
+  //   data: nearestCity,
+  //   isLoading,
+  //   refetch: refetchNearestCity,
+  // } = useFetchNearestCity({ latitude, longitude }, false);
+
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     fetchLocation();
+  //   }
+  // }, [latitude, longitude]);
 
   useEffect(() => {
-    if (latitude && longitude) {
-      fetchLocation();
-    }
-  }, [latitude, longitude]);
+    fetchLocation();
+  }, []);
 
   const fetchLocation = async () => {
     await getLocation();
-    refetchNearestCity();
+    doRegisterUser({ latitude, longitude });
   };
 
   const getLocation = () => {
     Taro.getLocation({
       type: "wgs84",
       success: (res) => {
-        setLatitude(res.latitude);
-        setLongitude(res.longitude);
+        console.log({ res });
+        setLatitude(res?.latitude?.toString());
+        setLongitude(res?.longitude?.toString());
       },
       fail: (err) => {
         console.error("Failed to get location:", err);
@@ -71,7 +86,6 @@ const LandingPageRamadan = () => {
     });
   };
 
-  console.log({ nearestCity, isLoading });
   return (
     <View className="bg-white h-full">
       <View
@@ -79,7 +93,11 @@ const LandingPageRamadan = () => {
         className="bg-cover bg-no-repeat bg-center "
       >
         <View className="p-4">
-          <PrayerCard />
+          <PrayerCard
+            city={city}
+            nearestPrayTime={nearestPrayerTime}
+            notificationStatus={notificationStatus}
+          />
         </View>
       </View>
       <div className="flex items-center justify-center w-full pt-4 mb-4">

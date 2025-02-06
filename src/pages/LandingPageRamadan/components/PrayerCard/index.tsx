@@ -3,15 +3,42 @@ import lampLeft from "../../../../assets/group-lampoon-left.svg";
 import lampRight from "../../../../assets/group-lampoon-right.svg";
 import bedug from "../../../../assets/bedug.png";
 import notifOn from "../../../../assets/ico_alarm.svg";
+import notifOff from "../../../../assets/ico_alarm_off.svg";
 import chevronRight from "../../../../assets/chevron-right.svg";
 import mapPinGrey from "../../../../assets/map-pin-grey.svg";
 import convex from "../../../../assets/convex-masjid.svg";
 import { handleNavigate } from "../../../../lib/utils";
 import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
+import moment from "moment-timezone";
 
-const PrayerCard = () => {
+export interface PrayerCardProps {
+  name_time: string;
+  nearest_pray_info: string;
+  pray_date: string;
+  pray_time: string;
+  pray_time_remaining: number; // Unit: minutes
+  timezone: string;
+}
+
+const PrayerCard = ({
+  city,
+  nearestPrayTime,
+  notificationStatus,
+}: {
+  city: string;
+  nearestPrayTime: PrayerCardProps;
+  notificationStatus: boolean;
+}) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
-
+  const nearestPrayText = nearestPrayTime?.nearest_pray_info;
+  const nameTime = nearestPrayTime?.name_time;
+  const time =
+    nearestPrayTime?.pray_time +
+    " " +
+    moment.tz(nearestPrayTime?.timezone).zoneAbbr();
+  const notificationText = notificationStatus
+    ? "Notifikasi adzan telah Aktif"
+    : "Notifikasi adzan belum Aktif";
   const handleSearchLocation = () => {
     handleNavigate(
       "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
@@ -52,7 +79,8 @@ const PrayerCard = () => {
                 className="mt-8 text-xs text-gray-500 inline-flex justify-center items-center mb-3 rounded-full bg-white py-1 px-2 border-solid border-[1px] border-dividerGrey"
               >
                 <img src={mapPinGrey} className="w-4 h-4 mr-1" />
-                {dataRamadhanSearchLocation?.city || "Pancoran"}
+                {city}
+                {/* {dataRamadhanSearchLocation?.city || "Pancoran"} */}
                 <img
                   src={chevronRight}
                   className="w-4 h-4 ml-1"
@@ -66,21 +94,23 @@ const PrayerCard = () => {
 
               {/* Prayer Time */}
               <div className="text-base font-semibold text-gray-900 font-sans">
-                Zuhur 11:40 WIB
+                {nameTime} {time}
               </div>
 
               {/* Countdown */}
-              <div className="text-[10px] font-normal bg-yellow-100 text-grey rounded-full px-4 py-1 inline-flex items-center mt-3">
-                <img
-                  src={bedug}
-                  className="w-4 h-4 mr-1"
-                  style={{
-                    filter:
-                      "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
-                  }}
-                />
-                8 jam 30 menit lagi buka puasa
-              </div>
+              {nearestPrayText && (
+                <div className="text-[10px] font-normal bg-yellow-100 text-grey rounded-full px-4 py-1 inline-flex items-center mt-3">
+                  <img
+                    src={bedug}
+                    className="w-4 h-4 mr-1"
+                    style={{
+                      filter:
+                        "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
+                    }}
+                  />
+                  {nearestPrayText}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -88,8 +118,11 @@ const PrayerCard = () => {
         <div className="h-[1px] w-full bg-dividerGrey"></div>
         <div className="my-2 mx-4 flex justify-between items-center bg-white text-[10px]">
           <div className="flex items-center space-x-2">
-            <img src={notifOn} className="w-5 h-5 mr-1" />
-            <span>Notifikasi adzan telah aktif</span>
+            <img
+              src={notificationStatus ? notifOn : notifOff}
+              className="w-5 h-5 mr-1"
+            />
+            <span>{notificationText}</span>
           </div>
           <div
             className="flex items-center space-x-2"

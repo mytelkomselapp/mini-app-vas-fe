@@ -1,4 +1,4 @@
 export default definePageConfig({
-    navigationBarTitleText: "Lokasi Masjid Terdekat",
-  });
-  
+  navigationBarTitleText: "Lokasi Masjid Terdekat",
+  navigationBarTextStyle: "white",
+});
