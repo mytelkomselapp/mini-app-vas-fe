@@ -18,11 +18,16 @@ const ArahKiblat: React.FC = () => {
   const [angle, setAngle] = useState(0);
   const [open, setOpen] = useState(false);
   const [qibla, setQibla] = useState(0);
+  const pages = Taro.getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  const currentPath = "/" + currentPage.route;
 
+  const city = Taro.getStorageSync(currentPath);
+  console.log("Current Path:", currentPath, city);
   const [accuracyLevel, setAccuracyLevel] = useState<
     "tinggi" | "sedang" | "rendah"
   >("tinggi");
-
+  const labelCity = city?.city + ", " + city?.province + ", " + city?.country;
   const previousAngle = useRef(0);
   const fluctuations = useRef(0);
 
@@ -85,12 +90,20 @@ const ArahKiblat: React.FC = () => {
       </View>
 
       <View className="flex flex-col items-center h-screen absolute z-10">
-        <div className="flex gap-1 items-center mt-5 mb-20">
-          <img src={mapPinWhite} className="w-4 h-4 mr-1" alt="Location pin" />
-          <Text className="font-semibold text-[10px] text-center text-white">
-            {"Pancoran, DKI Jakarta, Indonesia"}
-          </Text>
-        </div>
+        {labelCity ? (
+          <div className="flex gap-1 items-center mt-5 mb-20">
+            <img
+              src={mapPinWhite}
+              className="w-4 h-4 mr-1"
+              alt="Location pin"
+            />
+            <Text className="font-semibold text-[10px] text-center text-white">
+              {labelCity}
+            </Text>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* Compass Wrapper */}
         <div className="relative w-60 h-60 flex items-center justify-center">

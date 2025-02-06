@@ -12,6 +12,7 @@ import NewsCardList from "./components/News";
 import { usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
+
 const features = [
   {
     name: "Cari Masjid",
@@ -108,7 +109,16 @@ const LandingPageRamadan = () => {
               icon={feature.icon}
               name={feature.name}
               handleClick={
-                feature?.path ? () => handleNavigate(feature?.path) : {}
+                feature?.path
+                  ? () =>
+                      handleNavigate(
+                        feature?.path,
+                        "",
+                        feature?.name?.toLowerCase() === "kiblat"
+                          ? dataRegisterUser?.city
+                          : null
+                      )
+                  : {}
               }
             />
           ))}
