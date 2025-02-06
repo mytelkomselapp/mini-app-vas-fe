@@ -58,6 +58,6 @@ export interface ErrorLogPayloadProps {
 }
 
 export interface NearestCityPayloadProps {
-  latitude: number;
-  longitude: number;
+  latitude: string;
+  longitude: string;
 }

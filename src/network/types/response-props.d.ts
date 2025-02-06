@@ -259,6 +259,47 @@ export interface ErrorLogBuyPackageProps {
   user_id: string;
 }
 
+export interface City {
+  id: number;
+  city: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  province: string;
+  timezone: string;
+}
+
+export interface PrayerSchedule {
+  id: number;
+  city_id: number;
+  date: string;
+  imsyak: string;
+  subuh: string;
+  dzuhur: string;
+  ashar: string;
+  maghrib: string;
+  isya: string;
+  timezone: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NearestPrayTime {
+  name_time: string;
+  pray_time: string;
+  pray_date: string;
+  pray_time_remaining: number;
+  nearest_pray_info: string;
+  timezone: string;
+}
+
+export interface RegisterUserData {
+  city: City;
+  prayer_schedule: PrayerSchedule;
+  nearest_pray_time: NearestPrayTime;
+  notification_status: "ON" | "OFF";
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -300,3 +341,5 @@ export type FlightByCityResponse = HttpSuccessResponse<FlightByCity>;
 
 export type ErrorLogBuyPackageResponse =
   HttpSuccessResponse<ErrorLogBuyPackageProps>;
+
+export type RegisterUserResponse = HttpSuccessResponse<RegisterUserData>;

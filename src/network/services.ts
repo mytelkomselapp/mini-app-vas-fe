@@ -21,6 +21,7 @@ import {
   FlightByCityResponse,
   ErrorLogBuyPackageResponse,
   FlightETicketUploadFileResponse,
+  RegisterUserResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -158,4 +159,10 @@ export const errorLogBuyPackage = (
 
 export const getNearestCity = (payload: NearestCityPayloadProps): any => {
   return http.get(endpoints?.nearestCity, payload);
+};
+
+export const postRegisterUser = (
+  payload: NearestCityPayloadProps
+): RegisterUserResponse => {
+  return http.post(endpoints?.registerUser, payload);
 };
