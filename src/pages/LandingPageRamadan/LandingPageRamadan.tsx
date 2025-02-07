@@ -13,7 +13,13 @@ import { usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 
-const features = [
+type Feature = {
+  name: string;
+  icon: string;
+  path?: string;
+};
+
+const features: Feature[] = [
   {
     name: "Cari Masjid",
     icon: "🏰",
@@ -51,6 +57,7 @@ const LandingPageRamadan = () => {
   const city = dataRegisterUser?.city?.city ?? "-";
   const nearestPrayerTime =
     (dataRegisterUser?.nearest_pray_time as PrayerCardProps) ?? {};
+  // const prayerSchedule = dataRegisterUser?.prayer_schedule;
   const notificationStatus = dataRegisterUser?.notification_status === "ON";
   // const {
   //   data: nearestCity,
@@ -81,10 +88,18 @@ const LandingPageRamadan = () => {
         setLatitude(res?.latitude?.toString());
         setLongitude(res?.longitude?.toString());
       },
-      fail: (err) => {
-        console.error("Failed to get location:", err);
-      },
     });
+  };
+  const onNavigate = (feature: Feature) => () => {
+    const path = feature.path ?? "";
+    const query = "";
+    let paramsVal = null;
+
+    if (feature.name.toLowerCase() === "kiblat") {
+      paramsVal = dataRegisterUser?.city as any;
+    }
+
+    return handleNavigate(path, query, paramsVal);
   };
 
   return (
@@ -108,18 +123,7 @@ const LandingPageRamadan = () => {
               key={index}
               icon={feature.icon}
               name={feature.name}
-              handleClick={
-                feature?.path
-                  ? () =>
-                      handleNavigate(
-                        feature?.path,
-                        "",
-                        feature?.name?.toLowerCase() === "kiblat"
-                          ? dataRegisterUser?.city
-                          : null
-                      )
-                  : {}
-              }
+              handleClick={onNavigate(feature)}
             />
           ))}
         </div>

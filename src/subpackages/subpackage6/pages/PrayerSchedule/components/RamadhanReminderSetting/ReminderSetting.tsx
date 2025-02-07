@@ -48,8 +48,8 @@ const ReminderSetting = ({
       </div>
       <RadioGroup className="flex flex-col">
         {[
-          { label: "Suara Adzan", value: "adzan", icon: Unmute },
-          { label: "Suara Bedug", value: "bedug", icon: Unmute },
+          // { label: "Suara Adzan", value: "adzan", icon: Unmute },
+          // { label: "Suara Bedug", value: "bedug", icon: Unmute },
           { label: "Notifikasi", value: "notifikasi", icon: Notification },
           { label: "Tidak Aktif", value: "tidak-aktif", icon: Stop },
         ].map((option) => (
