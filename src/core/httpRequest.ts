@@ -232,7 +232,7 @@ export const patch = (
   }
 
   const bearerToken = `Bearer ${generateToken(endpoint?.source)}`;
-
+  console.log({ bodyparam });
   return Taro.request({
     url,
     ...config,
@@ -241,7 +241,7 @@ export const patch = (
       "content-type": "application/json",
     },
     data: bodyparam,
-    method: "DELETE",
+    method: "PUT",
   });
 
   // return httpRequest.patch(url, bodyparam, newConfig);

@@ -11,8 +11,9 @@ import {
 import Chips from "../../../../../../components/Chips";
 import "./ReminderSetting.scss";
 
+type idType = { id: number; name: string; time: number };
 interface ReminderSettingProps {
-  id: number | undefined;
+  id: idType | undefined;
   currentStatus: PrayerStatus;
   toggleModal: () => void;
 }
@@ -24,6 +25,7 @@ const ReminderSetting = ({
 }: ReminderSettingProps) => {
   const [selectedOption, setSelectedOption] =
     useState<PrayerStatus>(currentStatus);
+  const [selectedChip, setSelectedChip] = useState<string | null>(null);
   const { updatePrayerStatus } = usePrayerNotification();
 
   const handleOptionChange = (value: PrayerStatus) => {
@@ -32,19 +34,24 @@ const ReminderSetting = ({
 
   const handleSubmit = () => {
     if (id !== undefined) {
-      updatePrayerStatus(id, selectedOption);
+      updatePrayerStatus(id?.id, selectedOption);
       toggleModal();
     }
   };
 
+  const handleChipClick = (value: string) => {
+    setSelectedChip(value);
+  };
+
   useEffect(() => {
     setSelectedOption(currentStatus);
-  }, [currentStatus]);
+    setSelectedChip(id?.time + " Menit");
+  }, [currentStatus, id]);
 
   return (
     <>
       <div className="text-center text-base font-semibold">
-        Pengingat Waktu Subuh
+        {"Pengingat Waktu" + " " + id?.name}
       </div>
       <RadioGroup className="flex flex-col">
         {[
@@ -82,18 +89,35 @@ const ReminderSetting = ({
       </RadioGroup>
       <div className="mt-4">
         <div className="flex justify-between">
-          <span className="text-sm font-semibold text-primaryBlack">
-            Pengingat Sebelum Subuh
+          <span className="text-sm font-semibold text-primaryBlack mb-2">
+            {"Pengingat Sebelum" + " " + id?.name}
           </span>
           <label className="switch">
             <input type="checkbox" />
-            <span className="slider"></span>
+            <span
+              className={`slider ${id?.time ? "slider-active" : ""}`}
+            ></span>
           </label>
         </div>
         <div className="flex gap-2">
-          <Chips text="5 Menit" />
-          <Chips text="10 Menit" />
-          <Chips text="15 Menit" />
+          <Chips
+            text="5 Menit"
+            textColor={selectedChip === "5 Menit" ? "white" : undefined}
+            bgColor={selectedChip === "5 Menit" ? "#001A41" : undefined}
+            onClick={handleChipClick}
+          />
+          <Chips
+            text="10 Menit"
+            textColor={selectedChip === "10 Menit" ? "white" : undefined}
+            bgColor={selectedChip === "10 Menit" ? "#001A41" : undefined}
+            onClick={handleChipClick}
+          />
+          <Chips
+            text="15 Menit"
+            textColor={selectedChip === "15 Menit" ? "white" : undefined}
+            bgColor={selectedChip === "15 Menit" ? "#001A41" : undefined}
+            onClick={handleChipClick}
+          />
         </div>
       </div>
       <div className="mt-4">

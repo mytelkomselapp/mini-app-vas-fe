@@ -94,6 +94,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/user-notification-config",
     source: "api",
   },
+  updateGlobalNotification: {
+    endpoint: "/api/v1/user/turn-notification-prayer",
+    source: "api",
+  },
 };
 
 export default endpoints;
