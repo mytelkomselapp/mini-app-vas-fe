@@ -1,6 +1,12 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import bgLanding from "../../../../assets/bg/bg-prayer-schedule.png";
+
+import bgSubuh from "../../../../assets/bg/bg-subuh.png";
+import bgZuhur from "../../../../assets/bg/bg-zuhur.png";
+import bgMagrib from "../../../../assets/bg/bg-magrib.png";
+import bgIsya from "../../../../assets/bg/bg-isya.png";
+
 import Mosque from "../../../../assets/ico_mosque_white.svg";
 import Compass from "../../../../assets/ico-compass-ramadhan.svg";
 import ChevronDown from "../../../../assets/chevron-down-white.svg";
@@ -102,6 +108,55 @@ const PrayerSchedule = () => {
     if (!isLoadingRegisterUser) {
       getPrayerSchedule(result?.data?.data, resultNotif?.data?.data?.data);
       setIsActive(result?.data?.data?.notification_status === "ON");
+    }
+  };
+
+  const getBgImage = (time: string) => {
+    switch (time) {
+      case "imsyak":
+      case "subuh":
+        Taro.setNavigationBarColor({
+          frontColor: "#ffffff", // Text color
+          backgroundColor: "#084d75", // Background color
+          animation: {
+            duration: 0,
+            timingFunc: "easeIn",
+          },
+        });
+        return bgSubuh;
+      case "dzuhur":
+      case "ashar":
+        Taro.setNavigationBarColor({
+          frontColor: "#ffffff", // Text color
+          backgroundColor: "#689df6", // Background color
+          animation: {
+            duration: 0,
+            timingFunc: "easeIn",
+          },
+        });
+        return bgZuhur;
+      case "maghrib":
+        Taro.setNavigationBarColor({
+          frontColor: "#ffffff", // Text color
+          backgroundColor: "#a72f1f", // Background color
+          animation: {
+            duration: 0,
+            timingFunc: "easeIn",
+          },
+        });
+        return bgMagrib;
+      case "isya":
+        Taro.setNavigationBarColor({
+          frontColor: "#ffffff", // Text color
+          backgroundColor: "#203578", // Background color
+          animation: {
+            duration: 0,
+            timingFunc: "easeIn",
+          },
+        });
+        return bgIsya;
+      default:
+        return bgLanding;
     }
   };
 
@@ -230,8 +285,10 @@ const PrayerSchedule = () => {
   const ContainerPrayer = ({ children }: PropsWithChildren) => (
     <View
       style={{
-        backgroundImage: `url(${bgLanding})`,
-        backgroundSize: "400%",
+        backgroundImage: `url(${getBgImage(
+          nearestPrayerTime?.name_time?.toLowerCase()
+        )})`,
+        backgroundSize: "cover",
         backgroundPosition: "top",
       }}
       className="relative bg-no-repeat rounded-b-2xl"
