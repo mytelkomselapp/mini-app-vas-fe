@@ -33,10 +33,12 @@ import {
 } from "../../../../lib/utils";
 import Taro from "@tarojs/taro";
 import {
+  useGlobalNotificationConfig,
   useNotificationConfig,
   usePostRegisterUser,
 } from "../../../../network";
 import { PrayerCardProps } from "@/pages/LandingPageRamadan/components/PrayerCard";
+import { PrayerNotificationConfig } from "@/network/types/response-props";
 
 interface Prayer {
   id: number;
@@ -44,11 +46,13 @@ interface Prayer {
   time: string;
   status: PrayerStatus;
   isReminderActive?: boolean;
-  reminderTime?: string;
+  reminderTime?: number;
 }
 
 const PrayerSchedule = () => {
-  const [selectedData, setSelectedData] = useState<number | undefined>();
+  const [selectedData, setSelectedData] = useState<
+    { id: number; name: string; time: number } | undefined
+  >();
   const [selectedStatus, setSelectedStatus] = useState<PrayerStatus>("adzan");
   const {
     isActive,
@@ -75,16 +79,25 @@ const PrayerSchedule = () => {
   // const currentDay = moment()?.format("dddd, DD MMMM YYYY");
   const currentDay = `${dayName}, ${day} ${monthName} ${year}`;
   const hijrDate = gregorianToHijri(new Date());
+
   const {
     mutateAsync: doRegisterUser,
     isLoading: isLoadingRegisterUser,
     data: dataRawRegisterUser,
   } = usePostRegisterUser();
+
   const {
     data: notificationConfigDataRaw,
     isLoading: isLoadingNotificationConfig,
     refetch: refetchNotificationConfig,
   } = useNotificationConfig(false);
+
+  const {
+    mutateAsync: doGlobalNotificationConfig,
+    isLoading: isLoadingGlobalConfig,
+    data: dataRawGlobalConfig,
+  } = useGlobalNotificationConfig();
+
   const dataRegisterUser = dataRawRegisterUser?.data?.data;
   const notificationConfigData = notificationConfigDataRaw?.data?.data;
 
@@ -168,44 +181,67 @@ const PrayerSchedule = () => {
         id: 1,
         name: "Imsak",
         time: prayerSchedule?.imsyak,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.imsyak?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.imsyak?.notification_status === "ON",
+        reminderTime: valNotif?.imsyak?.pre_notification_time,
       },
       {
         id: 2,
         name: "Subuh",
         time: prayerSchedule?.subuh,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.subuh?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.subuh?.notification_status === "ON",
+        reminderTime: valNotif?.subuh?.pre_notification_time,
       },
       {
         id: 3,
         name: "Zuhur",
         time: prayerSchedule?.dzuhur,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.dzuhur?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.dzuhur?.notification_status === "ON",
+        reminderTime: valNotif?.dzuhur?.pre_notification_time,
       },
       {
         id: 4,
         name: "Ashar",
         time: prayerSchedule?.ashar,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.ashar?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.ashar?.notification_status === "ON",
+        reminderTime: valNotif?.ashar?.pre_notification_time,
       },
       {
         id: 5,
         name: "Maghrib",
         time: prayerSchedule?.maghrib,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.magrib?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.maghrib?.notification_status === "ON",
+        reminderTime: valNotif?.magrib?.pre_notification_time,
       },
       {
         id: 6,
         name: "Isya",
         time: prayerSchedule?.isya,
-        status: "notifikasi" as PrayerStatus,
+        status:
+          valNotif?.isya?.notification_status === "ON"
+            ? "notifikasi"
+            : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.isya?.notification_status === "ON",
-        reminderTime: undefined,
+        reminderTime: valNotif?.isya?.pre_notification_time,
       },
     ];
     setPrayerData(preprocessedPrayerSchedule);
@@ -222,8 +258,13 @@ const PrayerSchedule = () => {
     });
   };
 
-  const openReminderSetting = (id: number, status: PrayerStatus) => {
-    setSelectedData(id);
+  const openReminderSetting = (
+    id: number,
+    status: PrayerStatus,
+    name: string,
+    time: number
+  ) => {
+    setSelectedData({ id, name, time });
     setSelectedStatus(status as PrayerStatus);
     openSheetReminderSetting(true);
   };
@@ -234,19 +275,30 @@ const PrayerSchedule = () => {
     toggleOpenReminderSetting();
   };
 
-  const confirmDisableNotification = () => {
+  const confirmDisableNotification = async () => {
     if (pendingToggle !== null) {
+      const valueNotification = isActive ? "ON" : "OFF";
+      const result = await doGlobalNotificationConfig({
+        notification: valueNotification,
+      });
+      console.log({ resultConfig: result });
       setIsActive(pendingToggle);
       setPendingToggle(null);
     }
     toggleDisabledConfirmation();
   };
 
-  const toggleNotification = () => {
+  const toggleNotification = async () => {
+    const valueNotification = isActive ? "ON" : "OFF";
+
     if (isActive) {
       setPendingToggle(false);
       toggleDisabledConfirmation();
     } else {
+      const result = await doGlobalNotificationConfig({
+        notification: valueNotification,
+      });
+      console.log({ toggleOn: result });
       setIsActive(true);
     }
   };
@@ -427,7 +479,12 @@ const PrayerSchedule = () => {
                     } `}
                     onClick={() =>
                       isActive
-                        ? openReminderSetting(data.id, data.status)
+                        ? openReminderSetting(
+                            data?.id,
+                            data.status,
+                            data?.name,
+                            Number(data?.reminderTime)
+                          )
                         : null
                     }
                   >
@@ -438,18 +495,6 @@ const PrayerSchedule = () => {
                       <View className="flex items-center gap-4">
                         <span className="text-[14px]">{data.time}</span>
                         {renderPrayerIconFromStatus(data.status)}
-                        {/* {isActive ? (
-                        <span
-                          onClick={() =>
-                            openReminderSetting(data.id, data.status)
-                          }
-                          className="text-[12px] text-primaryRed"
-                        >
-                          Atur
-                        </span>
-                      ) : (
-                        <span className="text-[12px] text-[#9CA9B9]">Atur</span>
-                      )} */}
                       </View>
                     </View>
                   </View>

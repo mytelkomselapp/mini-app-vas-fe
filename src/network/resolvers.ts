@@ -17,6 +17,7 @@ import {
   getNearestCity,
   getNotificationConfig,
   getWeboptinToken,
+  patchNotificationConfig,
   postBuyPackage,
   postClaimFreeTicket,
   postCreateETicket,
@@ -26,6 +27,7 @@ import {
 } from "./services";
 import {
   GetETicketPayloadProps,
+  GlobalNotificationPayloadProps,
   NearestCityPayloadProps,
 } from "./types/request-payload";
 import { useState } from "react";
@@ -227,5 +229,12 @@ export const useNotificationConfig = (enabled: boolean = true) => {
     ["Fetch Notification Config"],
     () => getNotificationConfig(),
     { enabled }
+  );
+};
+
+export const useGlobalNotificationConfig = () => {
+  return useMutation(
+    ["Patch Global Notification Config"],
+    patchNotificationConfig
   );
 };

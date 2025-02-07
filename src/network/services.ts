@@ -32,6 +32,8 @@ import {
   ErrorLogPayloadProps,
   FollowFlightPayloadProps,
   GetETicketPayloadProps,
+  GlobalNotificationPayloadProps,
+  GlobalNotificationProps,
   NearestCityPayloadProps,
 } from "./types/request-payload";
 
@@ -170,4 +172,10 @@ export const postRegisterUser = (
 
 export const getNotificationConfig = (): NotificationConfigResponse => {
   return http.get(endpoints?.notificationConfig);
+};
+
+export const patchNotificationConfig = (
+  payload: GlobalNotificationPayloadProps
+): RegisterUserResponse => {
+  return http.patch(endpoints?.updateGlobalNotification, payload);
 };

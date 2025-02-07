@@ -61,3 +61,7 @@ export interface NearestCityPayloadProps {
   latitude: string;
   longitude: string;
 }
+
+export interface GlobalNotificationPayloadProps {
+  notification: "ON" | "OFF";
+}
