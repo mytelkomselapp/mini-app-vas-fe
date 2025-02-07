@@ -4,6 +4,22 @@ import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
 
+const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const months = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -209,4 +225,70 @@ export const getCurrentTaskStatus = (stateCurrentDay: string) => {
   if (moment(stateCurrentDay)?.isBefore(currentDay)) return "past";
 
   return "today";
+};
+
+export const formatDateToIndonesian = (date: Date) => {
+  const dayName = days[date.getDay()];
+  const day = date.getDate();
+  const monthName = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return {
+    dayName,
+    day,
+    monthName,
+    year,
+  };
+};
+
+export const gregorianToHijri = (date: Date) => {
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
+  const jd =
+    Math.floor((1461 * (year + 4800 + Math.floor((month - 14) / 12))) / 4) +
+    Math.floor((367 * (month - 2 - 12 * Math.floor((month - 14) / 12))) / 12) -
+    Math.floor(
+      (3 * Math.floor((year + 4900 + Math.floor((month - 14) / 12)) / 100)) / 4
+    ) +
+    day -
+    32075;
+
+  const l = jd - 1948440 + 10632;
+  const n = Math.floor((l - 1) / 10631);
+  const r = l - 10631 * n + 354;
+  const j =
+    Math.floor((10985 - r) / 5316) * Math.floor((50 * r) / 17719) +
+    Math.floor(r / 5670) * Math.floor((43 * r) / 15238);
+  const h =
+    r -
+    Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) -
+    Math.floor(j / 16) * Math.floor((15238 * j) / 43) +
+    29;
+
+  const m = Math.floor((24 * h) / 709);
+  const d = h - Math.floor((709 * m) / 24);
+  const y = 30 * n + j - 30;
+
+  const hijriMonths = [
+    "Muharram",
+    "Safar",
+    "Rabi' al-awwal",
+    "Rabi' al-thani",
+    "Jumada al-awwal",
+    "Jumada al-thani",
+    "Rajab",
+    "Sha'ban",
+    "Ramadan",
+    "Shawwal",
+    "Dhu al-Qi'dah",
+    "Dhu al-Hijjah",
+  ];
+
+  return {
+    day: d,
+    month: hijriMonths[m - 1],
+    year: y,
+  };
 };

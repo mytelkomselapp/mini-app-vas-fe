@@ -57,7 +57,7 @@ export type PrayerStatus = "adzan" | "bedug" | "notifikasi" | "tidak-aktif";
 interface Prayer {
   id: number;
   name: string;
-  time: string;
+  time: string | undefined;
   status: PrayerStatus;
   isReminderActive: boolean;
   reminderTime?: "5min" | "10min" | "15min" | "";
@@ -67,6 +67,7 @@ interface PrayerNotificationProps {
   isActive?: boolean;
   setIsActive: (isActive: boolean) => void;
   prayerData: Prayer[];
+  setPrayerData: (payload: Prayer[]) => void;
   updatePrayerStatus: (index: number, status: PrayerStatus) => void;
 }
 
@@ -74,6 +75,11 @@ export const usePrayerNotification = create<PrayerNotificationProps>()(
   (set) => ({
     isActive: false,
     setIsActive: (isActive: boolean) => set(() => ({ isActive })),
+    setPrayerData: (prayers: Prayer[]) =>
+      set(() => ({
+        prayerData: prayers,
+      })),
+
     prayerData: [
       {
         id: 1,
