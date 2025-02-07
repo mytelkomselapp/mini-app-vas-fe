@@ -15,6 +15,7 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getNearestCity,
+  getNotificationConfig,
   getWeboptinToken,
   postBuyPackage,
   postClaimFreeTicket,
@@ -219,4 +220,12 @@ export const useFetchNearestCity = (
 
 export const usePostRegisterUser = () => {
   return useMutation(["Post Register User"], postRegisterUser);
+};
+
+export const useNotificationConfig = (enabled: boolean = true) => {
+  return useQuery(
+    ["Fetch Notification Config"],
+    () => getNotificationConfig(),
+    { enabled }
+  );
 };
