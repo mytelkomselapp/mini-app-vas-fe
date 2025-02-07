@@ -90,6 +90,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/register",
     source: "api",
   },
+  notificationConfig: {
+    endpoint: "/api/v1/user/user-notification-config",
+    source: "api",
+  },
 };
 
 export default endpoints;

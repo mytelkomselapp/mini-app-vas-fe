@@ -26,7 +26,10 @@ import {
   handleNavigate,
 } from "../../../../lib/utils";
 import Taro from "@tarojs/taro";
-import { usePostRegisterUser } from "../../../../network";
+import {
+  useNotificationConfig,
+  usePostRegisterUser,
+} from "../../../../network";
 import { PrayerCardProps } from "@/pages/LandingPageRamadan/components/PrayerCard";
 
 interface Prayer {
@@ -71,7 +74,14 @@ const PrayerSchedule = () => {
     isLoading: isLoadingRegisterUser,
     data: dataRawRegisterUser,
   } = usePostRegisterUser();
+  const {
+    data: notificationConfigDataRaw,
+    isLoading: isLoadingNotificationConfig,
+    refetch: refetchNotificationConfig,
+  } = useNotificationConfig(false);
   const dataRegisterUser = dataRawRegisterUser?.data?.data;
+  const notificationConfigData = notificationConfigDataRaw?.data?.data;
+
   const city = dataRegisterUser?.city?.city ?? "-";
   const nearestPrayerTime =
     (dataRegisterUser?.nearest_pray_time as PrayerCardProps) ?? {};
@@ -85,56 +95,61 @@ const PrayerSchedule = () => {
 
   const fetchLocation = async () => {
     await getLocation();
+    const resultNotif = await refetchNotificationConfig();
+
     const result = await doRegisterUser({ latitude, longitude });
 
-    if (!isLoadingRegisterUser) getPrayerSchedule(result?.data?.data);
+    if (!isLoadingRegisterUser) {
+      getPrayerSchedule(result?.data?.data, resultNotif?.data?.data?.data);
+      setIsActive(result?.data?.data?.notification_status === "ON");
+    }
   };
 
-  const getPrayerSchedule = async (val) => {
+  const getPrayerSchedule = async (val, valNotif) => {
     const prayerSchedule = await val?.prayer_schedule;
-    console.log({ prayerSchedule });
+
     const preprocessedPrayerSchedule = [
       {
         id: 1,
         name: "Imsak",
         time: prayerSchedule?.imsyak,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.imsyak?.notification_status === "ON",
       },
       {
         id: 2,
         name: "Subuh",
         time: prayerSchedule?.subuh,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.subuh?.notification_status === "ON",
       },
       {
         id: 3,
         name: "Zuhur",
         time: prayerSchedule?.dzuhur,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.dzuhur?.notification_status === "ON",
       },
       {
         id: 4,
         name: "Ashar",
         time: prayerSchedule?.ashar,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.ashar?.notification_status === "ON",
       },
       {
         id: 5,
         name: "Maghrib",
         time: prayerSchedule?.maghrib,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.maghrib?.notification_status === "ON",
       },
       {
         id: 6,
         name: "Isya",
         time: prayerSchedule?.isya,
         status: "notifikasi" as PrayerStatus,
-        isReminderActive: false,
+        isReminderActive: valNotif?.isya?.notification_status === "ON",
         reminderTime: undefined,
       },
     ];
@@ -350,7 +365,14 @@ const PrayerSchedule = () => {
                 {(data: Prayer, i) => (
                   <View
                     key={data.id}
-                    className="py-2 px-4 rounded-2xl bg-white mb-2"
+                    className={`py-2 px-4 rounded-2xl bg-white mb-2 ${
+                      isActive ? "opacity-100" : "opacity-45"
+                    } `}
+                    onClick={() =>
+                      isActive
+                        ? openReminderSetting(data.id, data.status)
+                        : null
+                    }
                   >
                     <View className="flex items-center justify-between w-full py-2">
                       <View className="flex items-center gap-2">

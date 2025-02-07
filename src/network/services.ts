@@ -22,6 +22,7 @@ import {
   ErrorLogBuyPackageResponse,
   FlightETicketUploadFileResponse,
   RegisterUserResponse,
+  NotificationConfigResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -165,4 +166,8 @@ export const postRegisterUser = (
   payload: NearestCityPayloadProps
 ): RegisterUserResponse => {
   return http.post(endpoints?.registerUser, payload);
+};
+
+export const getNotificationConfig = (): NotificationConfigResponse => {
+  return http.get(endpoints?.notificationConfig);
 };

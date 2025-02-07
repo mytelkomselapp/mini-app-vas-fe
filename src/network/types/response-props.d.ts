@@ -300,6 +300,20 @@ export interface RegisterUserData {
   notification_status: "ON" | "OFF";
 }
 
+export interface PrayerNotificationConfig {
+  notification_status: "ON" | "OFF";
+  pre_notification_time: number;
+}
+
+export interface NotificationConfig {
+  imsyak: PrayerNotificationConfig;
+  subuh: PrayerNotificationConfig;
+  dzuhur: PrayerNotificationConfig;
+  ashar: PrayerNotificationConfig;
+  maghrib: PrayerNotificationConfig;
+  isya: PrayerNotificationConfig;
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -343,3 +357,6 @@ export type ErrorLogBuyPackageResponse =
   HttpSuccessResponse<ErrorLogBuyPackageProps>;
 
 export type RegisterUserResponse = HttpSuccessResponse<RegisterUserData>;
+
+export type NotificationConfigResponse =
+  HttpSuccessResponse<NotificationConfig>;
