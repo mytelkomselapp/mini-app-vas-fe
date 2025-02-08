@@ -140,6 +140,7 @@ const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [mapHeight, setMapHeight] = useState("65%");
 
   useEffect(() => {
     // Get the user's current location
@@ -154,6 +155,14 @@ const CariMasjid: React.FC = () => {
       },
     });
   }, []);
+
+  const handleSnapChange = (index: number) => {
+    const snapPoints = [35, 60, 85];
+    const currentSnap = snapPoints[index];
+    // Calculate remaining height for map (100 - snapPoint)%
+    setMapHeight(`${100 - currentSnap}%`);
+  };
+
   return (
     <View className="bg-white h-screen flex">
       <Map
@@ -172,7 +181,11 @@ const CariMasjid: React.FC = () => {
         markers={mapMarkers}
         latitude={latitude}
         longitude={longitude}
-        style={{ height: "100vh", width: "100vw" }}
+        style={{ 
+          height: mapHeight, 
+          width: "100%",
+          transition: "height 0.3s ease-in-out"
+        }}
       >
         <CoverView slot="callout">
           {customMarkers.map((item) => (
@@ -189,6 +202,7 @@ const CariMasjid: React.FC = () => {
         containerClassname="draggable"
         snapPoints={[35, 60, 85]}
         initialSnap={1}
+        onSnap={handleSnapChange}
       >
         <View className="flex flex-col justify-between">
           <View>
