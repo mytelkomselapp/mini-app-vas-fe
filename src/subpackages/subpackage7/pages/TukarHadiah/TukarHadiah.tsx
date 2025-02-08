@@ -9,6 +9,8 @@ import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import { useState } from "react";
 import { useEffect } from "react";
+import { handleNavigate } from "../../../../lib/utils";
+import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 
 interface RewardItemProps {
   title: string;
@@ -131,7 +133,7 @@ const TukarHadiah = () => {
               <Button
                 style="secondary"
                 label="Riwayat"
-                onClick={() => { }}
+                onClick={() => { handleNavigate('/subpackages/subpackage7/pages/RiwayatTukarHadiah/index') }}
                 className="!max-h-[34px] !text-xs font-semibold leading-4"
                 icon={<img src={ClockIcon} className="w-4 h-4 ml-[2px]" />}
               />
@@ -172,7 +174,7 @@ const TukarHadiah = () => {
           >
             {merchandises.map((item, idx) => (
               <SwiperItem key={idx}>
-                <RewardItem {...item} onClick={openReward}/>
+                <RewardItem {...item} onClick={() => openReward(idx)}/>
               </SwiperItem>
             ))}
           </Swiper>
@@ -185,31 +187,12 @@ const TukarHadiah = () => {
             Mau tukar stamp dengan hadiah ini?
           </p>
 
-          <div 
-            className="bg-white rounded-xl overflow-hidden w-full max-h-[165px] mx-4"
-            style={{ border: '1px solid #EFF1F4' }}
-          >
-            <div className="flex">
-              <Image
-                src={'https://placehold.co/400x400'}
-                style={{
-                  width: "165px",
-                  height: "165px"
-                }}
-              />
-              <div className="flex flex-col justify-between text-left p-4">
-                <Text className="font-bold text-[12px] leading-[16px]">Voucher Gopay 11 rb</Text>
-                <div>
-                  <span className="text-xs text-gray-400 line-through">
-                    2500 Stamp
-                  </span>
-                  <span className="text-sm leading-[16px] text-red-500 font-semibold">
-                    2000 Stamp
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <HorizontalStampCard
+            imageUrl={'https://placehold.co/400x400'}
+            title={'Voucher Gopay 11 rb'}
+            originalStamps={2500}
+            discountedStamps={2000}
+          />
 
           <p className="text-sm text-grey mt-4">
             Tukarkan 2000 stamp untuk mendapatkan hadiah ini sekarang!
