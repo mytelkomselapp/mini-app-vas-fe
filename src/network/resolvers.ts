@@ -15,6 +15,7 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getNearestCity,
+  getNearestMosques,
   getNotificationConfig,
   getWeboptinToken,
   patchNotificationConfig,
@@ -29,6 +30,7 @@ import {
   GetETicketPayloadProps,
   GlobalNotificationPayloadProps,
   NearestCityPayloadProps,
+  NearestMosquesPayloadProps,
 } from "./types/request-payload";
 import { useState } from "react";
 
@@ -236,5 +238,16 @@ export const useGlobalNotificationConfig = () => {
   return useMutation(
     ["Patch Global Notification Config"],
     patchNotificationConfig
+  );
+};
+
+export const useFetchNearestMosques = (
+  payload: NearestMosquesPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Nearest Mosques"], 
+    () => getNearestMosques(payload), 
+    { enabled }
   );
 };

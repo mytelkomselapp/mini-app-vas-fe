@@ -23,6 +23,7 @@ import {
   FlightETicketUploadFileResponse,
   RegisterUserResponse,
   NotificationConfigResponse,
+  NearestMosquesResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -35,6 +36,7 @@ import {
   GlobalNotificationPayloadProps,
   GlobalNotificationProps,
   NearestCityPayloadProps,
+  NearestMosquesPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -178,4 +180,8 @@ export const patchNotificationConfig = (
   payload: GlobalNotificationPayloadProps
 ): RegisterUserResponse => {
   return http.patch(endpoints?.updateGlobalNotification, payload);
+};
+
+export const getNearestMosques = (payload: NearestMosquesPayloadProps): NearestMosquesResponse => {
+  return http.get(endpoints?.nearestMosques, payload);
 };

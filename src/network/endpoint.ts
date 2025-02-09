@@ -98,6 +98,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/turn-notification-prayer",
     source: "api",
   },
+  nearestMosques: {
+    endpoint: "/api/v1/ramadhan/nearest-mosques",
+    source: "api",
+  },
 };
 
 export default endpoints;
