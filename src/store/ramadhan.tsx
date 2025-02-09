@@ -2,16 +2,28 @@ import { create } from "zustand";
 import { RamadhanSearchLocationProps } from "../network/types/response-props";
 import {
   getCurrentDayRamadhan,
-  getCurrentTaskStatus,
   getCurrentWeekRamadhan,
+  TaroStorage,
 } from "../lib/utils";
-import moment from "moment";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface SearchLocationProps {
   data?: RamadhanSearchLocationProps;
   setData: (data: RamadhanSearchLocationProps) => void;
 }
 
+export const useHistoryRamadhanSearchLocation = create<SearchLocationProps>()(
+  persist(
+    (set) => ({
+      setData: (data: RamadhanSearchLocationProps) => set(() => ({ data })),
+    }),
+    {
+      name: "history-ramadhan-search-location",
+      storage: createJSONStorage(() => TaroStorage),
+      version: 1,
+    }
+  )
+);
 export const useRamadhanSearchLocation = create<SearchLocationProps>()(
   (set) => ({
     setData: (data: RamadhanSearchLocationProps) => set(() => ({ data })),

@@ -105,7 +105,11 @@ export interface FlightSearchCity {
 export interface RamadhanSearchLocationProps {
   id: number;
   city: string;
-  address: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  province: string;
+  timezone: string;
 }
 
 export interface FlightSearchData {
@@ -360,3 +364,5 @@ export type RegisterUserResponse = HttpSuccessResponse<RegisterUserData>;
 
 export type NotificationConfigResponse =
   HttpSuccessResponse<NotificationConfig>;
+
+export type SearchCityResponse = HttpSuccessResponse<City[]>;

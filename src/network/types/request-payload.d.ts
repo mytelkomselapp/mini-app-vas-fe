@@ -65,3 +65,11 @@ export interface NearestCityPayloadProps {
 export interface GlobalNotificationPayloadProps {
   notification: "ON" | "OFF";
 }
+
+export interface SearchCityPayloadProps {
+  search: string;
+}
+
+export interface UserUpdateCityPayloadProps {
+  city_id: number;
+}

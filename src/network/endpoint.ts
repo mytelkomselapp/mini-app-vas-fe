@@ -98,6 +98,14 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/turn-notification-prayer",
     source: "api",
   },
+  getCities: {
+    endpoint: "/api/v1/ramadhan/cities",
+    source: "api",
+  },
+  userUpdateCity: {
+    endpoint: "/api/v1/user/update-city",
+    source: "api",
+  },
 };
 
 export default endpoints;
