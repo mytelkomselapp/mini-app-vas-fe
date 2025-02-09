@@ -23,6 +23,7 @@ import {
   FlightETicketUploadFileResponse,
   RegisterUserResponse,
   NotificationConfigResponse,
+  SearchCityResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -35,6 +36,7 @@ import {
   GlobalNotificationPayloadProps,
   GlobalNotificationProps,
   NearestCityPayloadProps,
+  UserUpdateCityPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -178,4 +180,14 @@ export const patchNotificationConfig = (
   payload: GlobalNotificationPayloadProps
 ): RegisterUserResponse => {
   return http.patch(endpoints?.updateGlobalNotification, payload);
+};
+
+export const getCities = (
+  payload: SearchCityPayloadProps
+): SearchCityResponse => {
+  return http.get(endpoints?.getCities, payload);
+};
+
+export const userUpdateCity = (payload: UserUpdateCityPayloadProps) => {
+  return http.post(endpoints?.userUpdateCity, payload);
 };

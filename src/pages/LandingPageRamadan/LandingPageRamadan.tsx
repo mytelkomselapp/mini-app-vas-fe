@@ -12,6 +12,7 @@ import NewsCardList from "./components/News";
 import { usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
+import { useRamadhanSearchLocation } from "../../store/ramadhan";
 
 type Feature = {
   name: string;
@@ -59,17 +60,9 @@ const LandingPageRamadan = () => {
     (dataRegisterUser?.nearest_pray_time as PrayerCardProps) ?? {};
   // const prayerSchedule = dataRegisterUser?.prayer_schedule;
   const notificationStatus = dataRegisterUser?.notification_status === "ON";
-  // const {
-  //   data: nearestCity,
-  //   isLoading,
-  //   refetch: refetchNearestCity,
-  // } = useFetchNearestCity({ latitude, longitude }, false);
 
-  // useEffect(() => {
-  //   if (latitude && longitude) {
-  //     fetchLocation();
-  //   }
-  // }, [latitude, longitude]);
+  const { setData: setDataRamadhanSearchLocation } =
+    useRamadhanSearchLocation();
 
   useEffect(() => {
     fetchLocation();
@@ -101,6 +94,12 @@ const LandingPageRamadan = () => {
 
     return handleNavigate(path, query, paramsVal);
   };
+
+  useEffect(() => {
+    if (dataRegisterUser) {
+      setDataRamadhanSearchLocation(dataRegisterUser?.city);
+    }
+  }, [dataRegisterUser]);
 
   return (
     <View className="bg-white h-full">

@@ -79,8 +79,7 @@ const PrayerCard = ({
                 className="mt-8 text-xs text-gray-500 inline-flex justify-center items-center mb-3 rounded-full bg-white py-1 px-2 border-solid border-[1px] border-dividerGrey"
               >
                 <img src={mapPinGrey} className="w-4 h-4 mr-1" />
-                {city}
-                {/* {dataRamadhanSearchLocation?.city || "Pancoran"} */}
+                {dataRamadhanSearchLocation?.city || city}
                 <img
                   src={chevronRight}
                   className="w-4 h-4 ml-1"
