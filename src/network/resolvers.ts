@@ -3,6 +3,7 @@ import {
   deleteETicket,
   deleteTrackingFlight,
   errorLogBuyPackage,
+  getCities,
   getCMSFlightLandingPage,
   getETicketByFlightId,
   getETicketList,
@@ -25,12 +26,14 @@ import {
   postRegisterUser,
   postTrackingFlight,
   postUploadETicketFile,
+  userUpdateCity,
 } from "./services";
 import {
   GetETicketPayloadProps,
   GlobalNotificationPayloadProps,
   NearestCityPayloadProps,
   NearestMosquesPayloadProps,
+  SearchCityPayloadProps,
 } from "./types/request-payload";
 import { useState } from "react";
 
@@ -250,4 +253,17 @@ export const useFetchNearestMosques = (
     () => getNearestMosques(payload), 
     { enabled }
   );
+};
+
+export const useFetchSearchCity = (
+  payload: SearchCityPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(["Search City", payload], () => getCities(payload), {
+    enabled,
+  });
+};
+
+export const useUserUpdateCity = () => {
+  return useMutation(["Patch User Update City"], userUpdateCity);
 };

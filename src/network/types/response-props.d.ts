@@ -105,7 +105,11 @@ export interface FlightSearchCity {
 export interface RamadhanSearchLocationProps {
   id: number;
   city: string;
-  address: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  province: string;
+  timezone: string;
 }
 
 export interface FlightSearchData {
@@ -381,3 +385,5 @@ export type NotificationConfigResponse =
   HttpSuccessResponse<NotificationConfig>;
 
 export type NearestMosquesResponse = HttpSuccessResponse<NearestMosquesData[]>; 
+
+export type SearchCityResponse = HttpSuccessResponse<City[]>;

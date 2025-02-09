@@ -71,3 +71,11 @@ export interface NearestMosquesPayloadProps {
   longitude: string;
   radius: number;
 }
+
+export interface SearchCityPayloadProps {
+  search: string;
+}
+
+export interface UserUpdateCityPayloadProps {
+  city_id: number;
+}

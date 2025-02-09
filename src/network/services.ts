@@ -24,6 +24,7 @@ import {
   RegisterUserResponse,
   NotificationConfigResponse,
   NearestMosquesResponse,
+  SearchCityResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -37,6 +38,7 @@ import {
   GlobalNotificationProps,
   NearestCityPayloadProps,
   NearestMosquesPayloadProps,
+  UserUpdateCityPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -184,4 +186,14 @@ export const patchNotificationConfig = (
 
 export const getNearestMosques = (payload: NearestMosquesPayloadProps): NearestMosquesResponse => {
   return http.get(endpoints?.nearestMosques, payload);
+};
+
+export const getCities = (
+  payload: SearchCityPayloadProps
+): SearchCityResponse => {
+  return http.get(endpoints?.getCities, payload);
+};
+
+export const userUpdateCity = (payload: UserUpdateCityPayloadProps) => {
+  return http.post(endpoints?.userUpdateCity, payload);
 };
