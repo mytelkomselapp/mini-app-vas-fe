@@ -5,8 +5,10 @@ import Button from "../../../../components/Button";
 import TransparentBottomSheet from "../../../../components/TransparentBottomSheet";
 import ChevronRight from "../../../../assets/chevron-right.svg";
 import MosqueIcon from "../../../../assets/ico_mosque.svg";
-import { useEffect, useState } from "react";
+import SignMosque from "../../../../assets/sign-mosque.svg";
+import { useEffect, useState, useMemo } from "react";
 import Taro from "@tarojs/taro";
+import { useFetchNearestMosques } from "../../../../network/resolvers";
 
 interface MosqueListItemProps {
   name: string;
@@ -86,6 +88,9 @@ const normalCallout = {
   id: 1,
   latitude: 23.098994,
   longitude: 113.32252,
+  iconPath: SignMosque,
+  width: 26,
+  height: 30,
   callout: {
     color: "#ff0000",
     fontSize: 14,
@@ -103,6 +108,9 @@ const customCallout1 = {
   id: 2,
   latitude: 23.097994,
   longitude: 113.32352,
+  iconPath: SignMosque,
+  width: 26,
+  height: 30,
   customCallout: {
     anchorY: 0,
     anchorX: 0,
@@ -114,6 +122,9 @@ const customCallout2 = {
   id: 3,
   latitude: 23.096994,
   longitude: 113.32452,
+  iconPath: SignMosque,
+  width: 26,
+  height: 30,
   customCallout: {
     anchorY: 0,
     anchorX: 0,
@@ -125,6 +136,9 @@ const customCallout3 = {
   id: 4,
   latitude: 23.095994,
   longitude: 113.32552,
+  iconPath: SignMosque,
+  width: 26,
+  height: 30,
   customCallout: {
     anchorY: 0,
     anchorX: 0,
@@ -140,9 +154,20 @@ const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [mapHeight, setMapHeight] = useState("65%");
+
+  const hasLocation = latitude !== 0 && longitude !== 0;
+
+  const { data: nearestMosques, isLoading: isLoadingNearestMosques } =
+    useFetchNearestMosques({
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+      radius: 1000,
+    },
+    hasLocation
+  );
 
   useEffect(() => {
-    // Get the user's current location
     Taro.getLocation({
       type: "wgs84",
       success: (res) => {
@@ -154,6 +179,48 @@ const CariMasjid: React.FC = () => {
       },
     });
   }, []);
+
+  useEffect(() => {
+    if (hasLocation) {
+      console.log('Location updated:', latitude, longitude);
+    }
+  }, [latitude, longitude]);
+  
+  
+
+  const handleSnapChange = (index: number) => {
+    const snapPoints = [35, 60, 85];
+    const currentSnap = snapPoints[index];
+    // Calculate remaining height for map (100 - snapPoint)%
+    setMapHeight(`${100 - currentSnap}%`);
+  };
+
+  // Create markers from nearest mosques data
+  const mosqueMarkers = useMemo(() => {
+    if (!nearestMosques?.data?.data) return [];
+    
+    return nearestMosques.data?.data?.map((mosque) => ({
+      id: mosque.id,
+      latitude: Number(mosque.latitude),
+      longitude: Number(mosque.longitude),
+      iconPath: SignMosque,
+      width: 26,
+      height: 30,
+      callout: {
+        content: mosque.name,
+        color: "#000000",
+        fontSize: 14,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: "#E5E7EB",
+        bgColor: "#fff",
+        padding: 8,
+        display: "BYCLICK",
+        textAlign: "center",
+      },
+    }));
+  }, [nearestMosques]);
+
   return (
     <View className="bg-white h-screen flex">
       <Map
@@ -169,15 +236,19 @@ const CariMasjid: React.FC = () => {
         enableScroll
         optimize
         scale={18}
-        markers={mapMarkers}
+        markers={mosqueMarkers}
         latitude={latitude}
         longitude={longitude}
-        style={{ height: "100vh", width: "100vw" }}
+        style={{ 
+          height: mapHeight, 
+          width: "100%",
+          transition: "height 0.3s ease-in-out"
+        }}
       >
         <CoverView slot="callout">
-          {customMarkers.map((item) => (
+          {mosqueMarkers.map((item) => (
             <CoverView marker-id={item.id} key={item.id}>
-              <View>navigator {item.id}</View>
+              {/* Optionally add custom callout content here */}
             </CoverView>
           ))}
         </CoverView>
@@ -189,21 +260,22 @@ const CariMasjid: React.FC = () => {
         containerClassname="draggable"
         snapPoints={[35, 60, 85]}
         initialSnap={1}
+        onSnap={handleSnapChange}
       >
         <View className="flex flex-col justify-between">
           <View>
-            <Text className="text-[14px] text-textSecondary mb-4">
-              Terdapat {mosques.length} masjid di sekitarmu
+            <Text className="text-[14px] text-textSecondary">
+              Terdapat {nearestMosques?.data?.data?.length || 0} masjid di sekitarmu
             </Text>
 
             {/* Mosque List */}
-            <View>
-              {mosques.map((mosque) => (
+            <View className="mt-4">
+              {nearestMosques?.data?.data?.map((mosque) => (
                 <MosqueListItem
                   key={mosque.id}
                   name={mosque.name}
-                  address={mosque.address}
-                  distance={mosque.distance}
+                  address={mosque.city.city}
+                  distance={Math.round(mosque.distance * 1000)} // Convert km to m
                 />
               ))}
             </View>

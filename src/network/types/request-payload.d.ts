@@ -66,6 +66,12 @@ export interface GlobalNotificationPayloadProps {
   notification: "ON" | "OFF";
 }
 
+export interface NearestMosquesPayloadProps {
+  latitude: string;
+  longitude: string;
+  radius: number;
+}
+
 export interface SearchCityPayloadProps {
   search: string;
 }

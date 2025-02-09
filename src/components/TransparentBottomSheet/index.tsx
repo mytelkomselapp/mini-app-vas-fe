@@ -12,6 +12,7 @@ interface TransparentBottomSheetProps {
   showHeader?: boolean;
   snapPoints?: number[]; // Array of percentage heights (e.g., [25, 50, 100])
   initialSnap?: number; // Initial snap point index
+  onSnap?: (index: number) => void;
 }
 
 const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
@@ -23,6 +24,7 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
   showHeader = true,
   snapPoints = [100],
   initialSnap = 0,
+  onSnap,
 }) => {
   const [currentSnap, setCurrentSnap] = React.useState(initialSnap);
   const [isDragging, setIsDragging] = React.useState(false);
@@ -53,10 +55,12 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
         // Dragging down
         const nextSnap = Math.max(currentSnap - 1, 0);
         setCurrentSnap(nextSnap);
+        onSnap?.(nextSnap);
       } else {
         // Dragging up
         const nextSnap = Math.min(currentSnap + 1, snapPoints.length - 1);
         setCurrentSnap(nextSnap);
+        onSnap?.(nextSnap);
       }
     }
   };

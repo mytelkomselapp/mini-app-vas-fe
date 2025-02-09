@@ -318,6 +318,25 @@ export interface NotificationConfig {
   isya: PrayerNotificationConfig;
 }
 
+export interface MosqueCity {
+  id: number;
+  city: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  province: string;
+  timezone: string;
+}
+
+export interface NearestMosquesData {
+  id: number;
+  name: string;
+  latitude: string;
+  longitude: string;
+  distance: number;
+  city: MosqueCity;
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -364,5 +383,7 @@ export type RegisterUserResponse = HttpSuccessResponse<RegisterUserData>;
 
 export type NotificationConfigResponse =
   HttpSuccessResponse<NotificationConfig>;
+
+export type NearestMosquesResponse = HttpSuccessResponse<NearestMosquesData[]>; 
 
 export type SearchCityResponse = HttpSuccessResponse<City[]>;
