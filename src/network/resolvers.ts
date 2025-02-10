@@ -18,6 +18,10 @@ import {
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
+  getStampHistory,
+  getStampMissionList,
+  getStampMissionSummary,
+  getUserStamp,
   getWeboptinToken,
   patchNotificationConfig,
   postBuyPackage,
@@ -25,6 +29,7 @@ import {
   postCreateETicket,
   postNotificationConfig,
   postRegisterUser,
+  postSubmitMission,
   postTrackingFlight,
   postUploadETicketFile,
   userUpdateCity,
@@ -35,6 +40,9 @@ import {
   NearestCityPayloadProps,
   NearestMosquesPayloadProps,
   SearchCityPayloadProps,
+  StampHistoryPayloadProps,
+  StampMissionListPayloadProps,
+  StampMissionSummaryPayloadProps,
 } from "./types/request-payload";
 import { useState } from "react";
 
@@ -269,4 +277,45 @@ export const useUserUpdateCity = () => {
 
 export const usePostNotificationConfig = () => {
   return useMutation(["Post Notification Config"], postNotificationConfig);
+};
+
+export const useFetchStampMissionList = (
+  payload: StampMissionListPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp Mission List", payload],
+    () => getStampMissionList(payload),
+    { enabled }
+  );
+};
+
+export const useFetchStampMissionSummary = (
+  payload: StampMissionSummaryPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp Mission Summary", payload],
+    () => getStampMissionSummary(payload),
+    { enabled }
+  );
+};
+
+export const usePostSubmitMission = () => {
+  return useMutation(["Post Submit Mission"], postSubmitMission);
+};
+
+export const useFetchStampHistory = (
+  payload: StampHistoryPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp History", payload],
+    () => getStampHistory(payload),
+    { enabled }
+  );
+};
+
+export const useFetchUserStamp = (enabled: boolean = true) => {
+  return useQuery(["Fetch User Stamp"], getUserStamp, { enabled });
 };

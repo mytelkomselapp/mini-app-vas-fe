@@ -337,6 +337,77 @@ export interface NearestMosquesData {
   city: MosqueCity;
 }
 
+export interface StampMissionListDataMission {
+  mission_id: string;
+  mission_name_id: string;
+  mission_name_en: string;
+  application_code: string;
+  amount: string;
+  is_recurring: boolean;
+  mission_status: number; // 0 = disabled(complete / past), 1 = enabled
+}
+
+export interface StampMissionListDataConfig {
+  id: number;
+  category_id: string;
+  category: "pagi" | "siang" | "malam";
+  category_description_id: string;
+  category_description_en: string;
+  max_daily_stamp: number;
+  mission_status: number; // 0 = disabled(complete / past), 1 = enabled
+  mission: StampMissionListDataMission[];
+}
+export interface StampMissionListData {
+  DailyMaxStamp: number;
+  Config: StampMissionListDataConfig[];
+}
+
+export interface StampMissionSummaryData {
+  collected_stamp: number;
+  date: string;
+  percentage_of_mission: number;
+  targeted_stamp: number;
+  user_id: string;
+}
+
+export interface StampSubmissionData {
+  new_total_stamp: number;
+  today_earned_stamp: number;
+  earned_stamp: number;
+}
+
+export interface StampHistoryDataPagination {
+  current_page: number;
+  records_per_page: number;
+  total_page: number;
+  total_record: number;
+}
+
+export interface StampHistoryDataItem {
+  group: string;
+  type: string;
+  category: "pagi" | "siang" | "malam";
+  content_id: string;
+  nane_id: string;
+  name_en: string;
+  amount: number;
+  transaction_date: string;
+}
+
+export interface StampHistoryData {
+  valid_until: string;
+  pagination: StampHistoryDataPagination;
+  data: StampHistoryDataItem[];
+}
+
+export interface UserStampData {
+  user_id: string;
+  today_stamp: number;
+  total_stamp: number;
+  tier_point: number;
+  valid_until: string;
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -387,3 +458,13 @@ export type NotificationConfigResponse =
 export type NearestMosquesResponse = HttpSuccessResponse<NearestMosquesData[]>;
 
 export type SearchCityResponse = HttpSuccessResponse<City[]>;
+
+export type StampMissionListResponse =
+  HttpSuccessResponse<StampMissionListData>;
+
+export type StampMissionSummaryResponse =
+  HttpSuccessResponse<StampMissionSummaryData>;
+
+export type StampSubmissionResponse = HttpSuccessResponse<StampSubmissionData>;
+
+export type StampHistoryResponse = HttpSuccessResponse<StampHistoryData>;

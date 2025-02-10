@@ -25,6 +25,8 @@ import {
   NotificationConfigResponse,
   NearestMosquesResponse,
   SearchCityResponse,
+  StampMissionListResponse,
+  StampMissionSummaryResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -40,6 +42,8 @@ import {
   NearestMosquesPayloadProps,
   UserNotificationPayloadConfig,
   UserUpdateCityPayloadProps,
+  StampMissionListPayloadProps,
+  StampMissionSummaryPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -205,4 +209,32 @@ export const postNotificationConfig = (
   payload: UserNotificationPayloadConfig
 ): NotificationConfigResponse => {
   return http.post(endpoints?.notificationConfig, payload);
+};
+
+export const getStampMissionList = (
+  payload: StampMissionListPayloadProps
+): StampMissionListResponse => {
+  return http.get(endpoints?.stampMissionList, payload);
+};
+
+export const getStampMissionSummary = (
+  payload: StampMissionSummaryPayloadProps
+): StampMissionSummaryResponse => {
+  return http.get(endpoints?.stampMissionSummary, payload);
+};
+
+export const postSubmitMission = (
+  payload: StampMissionSubmitPayloadProps
+): StampMissionSubmitResponse => {
+  return http.post(endpoints?.submitMission, payload);
+};
+
+export const getStampHistory = (
+  payload: StampHistoryPayloadProps
+): StampHistoryResponse => {
+  return http.get(endpoints?.stampHistory, payload);
+};
+
+export const getUserStamp = (): UserStampResponse => {
+  return http.get(endpoints?.userStamp);
 };

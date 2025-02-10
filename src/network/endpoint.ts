@@ -110,6 +110,26 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/update-city",
     source: "api",
   },
+  stampMissionList: {
+    endpoint: "/api/v1/stamp/mission",
+    source: "api",
+  },
+  stampMissionSummary: {
+    endpoint: "/api/v1/stamp/mission_summary",
+    source: "api",
+  },
+  submitMission: {
+    endpoint: "/api/v1/stamp/submit",
+    source: "api",
+  },
+  stampHistory: {
+    endpoint: "/api/v1/stamp/history",
+    source: "api",
+  },
+  userStamp: {
+    endpoint: "/api/v1/user/stamp",
+    source: "api",
+  },
 };
 
 export default endpoints;
