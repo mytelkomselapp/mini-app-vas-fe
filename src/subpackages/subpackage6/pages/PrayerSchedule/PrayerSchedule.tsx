@@ -64,6 +64,7 @@ const PrayerSchedule = () => {
   const [pendingToggle, setPendingToggle] = useState<boolean | null>(null);
   const [latitude, setLatitude] = useState<string>("0");
   const [longitude, setLongitude] = useState<string>("0");
+  const [refresh, setRefresh] = useState(false);
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
   const {
     active: reminderSetting,
@@ -110,7 +111,11 @@ const PrayerSchedule = () => {
     : nearestPrayerTime?.name_time;
   useEffect(() => {
     fetchLocation();
-  }, []);
+  }, [refresh]);
+
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev);
+  };
 
   const fetchLocation = async () => {
     await getLocation();
@@ -179,7 +184,7 @@ const PrayerSchedule = () => {
     const preprocessedPrayerSchedule = [
       {
         id: 1,
-        name: "Imsak",
+        name: "Imsyak",
         time: prayerSchedule?.imsyak,
         status:
           valNotif?.imsyak?.notification_status === "ON"
@@ -201,7 +206,7 @@ const PrayerSchedule = () => {
       },
       {
         id: 3,
-        name: "Zuhur",
+        name: "Dzuhur",
         time: prayerSchedule?.dzuhur,
         status:
           valNotif?.dzuhur?.notification_status === "ON"
@@ -277,11 +282,12 @@ const PrayerSchedule = () => {
 
   const confirmDisableNotification = async () => {
     if (pendingToggle !== null) {
-      const valueNotification = isActive ? "ON" : "OFF";
+      const valueNotification = "OFF";
+      console.log({ valueNotification });
       const result = await doGlobalNotificationConfig({
         notification: valueNotification,
       });
-      console.log({ resultConfig: result });
+
       setIsActive(pendingToggle);
       setPendingToggle(null);
     }
@@ -289,16 +295,16 @@ const PrayerSchedule = () => {
   };
 
   const toggleNotification = async () => {
-    const valueNotification = isActive ? "ON" : "OFF";
+    const valueNotification = "ON";
 
     if (isActive) {
       setPendingToggle(false);
       toggleDisabledConfirmation();
     } else {
-      const result = await doGlobalNotificationConfig({
+      const result = doGlobalNotificationConfig({
         notification: valueNotification,
       });
-      console.log({ toggleOn: result });
+
       setIsActive(true);
     }
   };
@@ -518,6 +524,7 @@ const PrayerSchedule = () => {
           toggleModal={toggleOpenReminderSetting}
           currentStatus={selectedStatus}
           id={selectedData}
+          onRefresh={handleRefresh} // Pass the callback function
         />
       </BottomSheet>
       <BottomSheet

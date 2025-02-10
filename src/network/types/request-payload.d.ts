@@ -79,3 +79,9 @@ export interface SearchCityPayloadProps {
 export interface UserUpdateCityPayloadProps {
   city_id: number;
 }
+
+export interface UserNotificationPayloadConfig {
+  config_name: string; // ("imsyak_config", "subuh_config", "dzuhur_config", "ashar_config", "maghrib_config", "isya_config")
+  notification_status: "ON" | "OFF"; // ("ON", "OFF")
+  pre_notification_time: number; // (0, 5, 10, 15)
+}
