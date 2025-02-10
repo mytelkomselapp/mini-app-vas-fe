@@ -25,6 +25,7 @@ import {
   NotificationConfigResponse,
   NearestMosquesResponse,
   SearchCityResponse,
+  LandingPageCMSResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -205,4 +206,8 @@ export const postNotificationConfig = (
   payload: UserNotificationPayloadConfig
 ): NotificationConfigResponse => {
   return http.post(endpoints?.notificationConfig, payload);
+};
+
+export const getLandingPageCMS = (): LandingPageCMSResponse => {
+  return http.get(endpoints?.getLandingPageCMS);
 };

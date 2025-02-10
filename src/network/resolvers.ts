@@ -15,6 +15,7 @@ import {
   getFlightTrack,
   getFreemiumPackageList,
   getFreemiumUserPackage,
+  getLandingPageCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
@@ -37,6 +38,7 @@ import {
   SearchCityPayloadProps,
 } from "./types/request-payload";
 import { useState } from "react";
+import endpoints from "./endpoint";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -269,4 +271,10 @@ export const useUserUpdateCity = () => {
 
 export const usePostNotificationConfig = () => {
   return useMutation(["Post Notification Config"], postNotificationConfig);
+};
+
+export const useFetchLandingPageCMS = (enabled: boolean = true) => {
+  return useQuery(["Fetch Landing Page CMS"], getLandingPageCMS, {
+    enabled,
+  });
 };
