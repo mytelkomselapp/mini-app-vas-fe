@@ -292,3 +292,11 @@ export const gregorianToHijri = (date: Date) => {
     year: y,
   };
 };
+
+export const formatNumberWithThousandSeparator = (num: number): string => {
+  if (num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  } else {
+    return "0";
+  }
+};

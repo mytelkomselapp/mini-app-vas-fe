@@ -5,34 +5,39 @@ import ribbonTail from "../../../../assets/ribbon-tail.svg";
 import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
 import { useState } from "react";
-const packages = [
-  {
-    title: "Super Seru",
-    size: "125 GB",
-    duration: "28 Hari",
-    ribbonLabel: "Terakhir Dibeli",
-  },
-  {
-    title: "Internet OMG!",
-    size: "55 GB",
-    duration: "7 Hari",
-    ribbonLabel: "Promo",
-  },
-  {
-    title: "e-internet giga!",
-    size: "55 GB",
-    duration: "7 Hari",
-    ribbonLabel: "Best Deal",
-  },
-  {
-    title: "Roam OMG!",
-    size: "55 GB",
-    duration: "7 Hari",
-    ribbonLabel: "Best Deal",
-  },
-  // Add more packages as needed
-];
-const SpecialPackage = () => {
+import { Product } from "../../../../network/types/response-props";
+// const packages = [
+//   {
+//     title: "Super Seru",
+//     size: "125 GB",
+//     duration: "28 Hari",
+//     ribbonLabel: "Terakhir Dibeli",
+//   },
+//   {
+//     title: "Internet OMG!",
+//     size: "55 GB",
+//     duration: "7 Hari",
+//     ribbonLabel: "Promo",
+//   },
+//   {
+//     title: "e-internet giga!",
+//     size: "55 GB",
+//     duration: "7 Hari",
+//     ribbonLabel: "Best Deal",
+//   },
+//   {
+//     title: "Roam OMG!",
+//     size: "55 GB",
+//     duration: "7 Hari",
+//     ribbonLabel: "Best Deal",
+//   },
+//   // Add more packages as needed
+// ];
+const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
+  const groupedData: Product[][] = [];
+  for (let i = 0; i < data.length; i += 3) {
+    groupedData.push(data?.slice(i, i + 3));
+  }
   const [current, setCurrent] = useState(0);
   const handleClickAllOffer = () => {
     console.log("View All offer button clicked");
@@ -41,11 +46,12 @@ const SpecialPackage = () => {
     setCurrent(e.detail.current);
   };
 
-  const PackageCard = ({ title, size, duration, ribbonLabel }) => {
+  const PackageCard = ({ title, size, duration, ribbonLabel, isFirstItem }) => {
     return (
       <div
         className={cn(
-          "border border-solid border-gray-300 rounded-2xl pl-1 bg-white shadow-sm flex items-center space-x-1 w-[106px] min-w-[106px] h-[190px] relative ml-2"
+          "border border-solid border-gray-300 rounded-2xl pl-1 bg-white shadow-sm flex items-center space-x-1 w-[100px] min-w-[100px] h-[190px] relative",
+          isFirstItem ? "ml-2" : ""
         )}
         style={{
           background: `url(${kv})`,
@@ -113,34 +119,45 @@ const SpecialPackage = () => {
       </View>
 
       <Swiper
-        className="w-full h-[206px]  mt-4"
+        className="w-full h-[206px] mt-4"
         circular
         autoplay
         interval={3000}
         displayMultipleItems={3}
         onChange={handleSwiperChange}
       >
-        {packages?.map((slide, key) => (
+        {data?.map((slide, key) => (
           <SwiperItem key={key}>
             <div className={`w-full h-full flex items-center justify-center`}>
-              <PackageCard {...slide} key={key} />
+              <PackageCard
+                title={slide?.title?.split("|")?.[0]}
+                duration={slide?.title?.split("|")?.[2]}
+                ribbonLabel={slide?.productTag}
+                size={slide?.title?.split("|")?.[1]}
+                key={key}
+                isFirstItem={key === 0}
+              />
             </div>
           </SwiperItem>
         ))}
       </Swiper>
 
-      <div className="flex justify-center w-min absolute left-[45%] -bottom-[22%] transform -translate-x-1/2 p-[2px]">
-        {packages.map((_, index) => (
-          <div
-            key={index}
-            className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
-              current === index
-                ? "bg-blueNavy w-4 h-1"
-                : "bg-[#001A4166] w-1 h-1"
-            }`}
-          ></div>
-        ))}
-      </div>
+      {groupedData?.length > 1 ? (
+        <div className="flex justify-center w-min absolute left-[45%] -bottom-[22%] transform -translate-x-1/2 p-[2px]">
+          {groupedData.map((_, index) => (
+            <div
+              key={index}
+              className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+                current === index
+                  ? "bg-blueNavy w-4 h-1"
+                  : "bg-[#001A4166] w-1 h-1"
+              }`}
+            ></div>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
 
       {/* <ScrollView className="overflow-x-scroll w-screen z-[2] ml-2" scrollX>
         <View className="flex flex-row space-x-3 ml-0">

@@ -110,6 +110,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/update-city",
     source: "api",
   },
+  getLandingPageCMS: {
+    endpoint: "/api/ramadhan-landing-page",
+    source: "cms",
+  },
 };
 
 export default endpoints;

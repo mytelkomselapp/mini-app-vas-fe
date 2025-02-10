@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
 
-const Promo = () => {
+const Promo = ({ data = [] }: { data: object }) => {
   const [current, setCurrent] = useState(0);
   const promos = [
     {
