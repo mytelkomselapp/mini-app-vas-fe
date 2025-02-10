@@ -7,9 +7,8 @@ import notifOff from "../../../../assets/ico_alarm_off.svg";
 import chevronRight from "../../../../assets/chevron-right.svg";
 import mapPinGrey from "../../../../assets/map-pin-grey.svg";
 import convex from "../../../../assets/convex-masjid.svg";
-import { handleNavigate } from "../../../../lib/utils";
+import { convertTimezone, handleNavigate } from "../../../../lib/utils";
 import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
-import moment from "moment-timezone";
 
 export interface PrayerCardProps {
   name_time: string;
@@ -35,7 +34,7 @@ const PrayerCard = ({
   const time =
     nearestPrayTime?.pray_time +
     " " +
-    moment.tz(nearestPrayTime?.timezone).zoneAbbr();
+    convertTimezone(nearestPrayTime?.timezone);
   const notificationText = notificationStatus
     ? "Notifikasi adzan telah Aktif"
     : "Notifikasi adzan belum Aktif";
