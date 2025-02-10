@@ -23,6 +23,7 @@ import {
   postBuyPackage,
   postClaimFreeTicket,
   postCreateETicket,
+  postNotificationConfig,
   postRegisterUser,
   postTrackingFlight,
   postUploadETicketFile,
@@ -248,11 +249,9 @@ export const useFetchNearestMosques = (
   payload: NearestMosquesPayloadProps,
   enabled: boolean = true
 ) => {
-  return useQuery(
-    ["Fetch Nearest Mosques"], 
-    () => getNearestMosques(payload), 
-    { enabled }
-  );
+  return useQuery(["Fetch Nearest Mosques"], () => getNearestMosques(payload), {
+    enabled,
+  });
 };
 
 export const useFetchSearchCity = (
@@ -266,4 +265,8 @@ export const useFetchSearchCity = (
 
 export const useUserUpdateCity = () => {
   return useMutation(["Patch User Update City"], userUpdateCity);
+};
+
+export const usePostNotificationConfig = () => {
+  return useMutation(["Post Notification Config"], postNotificationConfig);
 };

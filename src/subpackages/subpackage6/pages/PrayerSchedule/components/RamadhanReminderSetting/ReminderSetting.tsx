@@ -10,30 +10,48 @@ import {
 } from "../../../../../../store/ramadhan";
 import Chips from "../../../../../../components/Chips";
 import "./ReminderSetting.scss";
+import { usePostNotificationConfig } from "../../../../../../network";
 
 type idType = { id: number; name: string; time: number };
 interface ReminderSettingProps {
   id: idType | undefined;
   currentStatus: PrayerStatus;
   toggleModal: () => void;
+  onRefresh: () => void; // Add the callback function prop
 }
 
 const ReminderSetting = ({
   id,
   currentStatus,
   toggleModal,
+  onRefresh,
 }: ReminderSettingProps) => {
   const [selectedOption, setSelectedOption] =
     useState<PrayerStatus>(currentStatus);
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
+  const preNotificationTime = parseInt(
+    selectedChip?.replace(" Menit", "") || ""
+  );
   const { updatePrayerStatus } = usePrayerNotification();
+  const {
+    mutateAsync: doPostNotifConfig,
+    data: postNotifData,
+    isLoading: isLoadingPostNotifData,
+  } = usePostNotificationConfig();
 
   const handleOptionChange = (value: PrayerStatus) => {
     setSelectedOption(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (id !== undefined) {
+      await doPostNotifConfig({
+        config_name: id?.name?.toLowerCase() + "_config",
+        notification_status: selectedOption === "notifikasi" ? "ON" : "OFF",
+        pre_notification_time: preNotificationTime,
+      });
+      onRefresh(); // Trigger the callback function
+
       updatePrayerStatus(id?.id, selectedOption);
       toggleModal();
     }
@@ -41,6 +59,14 @@ const ReminderSetting = ({
 
   const handleChipClick = (value: string) => {
     setSelectedChip(value);
+  };
+
+  const toggleNotification = () => {
+    if (preNotificationTime) {
+      setSelectedChip(0 + " Menit");
+    } else {
+      setSelectedChip(5 + " Menit");
+    }
   };
 
   useEffect(() => {
@@ -93,9 +119,15 @@ const ReminderSetting = ({
             {"Pengingat Sebelum" + " " + id?.name}
           </span>
           <label className="switch">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={!!preNotificationTime}
+              onChange={toggleNotification}
+            />
             <span
-              className={`slider ${id?.time ? "slider-active" : ""}`}
+              className={`slider ${
+                !!preNotificationTime ? "slider-active" : ""
+              }`}
             ></span>
           </label>
         </div>

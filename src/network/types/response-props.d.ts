@@ -384,6 +384,6 @@ export type RegisterUserResponse = HttpSuccessResponse<RegisterUserData>;
 export type NotificationConfigResponse =
   HttpSuccessResponse<NotificationConfig>;
 
-export type NearestMosquesResponse = HttpSuccessResponse<NearestMosquesData[]>; 
+export type NearestMosquesResponse = HttpSuccessResponse<NearestMosquesData[]>;
 
 export type SearchCityResponse = HttpSuccessResponse<City[]>;
