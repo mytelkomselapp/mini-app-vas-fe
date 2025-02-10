@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
+import { Promo as PromoTypes } from "../../../../network/types/response-props";
 
-const Promo = ({ data = [] }: { data: object }) => {
+const Promo = ({ data = [] }: { data: PromoTypes[] }) => {
   const [current, setCurrent] = useState(0);
   const promos = [
     {
@@ -114,11 +115,11 @@ const Promo = ({ data = [] }: { data: object }) => {
         interval={3000}
         onChange={handleSwiperChange}
       >
-        {promos?.map((slide, key) => (
+        {data?.map((slide, key) => (
           <SwiperItem key={key}>
             <div className={`w-full h-full flex items-center justify-center`}>
               <Image
-                src={slide?.imgSrc}
+                src={slide?.image}
                 className="w-[91vw] h-32 object-cover rounded-md"
                 mode="aspectFill"
               />
@@ -129,7 +130,7 @@ const Promo = ({ data = [] }: { data: object }) => {
       {/* Dot Indicator */}
 
       <div className="flex justify-center mt-4 bg-[#00000040] rounded-2xl w-min absolute bottom-4 left-[45%] transform -translate-x-1/2 p-[2px]">
-        {promos.map((_, index) => (
+        {data.map((_, index) => (
           <div
             key={index}
             className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
