@@ -9,64 +9,149 @@ import SpecialFilm from "./components/SpecialFilm";
 import SpecialPackage from "./components/SpecialPackage";
 import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
-import { usePostRegisterUser } from "../../network";
+import { useFetchLandingPageCMS, usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
-import { useRamadhanSearchLocation } from "../../store/ramadhan";
+import {
+  usePrayerNotification,
+  useRamadhanSearchLocation,
+} from "../../store/ramadhan";
 
 type Feature = {
   name: string;
-  icon: string;
+  icon?: string;
   path?: string;
 };
 
-const features: Feature[] = [
-  {
-    name: "Cari Masjid",
-    icon: "🏰",
-    path: "/subpackages/subpackage2/pages/CariMasjid/index",
-  },
-  {
-    name: "Kiblat",
-    icon: "🧭",
-    path: "/subpackages/subpackage1/pages/ArahKiblat/index",
-  },
-  { name: "Zakat", icon: "💰" },
-  { name: "Sedekah", icon: "❤️" },
-  { name: "Kirim Parsel", icon: "🎁" },
-  {
-    name: "Catatan\nIbadah",
-    icon: "📝",
-    path: "/subpackages/subpackage5/pages/CatatanIbadah/index",
-  },
-  {
-    name: "Dzikir",
-    icon: "📖",
-    path: "/subpackages/subpackage4/pages/Dzikir/index",
-  },
-  { name: "Kuis", icon: "❓" },
-];
+// const features: Feature[] = [
+//   {
+//     name: "Cari Masjid",
+//     icon: "🏰",
+//     path: "/subpackages/subpackage2/pages/CariMasjid/index",
+//   },
+//   {
+//     name: "Kiblat",
+//     icon: "🧭",
+//     path: "/subpackages/subpackage1/pages/ArahKiblat/index",
+//   },
+//   { name: "Zakat", icon: "💰" },
+//   { name: "Sedekah", icon: "❤️" },
+//   { name: "Kirim Parsel", icon: "🎁" },
+//   {
+//     name: "Catatan\nIbadah",
+//     icon: "📝",
+//     path: "/subpackages/subpackage5/pages/CatatanIbadah/index",
+//   },
+//   {
+//     name: "Dzikir",
+//     icon: "📖",
+//     path: "/subpackages/subpackage4/pages/Dzikir/index",
+//   },
+//   { name: "Kuis", icon: "❓" },
+// ];
 const LandingPageRamadan = () => {
   const [latitude, setLatitude] = useState("0");
   const [longitude, setLongitude] = useState("0");
+  const [features, setFeatures] = useState<Feature[]>([]);
+  const { data: dataRawLandingPageCMS, isLoading: isLoadingLandingPageCMS } =
+    useFetchLandingPageCMS();
+
+  console.log({ dataRawLandingPageCMS });
   const {
     mutateAsync: doRegisterUser,
     isLoading: isLoadingRegisterUser,
     data: dataRawRegisterUser,
   } = usePostRegisterUser();
+  const { isActive } = usePrayerNotification();
+
+  const dataLandingPageCMS =
+    dataRawLandingPageCMS?.data?.data?.ramadhanSections;
+  const productSession1 = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.product-section" &&
+          section?.id === 1
+      )?.products || []
+    : [];
+  const productSession2 = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.product-section" &&
+          section?.id === 2
+      )?.products || []
+    : [];
+
+  const cardSession1 = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.card-section" && section?.id === 1
+      )?.cards || []
+    : [];
+
+  const cardSession2 = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.card-section" && section?.id === 2
+      )?.cards || []
+    : [];
+
+  const newsSession = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) => section.__component === "sections.news-section"
+      )?.listNews || []
+    : [];
+  const promoSections = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) => section.__component === "sections.promo-section"
+      )?.promo || []
+    : [];
   const dataRegisterUser = dataRawRegisterUser?.data?.data;
   const city = dataRegisterUser?.city?.city ?? "-";
   const nearestPrayerTime =
     (dataRegisterUser?.nearest_pray_time as PrayerCardProps) ?? {};
-  // const prayerSchedule = dataRegisterUser?.prayer_schedule;
   const notificationStatus = dataRegisterUser?.notification_status === "ON";
 
   const { setData: setDataRamadhanSearchLocation } =
     useRamadhanSearchLocation();
 
   useEffect(() => {
+    if (dataLandingPageCMS) {
+      const appsSection = dataLandingPageCMS.find(
+        (section) => section.__component === "sections.apps-section"
+      );
+
+      if (appsSection && appsSection.apps) {
+        const featuresData: Feature[] = appsSection.apps
+          .slice(0, 8)
+          .map((app) => {
+            let path = "";
+            const title = app.title?.toLowerCase();
+            if (title?.includes("masjid")) {
+              path = "/subpackages/subpackage2/pages/CariMasjid/index";
+            } else if (title?.includes("kiblat")) {
+              path = "/subpackages/subpackage1/pages/ArahKiblat/index";
+            } else if (title?.includes("ibadah")) {
+              path = "/subpackages/subpackage5/pages/CatatanIbadah/index";
+            } else if (title?.includes("zikir")) {
+              path = "/subpackages/subpackage4/pages/Dzikir/index";
+            } else {
+              // Add more conditions as needed for other paths
+              path = "";
+            }
+            return {
+              name: app.title,
+              icon: app.icon,
+              path,
+            };
+          });
+        setFeatures(featuresData);
+      }
+    }
+  }, [dataLandingPageCMS]);
+
+  useEffect(() => {
     fetchLocation();
-  }, []);
+  }, [isActive]);
 
   const fetchLocation = async () => {
     await getLocation();
@@ -88,7 +173,7 @@ const LandingPageRamadan = () => {
     const query = "";
     let paramsVal = null;
 
-    if (feature.name.toLowerCase() === "kiblat") {
+    if (feature?.name.toLowerCase() === "kiblat") {
       paramsVal = dataRegisterUser?.city as any;
     }
 
@@ -128,13 +213,13 @@ const LandingPageRamadan = () => {
         </div>
       </div>
 
-      <Promo />
+      <Promo data={promoSections} />
       <View className="p-4 pl-0">
         <Text className="font-batikSans font-bold text-[14px] pl-4">
           {"Spesial Ramadan Untuk Kamu"}
         </Text>
-        <SpecialCommerce />
-        <SpecialPackage />
+        <SpecialCommerce data={productSession1} />
+        <SpecialPackage data={productSession2} />
         <View className="flex flex-row items-center pl-4 mt-14 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
             {"Film & Series Ramadan"}
@@ -144,7 +229,7 @@ const LandingPageRamadan = () => {
           </Text>
         </View>
 
-        <SpecialFilm />
+        <SpecialFilm data={cardSession1} />
 
         <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
@@ -154,7 +239,7 @@ const LandingPageRamadan = () => {
             {"Lihat Semua"}
           </Text>
         </View>
-        <SpecialGame />
+        <SpecialGame data={cardSession2} />
 
         <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
@@ -164,7 +249,7 @@ const LandingPageRamadan = () => {
             {"Lihat Semua"}
           </Text>
         </View>
-        <NewsCardList />
+        <NewsCardList data={newsSession} />
       </View>
     </View>
   );

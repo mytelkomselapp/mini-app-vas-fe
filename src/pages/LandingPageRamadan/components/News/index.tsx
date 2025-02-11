@@ -1,5 +1,6 @@
 import { View } from "@tarojs/components";
 import dummyProduct from "../../../../assets/dummy-product.png";
+import { News } from "../../../../network/types/response-props";
 const newsData = [
   {
     id: 1,
@@ -28,17 +29,22 @@ const newsData = [
   },
 ];
 
-const NewsCardList = () => {
+const NewsCardList = ({ data = [] }: { data: News[] }) => {
   return (
     <div className="space-y-4 mt-2">
-      {newsData.map((news, i) => (
+      {data?.map((news, i) => (
         <View key={i}>
           <div className="flex items-center bg-white px-4">
             {/* Content */}
             <div className="mr-4 flex-1">
               {/* Source */}
               <div className="flex items-center mb-1">
-                <span className="text-[10px]">{news.source}</span>
+                <img
+                  src={news?.authorIcon}
+                  alt="author"
+                  className="w-4 h-4 mr-2"
+                />
+                <span className="text-[10px]">{news?.author}</span>
               </div>
               {/* Title */}
               <p className="text-[12.5px] font-semibold mb-2 text-ellipsis">
@@ -46,18 +52,18 @@ const NewsCardList = () => {
               </p>
               {/* Date */}
               <div className="text-[10px] text-grey flex flex-row">
-                <span>{news.date}</span> <span className="mx-2">•</span>
-                <span>{news.category}</span>
+                <span>{news.tag}</span> <span className="mx-2">•</span>
+                <span>{news.publishDate}</span>
               </div>
             </div>
             {/* Image */}
             <img
-              src={news.imgSrc}
+              src={news.image}
               alt={news.title}
               className="w-20 h-20 object-cover rounded-lg"
             />
           </div>
-          {newsData?.length - 1 !== i ? (
+          {data?.length - 1 !== i ? (
             <div className="h-[1px] w-full bg-dividerGrey opacity-[0.7] mx-[10px] my-4" />
           ) : null}
         </View>

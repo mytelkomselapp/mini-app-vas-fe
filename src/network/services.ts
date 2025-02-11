@@ -28,6 +28,7 @@ import {
   StampMissionListResponse,
   StampMissionSummaryResponse,
   UserStampResponse,
+  LandingPageCMSResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -238,4 +239,8 @@ export const getStampHistory = (
 
 export const getUserStamp = (): UserStampResponse => {
   return http.get(endpoints?.userStamp);
+};
+
+export const getLandingPageCMS = (): LandingPageCMSResponse => {
+  return http.get(endpoints?.getLandingPageCMS);
 };

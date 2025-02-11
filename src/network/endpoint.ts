@@ -130,6 +130,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/stamp",
     source: "gamification",
   },
+  getLandingPageCMS: {
+    endpoint: "/api/ramadhan-landing-page",
+    source: "cms",
+  },
 };
 
 export default endpoints;

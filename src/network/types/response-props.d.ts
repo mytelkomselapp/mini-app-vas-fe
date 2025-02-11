@@ -408,6 +408,77 @@ export interface UserStampData {
   valid_until: string;
 }
 
+//Landing Page CMS
+export interface HeaderSection {
+  id: number;
+  title: string;
+  linkTitle: string | null;
+  targetUrl: string | null;
+  slug: string;
+}
+
+export interface App {
+  id: number;
+  title: string;
+  targetUrl: string | null;
+  published: boolean;
+  icon: string;
+}
+
+export interface Promo {
+  id: number;
+  title: string;
+  targetUrl: string | null;
+  published: boolean;
+  image: string;
+}
+
+export interface Product {
+  id: number;
+  title: string;
+  linkTitle: string;
+  price: number;
+  strikePrice: number | null;
+  productTag: string | null;
+  published: boolean;
+  productIcon: string | null;
+  productImage: string | null;
+}
+
+export interface Card {
+  id: number;
+  title: string;
+  subtitle: string;
+  published: boolean;
+  image: string;
+}
+
+export interface News {
+  id: number;
+  title: string;
+  tag: string;
+  publishDate: string;
+  author: string;
+  published: boolean;
+  authorIcon: string;
+  image: string;
+}
+
+export interface RamadhanSection {
+  id: number;
+  __component: string;
+  headerSection: HeaderSection;
+  apps?: App[];
+  promo?: Promo;
+  products?: Product[];
+  cards?: Card[];
+  listNews?: News[];
+}
+
+export interface LandingPageCMSData {
+  ramadhanSections: RamadhanSection[];
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -470,3 +541,4 @@ export type StampSubmissionResponse = HttpSuccessResponse<StampSubmissionData>;
 export type StampHistoryResponse = HttpSuccessResponse<StampHistoryData>;
 
 export type UserStampResponse = HttpSuccessResponse<UserStampData>;
+export type LandingPageCMSResponse = HttpSuccessResponse<LandingPageCMSData>;

@@ -15,6 +15,7 @@ import {
   getFlightTrack,
   getFreemiumPackageList,
   getFreemiumUserPackage,
+  getLandingPageCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
@@ -45,7 +46,6 @@ import {
   StampMissionSummaryPayloadProps,
 } from "./types/request-payload";
 import { useMemo, useState } from "react";
-import { UserStampResponse } from "./types/response-props";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -344,4 +344,10 @@ export const useBulkFetchMissionSummary = (calendar: string[] = []) => {
       dataAllMissionSummaryRaw?.[0]?.isLoading,
     data: dataAllMissionSummary,
   };
+};
+
+export const useFetchLandingPageCMS = (enabled: boolean = true) => {
+  return useQuery(["Fetch Landing Page CMS"], getLandingPageCMS, {
+    enabled,
+  });
 };

@@ -304,3 +304,23 @@ export const generateArrayRangeDate = (startDate: string, endDate: string) => {
 
   return dates;
 };
+
+export const formatNumberWithThousandSeparator = (num: number): string => {
+  if (num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  } else {
+    return "0";
+  }
+};
+
+export const convertTimezone = (timezone: string): string => {
+  const timezoneMap = {
+    "Asia/Jakarta": "WIB", // Western Indonesian Time (UTC+7)
+    "Asia/Pontianak": "WIB", // Western Indonesian Time (UTC+7)
+    "Asia/Makassar": "WITA", // Central Indonesian Time (UTC+8)
+    "Asia/Ujung_Pandang": "WITA", // Central Indonesian Time (UTC+8)
+    "Asia/Jayapura": "WIT", // Eastern Indonesian Time (UTC+9)
+  };
+
+  return timezoneMap[timezone] || timezone;
+};

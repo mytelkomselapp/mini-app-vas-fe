@@ -1,14 +1,15 @@
 import { ScrollView, Text, View } from "@tarojs/components";
 import maxStream from "../../../../assets/maxStream.png";
+import { Card } from "../../../../network/types/response-props";
 
-const SpecialFilm = () => {
-  const Movie = () => {
+const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
+  const Movie = ({ item }) => {
     return (
       <View>
         <div
           className="rounded-lg shadow-sm flex items-start space-x-2 min-w-[106px] w-[106px] h-[159px] mb-2"
           style={{
-            background: `url(https://placehold.co/600x400)`,
+            background: `url(${item?.image})`,
             // background: `linear-gradient(180deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%),url(https://placehold.co/600x400)`,
             backgroundSize: "cover", // or 'contain' depending on your needs
             backgroundRepeat: "no-repeat",
@@ -28,19 +29,17 @@ const SpecialFilm = () => {
                 background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 126.83%)`,
               }}
             >
-              <Text className="text-white text-[10px] mr-2 mb-2">
+              {/* <Text className="text-white text-[10px] mr-2 mb-2">
                 {"2j 25m"}
-              </Text>
+              </Text> */}
             </div>
           </div>
         </div>
         <View className="text-[12.8px] w-[106px] font-semibold mt-2">
-          <Text className="line-clamp-1">
-            Bukannya Aku Takut Kehilangan Dirimu
-          </Text>
+          <Text className="line-clamp-1">{item?.title}</Text>
         </View>
         <View className="text-[10px] text-grey w-[106px]">
-          <Text className="line-clamp-1">Drama, Romance</Text>
+          <Text className="line-clamp-1">{item?.subtitle}</Text>
         </View>
       </View>
     );
@@ -49,9 +48,10 @@ const SpecialFilm = () => {
   return (
     <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
       <View className="flex flex-row space-x-3">
-        <Movie />
-        <Movie />
-        <Movie />
+        {data?.map((item, index) => {
+          return <Movie key={index} item={item} />;
+        })}
+        <View className="w-4 text-transparent">{"A"}</View>
       </View>
     </ScrollView>
   );
