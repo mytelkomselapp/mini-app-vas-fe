@@ -1,7 +1,6 @@
 export default {
   pages: [
     "pages/LandingPageRamadan/index", //Main Page as the first order
-    // other pages...
   ],
   subPackages: [
     { root: "subpackages/subpackage1", pages: ["pages/ArahKiblat/index"] },
@@ -16,8 +15,25 @@ export default {
     },
     { root: "subpackages/subpackage5", pages: ["pages/CatatanIbadah/index"] },
     { root: "subpackages/subpackage6", pages: ["pages/PrayerSchedule/index"] },
-    { root: "subpackages/subpackage7", pages: ["pages/TukarHadiah/index", "pages/RiwayatTukarHadiah/index"] },
+    {
+      root: "subpackages/subpackage7",
+      pages: ["pages/TukarHadiah/index", "pages/RiwayatTukarHadiah/index"],
+    },
   ],
+  preloadRule: {
+    "pages/LandingPageRamadan/index": {
+      network: "all",
+      packages: [
+        "subpackages/subpackage1",
+        "subpackages/subpackage2",
+        "subpackages/subpackage3",
+        "subpackages/subpackage4",
+        "subpackages/subpackage5",
+        "subpackages/subpackage6",
+        "subpackages/subpackage7",
+      ],
+    },
+  },
   window: {
     backgroundTextStyle: "light",
     navigationBarTitleText: "Ramadan Fitri",
