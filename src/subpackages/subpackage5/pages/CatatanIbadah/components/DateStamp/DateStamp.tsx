@@ -3,11 +3,14 @@ import Show from "../../../../../../components/Show";
 import { View } from "@tarojs/components";
 import ChevronLeft from "../../../../../../assets/chevron-left.svg";
 import ChevronRight from "../../../../../../assets/chevron-right.svg";
-import { generateCalendarByMonth } from "../../../../../../lib/utils";
+import {
+  generateArrayRangeDate,
+  generateCalendarByMonth,
+} from "../../../../../../lib/utils";
 import moment, { Moment } from "moment";
 import DayCard from "./components/DayCard";
-import { StampPercentageDummy } from "../../constants";
 import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
+import { useBulkFetchMissionSummary } from "../../../../../..//network";
 
 export interface DateStampProps {}
 
@@ -22,15 +25,26 @@ const DateStamp: React.FC<DateStampProps> = () => {
   } = useDataCatatanIbadah();
 
   const listOfDay = generateCalendarByMonth(moment("2025-03-01"));
+  /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
+  const currentDayMoment = moment("2025-03-02");
+  const rangeDate = generateArrayRangeDate(
+    "2025-03-01",
+    currentDayMoment?.format("YYYY-MM-DD")
+  );
+
+  const { data: dataMissionSummary, isLoading: isLoadingMissionSummary } =
+    useBulkFetchMissionSummary(rangeDate);
+
+  /** get data of march  */
+  const dataMarch = [...listOfDay]?.filter((data) =>
+    moment(data)?.isSame(currentDay, "month")
+  );
+
   const dayOfWeek = React.useMemo(() => {
-    /** get data of march  */
-    const data = [...listOfDay]?.filter((data) =>
-      moment(data)?.isSame(currentDay, "month")
-    );
     /** why -1 because week 1 must start from zero */
     const startWeek = 7 * (currentWeek - 1);
 
-    return data?.splice(startWeek, 7);
+    return dataMarch?.splice(startWeek, 7);
   }, [currentWeek, listOfDay]);
 
   const handleClickDate = (d: Moment) => {
@@ -112,6 +126,8 @@ const DateStamp: React.FC<DateStampProps> = () => {
             style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}
           >
             {dayOfWeek.map((d: Moment, i: number) => {
+              const percentage =
+                (dataMissionSummary?.[i]?.percentage_of_mission || 0) * 100;
               return (
                 <DayCard
                   key={i}
@@ -119,7 +135,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
                   onClick={() => {
                     handleClickDate(d);
                   }}
-                  percentage={StampPercentageDummy?.[i]?.percentage}
+                  percentage={percentage}
                   day={d.date()}
                 />
               );
@@ -143,6 +159,8 @@ const DateStamp: React.FC<DateStampProps> = () => {
             ))}
             {listOfDay.map((d: Moment, i: number) => {
               const isSameMonth = moment(d)?.isSame("2025-03-01", "month");
+              const percentage =
+                (dataMissionSummary?.[i]?.percentage_of_mission || 0) * 100;
 
               if (!isSameMonth) return <div></div>;
 
@@ -153,7 +171,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
                   onClick={() => {
                     handleClickDate(d);
                   }}
-                  percentage={StampPercentageDummy?.[i]?.percentage}
+                  percentage={percentage}
                   day={d.date()}
                 />
               );

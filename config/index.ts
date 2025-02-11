@@ -12,11 +12,10 @@ const BundleAnalyzerPlugin =
 
 export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const path = require("path");
+  console.log(__dirname);
   module.exports = {
     alias: {
       "@": path.resolve(__dirname, "..", "src"),
-      components: path.resolve(__dirname, "..", "src/components"),
-      modules: path.resolve(__dirname, "..", "src/modules"),
     },
   };
   const baseConfig: UserConfigExport<"vite"> = {

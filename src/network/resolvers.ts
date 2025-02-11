@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQueries, useQuery } from "react-query";
 import {
   deleteETicket,
   deleteTrackingFlight,
@@ -44,7 +44,8 @@ import {
   StampMissionListPayloadProps,
   StampMissionSummaryPayloadProps,
 } from "./types/request-payload";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { UserStampResponse } from "./types/response-props";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -317,5 +318,30 @@ export const useFetchStampHistory = (
 };
 
 export const useFetchUserStamp = (enabled: boolean = true) => {
-  return useQuery(["Fetch User Stamp"], getUserStamp, { enabled });
+  return useQuery(["Fetch User Stamp"], getUserStamp, {
+    enabled,
+  });
+};
+
+export const useBulkFetchMissionSummary = (calendar: string[] = []) => {
+  const queryData =
+    calendar?.map((data) => ({
+      queryKey: `Fetch Mission Summary - ${data}`,
+      queryFn: () => getStampMissionSummary({ date: data }),
+      refetchOnMount: false,
+    })) ?? [];
+
+  const dataAllMissionSummaryRaw = useQueries(queryData);
+
+  const dataAllMissionSummary = useMemo(() => {
+    return [...dataAllMissionSummaryRaw]?.map((item) => item?.data?.data?.data);
+  }, [dataAllMissionSummaryRaw]);
+
+  return {
+    isLoading:
+      dataAllMissionSummaryRaw?.[0]?.isFetching ||
+      dataAllMissionSummaryRaw?.[0]?.isRefetching ||
+      dataAllMissionSummaryRaw?.[0]?.isLoading,
+    data: dataAllMissionSummary,
+  };
 };

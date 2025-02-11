@@ -4,11 +4,10 @@ import "./DaftarIbadah.css";
 import ProgressReward from "../ProgressReward";
 import BlinkStart from "../../../../../../assets/blink-start.png";
 import TaskIbadah from "./components/TaskIbadah";
-import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
 import moment from "moment";
 import EllipseStamp from "../../../../../../assets/ellipse-stamp.png";
-import EllipseStamp2 from "../../../../../../assets/Ellipse-stamp-2.png";
 import RewardIllustration from "../../../../../../assets/reward-illustration.png";
+import { useDataCatatanIbadah } from "@/store/ramadhan";
 
 export interface DaftarIbadahProps {}
 

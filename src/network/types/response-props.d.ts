@@ -468,3 +468,5 @@ export type StampMissionSummaryResponse =
 export type StampSubmissionResponse = HttpSuccessResponse<StampSubmissionData>;
 
 export type StampHistoryResponse = HttpSuccessResponse<StampHistoryData>;
+
+export type UserStampResponse = HttpSuccessResponse<UserStampData>;

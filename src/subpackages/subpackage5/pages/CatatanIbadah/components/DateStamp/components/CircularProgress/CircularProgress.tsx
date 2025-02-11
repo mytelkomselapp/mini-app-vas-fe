@@ -4,6 +4,16 @@ import { svgToBase64 } from "../../../../../../../../lib/utils";
 const CircularProgress = ({ progress, number, isActive = false }) => {
   const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" width="100" height="100">
   <circle stroke="#e5e7eb" stroke-width="6" fill="transparent" r="16" cx="20" cy="20" />
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff0000; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff5733; stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>`;
+
+  const filledSvgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" width="100" height="100">
+  <circle stroke="#e5e7eb" stroke-width="6" fill="transparent" r="16" cx="20" cy="20" />
   <circle
     stroke="url(#grad1)"
     stroke-width="6"
@@ -14,7 +24,7 @@ const CircularProgress = ({ progress, number, isActive = false }) => {
     stroke-dasharray="100"
     stroke-linecap="round"
     transform="rotate(-90 20 20)"
-    stroke-dashoffset="100 - ${progress}"
+    stroke-dashoffset="80"
     style="animation: progress-animation 1.5s linear forwards;"
   />
   <defs>
@@ -29,17 +39,15 @@ const CircularProgress = ({ progress, number, isActive = false }) => {
         stroke-dashoffset: 100;
       }
       to {
-        stroke-dashoffset: ${
-          100 - progress
-        }; /* Adjust based on desired progress */
+        stroke-dashoffset: ${80}; /* Adjust based on desired progress */
       }
     }
   </style>
 </svg>`;
 
-  const svgCircularProgress = svgToBase64(svgString);
-
-  console.log({ svgCircularProgress });
+  const svgCircularProgress = svgToBase64(
+    progress > 0 ? filledSvgString : svgString
+  );
 
   return (
     <div

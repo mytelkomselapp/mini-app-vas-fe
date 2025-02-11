@@ -13,7 +13,7 @@ const config = {
   plugins: [],
   defineConstants: {},
   alias: {
-    "@": path.resolve(__dirname, "..", "src"),
+    "src/*": path.resolve(__dirname, "..", "src"),
   },
   copy: {
     patterns: [],

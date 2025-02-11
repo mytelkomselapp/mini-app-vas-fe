@@ -6,11 +6,17 @@ import ButtonRedeem from "./components/ButtonRedeem/ButtonRedeem";
 import { DateStamp } from "./components";
 import DaftarIbadah from "./components/DaftarIbadah";
 import { handleNavigate } from "../../../../lib/utils";
+import { useFetchUserStamp } from "../../../../network";
 
 const CatatanIbadahPage = () => {
+  const { data: dataUserStampRaw } = useFetchUserStamp();
+
+  const dataUserStamp = dataUserStampRaw?.data?.data;
+  const totalStamp = dataUserStamp?.total_stamp ?? 0;
+
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
-    handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index")
+    handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
 
   return (
@@ -25,7 +31,9 @@ const CatatanIbadahPage = () => {
             <div className="rounded-full w-[24px] h-[24px] ">
               <img src={StampIcon} width="20px" height="20px" />
             </div>
-            <p className="text-[20px] font-bold text-white">0</p>
+            <p className="text-[20px] font-bold text-white relative top-[-2px]">
+              {totalStamp}
+            </p>
           </div>
         </div>
         <div className="flex justify-end pr-[20px] items-center w-[50%] h-auto">

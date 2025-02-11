@@ -112,23 +112,23 @@ const endpoints: ENDPOINT_SOURCE = {
   },
   stampMissionList: {
     endpoint: "/api/v1/stamp/mission",
-    source: "api",
+    source: "gamification",
   },
   stampMissionSummary: {
     endpoint: "/api/v1/stamp/mission_summary",
-    source: "api",
+    source: "gamification",
   },
   submitMission: {
     endpoint: "/api/v1/stamp/submit",
-    source: "api",
+    source: "gamification",
   },
   stampHistory: {
     endpoint: "/api/v1/stamp/history",
-    source: "api",
+    source: "gamification",
   },
   userStamp: {
     endpoint: "/api/v1/user/stamp",
-    source: "api",
+    source: "gamification",
   },
 };
 

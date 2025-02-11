@@ -42,7 +42,7 @@
       "cdndev.mytsel.id"
     ],
     "miniprogram": {
-      "current": 0,
+      "current": 2,
       "list": [
         {
           "id": 0,
@@ -55,6 +55,13 @@
           "id": 1,
           "name": "SearchLocation",
           "pathName": "subpackages/subpackage3/pages/RamadhanSearchLocation/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "Catatan Ibadah",
+          "pathName": "subpackages/subpackage5/pages/CatatanIbadah/index",
           "query": "",
           "scene": null
         }

@@ -145,7 +145,10 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[200px] flex flex-col items-center justify-center gap-y-2">
+        <div
+          style={{ borderTop: "2px solid #dae0e9" }}
+          className="h-[200px] flex flex-col items-center justify-center gap-y-2 rounded-t-[16px] py-[12px]"
+        >
           <AsSvg src={IconSchedule} width="24px" height="24px" />
           <p className="text-[12px] text-[#757f90] whitespace-pre text-center">{`Saat ini, kamu belum bisa mencatat ibadah untuk hari\nlain. Yuk, lanjutkan nanti!`}</p>
 

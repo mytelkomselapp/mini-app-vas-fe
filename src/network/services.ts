@@ -27,6 +27,7 @@ import {
   SearchCityResponse,
   StampMissionListResponse,
   StampMissionSummaryResponse,
+  UserStampResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {

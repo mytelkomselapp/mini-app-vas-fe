@@ -292,3 +292,15 @@ export const gregorianToHijri = (date: Date) => {
     year: y,
   };
 };
+
+export const generateArrayRangeDate = (startDate: string, endDate: string) => {
+  const start = moment(startDate);
+  const end = moment(endDate);
+
+  const dates: string[] = [];
+  for (let date = moment(start); date.isSameOrBefore(end); date.add(1, "day")) {
+    dates.push(date.format("YYYY-MM-DD"));
+  }
+
+  return dates;
+};
