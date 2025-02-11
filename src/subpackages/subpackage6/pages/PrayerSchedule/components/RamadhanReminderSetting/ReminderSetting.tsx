@@ -87,8 +87,9 @@ const ReminderSetting = ({
           { label: "Tidak Aktif", value: "tidak-aktif", icon: Stop },
         ].map((option) => (
           <label
+            onClick={() => handleOptionChange(option.value as PrayerStatus)}
             key={option.value}
-            className="flex items-center justify-between gap-4 cursor-pointer"
+            className="flex items-center justify-between gap-4 ctive:bg-transparent active:text-current"
           >
             <div className="flex items-center gap-2">
               <img
@@ -102,7 +103,6 @@ const ReminderSetting = ({
               className={`custom-radio-button ${
                 selectedOption === option.value ? "selected" : ""
               }`}
-              onClick={() => handleOptionChange(option.value as PrayerStatus)}
             >
               <div
                 className={`checked-dot ${
