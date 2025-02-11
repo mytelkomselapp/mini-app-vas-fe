@@ -6,13 +6,17 @@ import CheckedMarkGrey from "../../../../../../../../assets/checked-mark-green.s
 import CancelMarkGrey from "../../../../../../../../assets/cancel-mark-grey.svg";
 import LightningIcon from "../../../../../../../../assets/ico-white-lightning.svg";
 
-import { DataDetailTaskRamadhanProps } from "../../../../../../../../store/ramadhan";
+import {
+  DataDetailTaskRamadhanProps,
+  useDataCatatanIbadah,
+} from "../../../../../../../../store/ramadhan";
 
 import BackgroundSholat from "../../../../../../../../assets/bg/catatan-ibadah/bg-sholat.png";
 import BackgroundSahurBukaPuasa from "../../../../../../../../assets/bg/catatan-ibadah/bg-sahur.png";
 import BackgroundSedekah from "../../../../../../../../assets/bg/catatan-ibadah/bg-sedekah-subuh.png";
 import BackgroundBaca from "../../../../../../../../assets/bg/catatan-ibadah/bg-baca.png";
 import BackgroundDzikir from "../../../../../../../../assets/bg/catatan-ibadah/bg-dzikir.png";
+import { getCurrentTaskStatus } from "../../../../../../../../lib/utils";
 
 export interface CardTaskIbadahProps {
   data: DataDetailTaskRamadhanProps;
@@ -27,7 +31,8 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
   type = "pagi",
   onClick,
 }) => {
-  console.log({ type });
+  const { currentDay } = useDataCatatanIbadah();
+  const activeTaskStatus = getCurrentTaskStatus(currentDay);
 
   const generateOverlayColor = () => {
     if (type === "pagi") return "rgba(1, 126, 210, 0.65)";
@@ -81,9 +86,15 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
     return BackgroundSahurBukaPuasa;
   };
 
+  const handleClick = (data: DataDetailTaskRamadhanProps) => {
+    if (["past", "present"]?.includes(activeTaskStatus)) return;
+
+    onClick?.(data);
+  };
+
   return (
     <BackgroundImage
-      onClick={() => onClick(data)}
+      onClick={() => handleClick(data)}
       imageUrl={generateImageUrl()}
       bgSize="cover"
       className="h-[108px] w-[108px] rounded-[16px]"

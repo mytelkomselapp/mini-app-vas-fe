@@ -208,9 +208,9 @@ export const svgToBase64 = (svgString) => {
 };
 
 export const getCurrentDayRamadhan = () => {
-  return moment()?.isBefore("2025-03-01", "day")
-    ? "2025-03-01"
-    : moment()?.format();
+  return moment()?.isBefore("2025-02-01", "day")
+    ? "2025-02-01"
+    : moment()?.format("YYYY-MM-DD");
 };
 
 export const getCurrentWeekRamadhan = (currentDay: string) => {
@@ -219,7 +219,7 @@ export const getCurrentWeekRamadhan = (currentDay: string) => {
 };
 
 export const getCurrentTaskStatus = (stateCurrentDay: string) => {
-  const currentDay = "2025-03-01";
+  const currentDay = moment()?.format("YYYY-MM-DD");
 
   if (moment(stateCurrentDay)?.isAfter(currentDay)) return "present";
   if (moment(stateCurrentDay)?.isBefore(currentDay)) return "past";

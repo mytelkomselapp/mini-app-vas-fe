@@ -8,16 +8,17 @@ import moment from "moment";
 import EllipseStamp from "../../../../../../assets/ellipse-stamp.png";
 import RewardIllustration from "../../../../../../assets/reward-illustration.png";
 import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
+import { StampMissionSummaryData } from "../../../../../../network/types/response-props";
 import {
   useFetchMissionPopupCMS,
   useFetchStampMissionList,
 } from "../../../../../../network";
 
 export interface DaftarIbadahProps {
-  todayStamp: number;
+  dataMissionSummary: StampMissionSummaryData[];
 }
 
-const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ todayStamp = 0 }) => {
+const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ dataMissionSummary }) => {
   const { currentDay } = useDataCatatanIbadah();
 
   const { data: dataMissionPopupCMSRaw } = useFetchMissionPopupCMS();
@@ -32,7 +33,13 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ todayStamp = 0 }) => {
   const dataStampMissionListConfig =
     dataStampMissionListRaw?.data?.data?.Config ?? [];
 
-  const progressDaily = todayStamp;
+  const dataCurrentDay = dataMissionSummary?.find((data) =>
+    moment(data?.date)?.isSame(currentDay)
+  );
+
+  const progressDaily = dataCurrentDay?.collected_stamp ?? 0;
+
+  console.log({ dataCurrentDay, progressDaily });
 
   return (
     <React.Fragment>

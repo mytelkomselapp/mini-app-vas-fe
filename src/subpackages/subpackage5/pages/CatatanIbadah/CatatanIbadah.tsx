@@ -17,9 +17,9 @@ const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
 
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
-  const currentDayMoment = moment("2025-03-02");
+  const currentDayMoment = moment();
   const rangeDate = generateArrayRangeDate(
-    "2025-03-01",
+    "2025-02-01",
     currentDayMoment?.format("YYYY-MM-DD")
   );
 
@@ -27,7 +27,7 @@ const CatatanIbadahPage = () => {
 
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
-  const todayStamp = dataUserStamp?.today_stamp ?? 0;
+
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
@@ -57,7 +57,9 @@ const CatatanIbadahPage = () => {
         <DateStamp
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
         />
-        <DaftarIbadah todayStamp={todayStamp} />
+        <DaftarIbadah
+          dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+        />
       </View>
     </View>
   );
