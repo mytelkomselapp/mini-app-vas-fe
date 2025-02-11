@@ -27,8 +27,6 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
   type = "pagi",
   onClick,
 }) => {
-  console.log({ type });
-
   const generateOverlayColor = () => {
     if (type === "pagi") return "rgba(1, 126, 210, 0.65)";
     if (type === "siang") return "rgba(173, 96, 0, 0.65)";

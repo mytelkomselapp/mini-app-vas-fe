@@ -100,6 +100,9 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         queryKey: ["Fetch User Stamp"],
       });
       queryClient.invalidateQueries({
+        queryKey: ["Fetch Stamp Mission Summary", { date: currentDay }],
+      });
+      queryClient.invalidateQueries({
         queryKey: ["Fetch Stamp Mission List", { date: currentDay }],
       });
 

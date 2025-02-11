@@ -27,7 +27,7 @@ const CatatanIbadahPage = () => {
 
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
-  const todayStamp = dataUserStamp?.today_stamp ?? 0;
+
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
@@ -57,7 +57,9 @@ const CatatanIbadahPage = () => {
         <DateStamp
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
         />
-        <DaftarIbadah todayStamp={todayStamp} />
+        <DaftarIbadah
+          dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+        />
       </View>
     </View>
   );
