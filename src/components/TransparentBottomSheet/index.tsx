@@ -13,7 +13,7 @@ interface TransparentBottomSheetProps {
   snapPoints?: number[]; // Array of percentage heights (e.g., [25, 50, 100])
   initialSnap?: number; // Initial snap point index
   onSnap?: (index: number) => void;
-  currentSnapIndex?: number; // Add this prop
+  currentSnapIndex?: number;
 }
 
 const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
