@@ -39,6 +39,8 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ dataMissionSummary }) => {
 
   const progressDaily = dataCurrentDay?.collected_stamp ?? 0;
 
+  console.log({ dataCurrentDay, progressDaily });
+
   return (
     <React.Fragment>
       <View className="p-[20px]">

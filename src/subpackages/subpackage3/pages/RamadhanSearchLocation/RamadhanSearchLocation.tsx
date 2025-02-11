@@ -29,10 +29,8 @@ const RamadhanSearchLocation = () => {
 
   const { setData } = useRamadhanSearchLocation() || {};
 
-  const {
-    data: dataHistoryRamadhanSearchLocation,
-    setData: setDataHistoryRamadhanSearchLocation,
-  } = useHistoryRamadhanSearchLocation();
+  const { setData: setDataHistoryRamadhanSearchLocation } =
+    useHistoryRamadhanSearchLocation();
 
   const dataPreviousCity = state?.data;
 

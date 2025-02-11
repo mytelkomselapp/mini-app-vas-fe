@@ -17,9 +17,9 @@ const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
 
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
-  const currentDayMoment = moment("2025-03-02");
+  const currentDayMoment = moment();
   const rangeDate = generateArrayRangeDate(
-    "2025-03-01",
+    "2025-02-01",
     currentDayMoment?.format("YYYY-MM-DD")
   );
 

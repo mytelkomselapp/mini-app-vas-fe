@@ -26,7 +26,7 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
     setCurrentWeek,
   } = useDataCatatanIbadah();
 
-  const listOfDay = generateCalendarByMonth(moment("2025-03-01"));
+  const listOfDay = generateCalendarByMonth(moment());
   const currentDayMoment = getCurrentDayRamadhan();
 
   /** get data of march  */
@@ -44,7 +44,7 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
   const handleClickDate = (d: Moment) => {
     if (d.isBefore(currentDay, "month")) return;
 
-    setCurrentDay(moment(d)?.format());
+    setCurrentDay(moment(d)?.format("YYYY-MM-DD"));
   };
 
   const handleNext = () => {
@@ -120,8 +120,14 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
             style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}
           >
             {dayOfWeek.map((d: Moment, i: number) => {
+              const theDay = moment(d)?.format("YYYY-MM-DD");
               const percentage =
-                (dataMissionSummary?.[i]?.percentage_of_mission || 0) * 100;
+                dataMissionSummary?.find((data) =>
+                  moment(theDay)?.isSame(data?.date, "date")
+                )?.percentage_of_mission || 0;
+
+              console.log({ theDay, percentage });
+
               return (
                 <DayCard
                   key={i}
@@ -153,9 +159,12 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
               </div>
             ))}
             {listOfDay.map((d: Moment, i: number) => {
-              const isSameMonth = moment(d)?.isSame("2025-03-01", "month");
+              const isSameMonth = moment(d)?.isSame("2025-02-01", "month");
+              const theDay = moment(d)?.format("YYYY-MM-DD");
               const percentage =
-                (dataMissionSummary?.[i]?.percentage_of_mission || 0) * 100;
+                dataMissionSummary?.find((data) =>
+                  moment(theDay)?.isSame(data?.date)
+                )?.percentage_of_mission || 0;
 
               if (!isSameMonth) return <div></div>;
 
