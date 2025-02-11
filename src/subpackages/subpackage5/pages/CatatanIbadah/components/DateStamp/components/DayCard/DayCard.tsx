@@ -2,6 +2,7 @@ import * as React from "react";
 import CircularProgress from "../CircularProgress";
 
 export interface DayCardProps {
+  isToday: boolean;
   isActive: boolean;
   onClick: () => void;
   percentage: number;
@@ -9,6 +10,7 @@ export interface DayCardProps {
 }
 
 const DayCard: React.FC<DayCardProps> = ({
+  isToday,
   isActive,
   onClick,
   percentage,
@@ -23,6 +25,7 @@ const DayCard: React.FC<DayCardProps> = ({
         isActive={isActive}
         progress={percentage}
         number={day}
+        isToday={isToday}
       />
     </div>
   );

@@ -293,6 +293,18 @@ export const gregorianToHijri = (date: Date) => {
   };
 };
 
+export const generateArrayRangeDate = (startDate: string, endDate: string) => {
+  const start = moment(startDate);
+  const end = moment(endDate);
+
+  const dates: string[] = [];
+  for (let date = moment(start); date.isSameOrBefore(end); date.add(1, "day")) {
+    dates.push(date.format("YYYY-MM-DD"));
+  }
+
+  return dates;
+};
+
 export const formatNumberWithThousandSeparator = (num: number): string => {
   if (num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -311,4 +323,17 @@ export const convertTimezone = (timezone: string): string => {
   };
 
   return timezoneMap[timezone] || timezone;
+};
+
+export const translateTaskType = (type: "morning" | "afternoon" | "night") => {
+  switch (type) {
+    case "morning":
+      return "pagi";
+    case "afternoon":
+      return "siang";
+    case "night":
+      return "malam";
+    default:
+      return type;
+  }
 };

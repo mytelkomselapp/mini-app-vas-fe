@@ -1,5 +1,8 @@
 import { create } from "zustand";
-import { RamadhanSearchLocationProps } from "../network/types/response-props";
+import {
+  RamadhanSearchLocationProps,
+  StampMissionListDataMission,
+} from "../network/types/response-props";
 import {
   getCurrentDayRamadhan,
   getCurrentWeekRamadhan,
@@ -30,10 +33,8 @@ export const useRamadhanSearchLocation = create<SearchLocationProps>()(
   })
 );
 
-export interface DataDetailTaskRamadhanProps {
-  title: string;
-  id: number;
-}
+export interface DataDetailTaskRamadhanProps
+  extends StampMissionListDataMission {}
 interface DetailTaskRamadhanStateProps {
   data?: DataDetailTaskRamadhanProps;
   setData: (data: DataDetailTaskRamadhanProps) => void;

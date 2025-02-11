@@ -9,7 +9,7 @@ import mapPinGrey from "../../../../assets/map-pin-grey.svg";
 import convex from "../../../../assets/convex-masjid.svg";
 import { convertTimezone, handleNavigate } from "../../../../lib/utils";
 import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
-
+import { RamadhanSearchLocationProps } from "../../../../network/types/response-props";
 export interface PrayerCardProps {
   name_time: string;
   nearest_pray_info: string;
@@ -20,15 +20,20 @@ export interface PrayerCardProps {
 }
 
 const PrayerCard = ({
+  data,
   city,
   nearestPrayTime,
   notificationStatus,
 }: {
+  data: RamadhanSearchLocationProps;
   city: string;
   nearestPrayTime: PrayerCardProps;
   notificationStatus: boolean;
 }) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
+
+  console.log({ dataRamadhanSearchLocation });
+
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
   const nameTime = nearestPrayTime?.name_time;
   const time =
@@ -40,7 +45,11 @@ const PrayerCard = ({
     : "Notifikasi adzan belum Aktif";
   const handleSearchLocation = () => {
     handleNavigate(
-      "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+      "/subpackages/subpackage3/pages/RamadhanSearchLocation/index",
+      "",
+      {
+        data: data,
+      }
     );
   };
   const handleNavigatePrayerSetting = () => {
