@@ -39,6 +39,7 @@ import {
 } from "../../../../network";
 import { PrayerCardProps } from "@/pages/LandingPageRamadan/components/PrayerCard";
 import { PrayerNotificationConfig } from "@/network/types/response-props";
+import LoadingScreen from "../../../../components/LoadingScreen";
 
 interface Prayer {
   id: number;
@@ -54,6 +55,7 @@ const PrayerSchedule = () => {
     { id: number; name: string; time: number } | undefined
   >();
   const [selectedStatus, setSelectedStatus] = useState<PrayerStatus>("adzan");
+  const [firstLoad, setFirstLoad] = useState(false);
   const {
     isActive,
     setIsActive,
@@ -114,6 +116,9 @@ const PrayerSchedule = () => {
   }, [refresh]);
 
   const handleRefresh = () => {
+    if (!firstLoad) {
+      setFirstLoad(true);
+    }
     setRefresh((prev) => !prev);
   };
 
@@ -174,7 +179,7 @@ const PrayerSchedule = () => {
         });
         return bgIsya;
       default:
-        return bgLanding;
+        return null;
     }
   };
 
@@ -280,11 +285,11 @@ const PrayerSchedule = () => {
     toggleOpenReminderSetting();
   };
 
-  const confirmDisableNotification = async () => {
+  const confirmDisableNotification = () => {
     if (pendingToggle !== null) {
       const valueNotification = "OFF";
       console.log({ valueNotification });
-      const result = await doGlobalNotificationConfig({
+      doGlobalNotificationConfig({
         notification: valueNotification,
       });
 
@@ -294,14 +299,14 @@ const PrayerSchedule = () => {
     toggleDisabledConfirmation();
   };
 
-  const toggleNotification = async () => {
+  const toggleNotification = () => {
     const valueNotification = "ON";
 
     if (isActive) {
       setPendingToggle(false);
       toggleDisabledConfirmation();
     } else {
-      const result = doGlobalNotificationConfig({
+      doGlobalNotificationConfig({
         notification: valueNotification,
       });
 
@@ -459,7 +464,12 @@ const PrayerSchedule = () => {
 
   return (
     <View className="!bg-inactiveGrey min-h-screen">
-      <Show when={!isLoadingRegisterUser}>
+      {/* <Show when={isLoadingRegisterUser && !firstLoad}> */}
+      <Show when={isLoadingRegisterUser}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
+      {/* <Show when={!!dataRegisterUser}> */}
+      <Show when={!!dataRegisterUser || firstLoad}>
         <ContainerPrayer>
           <View className="py-4 px-4 mt-5">
             <View className="flex justify-center items-center pt-1 pb-3">
