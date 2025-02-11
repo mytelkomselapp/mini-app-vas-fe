@@ -138,7 +138,6 @@ const CariMasjid: React.FC = () => {
   // Add marker click handler
   const handleMarkerTap = (e) => {
     const markerId = e.detail?.markerId;
-    console.log(markerId, ' <<<<');
     setSelectedMosqueId(markerId);
     setShowAllMosques(false);
     handleSnapChange(0);
@@ -152,7 +151,6 @@ const CariMasjid: React.FC = () => {
   }, [nearestMosques?.data?.data, showAllMosques]);
 
   const handleMosquePress = (mosque) => {
-    console.log(mosque, ' <<<<');
     setSelectedMosque(mosque);
   };
 
