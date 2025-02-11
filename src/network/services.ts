@@ -46,6 +46,8 @@ import {
   UserUpdateCityPayloadProps,
   StampMissionListPayloadProps,
   StampMissionSummaryPayloadProps,
+  StampMissionSubmitPayloadProps,
+  StampHistoryPayloadProps,
 } from "./types/request-payload";
 
 /**
@@ -243,4 +245,8 @@ export const getUserStamp = (): UserStampResponse => {
 
 export const getLandingPageCMS = (): LandingPageCMSResponse => {
   return http.get(endpoints?.getLandingPageCMS);
+};
+
+export const getMissionPopupCMS = (): MissionPopupCMSResponse => {
+  return http.get(endpoints?.getMissionPopupCMS);
 };

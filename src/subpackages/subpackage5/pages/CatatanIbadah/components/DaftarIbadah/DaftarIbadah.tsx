@@ -7,12 +7,32 @@ import TaskIbadah from "./components/TaskIbadah";
 import moment from "moment";
 import EllipseStamp from "../../../../../../assets/ellipse-stamp.png";
 import RewardIllustration from "../../../../../../assets/reward-illustration.png";
-import { useDataCatatanIbadah } from "@/store/ramadhan";
+import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
+import {
+  useFetchMissionPopupCMS,
+  useFetchStampMissionList,
+} from "../../../../../../network";
 
-export interface DaftarIbadahProps {}
+export interface DaftarIbadahProps {
+  todayStamp: number;
+}
 
-const DaftarIbadah: React.FC<DaftarIbadahProps> = () => {
+const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ todayStamp = 0 }) => {
   const { currentDay } = useDataCatatanIbadah();
+
+  const { data: dataMissionPopupCMSRaw } = useFetchMissionPopupCMS();
+  const { data: dataStampMissionListRaw } = useFetchStampMissionList(
+    { date: currentDay },
+    !!currentDay
+  );
+
+  const dataMissionPopupCMS = dataMissionPopupCMSRaw?.data?.data ?? [];
+
+  const dailyMaxStamp = dataStampMissionListRaw?.data?.data?.DailyMaxStamp ?? 0;
+  const dataStampMissionListConfig =
+    dataStampMissionListRaw?.data?.data?.Config ?? [];
+
+  const progressDaily = todayStamp;
 
   return (
     <React.Fragment>
@@ -30,11 +50,14 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = () => {
           }}
           className="flex mt-[6px] justify-between items-center py-[12px] w-full h-[80px] rounded-[16px]"
         >
-          <div className="flex flex-col items-center justify-center w-[70%] h-full pl-[16px]">
-            <p className="text-[14px] whitespace-pre font-bold gradient-text text-transparent">
+          <div className="flex flex-col items-center justify-center w-[68%] h-full pl-[16px]">
+            <p className="text-[13px] whitespace-pre font-bold gradient-text text-transparent relative left-[-10px]">
               {`Selesaikan ibadahmu dan\ndapatkan stamp hariannya!`}
             </p>
-            <ProgressReward progress={10} />
+            <ProgressReward
+              progress={progressDaily}
+              dailyMaxStamp={dailyMaxStamp}
+            />
           </div>
 
           <div className="flex justify-center items-center relative w-[30%] h-full">
@@ -52,12 +75,15 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = () => {
             />
             <img
               src={RewardIllustration}
-              className="absolute h-[62px] w-[56px] object-contain"
+              className="absolute top-[12px] left-[24%] h-[62px] w-[56px] object-contain"
             />
           </div>
         </div>
       </View>
-      <TaskIbadah />
+      <TaskIbadah
+        dataMissionPopupCMS={dataMissionPopupCMS}
+        dataStampMissionListConfig={dataStampMissionListConfig}
+      />
     </React.Fragment>
   );
 };

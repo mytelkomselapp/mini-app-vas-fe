@@ -479,6 +479,15 @@ export interface LandingPageCMSData {
   ramadhanSections: RamadhanSection[];
 }
 
+export interface MissionPopupCMSData {
+  mission_id: string;
+  mission_name: string;
+  question: string;
+  quote: string | null;
+  publishedAt: string;
+  backgroundImg: string;
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -541,4 +550,6 @@ export type StampSubmissionResponse = HttpSuccessResponse<StampSubmissionData>;
 export type StampHistoryResponse = HttpSuccessResponse<StampHistoryData>;
 
 export type UserStampResponse = HttpSuccessResponse<UserStampData>;
+
 export type LandingPageCMSResponse = HttpSuccessResponse<LandingPageCMSData>;
+export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;

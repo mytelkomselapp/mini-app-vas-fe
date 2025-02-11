@@ -105,3 +105,9 @@ export interface StampHistoryPayloadProps {
   _page: number;
   _order_created: "desc" | "asc";
 }
+
+export interface StampMissionSubmitPayloadProps {
+  category: "pagi" | "siang" | "malam";
+  category_id: string;
+  mission_id: string;
+}

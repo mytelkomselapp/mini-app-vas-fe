@@ -1,7 +1,12 @@
 import StampIcon from "../../../../../../../../assets/icon-stamp-gamehub.svg";
 import { svgToBase64 } from "../../../../../../../../lib/utils";
 
-const CircularProgress = ({ progress, number, isActive = false }) => {
+const CircularProgress = ({
+  progress,
+  number,
+  isActive = false,
+  isToday = false,
+}) => {
   const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" width="100" height="100">
   <circle stroke="#e5e7eb" stroke-width="6" fill="transparent" r="16" cx="20" cy="20" />
   <defs>
@@ -72,7 +77,11 @@ const CircularProgress = ({ progress, number, isActive = false }) => {
 
       <p
         className={`text-[10px] mt-2 w-[30px] text-center ${
-          isActive ? "bg-[#ff0025] rounded-xl text-white" : "text-black"
+          isActive
+            ? "bg-[#ff0025] rounded-xl text-white"
+            : isToday
+            ? "text-[#ff0025]"
+            : "text-black"
         }`}
       >
         {number}

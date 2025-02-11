@@ -5,15 +5,29 @@ import BackgroundImage from "../../../../components/BackgroundImage";
 import ButtonRedeem from "./components/ButtonRedeem/ButtonRedeem";
 import { DateStamp } from "./components";
 import DaftarIbadah from "./components/DaftarIbadah";
-import { handleNavigate } from "../../../../lib/utils";
-import { useFetchUserStamp } from "../../../../network";
+import { generateArrayRangeDate, handleNavigate } from "../../../../lib/utils";
+import {
+  useBulkFetchMissionSummary,
+  useFetchUserStamp,
+} from "../../../../network";
+import moment from "moment";
+import { StampMissionSummaryData } from "../../../../network/types/response-props";
 
 const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
 
+  /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
+  const currentDayMoment = moment("2025-03-02");
+  const rangeDate = generateArrayRangeDate(
+    "2025-03-01",
+    currentDayMoment?.format("YYYY-MM-DD")
+  );
+
+  const { data: dataMissionSummary } = useBulkFetchMissionSummary(rangeDate);
+
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
-
+  const todayStamp = dataUserStamp?.today_stamp ?? 0;
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
@@ -31,9 +45,7 @@ const CatatanIbadahPage = () => {
             <div className="rounded-full w-[24px] h-[24px] ">
               <img src={StampIcon} width="20px" height="20px" />
             </div>
-            <p className="text-[20px] font-bold text-white relative top-[-2px]">
-              {totalStamp}
-            </p>
+            <p className="text-[20px] font-bold text-white">{totalStamp}</p>
           </div>
         </div>
         <div className="flex justify-end pr-[20px] items-center w-[50%] h-auto">
@@ -42,8 +54,10 @@ const CatatanIbadahPage = () => {
       </BackgroundImage>
 
       <View className="bg-white rounded-t-[16px] relative top-[-20px] min-h-[100px]">
-        <DateStamp />
-        <DaftarIbadah />
+        <DateStamp
+          dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+        />
+        <DaftarIbadah todayStamp={todayStamp} />
       </View>
     </View>
   );

@@ -324,3 +324,16 @@ export const convertTimezone = (timezone: string): string => {
 
   return timezoneMap[timezone] || timezone;
 };
+
+export const translateTaskType = (type: "morning" | "afternoon" | "night") => {
+  switch (type) {
+    case "morning":
+      return "pagi";
+    case "afternoon":
+      return "siang";
+    case "night":
+      return "malam";
+    default:
+      return type;
+  }
+};

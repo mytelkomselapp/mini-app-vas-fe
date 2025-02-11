@@ -16,6 +16,7 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getLandingPageCMS,
+  getMissionPopupCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
@@ -348,6 +349,12 @@ export const useBulkFetchMissionSummary = (calendar: string[] = []) => {
 
 export const useFetchLandingPageCMS = (enabled: boolean = true) => {
   return useQuery(["Fetch Landing Page CMS"], getLandingPageCMS, {
+    enabled,
+  });
+};
+
+export const useFetchMissionPopupCMS = (enabled: boolean = true) => {
+  return useQuery(["Fetch Mission Popup CMS"], getMissionPopupCMS, {
     enabled,
   });
 };

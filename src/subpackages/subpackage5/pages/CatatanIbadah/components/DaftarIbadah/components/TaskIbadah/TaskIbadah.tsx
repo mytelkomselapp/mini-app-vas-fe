@@ -3,7 +3,6 @@ import MorningIcon from "../../../../../../../../assets/morning-tab.svg";
 import AfternoonIcon from "../../../../../../../../assets/afternoon-tab.svg";
 import NightIcon from "../../../../../../../../assets/night-tab.svg";
 import { View } from "@tarojs/components";
-import { DUMMY_CARD_TASK_IBADAH_LIST } from "../../../../constants";
 import CardTaskIbadah from "../CardTaskIbadah/CardTaskIbadah";
 import useToggle from "../../../../../../../../hooks/useToggle";
 import DetailTaskIbadahModal from "../../../../modals";
@@ -15,34 +14,48 @@ import {
 import {
   getCurrentDayRamadhan,
   getCurrentTaskStatus,
+  translateTaskType,
 } from "../../../../../../../../lib/utils";
 import IconSchedule from "../../../../../../../../assets/ico_schedule.svg";
 import { AsSvg } from "../../../../../../../../components/Svg";
+import {
+  StampMissionListDataConfig,
+  MissionPopupCMSData,
+} from "../../../../../../../../network/types/response-props";
+import { usePostSubmitMission } from "../../../../../../../../network";
+import { queryClient } from "../../../../../../../../hoc/withProvider";
 
-export interface TaskIbadahProps {}
+export interface TaskIbadahProps {
+  dataStampMissionListConfig: StampMissionListDataConfig[];
+  dataMissionPopupCMS: MissionPopupCMSData[];
+}
 
 export type TaskIbadahActiveTabType = "morning" | "afternoon" | "night";
 
-const TaskIbadah: React.FC<TaskIbadahProps> = () => {
+const TaskIbadah: React.FC<TaskIbadahProps> = ({
+  dataStampMissionListConfig = [],
+  dataMissionPopupCMS = [],
+}) => {
   const [activeTab, setActiveTab] =
     React.useState<TaskIbadahActiveTabType>("morning");
+
+  const { mutateAsync: postSubmitMission, isLoading: loadingSubmitMission } =
+    usePostSubmitMission();
 
   const { setData } = useDetailTaskRamadhan();
   const { currentDay, setCurrentDay } = useDataCatatanIbadah();
   const activeTaskStatus = getCurrentTaskStatus(currentDay);
 
-  console.log({ activeTaskStatus });
-
-  const dataCardByActiveTab = DUMMY_CARD_TASK_IBADAH_LIST?.[activeTab];
+  const dataConfigItem = [...dataStampMissionListConfig]?.find(
+    (data) => data?.category === translateTaskType(activeTab)
+  );
+  const dataCardByActiveTab = dataConfigItem?.mission;
 
   const { active: visibleTaskModal, toggleActive: toggleVisibleTaskModal } =
     useToggle();
 
   const handleOpenTaskModal = (data: DataDetailTaskRamadhanProps) => {
-    setData({
-      id: data?.id,
-      title: data?.title,
-    });
+    setData(data);
     toggleVisibleTaskModal();
   };
 
@@ -72,6 +85,29 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
       return `text-[16px] text-center flex justify-center items-center relative top-[2px] gap-x-1 h-[40px] font-bold text-black rounded-t-[16px]`;
 
     return `text-[16px] text-center flex justify-center items-center gap-x-1 h-[40px] font-bold text-[#757F90]`;
+  };
+
+  const handleSubmitMission = async (missionId: string) => {
+    try {
+      await postSubmitMission({
+        mission_id: missionId,
+        category: dataConfigItem?.category as any,
+        category_id: dataConfigItem?.category_id as any,
+      });
+
+      /*  Refetch user stamp and stamp mission list */
+      queryClient.invalidateQueries({
+        queryKey: ["Fetch User Stamp"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["Fetch Stamp Mission List", { date: currentDay }],
+      });
+
+      toggleVisibleTaskModal();
+    } catch (error) {
+      /** TODO: Show Toast Error */
+      console.log("TOAST ERROR");
+    }
   };
 
   return (
@@ -131,15 +167,13 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
           </p>
 
           <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
-            {[...dataCardByActiveTab]?.map((data, idx) => (
+            {dataCardByActiveTab?.map((data, idx) => (
               <CardTaskIbadah
-                id={data?.id}
+                data={data}
                 condition="active"
                 key={idx}
-                imageUrl={data?.imageUrl}
-                title={data?.title}
                 onClick={handleOpenTaskModal}
-                type={data?.type as TaskIbadahActiveTabType}
+                type={dataConfigItem?.category as any}
               />
             ))}
           </div>
@@ -162,9 +196,11 @@ const TaskIbadah: React.FC<TaskIbadahProps> = () => {
       )}
 
       <DetailTaskIbadahModal
+        data={dataMissionPopupCMS}
         visible={visibleTaskModal}
         onClose={toggleVisibleTaskModal}
-        onSubmit={() => {}}
+        onSubmit={handleSubmitMission}
+        submitLoading={loadingSubmitMission}
       />
     </View>
   );

@@ -134,6 +134,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/ramadhan-landing-page",
     source: "cms",
   },
+  getMissionPopupCMS: {
+    endpoint: "/api/rm-mission-popups",
+    source: "cms",
+  },
 };
 
 export default endpoints;

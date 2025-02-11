@@ -4,17 +4,19 @@ import { View } from "@tarojs/components";
 import ChevronLeft from "../../../../../../assets/chevron-left.svg";
 import ChevronRight from "../../../../../../assets/chevron-right.svg";
 import {
-  generateArrayRangeDate,
   generateCalendarByMonth,
+  getCurrentDayRamadhan,
 } from "../../../../../../lib/utils";
 import moment, { Moment } from "moment";
 import DayCard from "./components/DayCard";
 import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
-import { useBulkFetchMissionSummary } from "../../../../../..//network";
+import { StampMissionSummaryData } from "../../../../../..//network/types/response-props";
 
-export interface DateStampProps {}
+export interface DateStampProps {
+  dataMissionSummary: StampMissionSummaryData[];
+}
 
-const DateStamp: React.FC<DateStampProps> = () => {
+const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
   const {
     currentDay,
     currentView,
@@ -25,15 +27,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
   } = useDataCatatanIbadah();
 
   const listOfDay = generateCalendarByMonth(moment("2025-03-01"));
-  /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
-  const currentDayMoment = moment("2025-03-02");
-  const rangeDate = generateArrayRangeDate(
-    "2025-03-01",
-    currentDayMoment?.format("YYYY-MM-DD")
-  );
-
-  const { data: dataMissionSummary, isLoading: isLoadingMissionSummary } =
-    useBulkFetchMissionSummary(rangeDate);
+  const currentDayMoment = getCurrentDayRamadhan();
 
   /** get data of march  */
   const dataMarch = [...listOfDay]?.filter((data) =>
@@ -131,6 +125,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
               return (
                 <DayCard
                   key={i}
+                  isToday={d.isSame(moment(currentDayMoment), "day")}
                   isActive={d.isSame(moment(currentDay), "day")}
                   onClick={() => {
                     handleClickDate(d);
@@ -167,6 +162,7 @@ const DateStamp: React.FC<DateStampProps> = () => {
               return (
                 <DayCard
                   key={i}
+                  isToday={d.isSame(moment(currentDayMoment), "day")}
                   isActive={d.isSame(moment(currentDay), "day")}
                   onClick={() => {
                     handleClickDate(d);

@@ -44,7 +44,6 @@ const RamadhanSearchLocation = () => {
 
   const isShowSearchResult = dataSearchCity?.length > 0;
   const isShowHistorySearchResult = !isShowSearchResult;
-  console.log({ isShowSearchResult, isShowHistorySearchResult });
 
   const handleChangeKeyword = (value: string) => {
     if (value?.length <= 0) {
