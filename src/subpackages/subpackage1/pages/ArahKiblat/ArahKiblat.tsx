@@ -78,7 +78,7 @@ const ArahKiblat: React.FC = () => {
   }, []);
 
   const handleClose = () => setOpen(false);
-  const isAligned = qibla === angle;
+  const isAligned = qibla === Math.round(angle);
   console.log({ qibla, angle, isAligned });
   return (
     <View className="bg-white h-screen flex">
