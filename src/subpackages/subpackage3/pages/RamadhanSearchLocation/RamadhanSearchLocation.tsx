@@ -15,18 +15,28 @@ import {
 import Taro from "@tarojs/taro";
 import { useFetchSearchCity, useUserUpdateCity } from "../../../../network";
 import { queryClient } from "../../../../hoc/withProvider";
+import { getNavigateState } from "../../../../lib/utils";
 
 const RamadhanSearchLocation = () => {
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = React.useMemo(
+    () => getNavigateState(currentPath),
+    [currentPath]
+  );
+
   const [isTyping, setIsTyping] = React.useState<boolean>(false);
   const [keyword, setKeyword] = React.useState<string>("");
 
   const { setData } = useRamadhanSearchLocation() || {};
+
   const {
     data: dataHistoryRamadhanSearchLocation,
     setData: setDataHistoryRamadhanSearchLocation,
   } = useHistoryRamadhanSearchLocation();
 
-  console.log({ dataHistoryRamadhanSearchLocation });
+  const dataPreviousCity = state?.data;
+
+  console.log({ dataPreviousCity });
 
   const {
     data: searchCityData,
@@ -97,7 +107,7 @@ const RamadhanSearchLocation = () => {
         <SearchResult
           data={dataSearchCity}
           onSelect={handleSelectCity}
-          itemHistory={dataHistoryRamadhanSearchLocation}
+          itemHistory={dataPreviousCity}
           type="history"
         />
       </Show>

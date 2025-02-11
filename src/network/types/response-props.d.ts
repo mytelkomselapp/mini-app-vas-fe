@@ -103,13 +103,13 @@ export interface FlightSearchCity {
 }
 
 export interface RamadhanSearchLocationProps {
-  id: number;
-  city: string;
-  latitude: string;
-  longitude: string;
-  country: string;
-  province: string;
-  timezone: string;
+  id?: number;
+  city?: string;
+  latitude?: string;
+  longitude?: string;
+  country?: string;
+  province?: string;
+  timezone?: string;
 }
 
 export interface FlightSearchData {
