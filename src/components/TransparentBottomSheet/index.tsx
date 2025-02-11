@@ -13,6 +13,7 @@ interface TransparentBottomSheetProps {
   snapPoints?: number[]; // Array of percentage heights (e.g., [25, 50, 100])
   initialSnap?: number; // Initial snap point index
   onSnap?: (index: number) => void;
+  currentSnapIndex?: number;
 }
 
 const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
@@ -25,11 +26,20 @@ const TransparentBottomSheet: React.FC<TransparentBottomSheetProps> = ({
   snapPoints = [100],
   initialSnap = 0,
   onSnap,
+  currentSnapIndex,
 }) => {
   const [currentSnap, setCurrentSnap] = React.useState(initialSnap);
   const [isDragging, setIsDragging] = React.useState(false);
   const [startY, setStartY] = React.useState(0);
   const [currentY, setCurrentY] = React.useState(0);
+
+  // Add this effect to handle external snap point changes
+  React.useEffect(() => {
+    if (currentSnapIndex !== undefined) {
+      setCurrentSnap(currentSnapIndex);
+      onSnap?.(currentSnapIndex);
+    }
+  }, [currentSnapIndex]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
