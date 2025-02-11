@@ -85,3 +85,29 @@ export interface UserNotificationPayloadConfig {
   notification_status: "ON" | "OFF"; // ("ON", "OFF")
   pre_notification_time: number; // (0, 5, 10, 15)
 }
+
+export interface StampMissionListPayloadProps {
+  date: string;
+}
+
+export interface StampMissionSummaryPayloadProps {
+  date: string;
+}
+
+export interface StampMissionSubmitPayloadProps {
+  category: "pagi" | "siang" | "malam";
+  category_id: string;
+  mission_id: string;
+}
+
+export interface StampHistoryPayloadProps {
+  _limit: number;
+  _page: number;
+  _order_created: "desc" | "asc";
+}
+
+export interface StampMissionSubmitPayloadProps {
+  category: "pagi" | "siang" | "malam";
+  category_id: string;
+  mission_id: string;
+}

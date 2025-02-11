@@ -1,32 +1,37 @@
 import * as React from "react";
-import { Zap } from "lucide-react";
+import AsSVG from "../../../../../../../../components/Svg/Svg";
 import BackgroundImage from "../../../../../../../../components/BackgroundImage";
 import CheckedMarkGreen from "../../../../../../../../assets/checked-mark-green.svg";
 import CheckedMarkGrey from "../../../../../../../../assets/checked-mark-green.svg";
 import CancelMarkGrey from "../../../../../../../../assets/cancel-mark-grey.svg";
-import AsSVG from "../../../../../../../../components/Svg/Svg";
+import LightningIcon from "../../../../../../../../assets/ico-white-lightning.svg";
+
 import { DataDetailTaskRamadhanProps } from "../../../../../../../../store/ramadhan";
 
+import BackgroundSholat from "../../../../../../../../assets/bg/catatan-ibadah/bg-sholat.png";
+import BackgroundSahurBukaPuasa from "../../../../../../../../assets/bg/catatan-ibadah/bg-sahur.png";
+import BackgroundSedekah from "../../../../../../../../assets/bg/catatan-ibadah/bg-sedekah-subuh.png";
+import BackgroundBaca from "../../../../../../../../assets/bg/catatan-ibadah/bg-baca.png";
+import BackgroundDzikir from "../../../../../../../../assets/bg/catatan-ibadah/bg-dzikir.png";
+
 export interface CardTaskIbadahProps {
-  id: number;
-  type: "morning" | "afternoon" | "night";
+  data: DataDetailTaskRamadhanProps;
+  type: "pagi" | "siang" | "malam";
   onClick: (data: DataDetailTaskRamadhanProps) => void;
-  imageUrl: any;
-  title: string;
   condition: "checked" | "complete-disabled" | "active" | "incomplete-disabled";
 }
 
 const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
-  id,
+  data,
   condition = "active",
-  title = "",
-  type = "morning",
-  imageUrl,
+  type = "pagi",
   onClick,
 }) => {
+  console.log({ type });
+
   const generateOverlayColor = () => {
-    if (type === "morning") return "rgba(1, 126, 210, 0.65)";
-    if (type === "afternoon") return "rgba(173, 96, 0, 0.65)";
+    if (type === "pagi") return "rgba(1, 126, 210, 0.65)";
+    if (type === "siang") return "rgba(173, 96, 0, 0.65)";
 
     return "rgba(7, 36, 92, 0.65)";
   };
@@ -35,7 +40,9 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
     return (
       <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#e5f4ee]">
         <AsSVG src={CheckedMarkGreen} width="24px" height="24px" />
-        <p className="text-[10px] font-bold text-[#008e53]">{title}</p>
+        <p className="text-[10px] font-bold text-[#008e53]">
+          {data?.mission_name_id}
+        </p>
       </div>
     );
   }
@@ -44,7 +51,9 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
     return (
       <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#dae0e9]">
         <AsSVG src={CancelMarkGrey} width="24px" height="24px" />
-        <p className="text-[10px] font-bold text-[#9ca9c9]">{title}</p>
+        <p className="text-[10px] font-bold text-[#9ca9c9]">
+          {data?.mission_name_id}
+        </p>
       </div>
     );
   }
@@ -53,20 +62,29 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
     return (
       <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#dae0e9]">
         <AsSVG src={CheckedMarkGrey} width="24px" height="24px" />
-        <p className="text-[10px] font-bold text-[#9ca9c9]">{title}</p>
+        <p className="text-[10px] font-bold text-[#9ca9c9]">
+          {data?.mission_name_id}
+        </p>
       </div>
     );
   }
 
+  const generateImageUrl = () => {
+    const mission = data?.mission_name_id;
+
+    if (/^Sedekah Subuh$/.test(mission)) return BackgroundSedekah;
+    if (/^Baca Al-Quran$/.test(mission)) return BackgroundBaca;
+    if (/^Dzikir (Pagi|Petang)$/.test(mission)) return BackgroundDzikir;
+    if (/^Sholat (Subuh|Dhuha|Zuhur|Asar|Maghrib|Isya|Tarawih)$/.test(mission))
+      return BackgroundSholat;
+
+    return BackgroundSahurBukaPuasa;
+  };
+
   return (
     <BackgroundImage
-      onClick={() =>
-        onClick({
-          id,
-          title,
-        })
-      }
-      imageUrl={imageUrl}
+      onClick={() => onClick(data)}
+      imageUrl={generateImageUrl()}
       bgSize="cover"
       className="h-[108px] w-[108px] rounded-[16px]"
     >
@@ -77,12 +95,19 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
         <div className="flex justify-end w-full">
           <div className="flex justify-center gap-x-1 items-center w-[50px] h-[25px] bg-[#ff0025] rounded-tr-[16px] rounded-bl-[12px]">
             <p className="text-white text-[10px] font-bold">+10</p>
-            <Zap size={10} color="white" />
+            <img
+              src={LightningIcon}
+              alt="lightning"
+              width="12px"
+              height="12px"
+            />
           </div>
         </div>
 
         <div className="flex justify-center items-center h-[60%]">
-          <p className="text-[10px] text-white font-bold">{title}</p>
+          <p className="text-[10px] text-white font-bold">
+            {data?.mission_name_id}
+          </p>
         </div>
       </div>
     </BackgroundImage>

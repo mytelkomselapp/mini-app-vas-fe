@@ -41,6 +41,9 @@
     "maintained node versions"
   ],
   "author": "",
+  "resolutions": {
+    "string-width": "4.2.3"
+  },
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "@files-ui/react": "^1.2.4",
@@ -94,6 +97,7 @@
     "react-router-dom": "^6.27.0",
     "react-waypoint": "^10.3.0",
     "redux": "^5.0.1",
+    "string-width": "4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-rem-to-px": "^0.1.1",
     "taro-axios": "^1.1.1",

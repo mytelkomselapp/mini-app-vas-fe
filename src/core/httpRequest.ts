@@ -4,12 +4,12 @@ import {
   BASE_API_URL,
   BASE_CMS_API_URL,
   BASE_CMS_TOKEN,
-  BASE_APPS_TOKEN,
+  BASE_GAMIFICATION_API_URL,
 } from "./env";
 import { AxiosHTTPError } from "../network/types/api-response-container";
 import { serializeParam } from "./serializeParam";
 
-type API_SOURCE = "api" | "cms";
+type API_SOURCE = "api" | "cms" | "gamification";
 export type ENDPOINT_SOURCE = {
   [key: string]: {
     endpoint: string;
@@ -48,11 +48,15 @@ const generateBaseURL = (source: API_SOURCE, url: string) => {
     return `${BASE_API_URL}${url}`;
   }
 
+  if (source === "gamification") {
+    return `${BASE_GAMIFICATION_API_URL}${url}`;
+  }
+
   return `${BASE_CMS_API_URL}${url}`;
 };
 
 const generateToken = (source: API_SOURCE) => {
-  if (source === "api") {
+  if (source === "api" || source === "gamification") {
     try {
       const value = Taro.getStorageSync("customParams");
       return "d5ec054f8b17714ceff631d947c5b5d0-7a2e354f88a643eceaf488d31ed354d5e0f440aaaec0fa56dc2fbdcd4a7ca1c161a8d2c63da979eec33037b18f255f845191d2c31bde6e8f1e4ec3af5dcef25c1417596968685c42a6d93dd55ec05309649213125c3e8fca0f9e77e02482f93addfa48f5c6a92d0754dcaf534ebfc9b8e3a120000030d5ed83c408f8c842d1d1";
@@ -65,9 +69,9 @@ const generateToken = (source: API_SOURCE) => {
       alert("Error: " + e);
       // Do something when catch error
     }
-  } else {
-    return BASE_CMS_TOKEN;
   }
+
+  return BASE_CMS_TOKEN;
 };
 
 export const get = <T extends string | ArrayBuffer = any>(
@@ -96,6 +100,7 @@ export const get = <T extends string | ArrayBuffer = any>(
     url,
     ...config,
     header: {
+      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -132,6 +137,7 @@ export const post = <T extends string | ArrayBuffer = any>(
     url,
     ...config,
     header: {
+      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -164,6 +170,7 @@ export const uploadFile = <T extends string | ArrayBuffer = any>(
     filePath, // Path to the file
     name: "files", // Form field name for the file
     header: {
+      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
     },
   });
@@ -200,6 +207,7 @@ export const apiDelete = (
     url,
     ...config,
     header: {
+      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -237,6 +245,7 @@ export const patch = (
     url,
     ...config,
     header: {
+      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },

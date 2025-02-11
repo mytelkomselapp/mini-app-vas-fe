@@ -16,6 +16,7 @@ import {
   usePrayerNotification,
   useRamadhanSearchLocation,
 } from "../../store/ramadhan";
+import { RamadhanSearchLocationProps } from "@/network/types/response-props";
 
 type Feature = {
   name: string;
@@ -194,6 +195,7 @@ const LandingPageRamadan = () => {
       >
         <View className="p-4">
           <PrayerCard
+            data={dataRegisterUser?.city as RamadhanSearchLocationProps}
             city={city}
             nearestPrayTime={nearestPrayerTime}
             notificationStatus={notificationStatus}

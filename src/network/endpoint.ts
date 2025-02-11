@@ -110,8 +110,32 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/user/update-city",
     source: "api",
   },
+  stampMissionList: {
+    endpoint: "/api/v1/stamp/mission",
+    source: "gamification",
+  },
+  stampMissionSummary: {
+    endpoint: "/api/v1/stamp/mission_summary",
+    source: "gamification",
+  },
+  submitMission: {
+    endpoint: "/api/v1/stamp/submit",
+    source: "gamification",
+  },
+  stampHistory: {
+    endpoint: "/api/v1/stamp/history",
+    source: "gamification",
+  },
+  userStamp: {
+    endpoint: "/api/v1/user/stamp",
+    source: "gamification",
+  },
   getLandingPageCMS: {
     endpoint: "/api/ramadhan-landing-page",
+    source: "cms",
+  },
+  getMissionPopupCMS: {
+    endpoint: "/api/rm-mission-popups",
     source: "cms",
   },
 };

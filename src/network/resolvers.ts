@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQueries, useQuery } from "react-query";
 import {
   deleteETicket,
   deleteTrackingFlight,
@@ -16,9 +16,14 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getLandingPageCMS,
+  getMissionPopupCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
+  getStampHistory,
+  getStampMissionList,
+  getStampMissionSummary,
+  getUserStamp,
   getWeboptinToken,
   patchNotificationConfig,
   postBuyPackage,
@@ -26,6 +31,7 @@ import {
   postCreateETicket,
   postNotificationConfig,
   postRegisterUser,
+  postSubmitMission,
   postTrackingFlight,
   postUploadETicketFile,
   userUpdateCity,
@@ -36,9 +42,11 @@ import {
   NearestCityPayloadProps,
   NearestMosquesPayloadProps,
   SearchCityPayloadProps,
+  StampHistoryPayloadProps,
+  StampMissionListPayloadProps,
+  StampMissionSummaryPayloadProps,
 } from "./types/request-payload";
-import { useState } from "react";
-import endpoints from "./endpoint";
+import { useMemo, useState } from "react";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -273,8 +281,80 @@ export const usePostNotificationConfig = () => {
   return useMutation(["Post Notification Config"], postNotificationConfig);
 };
 
+export const useFetchStampMissionList = (
+  payload: StampMissionListPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp Mission List", payload],
+    () => getStampMissionList(payload),
+    { enabled }
+  );
+};
+
+export const useFetchStampMissionSummary = (
+  payload: StampMissionSummaryPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp Mission Summary", payload],
+    () => getStampMissionSummary(payload),
+    { enabled }
+  );
+};
+
+export const usePostSubmitMission = () => {
+  return useMutation(["Post Submit Mission"], postSubmitMission);
+};
+
+export const useFetchStampHistory = (
+  payload: StampHistoryPayloadProps,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Stamp History", payload],
+    () => getStampHistory(payload),
+    { enabled }
+  );
+};
+
+export const useFetchUserStamp = (enabled: boolean = true) => {
+  return useQuery(["Fetch User Stamp"], getUserStamp, {
+    enabled,
+  });
+};
+
+export const useBulkFetchMissionSummary = (calendar: string[] = []) => {
+  const queryData =
+    calendar?.map((data) => ({
+      queryKey: `Fetch Mission Summary - ${data}`,
+      queryFn: () => getStampMissionSummary({ date: data }),
+      refetchOnMount: false,
+    })) ?? [];
+
+  const dataAllMissionSummaryRaw = useQueries(queryData);
+
+  const dataAllMissionSummary = useMemo(() => {
+    return [...dataAllMissionSummaryRaw]?.map((item) => item?.data?.data?.data);
+  }, [dataAllMissionSummaryRaw]);
+
+  return {
+    isLoading:
+      dataAllMissionSummaryRaw?.[0]?.isFetching ||
+      dataAllMissionSummaryRaw?.[0]?.isRefetching ||
+      dataAllMissionSummaryRaw?.[0]?.isLoading,
+    data: dataAllMissionSummary,
+  };
+};
+
 export const useFetchLandingPageCMS = (enabled: boolean = true) => {
   return useQuery(["Fetch Landing Page CMS"], getLandingPageCMS, {
+    enabled,
+  });
+};
+
+export const useFetchMissionPopupCMS = (enabled: boolean = true) => {
+  return useQuery(["Fetch Mission Popup CMS"], getMissionPopupCMS, {
     enabled,
   });
 };
