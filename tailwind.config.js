@@ -67,7 +67,6 @@ module.exports = {
       fontFamily: {
         sans: ["Poppins"],
         batikSans: ["TelkomselBatikSans", "sans-serif"],
-        amiri: ["Amiri", "serif"],
       },
       backgroundSize: {
         bannerImage: "100% 190px",

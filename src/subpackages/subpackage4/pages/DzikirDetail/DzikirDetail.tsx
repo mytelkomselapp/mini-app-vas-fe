@@ -87,9 +87,7 @@ const DzikirDetail = () => {
         </div> */}
       </div>
       <View className="p-6 justify-end text-right">
-        <Text className="text-right text-xl font-amiri leading-[2.5]">
-          {arab}
-        </Text>
+        <Text className="text-right text-xl leading-[2.5]">{arab}</Text>
       </View>
       <View className="px-4 leading-tight">
         <Text className="text-grey text-[14px]">{latin}</Text>
