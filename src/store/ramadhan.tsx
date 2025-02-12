@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import {
+  DzikirCMSData,
   RamadhanSearchLocationProps,
   StampMissionListDataMission,
 } from "../network/types/response-props";
@@ -151,3 +152,12 @@ export const usePrayerNotification = create<PrayerNotificationProps>()(
       }),
   })
 );
+
+interface DzikirProps {
+  data?: DzikirCMSData[];
+  setData: (data: DzikirCMSData[]) => void;
+}
+
+export const useDzikirDetail = create<DzikirProps>()((set) => ({
+  setData: (data: DzikirCMSData[]) => set(() => ({ data })),
+}));

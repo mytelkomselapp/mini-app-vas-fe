@@ -1,11 +1,14 @@
 import { View } from "@tarojs/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import backdrop from "../../../../assets/backdrop-dzikir.png";
 import morning from "../../../../assets/morning.svg";
 import dawn from "../../../../assets/dawn.svg";
 import { handleNavigate } from "../../../../lib/utils";
 import { serializeParam } from "../../../../core/serializeParam";
 import Taro from "@tarojs/taro";
+import { useFetchDzikir } from "../../../../network";
+import { DzikirCMSData } from "../../../../network/types/response-props";
+import { useDzikirDetail } from "../../../../store/ramadhan";
 
 interface Surah {
   period: string;
@@ -13,31 +16,30 @@ interface Surah {
 }
 
 const Dzikir = () => {
+  const { data: dataRawDzikir, isLoading } = useFetchDzikir();
+  const { setData } = useDzikirDetail();
+  const dataDzikir = dataRawDzikir?.data?.data;
+  const dzikirPagi =
+    dataDzikir?.filter((item) => item?.category === "pagi") ?? [];
+  const dzikirMalam =
+    dataDzikir?.filter((item) => item?.category === "malam") ?? [];
   const [activeTab, setActiveTab] = useState("pagi");
 
-  const dhikrList = [
-    "Ayat Kursi",
-    "Surah Al-Ikhlas",
-    "Surah Al-Falaq",
-    "Surah An-Naas",
-    "Sayyidul Istighfar",
-    "Melindungi Diri Dari Kecemasan, Kemalasan, dan Hutang",
-    "Mencapai Kesejahteraan di Dunia dan Akhirat",
-    "Melindungi Diri Dari Empat Kejahatan",
-    "Mempercayakan Semua Urusan Kepada Allah",
-    "Memenuhi Kewajiban untu Bersyukur Kepada Allah",
-  ];
+  const dhikrList = activeTab === "pagi" ? dzikirPagi : dzikirMalam;
 
-  const handleClick = (origin: Surah) => {
-    const qParams = serializeParam({
-      period: origin?.period,
-      surahId: origin?.surahId,
-    });
+  const handleClick = (origin: DzikirCMSData) => {
+    const qParams = serializeParam(origin);
     handleNavigate(
       "/subpackages/subpackage4/pages/DzikirDetail/index",
       `?${qParams}`
     );
   };
+
+  useEffect(() => {
+    if (dataRawDzikir && dataDzikir) {
+      setData(dataDzikir);
+    }
+  }, [dataRawDzikir]);
 
   return (
     <div className="max-w-md mx-auto overflow-hidden ">
@@ -78,15 +80,12 @@ const Dzikir = () => {
       <div className="pt-20">
         <ul className="divide-y divide-gray-200 bg-white h-full pt-2">
           {dhikrList.map((item, index) => (
-            <View
-              key={index}
-              onClick={() => handleClick({ period: activeTab, surahId: item })}
-            >
+            <View key={index} onClick={() => handleClick(item)}>
               <li className="py-4 px-6 flex items-center ">
                 <span className="w-6 h-6 flex items-center justify-center bg-[#FEF2F4] text-textError text-[14px] font-bold font-batikSans rounded-lg mr-4 p-1">
                   {index + 1}
                 </span>
-                <span className="text-[14px]">{item}</span>
+                <span className="text-[14px]">{item?.title}</span>
               </li>
               {index !== dhikrList?.length - 1 ? (
                 <div className="w-10/12 h-[1px] bg-inactiveGrey rounded mx-auto" />

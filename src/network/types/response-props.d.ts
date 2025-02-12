@@ -488,6 +488,16 @@ export interface MissionPopupCMSData {
   backgroundImg: string;
 }
 
+export interface DzikirCMSData {
+  order: number;
+  title: string;
+  category: string;
+  arab: string;
+  latin: string;
+  indonesia: string;
+  publishedAt: string;
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -553,3 +563,4 @@ export type UserStampResponse = HttpSuccessResponse<UserStampData>;
 
 export type LandingPageCMSResponse = HttpSuccessResponse<LandingPageCMSData>;
 export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
+export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;

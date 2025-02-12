@@ -138,6 +138,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/rm-mission-popups",
     source: "cms",
   },
+  getDzikir: {
+    endpoint: "/api/rm-dzikirs",
+    source: "cms",
+  },
 };
 
 export default endpoints;

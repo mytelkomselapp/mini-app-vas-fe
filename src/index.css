@@ -124,3 +124,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 700;
   src: url(assets/fonts/TelkomselBatikSans-Bold.ttf) format("truetype");
 }
+
+@font-face {
+  font-family: "Amiri";
+  font-weight: normal;
+  font-style: normal;
+  src: url(assets/fonts/Amiri-Regular.ttf) format("truetype");
+}
