@@ -6,6 +6,7 @@ import TransparentBottomSheet from "../../../../components/TransparentBottomShee
 import ChevronRight from "../../../../assets/chevron-right.svg";
 import MosqueIcon from "../../../../assets/ico_mosque.svg";
 import SignMosque from "../../../../assets/sign-mosque.svg";
+import SignMosqueSelected from "../../../../assets/sign-mosque-selected.svg";
 import GmapsIcon from "../../../../assets/gmaps-ico.png";
 import MapsIcon from "../../../../assets/maps-ico.png";
 import { useEffect, useState, useMemo } from "react";
@@ -115,9 +116,9 @@ const CariMasjid: React.FC = () => {
         id: mosque.id,
         latitude: Number(mosque.latitude),
         longitude: Number(mosque.longitude),
-        iconPath: SignMosque,
-        width: 26,
-        height: 30,
+        iconPath: mosque.id === Number(selectedMosqueId) ? SignMosqueSelected : SignMosque,
+        width: mosque.id === Number(selectedMosqueId) ? 32 : 26,
+        height: mosque.id === Number(selectedMosqueId) ? 38 : 30,
         callout: {
           content: mosque.name,
           color: "#000000",
@@ -131,7 +132,7 @@ const CariMasjid: React.FC = () => {
           textAlign: "center",
         },
       }));
-  }, [nearestMosques, showAllMosques]);
+  }, [nearestMosques, showAllMosques, selectedMosqueId]);
 
   const handleShowMore = () => {
     setShowAllMosques(true);
