@@ -108,7 +108,7 @@ const detectPlatform = () => {
   }
 };
 
-const platform = detectPlatform();
+export const platform = detectPlatform();
 
 export const sendAnalyticsEvent = async (event_name, event_params) => {
   const user_pseudo_id = "12345678901234567890123456789011"; //get from app or custParam

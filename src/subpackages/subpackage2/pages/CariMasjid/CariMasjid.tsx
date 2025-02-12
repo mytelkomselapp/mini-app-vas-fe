@@ -11,6 +11,7 @@ import MapsIcon from "../../../../assets/maps-ico.png";
 import { useEffect, useState, useMemo } from "react";
 import Taro from "@tarojs/taro";
 import { useFetchNearestMosques } from "../../../../network/resolvers";
+import { platform } from "../../../../network/analytics/tracker";
 
 interface MosqueListItemProps {
   name: string;
@@ -60,7 +61,8 @@ const CariMasjid: React.FC = () => {
   const [showAllMosques, setShowAllMosques] = useState(false);
   const [selectedMosqueId, setSelectedMosqueId] = useState<string | null>(null);
   const [selectedMosque, setSelectedMosque] = useState(null);
-  const isIOS = Taro.getSystemInfoSync().platform === 'ios';
+  const isIOS = platform === 'iOS';
+  console.log('platform', platform);
 
   const hasLocation = latitude !== 0 && longitude !== 0;
 
@@ -169,15 +171,25 @@ const CariMasjid: React.FC = () => {
       // TODO
       if (isIOS) {
         // deeplink ios
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(`comgooglemaps://?q=${latitude},${longitude}&center=${latitude},${longitude}`)
+        });
       } else {
         // deeplink android
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(`google.navigation:q=${latitude},${longitude}`)
+        });
       }
     } else if (type === 'waze') {
-      if (isIOS) {
-        // deeplink ios
-      } else {
-        // deeplink android
-      }
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(`waze://?ll=${latitude},${longitude}&navigate=yes`)
+      });
     }
   };
 
