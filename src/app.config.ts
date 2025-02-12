@@ -19,10 +19,8 @@ export default {
       root: "subpackages/subpackage7",
       pages: ["pages/TukarHadiah/index", "pages/RiwayatTukarHadiah/index"],
     },
-    {
-      root: "subpackages/subpackage9",
-      pages: ["pages/Webview/index"],
-    },
+    { root: "subpackages/subpackage8", pages: ["pages/Redemption/index"] },
+    { root: "subpackages/subpackage9", pages: ["pages/Webview/index"] },
   ],
   preloadRule: {
     "pages/LandingPageRamadan/index": {
@@ -35,6 +33,7 @@ export default {
         "subpackages/subpackage5",
         "subpackages/subpackage6",
         "subpackages/subpackage7",
+        "subpackages/subpackage8",
         "subpackages/subpackage9",
       ],
     },
