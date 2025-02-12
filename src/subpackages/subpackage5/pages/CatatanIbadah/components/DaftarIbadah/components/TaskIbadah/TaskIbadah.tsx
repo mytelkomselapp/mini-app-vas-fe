@@ -24,6 +24,7 @@ import {
 } from "../../../../../../../../network/types/response-props";
 import { usePostSubmitMission } from "../../../../../../../../network";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
+import moment from "moment";
 
 export interface TaskIbadahProps {
   dataStampMissionListConfig: StampMissionListDataConfig[];
@@ -100,6 +101,12 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         queryKey: ["Fetch User Stamp"],
       });
       queryClient.invalidateQueries({
+        queryKey: `Fetch Mission Summary - ${currentDay}`,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["Fetch Stamp Mission Summary", { date: currentDay }],
+      });
+      queryClient.invalidateQueries({
         queryKey: ["Fetch Stamp Mission List", { date: currentDay }],
       });
 
@@ -167,15 +174,31 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
           </p>
 
           <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
-            {dataCardByActiveTab?.map((data, idx) => (
-              <CardTaskIbadah
-                data={data}
-                condition="active"
-                key={idx}
-                onClick={handleOpenTaskModal}
-                type={dataConfigItem?.category as any}
-              />
-            ))}
+            {dataCardByActiveTab?.map((data, idx) => {
+              const generateCondition = () => {
+                console.log({ activeTaskStatus, data });
+
+                if (activeTaskStatus === "today") {
+                  if (data?.mission_status === 0) return "checked";
+                  if (data?.mission_status === 1) return "active";
+                }
+
+                if (activeTaskStatus === "past") {
+                  if (data?.mission_status === 0) return "complete-disabled";
+                  if (data?.mission_status === 1) return "incomplete-disabled";
+                }
+              };
+
+              return (
+                <CardTaskIbadah
+                  data={data}
+                  condition={generateCondition() as any}
+                  key={idx}
+                  onClick={handleOpenTaskModal}
+                  type={dataConfigItem?.category as any}
+                />
+              );
+            })}
           </div>
         </div>
       ) : (

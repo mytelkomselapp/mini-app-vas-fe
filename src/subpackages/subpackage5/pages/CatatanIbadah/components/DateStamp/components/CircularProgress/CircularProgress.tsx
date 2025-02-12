@@ -7,6 +7,8 @@ const CircularProgress = ({
   isActive = false,
   isToday = false,
 }) => {
+  const theProgress = 100 - progress;
+
   const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" width="100" height="100">
   <circle stroke="#e5e7eb" stroke-width="6" fill="transparent" r="16" cx="20" cy="20" />
   <defs>
@@ -29,7 +31,7 @@ const CircularProgress = ({
     stroke-dasharray="100"
     stroke-linecap="round"
     transform="rotate(-90 20 20)"
-    stroke-dashoffset="80"
+    stroke-dashoffset="${theProgress}"
     style="animation: progress-animation 1.5s linear forwards;"
   />
   <defs>
@@ -44,7 +46,7 @@ const CircularProgress = ({
         stroke-dashoffset: 100;
       }
       to {
-        stroke-dashoffset: ${80}; /* Adjust based on desired progress */
+        stroke-dashoffset: stroke-dashoffset: ${theProgress}; /* Adjust based on desired progress */
       }
     }
   </style>
@@ -53,6 +55,8 @@ const CircularProgress = ({
   const svgCircularProgress = svgToBase64(
     progress > 0 ? filledSvgString : svgString
   );
+
+  console.log({ filledSvgString, progress });
 
   return (
     <div
