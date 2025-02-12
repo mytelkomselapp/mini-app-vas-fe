@@ -29,6 +29,8 @@ import {
   StampMissionSummaryResponse,
   UserStampResponse,
   LandingPageCMSResponse,
+  RewardSectionResponse,
+  RewardItemResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -249,4 +251,12 @@ export const getLandingPageCMS = (): LandingPageCMSResponse => {
 
 export const getMissionPopupCMS = (): MissionPopupCMSResponse => {
   return http.get(endpoints?.getMissionPopupCMS);
+};
+
+export const getRewardSections = (): RewardSectionResponse => {
+  return http.get(endpoints?.getRewardSections);
+};
+
+export const getListRewards = (): RewardItemResponse => {
+  return http.get(endpoints?.getListRewards);
 };

@@ -16,10 +16,12 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getLandingPageCMS,
+  getListRewards,
   getMissionPopupCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
+  getRewardSections,
   getStampHistory,
   getStampMissionList,
   getStampMissionSummary,
@@ -355,6 +357,18 @@ export const useFetchLandingPageCMS = (enabled: boolean = true) => {
 
 export const useFetchMissionPopupCMS = (enabled: boolean = true) => {
   return useQuery(["Fetch Mission Popup CMS"], getMissionPopupCMS, {
+    enabled,
+  });
+};
+
+export const useFetchRewardSections = (enabled: boolean = true) => {
+  return useQuery(["Fetch Reward Sections"], getRewardSections, {
+    enabled,
+  });
+};
+
+export const useFetchListRewards = (enabled: boolean = true) => {
+  return useQuery(["Fetch List Rewards"], getListRewards, {
     enabled,
   });
 };
