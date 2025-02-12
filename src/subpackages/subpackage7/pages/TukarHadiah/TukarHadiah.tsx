@@ -1,7 +1,8 @@
 import { DateStamp } from "../../../subpackage5/pages/CatatanIbadah/components";
 import DaftarIbadah from "../../../subpackage5/pages/CatatanIbadah/components/DaftarIbadah";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
-import StampIcon from "../../../../assets/icon-stamp-gamehub-32.svg";
+import StampIcon from "../../../../assets/icon-stamp-gamehub.svg";
+import StampIcon32 from "../../../../assets/icon-stamp-gamehub-32.svg";
 import ClockIcon from "../../../../assets/ico_clock.svg";
 import useToggle from "../../../../hooks/useToggle";
 
@@ -11,34 +12,50 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
-
+import { useFetchListRewards, useFetchRewardSections } from "../../../../network/resolvers";
+import { RewardSectionData, RewardItemData } from "../../../../network/types/response-props";
 interface RewardItemProps {
   title: string;
   originalStamp: number;
   currentStamp: number;
   type: string;
+  imageUrl: string;
   onClick: () => void;
 }
 
-const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentStamp, onClick }) => {
+const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentStamp, type, imageUrl, onClick }) => {
+
   return (
-    <div 
-      className="bg-white rounded-xl overflow-hidden mx-auto max-w-[165.5px]"
+    <div
+      className="bg-white rounded-xl overflow-hidden mx-auto max-w-[165.5px] h-auto"
       style={{ border: '1px solid #EFF1F4' }}
     >
       <Image
-        src={'https://placehold.co/400x400'}
+        src={imageUrl}
         style={{
-          width: "165.5px",
+          width: "180px",
           height: "165px"
         }}
+        mode="aspectFill"
       />
-      <div className="p-3">
-        <Text className="font-bold text-[12px] leading-[16px]">{title}</Text>
+      <div className="p-3 pt-0">
+        <div className="mb-2">
+          <Text className="font-bold text-[12px] leading-[16px]">{title}</Text>
+        </div>
         <div className="mb-3">
-          <span className="text-xs text-gray-400 line-through mr-2">
-            {originalStamp} Stamp
-          </span>
+          <div className="flex gap-1 ml-[-2px]">
+            <Image
+              src={StampIcon}
+              style={{
+                width: "16px",
+                height: "16px"
+              }}
+            />
+            <span className="text-xs text-gray-400 line-through mr-2">
+              {originalStamp} Stamp
+            </span>
+          </div>
+
           <span className="text-sm text-red-500 font-semibold">
             {currentStamp} Stamp
           </span>
@@ -49,53 +66,23 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
   );
 };
 
-
-
-const allRewards = [
-  {
-    title: 'Voucher Gopay 10 rb',
-    originalStamp: 2500,
-    currentStamp: 2000,
-    type: 'voucher'
-  },
-  {
-    title: 'Voucher Dana 10 rb',
-    originalStamp: 2500,
-    currentStamp: 2000,
-    type: 'voucher'
-  },
-  {
-    title: 'Voucher Gopay 20 rb',
-    originalStamp: 2500,
-    currentStamp: 2000,
-    type: 'voucher'
-  },
-  {
-    title: 'Voucher Dana 20 rb',
-    originalStamp: 2500,
-    currentStamp: 2000,
-    type: 'voucher'
-  }
-];
-
-const merchandises = [
-  {
-    title: 'Topi - Bucket Hat',
-    originalStamp: 4200,
-    currentStamp: 3300,
-    type: 'merchandise'
-  },
-  {
-    title: 'Eaphone Wireless',
-    originalStamp: 16000,
-    currentStamp: 13000,
-    type: 'merchandise'
-  }
-];
-
 const TukarHadiah = () => {
+  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(false);
   const [selectedReward, setSelectedReward] = useState(null);
+
+  const { data: rewardSections, isLoading } = useFetchRewardSections();
+  const { data: listRewards, isLoading: isLoadingListRewards } = useFetchListRewards(!!rewardSections?.data);
+  // Group rewards by section and maintain section order
+  const groupedRewards = ((rewardSections?.data?.data as unknown) as RewardSectionData[] || [])
+    .sort((a, b) => Number(a.id) - Number(b.id))
+    .reduce((acc, section) => {
+      const sectionRewards = ((listRewards?.data?.data as unknown) as RewardItemData[] || []).filter(
+        reward => reward.reward_section === section.name
+      );
+      acc[section.name] = sectionRewards;
+      return acc;
+    }, {} as Record<string, any>);
 
   useEffect(() => {
     if (selectedReward !== null) {
@@ -107,6 +94,20 @@ const TukarHadiah = () => {
     setSelectedReward(index);
   }
 
+  const handleSwiperChange = (e, sectionName: string) => {
+    setCurrentSlides(prev => ({
+      ...prev,
+      [sectionName]: e.detail.current
+    }));
+  };
+
+  // Get the selected reward data
+  const getSelectedRewardData = () => {
+    if (selectedReward === null) return null;
+    const allRewards = Object.values(groupedRewards).flat();
+    return allRewards[selectedReward];
+  };
+
   return (
     <View className="bg-[#D41F2C] w-full min-h-full h-auto">
       <View className="bg-white rounded-t-[16px] min-h-[100px]">
@@ -116,7 +117,7 @@ const TukarHadiah = () => {
             <div className="flex flex-col justify-between mb-6">
               <div className="flex items-center gap-1">
                 <Image
-                  src={StampIcon}
+                  src={StampIcon32}
                   style={{
                     width: "32px",
                     height: "32px"
@@ -141,43 +142,46 @@ const TukarHadiah = () => {
           </div>
 
           {/* Rewards Sections */}
-          <p className="text-[16px] font-bold text-black">
-            Semua Hadiah
-          </p>
-          <Swiper
-            className="w-full h-[365px]"
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            displayMultipleItems={2}
-            circular
-            indicatorDots
-            autoplay
-          >
-            {allRewards.map((item, idx) => (
-              <SwiperItem key={idx}>
-                <RewardItem {...item} onClick={() => openReward(idx)} />
-              </SwiperItem>
-            ))}
-          </Swiper>
+          {((rewardSections?.data?.data as unknown) as RewardSectionData[] || []).map((section, idx) => (
+            <View key={idx} className="mb-4">
+              <p className="text-[16px] font-bold text-black mb-4">
+                {section.name}
+              </p>
+              <Swiper
+                className="w-full h-[300px] mb-4"
+                circular
+                autoplay
+                displayMultipleItems={2}
+                onChange={(e) => handleSwiperChange(e, section.name)}
+              >
+                {groupedRewards?.[section.name]?.map((item, idx) => (
+                  <SwiperItem key={idx}>
+                    <RewardItem
+                      title={item.reward_name_id}
+                      originalStamp={item.redeem_nominal}
+                      currentStamp={item.redeem_nominal}
+                      type={item.type}
+                      imageUrl={item.image}
+                      onClick={() => openReward(idx)}
+                    />
+                  </SwiperItem>
+                ))}
+              </Swiper>
+              {/* Dot Indicator */}
+              <View className="flex justify-center">
+                <View className="flex justify-center bg-[#00000040] rounded-2xl w-min mx-auto p-[2px]">
+                  {groupedRewards?.[section.name]?.map((_, index) => (
+                    <View
+                      key={index}
+                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${(currentSlides[section.name] || 0) === index ? "bg-white w-4 h-1" : "bg-[#FFFFFF99] w-1 h-1"
+                        }`}
+                    ></View>
+                  ))}
+                </View>
+              </View>
+            </View>
+          ))}
 
-          <p className="text-[16px] font-bold text-black">
-            Merchandise
-          </p>
-          <Swiper
-            className="w-full h-[365px]"
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            displayMultipleItems={2}
-            circular
-            indicatorDots
-            autoplay
-          >
-            {merchandises.map((item, idx) => (
-              <SwiperItem key={idx}>
-                <RewardItem {...item} onClick={() => openReward(idx)}/>
-              </SwiperItem>
-            ))}
-          </Swiper>
         </div>
       </View>
 
@@ -187,15 +191,17 @@ const TukarHadiah = () => {
             Mau tukar stamp dengan hadiah ini?
           </p>
 
-          <HorizontalStampCard
-            imageUrl={'https://placehold.co/400x400'}
-            title={'Voucher Gopay 11 rb'}
-            originalStamps={2500}
-            discountedStamps={2000}
-          />
+          {getSelectedRewardData() && (
+            <HorizontalStampCard
+              imageUrl={getSelectedRewardData().image}
+              title={getSelectedRewardData().reward_name_id}
+              originalStamps={getSelectedRewardData().redeem_nominal}
+              discountedStamps={getSelectedRewardData().redeem_nominal}
+            />
+          )}
 
           <p className="text-sm text-grey mt-4">
-            Tukarkan 2000 stamp untuk mendapatkan hadiah ini sekarang!
+            Tukarkan {getSelectedRewardData()?.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
           </p>
         </View>
 
