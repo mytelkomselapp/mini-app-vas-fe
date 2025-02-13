@@ -5,11 +5,14 @@ import ProgressBar from "./components/ProgressBar";
 import { Text, View } from "@tarojs/components";
 import BottomNavigation from "./components/BottomNavigation";
 import { useDzikirDetail } from "../../../../store/ramadhan";
+import { DzikirCMSData } from "@/network/types/response-props";
 
 const DzikirDetail = () => {
   const { data: dataDzikirList } = useDzikirDetail();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); //ayat
+  const [readTimes, setReadTimes] = useState(1);
+  const [dataDzikirDetail, setDataDzikirDetail] = useState({});
 
   const searchParams = Taro.getCurrentInstance().router?.params;
 
@@ -17,31 +20,42 @@ const DzikirDetail = () => {
 
   const category = searchParams?.category || "";
   const order = searchParams?.order || 0;
-  const caption = "Dibaca 1x";
 
   const dataDzikir = dataDzikirList?.find(
     (val) => val.category === category && String(val?.order) === String(step)
   );
+
   const totalSteps =
     dataDzikirList?.filter((val) => val?.category === category)?.length || 1; //total surah pages
   const arab = decodeURIComponent(dataDzikir?.arab || "");
   const indonesia = decodeURIComponent(dataDzikir?.indonesia || "");
   const latin = decodeURIComponent(dataDzikir?.latin || "");
   const title = decodeURIComponent(dataDzikir?.title || "");
-
+  const readTotal = dataDzikir?.readCount || 1;
+  const caption = `Dibaca ${readTotal}x`;
   useEffect(() => {
     Taro.setNavigationBarTitle({ title: `Dzikir ${category}` });
-    setStep(Number(order));
+    setStep(readTotal);
   }, [period, order]);
-
+  useEffect(() => {
+    if (dataDzikir) {
+      setDataDzikirDetail(dataDzikir as DzikirCMSData);
+      setReadTimes(dataDzikir?.readCount || 1);
+    }
+  }, [dataDzikir]);
   const handlePrevious = () => {
-    if (step > 1) {
+    if (readTimes < readTotal) {
+      setReadTimes(readTimes + 1);
+    } else if (step > 1) {
       setStep(step - 1);
     }
   };
+  console.log({ readTimes, readTotal });
 
   const handleNext = () => {
-    if (step < totalSteps) {
+    if (readTimes > 1) {
+      setReadTimes(readTimes - 1);
+    } else if (step < totalSteps) {
       setStep(step + 1);
     }
   };
@@ -99,8 +113,10 @@ const DzikirDetail = () => {
       <BottomNavigation
         currentStep={step}
         totalSteps={totalSteps}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
+        readTimes={readTimes}
+        readTotal={readTotal}
+        onPrevious={() => handlePrevious()}
+        onNext={() => handleNext()}
       />
     </div>
   );

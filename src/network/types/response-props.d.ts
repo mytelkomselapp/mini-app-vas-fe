@@ -496,6 +496,7 @@ export interface DzikirCMSData {
   latin: string;
   indonesia: string;
   publishedAt: string;
+  readCount: number;
 }
 
 export type CMSFlightLandingPageResponse =

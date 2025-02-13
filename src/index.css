@@ -125,3 +125,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   src: url(assets/fonts/TelkomselBatikSans-Bold.ttf) format("truetype");
 }
 
+.circular-progress {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: conic-gradient(
+    white var(--progress, 0%),
+    #FF0025 0
+  );
+  box-shadow: 0px 4px 10px 0px #FF002526; /* Add drop shadow */
+}
+
+.circular-progress::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  background: var(--bg-color, #FF0025); /* Default background color */
+}
