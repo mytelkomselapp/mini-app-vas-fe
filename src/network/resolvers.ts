@@ -5,6 +5,7 @@ import {
   errorLogBuyPackage,
   getCities,
   getCMSFlightLandingPage,
+  getDzikir,
   getETicketByFlightId,
   getETicketList,
   getFlightByCity,
@@ -357,6 +358,12 @@ export const useFetchLandingPageCMS = (enabled: boolean = true) => {
 
 export const useFetchMissionPopupCMS = (enabled: boolean = true) => {
   return useQuery(["Fetch Mission Popup CMS"], getMissionPopupCMS, {
+    enabled,
+  });
+};
+
+export const useFetchDzikir = (enabled: boolean = true) => {
+  return useQuery(["Fetch Dzikir"], getDzikir, {
     enabled,
   });
 };
