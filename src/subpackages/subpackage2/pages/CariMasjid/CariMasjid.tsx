@@ -9,10 +9,11 @@ import SignMosque from "../../../../assets/sign-mosque.svg";
 import SignMosqueSelected from "../../../../assets/sign-mosque-selected.svg";
 import GmapsIcon from "../../../../assets/gmaps-ico.png";
 import MapsIcon from "../../../../assets/maps-ico.png";
+import WazeIcon from "../../../../assets/waze-ico.svg";
 import { useEffect, useState, useMemo } from "react";
 import Taro from "@tarojs/taro";
 import { useFetchNearestMosques } from "../../../../network/resolvers";
-import { platform } from "../../../../network/analytics/tracker";
+import { detectPlatform } from "../../../../lib/utils";
 
 interface MosqueListItemProps {
   name: string;
@@ -62,8 +63,8 @@ const CariMasjid: React.FC = () => {
   const [showAllMosques, setShowAllMosques] = useState(false);
   const [selectedMosqueId, setSelectedMosqueId] = useState<string | null>(null);
   const [selectedMosque, setSelectedMosque] = useState(null);
-  const isIOS = platform === 'iOS';
-  console.log('platform', platform);
+  const isIOS = detectPlatform() === 'ios';
+  console.log('platform', detectPlatform());
 
   const hasLocation = latitude !== 0 && longitude !== 0;
 
@@ -169,27 +170,25 @@ const CariMasjid: React.FC = () => {
         // address: selectedMosque?.city
       });
     } else if (type === 'google') {
-      // TODO
       if (isIOS) {
-        // deeplink ios
         Taro.navigateTo({
           url:
             "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(`comgooglemaps://?q=${latitude},${longitude}&center=${latitude},${longitude}`)
+            encodeURIComponent(`https://www.google.com/maps?q=${latitude},${longitude}`)
         });
       } else {
-        // deeplink android
-        Taro.navigateTo({
-          url:
-            "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(`google.navigation:q=${latitude},${longitude}`)
+        Taro.openLocation({
+          latitude,
+          longitude,
+          // name: selectedMosque?.name,
+          // address: selectedMosque?.city
         });
       }
     } else if (type === 'waze') {
       Taro.navigateTo({
         url:
           "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(`waze://?ll=${latitude},${longitude}&navigate=yes`)
+          encodeURIComponent(`https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`)
       });
     }
   };
@@ -294,7 +293,7 @@ const CariMasjid: React.FC = () => {
                   }}
                 >
                   <Image
-                    src={GmapsIcon}
+                    src={WazeIcon}
                     style={{
                       width: "32px",
                       height: "32px"
