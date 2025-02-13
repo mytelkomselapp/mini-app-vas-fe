@@ -142,6 +142,14 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/rm-dzikirs",
     source: "cms",
   },
+  getRewardSections: {
+    endpoint: "/api/v1/stamp/reward/sections",
+    source: "gamification",
+  },
+  getListRewards: {
+    endpoint: "/api/v1/stamp/reward",
+    source: "gamification",
+  },
 };
 
 export default endpoints;

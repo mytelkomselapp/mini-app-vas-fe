@@ -30,6 +30,8 @@ import {
   UserStampResponse,
   LandingPageCMSResponse,
   DzikirCMSResponse,
+  RewardSectionResponse,
+  RewardItemResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -254,4 +256,12 @@ export const getMissionPopupCMS = (): MissionPopupCMSResponse => {
 
 export const getDzikir = (): DzikirCMSResponse => {
   return http.get(endpoints?.getDzikir);
+};
+
+export const getRewardSections = (): RewardSectionResponse => {
+  return http.get(endpoints?.getRewardSections);
+};
+
+export const getListRewards = (): RewardItemResponse => {
+  return http.get(endpoints?.getListRewards);
 };

@@ -337,3 +337,17 @@ export const translateTaskType = (type: "morning" | "afternoon" | "night") => {
       return type;
   }
 };
+
+export const detectPlatform = () => {
+  const systemInfo = Taro.getSystemInfoSync();
+  const system = systemInfo.system?.toLowerCase();
+  console.log("systemInfo", systemInfo);
+    
+  if (system?.includes("ios")) {
+    return "ios";
+  }
+  if (system?.includes("android")) {
+    return "android";
+  }
+  return "unknown";
+};

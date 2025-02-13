@@ -498,6 +498,30 @@ export interface DzikirCMSData {
   publishedAt: string;
   readCount: number;
 }
+export interface RewardSectionData {
+  id: string;
+  name: string;
+}
+
+export interface RewardItemData {
+  id: string;
+  type: string;
+  reward_config: string;
+  reward_name_id: string;
+  reward_name_en: string;
+  stock: number;
+  available: number;
+  redeem_nominal: number;
+  reward_desc_id: string;
+  reward_desc_en: string;
+  is_deliverable: number;
+  item_weight: number;
+  image: string;
+  is_published: number;
+  is_recurring_stock: number;
+  reward_section: string;
+  reward_category: string;
+}
 
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
@@ -565,3 +589,5 @@ export type UserStampResponse = HttpSuccessResponse<UserStampData>;
 export type LandingPageCMSResponse = HttpSuccessResponse<LandingPageCMSData>;
 export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
 export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
+export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
+export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;

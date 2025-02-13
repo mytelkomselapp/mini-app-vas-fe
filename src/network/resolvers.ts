@@ -17,10 +17,12 @@ import {
   getFreemiumPackageList,
   getFreemiumUserPackage,
   getLandingPageCMS,
+  getListRewards,
   getMissionPopupCMS,
   getNearestCity,
   getNearestMosques,
   getNotificationConfig,
+  getRewardSections,
   getStampHistory,
   getStampMissionList,
   getStampMissionSummary,
@@ -362,6 +364,18 @@ export const useFetchMissionPopupCMS = (enabled: boolean = true) => {
 
 export const useFetchDzikir = (enabled: boolean = true) => {
   return useQuery(["Fetch Dzikir"], getDzikir, {
+    enabled,
+  });
+};
+
+export const useFetchRewardSections = (enabled: boolean = true) => {
+  return useQuery(["Fetch Reward Sections"], getRewardSections, {
+    enabled,
+  });
+};
+
+export const useFetchListRewards = (enabled: boolean = true) => {
+  return useQuery(["Fetch List Rewards"], getListRewards, {
     enabled,
   });
 };

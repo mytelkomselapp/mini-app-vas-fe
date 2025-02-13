@@ -30,6 +30,7 @@ export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
               width: "165px",
               height: "165px"
             }}
+            mode="aspectFill"
           />
           <div className="flex flex-col justify-between text-left p-4">
             <Text className="font-bold text-[12px] leading-[16px]">{title}</Text>
