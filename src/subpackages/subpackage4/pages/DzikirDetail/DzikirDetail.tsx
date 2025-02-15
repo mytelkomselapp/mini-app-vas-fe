@@ -4,31 +4,61 @@ import Taro from "@tarojs/taro";
 import ProgressBar from "./components/ProgressBar";
 import { Text, View } from "@tarojs/components";
 import BottomNavigation from "./components/BottomNavigation";
+import { useDzikirDetail } from "../../../../store/ramadhan";
+import { DzikirCMSData } from "@/network/types/response-props";
 
 const DzikirDetail = () => {
-  const [step, setStep] = useState(1);
+  const { data: dataDzikirList } = useDzikirDetail();
 
-  const totalSteps = 5; //total surah pages
+  const [step, setStep] = useState(1); //ayat
+  const [readTimes, setReadTimes] = useState(1);
+  const [dataDzikirDetail, setDataDzikirDetail] = useState({});
+
   const searchParams = Taro.getCurrentInstance().router?.params;
-  const period = searchParams?.period || "";
-  const surahId = searchParams?.surahId || "";
-  const caption = "Dibaca 1x";
 
+  const period = searchParams?.period || "";
+
+  const category = searchParams?.category || "";
+  const order = searchParams?.order || 0;
+
+  const dataDzikir = dataDzikirList?.find(
+    (val) => val.category === category && String(val?.order) === String(step)
+  );
+
+  const totalSteps =
+    dataDzikirList?.filter((val) => val?.category === category)?.length || 1; //total surah pages
+  const arab = decodeURIComponent(dataDzikir?.arab || "");
+  const indonesia = decodeURIComponent(dataDzikir?.indonesia || "");
+  const latin = decodeURIComponent(dataDzikir?.latin || "");
+  const title = decodeURIComponent(dataDzikir?.title || "");
+  const readTotal = dataDzikir?.readCount || 1;
+  const caption = `Dibaca ${readTotal}x`;
+  useEffect(() => {
+    Taro.setNavigationBarTitle({ title: `Dzikir ${category}` });
+    setStep(readTotal);
+  }, [period, order]);
+  useEffect(() => {
+    if (dataDzikir) {
+      setDataDzikirDetail(dataDzikir as DzikirCMSData);
+      setReadTimes(dataDzikir?.readCount || 1);
+    }
+  }, [dataDzikir]);
   const handlePrevious = () => {
-    if (step > 1) {
+    if (readTimes < readTotal) {
+      setReadTimes(readTimes + 1);
+    } else if (step > 1) {
       setStep(step - 1);
     }
   };
-  console.log({ step, totalSteps });
+  console.log({ readTimes, readTotal });
+
   const handleNext = () => {
-    if (step < totalSteps) {
+    if (readTimes > 1) {
+      setReadTimes(readTimes - 1);
+    } else if (step < totalSteps) {
       setStep(step + 1);
     }
   };
-
-  useEffect(() => {
-    Taro.setNavigationBarTitle({ title: `Dzikir ${period}` });
-  }, [period]);
 
   return (
     <div className="max-w-md mx-auto overflow-hidden ">
@@ -45,7 +75,7 @@ const DzikirDetail = () => {
         <ProgressBar progress={step} max={totalSteps} />
         <View className="mt-3">
           <Text className="text-white font-batikSans font-semibold">
-            {decodeURIComponent(surahId)}
+            {title}
           </Text>
         </View>
         <View>
@@ -70,14 +100,23 @@ const DzikirDetail = () => {
           </button>
         </div> */}
       </div>
-      <View className="p-4">
-        <Text>{`Content ${step}`}</Text>
+      <View className="p-6 justify-end text-right">
+        <Text className="text-right text-xl leading-[2.5]">{arab}</Text>
+      </View>
+      <View className="px-4 leading-tight">
+        <Text className="text-grey text-[14px]">{latin}</Text>
+      </View>
+      <View className="px-4 flex flex-col mt-4">
+        <Text className="font-bold font-batikSans text-base">Artinya</Text>
+        <Text className="text-[14px] pt-2 mb-40">{indonesia}</Text>
       </View>
       <BottomNavigation
         currentStep={step}
         totalSteps={totalSteps}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
+        readTimes={readTimes}
+        readTotal={readTotal}
+        onPrevious={() => handlePrevious()}
+        onNext={() => handleNext()}
       />
     </div>
   );
