@@ -8,21 +8,24 @@ const historyData = [
     originalStamp: 2500,
     currentStamp: 2000,
     type: 'voucher',
-    imageUrl: 'https://placehold.co/400x400'
+    imageUrl: 'https://placehold.co/400x400',
+    status: 'standby'
   },
   {
     title: 'Voucher Gopay 10 rb',
     originalStamp: 2500,
     currentStamp: 2000,
     type: 'voucher',
-    imageUrl: 'https://placehold.co/400x400'
+    imageUrl: 'https://placehold.co/400x400',
+    status: 'pending'
   },
   {
     title: 'Voucher Gopay 10 rb',
     originalStamp: 2500,
     currentStamp: 2000,
     type: 'voucher',
-    imageUrl: 'https://placehold.co/400x400'
+    imageUrl: 'https://placehold.co/400x400',
+    status: 'failed'
   }
 ]
 
@@ -35,6 +38,7 @@ const RiwayatTukarHadiah = () => {
         title={item.title}
         originalStamps={item.originalStamp}
         discountedStamps={item.currentStamp}
+        status={item.status}
       />
     ))}
   </View>

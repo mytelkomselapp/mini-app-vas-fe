@@ -42,7 +42,7 @@
   
   /* Header and drag handle styling */
   .sheet-header {
-    padding: 16px 16px 0 16px;
+    padding: 16px;
     display: flex;
     justify-content: center;
     pointer-events: auto !important;
@@ -63,6 +63,7 @@
     -webkit-overflow-scrolling: touch;
     pointer-events: auto !important;
     max-height: 100%;
+    padding: 0 16px 16px 16px;
   }
   
   /* Drag handle area */
