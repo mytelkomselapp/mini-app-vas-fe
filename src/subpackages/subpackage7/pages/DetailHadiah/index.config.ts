@@ -1,5 +1,5 @@
 export default definePageConfig({
-  navigationBarTitleText: "Riwayat Stamp",
+  navigationBarTitleText: "Detail Hadiah",
   navigationBarBackgroundColor: "#d41f2c",
   navigationBarTextStyle: "white",
 });

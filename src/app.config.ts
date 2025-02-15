@@ -17,7 +17,7 @@ export default {
     { root: "subpackages/subpackage6", pages: ["pages/PrayerSchedule/index"] },
     {
       root: "subpackages/subpackage7",
-      pages: ["pages/TukarHadiah/index", "pages/RiwayatTukarHadiah/index"],
+      pages: ["pages/TukarHadiah/index", "pages/RiwayatTukarHadiah/index", "pages/DetailHadiah/index"],
     },
     { root: "subpackages/subpackage8", pages: ["pages/Redemption/index"] },
     { root: "subpackages/subpackage9", pages: ["pages/Webview/index"] },
