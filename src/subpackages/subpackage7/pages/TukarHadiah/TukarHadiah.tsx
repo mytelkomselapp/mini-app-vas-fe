@@ -68,8 +68,7 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
 
 const TukarHadiah = () => {
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
-  const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(false);
-  const [selectedReward, setSelectedReward] = useState(null);
+  const [selectedReward, setSelectedReward] = useState<RewardItemData | null>(null);
 
   const { data: rewardSections, isLoading } = useFetchRewardSections();
   const { data: listRewards, isLoading: isLoadingListRewards } = useFetchListRewards(!!rewardSections?.data);
@@ -84,14 +83,8 @@ const TukarHadiah = () => {
       return acc;
     }, {} as Record<string, any>);
 
-  useEffect(() => {
-    if (selectedReward !== null) {
-      setVisibleSheet(true);
-    }
-  }, [selectedReward]);
-
-  const openReward = (index) => {
-    setSelectedReward(index);
+  const openReward = (reward: RewardItemData) => {
+    setSelectedReward(reward);
   }
 
   const handleSwiperChange = (e, sectionName: string) => {
@@ -101,11 +94,8 @@ const TukarHadiah = () => {
     }));
   };
 
-  // Get the selected reward data
-  const getSelectedRewardData = () => {
-    if (selectedReward === null) return null;
-    const allRewards = Object.values(groupedRewards).flat();
-    return allRewards[selectedReward];
+  const handleCloseSheet = () => {
+    setSelectedReward(null);
   };
 
   return (
@@ -148,7 +138,7 @@ const TukarHadiah = () => {
                 {section.name}
               </p>
               <Swiper
-                className="w-full h-[300px] mb-4"
+                className="w-full h-[305px] mb-4"
                 circular
                 autoplay
                 displayMultipleItems={2}
@@ -162,7 +152,7 @@ const TukarHadiah = () => {
                       currentStamp={item.redeem_nominal}
                       type={item.type}
                       imageUrl={item.image}
-                      onClick={() => openReward(idx)}
+                      onClick={() => openReward(item)}
                     />
                   </SwiperItem>
                 ))}
@@ -185,32 +175,46 @@ const TukarHadiah = () => {
         </div>
       </View>
 
-      <BottomSheet open={visibleSheet} onClose={() => { setVisibleSheet(false) }}>
-        <View className="flex flex-col items-center text-center mb-4">
-          <p className="text-[16px] font-bold text-black mb-4">
+      <BottomSheet open={selectedReward !== null} onClose={handleCloseSheet} containerClassname={`p-4 ${selectedReward?.type !== 'voucher' ? 'h-[90vh]' : ''}`} withoutPadding>
+        <View className="flex flex-col w-full">
+          <p className="text-[16px] font-bold text-black mb-4 text-center">
             Mau tukar stamp dengan hadiah ini?
           </p>
 
-          {getSelectedRewardData() && (
-            <HorizontalStampCard
-              imageUrl={getSelectedRewardData().image}
-              title={getSelectedRewardData().reward_name_id}
-              originalStamps={getSelectedRewardData().redeem_nominal}
-              discountedStamps={getSelectedRewardData().redeem_nominal}
-            />
+          {selectedReward && (
+            <div className="w-full">
+              <HorizontalStampCard
+                imageUrl={selectedReward.image}
+                title={selectedReward.reward_name_id}
+                originalStamps={selectedReward.redeem_nominal}
+                discountedStamps={selectedReward.redeem_nominal}
+              />
+            </div>
           )}
 
-          <p className="text-sm text-grey mt-4">
-            Tukarkan {getSelectedRewardData()?.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
-          </p>
+          {selectedReward?.type === 'voucher' ? (
+            <p className="text-sm text-grey mt-4 text-center">
+              Tukarkan {selectedReward.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
+            </p>
+          ) : (
+            <div>
+              <p className="text-sm font-semibold mb-2">Deskripsi</p>
+              <div className="w-full max-h-[30vh] bg-inactiveGrey overflow-y-auto rounded-lg mb-4">
+                <p className="text-sm text-grey p-4">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a ex eu lorem lacinia interdum a in mauris. Integer imperdiet congue metus nec scelerisque. Quisque eget tellus sed mi mattis consectetur. Proin felis mi, dignissim ac vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a ex eu lorem lacinia interdum a in mauris. Integer imperdiet congue metus nec scelerisque. Quisque eget tellus sed mi mattis consectetur. Proin felis mi, dignissim ac vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
+                </p>
+              </div>
+            </div>
+          )}
         </View>
 
-        <Button label="Selesai" onClick={() => { setVisibleSheet(false) }} className="mb-1" />
+        <Button label="Tukar Sekarang" onClick={handleCloseSheet} className="mb-1" />
         <Button
-          label="Tampilkan Lebih Banyak"
-          onClick={() => setVisibleSheet(false)}
+          label="Nanti Saja"
+          onClick={handleCloseSheet}
           style="secondary"
-          className="mb-8"
+        // className="mb-8"
         />
       </BottomSheet>
     </View>
