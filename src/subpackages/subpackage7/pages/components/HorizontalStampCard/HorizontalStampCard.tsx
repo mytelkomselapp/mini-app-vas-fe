@@ -8,7 +8,7 @@ interface HorizontalStampCardProps {
   discountedStamps: number;
   showHeader?: boolean;
   showFooter?: boolean;
-  status?: 'standby' | 'pending' | 'failed' | 'preview';
+  status?: 'standby' | 'pending' | 'failed' | 'preview' | 'success';
 }
 
 export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
@@ -73,6 +73,11 @@ export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
               {status === 'standby' && (
                 <span className="text-xs leading-[16px]">
                   Berlaku sampai 25 Desember
+                </span>
+              )}
+              {status === 'success' && (
+                <span className="text-xs leading-[16px] text-green-500 font-semibold bg-[#E6F7EE] px-2 py-1 rounded-full">
+                  Berhasil
                 </span>
               )}
             </div>
