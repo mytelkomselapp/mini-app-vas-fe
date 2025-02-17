@@ -30,7 +30,7 @@ const Redemption: React.FC = () => {
   const handleOpenHistory = () => {
     handleNavigate("/subpackages/subpackage7/pages/RiwayatTukarHadiah/index");
   };
-  const { image, title, status, color } = getStats("success");
+  const { image, title, status, color } = getStats("failed");
   return (
     <div className="bg-inactiveGrey p-4 pb-10 h-screen">
       <div className="mt-4 h-[50vh]">

@@ -488,6 +488,16 @@ export interface MissionPopupCMSData {
   backgroundImg: string;
 }
 
+export interface DzikirCMSData {
+  order: number;
+  title: string;
+  category: string;
+  arab: string;
+  latin: string;
+  indonesia: string;
+  publishedAt: string;
+  readCount: number;
+}
 export interface RewardSectionData {
   id: string;
   name: string;
@@ -578,6 +588,6 @@ export type UserStampResponse = HttpSuccessResponse<UserStampData>;
 
 export type LandingPageCMSResponse = HttpSuccessResponse<LandingPageCMSData>;
 export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
+export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
-

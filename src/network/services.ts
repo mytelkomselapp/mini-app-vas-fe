@@ -29,6 +29,7 @@ import {
   StampMissionSummaryResponse,
   UserStampResponse,
   LandingPageCMSResponse,
+  DzikirCMSResponse,
   RewardSectionResponse,
   RewardItemResponse,
 } from "./types/response-props";
@@ -251,6 +252,10 @@ export const getLandingPageCMS = (): LandingPageCMSResponse => {
 
 export const getMissionPopupCMS = (): MissionPopupCMSResponse => {
   return http.get(endpoints?.getMissionPopupCMS);
+};
+
+export const getDzikir = (): DzikirCMSResponse => {
+  return http.get(endpoints?.getDzikir);
 };
 
 export const getRewardSections = (): RewardSectionResponse => {
