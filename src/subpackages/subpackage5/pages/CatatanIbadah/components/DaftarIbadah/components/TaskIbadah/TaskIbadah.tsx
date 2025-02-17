@@ -176,8 +176,6 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
           <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
             {dataCardByActiveTab?.map((data, idx) => {
               const generateCondition = () => {
-                console.log({ activeTaskStatus, data });
-
                 if (activeTaskStatus === "today") {
                   if (data?.mission_status === 0) return "checked";
                   if (data?.mission_status === 1) return "active";

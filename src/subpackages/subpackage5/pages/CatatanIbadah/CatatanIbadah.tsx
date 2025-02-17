@@ -12,6 +12,7 @@ import {
 } from "../../../../network";
 import moment from "moment";
 import { StampMissionSummaryData } from "../../../../network/types/response-props";
+import LottieOverlay from "../../../../components/LottieOverlay";
 
 const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
@@ -33,6 +34,10 @@ const CatatanIbadahPage = () => {
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
 
+  const handleAnimationEnd = () => {
+    console.log("animation end");
+  };
+
   return (
     <View className="bg-white w-full min-h-full h-auto">
       <BackgroundImage
@@ -52,6 +57,8 @@ const CatatanIbadahPage = () => {
           <ButtonRedeem title="Tukar Hadiah" onClick={handleGoToRedeemPage} />
         </div>
       </BackgroundImage>
+
+      <LottieOverlay />
 
       <View className="bg-white rounded-t-[16px] relative top-[-20px] min-h-[100px]">
         <DateStamp

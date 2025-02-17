@@ -34,8 +34,6 @@ const RamadhanSearchLocation = () => {
 
   const dataPreviousCity = state?.data;
 
-  console.log({ dataPreviousCity });
-
   const {
     data: searchCityData,
     isLoading: isLoadingSearchCity,
