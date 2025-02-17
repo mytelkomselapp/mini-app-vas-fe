@@ -9,7 +9,6 @@ import useToggle from "../../../../hooks/useToggle";
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import { useState } from "react";
-import { useEffect } from "react";
 import { handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 import { useFetchListRewards, useFetchRewardSections } from "../../../../network/resolvers";
@@ -98,6 +97,12 @@ const TukarHadiah = () => {
     setSelectedReward(null);
   };
 
+  const handleCheckout = () => {
+    if (selectedReward?.type === 'merchandise') {
+      handleNavigate('/subpackages/subpackage7/pages/CheckoutMerchandise/index');
+    }
+  }
+
   return (
     <View className="bg-[#D41F2C] w-full min-h-full h-auto">
       <View className="bg-white rounded-t-[16px] min-h-[100px]">
@@ -159,11 +164,11 @@ const TukarHadiah = () => {
               </Swiper>
               {/* Dot Indicator */}
               <View className="flex justify-center">
-                <View className="flex justify-center bg-[#00000040] rounded-2xl w-min mx-auto p-[2px]">
+                <View className="flex justify-center rounded-2xl w-min mx-auto p-[2px]">
                   {groupedRewards?.[section.name]?.map((_, index) => (
                     <View
                       key={index}
-                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${(currentSlides[section.name] || 0) === index ? "bg-white w-4 h-1" : "bg-[#FFFFFF99] w-1 h-1"
+                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${(currentSlides[section.name] || 0) === index ? "bg-[#001A41] w-4 h-1" : "bg-[#001A41] w-1 h-1"
                         }`}
                     ></View>
                   ))}
@@ -193,7 +198,7 @@ const TukarHadiah = () => {
           )}
 
           {selectedReward?.type === 'voucher' ? (
-            <p className="text-sm text-grey mt-4 text-center">
+            <p className="text-sm text-grey mt-4 text-center mb-2">
               Tukarkan {selectedReward.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
             </p>
           ) : (
@@ -209,7 +214,7 @@ const TukarHadiah = () => {
           )}
         </View>
 
-        <Button label="Tukar Sekarang" onClick={handleCloseSheet} className="mb-1" />
+        <Button label="Tukar Sekarang" onClick={handleCheckout} className="mb-2" />
         <Button
           label="Nanti Saja"
           onClick={handleCloseSheet}
