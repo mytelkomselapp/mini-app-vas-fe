@@ -1,10 +1,7 @@
-import { DateStamp } from "../../../subpackage5/pages/CatatanIbadah/components";
-import DaftarIbadah from "../../../subpackage5/pages/CatatanIbadah/components/DaftarIbadah";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
 import StampIcon from "../../../../assets/icon-stamp-gamehub.svg";
 import StampIcon32 from "../../../../assets/icon-stamp-gamehub-32.svg";
 import ClockIcon from "../../../../assets/ico_clock.svg";
-import useToggle from "../../../../hooks/useToggle";
 
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
@@ -15,6 +12,7 @@ import {
   useFetchListRewards,
   useFetchRewardSections,
   useFetchUserStamp,
+  usePostRedeemVoucher,
 } from "../../../../network/resolvers";
 import {
   RewardSectionData,
@@ -22,6 +20,8 @@ import {
 } from "../../../../network/types/response-props";
 import { useCurrentSelectedReward } from "../../../../store/ramadhan";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import Taro from "@tarojs/taro";
+import NotificationToast from "../../../../components/NotificationToast";
 
 interface RewardItemProps {
   title: string;
@@ -90,6 +90,8 @@ const RewardItem: React.FC<RewardItemProps> = ({
 };
 
 const TukarHadiah = () => {
+  const [visibleNotificationToast, setVisibleNotificationToast] = useState(false);
+  
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
     {}
   );
@@ -104,6 +106,10 @@ const TukarHadiah = () => {
   const { currentSelectedReward, setCurrentSelectedReward } =
     useCurrentSelectedReward();
   const { data: rewardSections, isLoading } = useFetchRewardSections();
+  const filteredRewardSections = rewardSections?.data?.data?.filter(
+    (section) => section.name.toLowerCase() !== 'merchandise'
+  );
+
   const { data: listRewards, isLoading: isLoadingListRewards } =
     useFetchListRewards(!!rewardSections?.data);
   // Group rewards by section and maintain section order
@@ -118,6 +124,8 @@ const TukarHadiah = () => {
       acc[section.name] = sectionRewards;
       return acc;
     }, {} as Record<string, any>);
+
+  const { mutateAsync: redeemVoucher, isLoading: isLoadingRedeemVoucher } = usePostRedeemVoucher(dataUserStamp?.user_id ?? '');
 
   const openReward = (reward: RewardItemData) => {
     setCurrentSelectedReward(reward);
@@ -134,11 +142,21 @@ const TukarHadiah = () => {
     setCurrentSelectedReward(null);
   };
 
-  const handleCheckout = () => {
-    if (currentSelectedReward?.type === "merchandise") {
-      handleNavigate(
-        "/subpackages/subpackage7/pages/CheckoutMerchandise/index"
-      );
+  const handleCheckout = async () => {
+    const id = currentSelectedReward?.id;
+    if (!id) return;
+    const result = await redeemVoucher({ reward_id: id });
+    if (result?.data?.meta?.status?.toLowerCase() === "success") {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(
+            result?.data?.data?.redeem_result?.voucher?.data?.url
+          ),
+      });
+    } else {
+      // setCurrentSelectedReward(null);
+      setVisibleNotificationToast(true);
     }
   };
 
@@ -184,7 +202,7 @@ const TukarHadiah = () => {
 
           {/* Rewards Sections */}
           {(
-            (rewardSections?.data?.data as unknown as RewardSectionData[]) || []
+            (filteredRewardSections as unknown as RewardSectionData[]) || []
           ).map((section, idx) => (
             <View key={idx} className="mb-4">
               <p className="text-[16px] font-bold text-black mb-4">
@@ -212,7 +230,7 @@ const TukarHadiah = () => {
                 ))}
               </Swiper>
               {/* Dot Indicator */}
-              {rewardSections?.data?.data?.length > 2 && (
+              {groupedRewards?.[section.name]?.length > 2 && (
                 <View className="flex justify-center">
                   <View className="flex justify-center rounded-2xl w-min mx-auto p-[2px]">
                     {groupedRewards?.[section.name]?.map((_, index) => (
@@ -275,6 +293,7 @@ const TukarHadiah = () => {
         </View>
 
         <Button
+          disabled={isLoadingRedeemVoucher}
           label="Tukar Sekarang"
           onClick={handleCheckout}
           className="mb-2"
@@ -286,6 +305,13 @@ const TukarHadiah = () => {
           // className="mb-8"
         />
       </BottomSheet>
+
+      <NotificationToast
+        description="Kamu sudah mengisi ibadah ini"
+        duration={3000}
+        show={visibleNotificationToast}
+        onClose={() => setVisibleNotificationToast(false)}
+      />
     </View>
   );
 };

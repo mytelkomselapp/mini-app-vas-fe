@@ -39,6 +39,7 @@ import {
   postUploadETicketFile,
   userUpdateCity,
   postRedeemMerchandise,
+  postRedeemVoucher,
 } from "./services";
 import {
   GetETicketPayloadProps,
@@ -49,7 +50,8 @@ import {
   StampHistoryPayloadProps,
   StampMissionListPayloadProps,
   StampMissionSummaryPayloadProps,
-  MerchandisePayloadProps
+  MerchandisePayloadProps,
+  RedeemVoucherPayloadProps
 } from "./types/request-payload";
 import { useMemo, useState } from "react";
 
@@ -386,4 +388,8 @@ export const usePostRedeemMerchandise = (userId: string) => {
   return useMutation(
     ["Post Redeem Merchandise"], 
     (payload: MerchandisePayloadProps) => postRedeemMerchandise(payload, userId));
+};
+
+export const usePostRedeemVoucher = (userId: string) => {
+  return useMutation(["Post Redeem Voucher"], (payload: RedeemVoucherPayloadProps) => postRedeemVoucher(payload, userId));
 };

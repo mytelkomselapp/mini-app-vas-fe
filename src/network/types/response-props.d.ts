@@ -543,6 +543,26 @@ export interface MerchandiseRewardData {
   };
 }
 
+export interface RedeemVoucherData {
+  stamp_summary: {
+    new_total_stamp: number;
+    today_earned_stamp: number;
+  };
+  redeem_result: {
+    voucher: {
+      data: {
+        id_voucher: string;
+        tgl_expired: string;
+        url: string;
+      };
+      meta: {
+        code: string;
+        status: string;
+      };
+    };
+  };
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -612,3 +632,4 @@ export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
 export type MerchandiseRewardResponse = HttpSuccessResponse<MerchandiseRewardData>;
+export type RedeemVoucherResponse = HttpSuccessResponse<RedeemVoucherData>; 
