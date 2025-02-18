@@ -92,7 +92,7 @@ const RewardItem: React.FC<RewardItemProps> = ({
 
 const TukarHadiah = () => {
   const { active: visibleNotificationToast, toggleActive: toggleVisibleNotificationToast } = useToggle();
-  console.log(visibleNotificationToast);
+
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
     {}
   );
@@ -157,7 +157,7 @@ const TukarHadiah = () => {
       });
     } else {
       // setCurrentSelectedReward(null);
-      setVisibleNotificationToast(true);
+      toggleVisibleNotificationToast();
     }
   };
 
@@ -224,7 +224,7 @@ const TukarHadiah = () => {
                       currentStamp={item.redeem_nominal}
                       type={item.type}
                       imageUrl={item.image}
-                      onClick={() => toggleVisibleNotificationToast()}
+                      onClick={() => openReward(item)}
                       disabled={item.redeem_nominal > totalStamp}
                     />
                   </SwiperItem>
@@ -308,7 +308,7 @@ const TukarHadiah = () => {
       </BottomSheet>
 
       <NotificationToast
-        description="Kamu sudah mengisi ibadah ini"
+        description="Terjadi kesalahan. Silakan coba lagi nanti."
         duration={3000}
         show={visibleNotificationToast}
         onClose={toggleVisibleNotificationToast}
