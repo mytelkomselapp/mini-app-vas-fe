@@ -54,7 +54,7 @@ import {
   StampHistoryPayloadProps,
   MerchandisePayloadProps
 } from "./types/request-payload";
-import { createJWT, verifyJWT } from "../lib/utils";
+import { createJWT } from "../lib/utils";
 import { REDEMPTION_SECRET } from "../core/env";
 
 /**
