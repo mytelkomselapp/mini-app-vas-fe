@@ -12,6 +12,7 @@ import {
 } from "../../../../network";
 import moment from "moment";
 import { StampMissionSummaryData } from "../../../../network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
@@ -27,7 +28,7 @@ const CatatanIbadahPage = () => {
 
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
-
+  useTaroNavBar();
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");

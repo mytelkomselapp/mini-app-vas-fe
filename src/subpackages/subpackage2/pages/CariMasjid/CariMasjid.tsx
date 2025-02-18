@@ -14,6 +14,7 @@ import { useEffect, useState, useMemo } from "react";
 import Taro from "@tarojs/taro";
 import { useFetchNearestMosques } from "../../../../network/resolvers";
 import { detectPlatform } from "../../../../lib/utils";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 interface MosqueListItemProps {
   name: string;
@@ -63,17 +64,18 @@ const CariMasjid: React.FC = () => {
   const [showAllMosques, setShowAllMosques] = useState(false);
   const [selectedMosqueId, setSelectedMosqueId] = useState<string | null>(null);
   const [selectedMosque, setSelectedMosque] = useState(null);
-  const isIOS = detectPlatform() === 'ios';
-  console.log('platform', detectPlatform());
-
+  const isIOS = detectPlatform() === "ios";
+  console.log("platform", detectPlatform());
+  useTaroNavBar();
   const hasLocation = latitude !== 0 && longitude !== 0;
 
   const { data: nearestMosques, isLoading: isLoadingNearestMosques } =
-    useFetchNearestMosques({
-      latitude: latitude.toString(),
-      longitude: longitude.toString(),
-      radius: 1000,
-    },
+    useFetchNearestMosques(
+      {
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
+        radius: 1000,
+      },
       hasLocation
     );
 
@@ -92,11 +94,9 @@ const CariMasjid: React.FC = () => {
 
   useEffect(() => {
     if (hasLocation) {
-      console.log('Location updated:', latitude, longitude);
+      console.log("Location updated:", latitude, longitude);
     }
   }, [latitude, longitude]);
-
-
 
   const handleSnapChange = (index: number) => {
     const currentSnap = SNAPPOINTS[index];
@@ -112,12 +112,15 @@ const CariMasjid: React.FC = () => {
       ?.sort((a, b) => a.distance - b.distance)
       ?.slice(0, 20); // Always limit to maximum 20 mosques
 
-    return (showAllMosques ? sortedMosques : sortedMosques?.slice(0, 5))
-      ?.map((mosque) => ({
+    return (showAllMosques ? sortedMosques : sortedMosques?.slice(0, 5))?.map(
+      (mosque) => ({
         id: mosque.id,
         latitude: Number(mosque.latitude),
         longitude: Number(mosque.longitude),
-        iconPath: mosque.id === Number(selectedMosqueId) ? SignMosqueSelected : SignMosque,
+        iconPath:
+          mosque.id === Number(selectedMosqueId)
+            ? SignMosqueSelected
+            : SignMosque,
         width: mosque.id === Number(selectedMosqueId) ? 32 : 26,
         height: mosque.id === Number(selectedMosqueId) ? 38 : 30,
         callout: {
@@ -132,7 +135,8 @@ const CariMasjid: React.FC = () => {
           display: "BYCLICK",
           textAlign: "center",
         },
-      }));
+      })
+    );
   }, [nearestMosques, showAllMosques, selectedMosqueId]);
 
   const handleShowMore = () => {
@@ -158,23 +162,25 @@ const CariMasjid: React.FC = () => {
     setSelectedMosque(mosque);
   };
 
-  const handleMapPress = (type: 'maps' | 'google' | 'waze') => {
+  const handleMapPress = (type: "maps" | "google" | "waze") => {
     const latitude = Number(selectedMosque?.latitude);
     const longitude = Number(selectedMosque?.longitude);
 
-    if (type === 'maps') {
+    if (type === "maps") {
       Taro.openLocation({
         latitude,
         longitude,
         // name: selectedMosque?.name,
         // address: selectedMosque?.city
       });
-    } else if (type === 'google') {
+    } else if (type === "google") {
       if (isIOS) {
         Taro.navigateTo({
           url:
             "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(`https://www.google.com/maps?q=${latitude},${longitude}`)
+            encodeURIComponent(
+              `https://www.google.com/maps?q=${latitude},${longitude}`
+            ),
         });
       } else {
         Taro.openLocation({
@@ -184,11 +190,13 @@ const CariMasjid: React.FC = () => {
           // address: selectedMosque?.city
         });
       }
-    } else if (type === 'waze') {
+    } else if (type === "waze") {
       Taro.navigateTo({
         url:
           "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(`https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`)
+          encodeURIComponent(
+            `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`
+          ),
       });
     }
   };
@@ -217,7 +225,7 @@ const CariMasjid: React.FC = () => {
         style={{
           height: mapHeight,
           width: "100%",
-          transition: "height 0.3s ease-in-out"
+          transition: "height 0.3s ease-in-out",
         }}
       >
         <CoverView slot="callout">
@@ -231,7 +239,7 @@ const CariMasjid: React.FC = () => {
 
       <TransparentBottomSheet
         open={visibleSheet}
-        onClose={() => { }}
+        onClose={() => {}}
         containerClassname="draggable"
         snapPoints={SNAPPOINTS}
         initialSnap={2}
@@ -240,68 +248,79 @@ const CariMasjid: React.FC = () => {
       >
         {showMapApps ? (
           <View className="flex flex-col p-4">
-            <Text className="text-[16px] leading-[24px] font-semibold mb-4 text-center">Buka di aplikasi</Text>
+            <Text className="text-[16px] leading-[24px] font-semibold mb-4 text-center">
+              Buka di aplikasi
+            </Text>
             <View className="flex flex-row justify-center gap-8">
               {isIOS && (
                 <View
                   className="flex flex-col items-center"
-                  onClick={() => handleMapPress('maps')}
+                  onClick={() => handleMapPress("maps")}
                 >
-                  <View className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
+                  <View
+                    className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
                     style={{
-                      border: `1px solid #EFF1F4`
+                      border: `1px solid #EFF1F4`,
                     }}
                   >
                     <Image
                       src={MapsIcon}
                       style={{
                         width: "32px",
-                        height: "32px"
+                        height: "32px",
                       }}
                     />
                   </View>
-                  <Text className="text-[10px] leading-[12px] text-textPrimary">Maps</Text>
+                  <Text className="text-[10px] leading-[12px] text-textPrimary">
+                    Maps
+                  </Text>
                 </View>
               )}
               <View
                 className="flex flex-col items-center"
-                onClick={() => handleMapPress('google')}
+                onClick={() => handleMapPress("google")}
               >
-                <View className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
+                <View
+                  className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
                   style={{
-                    border: `1px solid #EFF1F4`
+                    border: `1px solid #EFF1F4`,
                   }}
                 >
                   <Image
                     src={GmapsIcon}
                     style={{
                       width: "32px",
-                      height: "32px"
+                      height: "32px",
                     }}
                   />
                 </View>
 
-                <Text className="text-[10px] leading-[12px] text-textPrimary">Google Maps</Text>
+                <Text className="text-[10px] leading-[12px] text-textPrimary">
+                  Google Maps
+                </Text>
               </View>
               <View
                 className="flex flex-col items-center"
-                onClick={() => handleMapPress('waze')}
+                onClick={() => handleMapPress("waze")}
               >
-                <View className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
+                <View
+                  className="w-[56px] h-[56px] p-2 rounded-[12px] flex items-center justify-center mb-2"
                   style={{
-                    border: `1px solid #EFF1F4`
+                    border: `1px solid #EFF1F4`,
                   }}
                 >
                   <Image
                     src={WazeIcon}
                     style={{
                       width: "32px",
-                      height: "32px"
+                      height: "32px",
                     }}
                   />
                 </View>
 
-                <Text className="text-[10px] leading-[12px] text-textPrimary">Waze</Text>
+                <Text className="text-[10px] leading-[12px] text-textPrimary">
+                  Waze
+                </Text>
               </View>
             </View>
           </View>
@@ -318,7 +337,11 @@ const CariMasjid: React.FC = () => {
               {nearestMosques?.data?.data
                 ?.sort((a, b) => a.distance - b.distance)
                 ?.slice(0, 20)
-                ?.filter(mosque => selectedMosqueId ? mosque.id === Number(selectedMosqueId) : true)
+                ?.filter((mosque) =>
+                  selectedMosqueId
+                    ? mosque.id === Number(selectedMosqueId)
+                    : true
+                )
                 ?.slice(0, showAllMosques ? undefined : 5)
                 ?.map((mosque) => (
                   <MosqueListItem
@@ -331,13 +354,15 @@ const CariMasjid: React.FC = () => {
                 ))}
             </View>
 
-            {!selectedMosqueId && nearestMosques?.data?.data?.length > 5 && !showAllMosques && (
-              <Button
-                label="Tampilkan Lebih Banyak"
-                onClick={handleShowMore}
-                style="secondary"
-              />
-            )}
+            {!selectedMosqueId &&
+              nearestMosques?.data?.data?.length > 5 &&
+              !showAllMosques && (
+                <Button
+                  label="Tampilkan Lebih Banyak"
+                  onClick={handleShowMore}
+                  style="secondary"
+                />
+              )}
           </View>
         )}
       </TransparentBottomSheet>

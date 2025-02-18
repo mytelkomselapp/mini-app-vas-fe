@@ -8,8 +8,10 @@ import iconInfo from "../../../../assets/ico_info.svg";
 import { View } from "@tarojs/components";
 import Button from "../../../../components/Button";
 import { handleNavigate } from "../../../../lib/utils";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const Redemption: React.FC = () => {
+  useTaroNavBar();
   const getStats = (stats: string) => {
     if (stats === "success") {
       return {

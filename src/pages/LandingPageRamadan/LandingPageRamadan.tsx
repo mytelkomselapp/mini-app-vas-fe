@@ -19,6 +19,7 @@ import {
 import { RamadhanSearchLocationProps } from "@/network/types/response-props";
 import Show from "../../components/Show";
 import LoadingScreen from "../../components/LoadingScreen";
+import useTaroNavBar from "../../hooks/useTaroNavBar";
 
 type Feature = {
   name: string;
@@ -26,32 +27,6 @@ type Feature = {
   path?: string;
 };
 
-// const features: Feature[] = [
-//   {
-//     name: "Cari Masjid",
-//     icon: "🏰",
-//     path: "/subpackages/subpackage2/pages/CariMasjid/index",
-//   },
-//   {
-//     name: "Kiblat",
-//     icon: "🧭",
-//     path: "/subpackages/subpackage1/pages/ArahKiblat/index",
-//   },
-//   { name: "Zakat", icon: "💰" },
-//   { name: "Sedekah", icon: "❤️" },
-//   { name: "Kirim Parsel", icon: "🎁" },
-//   {
-//     name: "Catatan\nIbadah",
-//     icon: "📝",
-//     path: "/subpackages/subpackage5/pages/CatatanIbadah/index",
-//   },
-//   {
-//     name: "Dzikir",
-//     icon: "📖",
-//     path: "/subpackages/subpackage4/pages/Dzikir/index",
-//   },
-//   { name: "Kuis", icon: "❓" },
-// ];
 const LandingPageRamadan = () => {
   const [latitude, setLatitude] = useState("0");
   const [longitude, setLongitude] = useState("0");
@@ -66,6 +41,7 @@ const LandingPageRamadan = () => {
     data: dataRawRegisterUser,
   } = usePostRegisterUser();
   const { isActive } = usePrayerNotification();
+  useTaroNavBar();
 
   const dataLandingPageCMS =
     dataRawLandingPageCMS?.data?.data?.ramadhanSections;

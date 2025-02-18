@@ -12,8 +12,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
-import { useFetchListRewards, useFetchRewardSections } from "../../../../network/resolvers";
-import { RewardSectionData, RewardItemData } from "../../../../network/types/response-props";
+import {
+  useFetchListRewards,
+  useFetchRewardSections,
+} from "../../../../network/resolvers";
+import {
+  RewardSectionData,
+  RewardItemData,
+} from "../../../../network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 interface RewardItemProps {
   title: string;
   originalStamp: number;
@@ -23,18 +30,24 @@ interface RewardItemProps {
   onClick: () => void;
 }
 
-const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentStamp, type, imageUrl, onClick }) => {
-
+const RewardItem: React.FC<RewardItemProps> = ({
+  title,
+  originalStamp,
+  currentStamp,
+  type,
+  imageUrl,
+  onClick,
+}) => {
   return (
     <div
       className="bg-white rounded-xl overflow-hidden mx-auto max-w-[165.5px] h-auto"
-      style={{ border: '1px solid #EFF1F4' }}
+      style={{ border: "1px solid #EFF1F4" }}
     >
       <Image
         src={imageUrl}
         style={{
           width: "180px",
-          height: "165px"
+          height: "165px",
         }}
         mode="aspectFill"
       />
@@ -48,7 +61,7 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
               src={StampIcon}
               style={{
                 width: "16px",
-                height: "16px"
+                height: "16px",
               }}
             />
             <span className="text-xs text-gray-400 line-through mr-2">
@@ -60,37 +73,48 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
             {currentStamp} Stamp
           </span>
         </div>
-        <Button label="Tukar" onClick={onClick} className="!min-h-[34px] !max-h-[34px]" />
+        <Button
+          label="Tukar"
+          onClick={onClick}
+          className="!min-h-[34px] !max-h-[34px]"
+        />
       </div>
     </div>
   );
 };
 
 const TukarHadiah = () => {
-  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
-  const [selectedReward, setSelectedReward] = useState<RewardItemData | null>(null);
-
+  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
+    {}
+  );
+  const [selectedReward, setSelectedReward] = useState<RewardItemData | null>(
+    null
+  );
+  useTaroNavBar();
   const { data: rewardSections, isLoading } = useFetchRewardSections();
-  const { data: listRewards, isLoading: isLoadingListRewards } = useFetchListRewards(!!rewardSections?.data);
+  const { data: listRewards, isLoading: isLoadingListRewards } =
+    useFetchListRewards(!!rewardSections?.data);
   // Group rewards by section and maintain section order
-  const groupedRewards = ((rewardSections?.data?.data as unknown) as RewardSectionData[] || [])
+  const groupedRewards = (
+    (rewardSections?.data?.data as unknown as RewardSectionData[]) || []
+  )
     .sort((a, b) => Number(a.id) - Number(b.id))
     .reduce((acc, section) => {
-      const sectionRewards = ((listRewards?.data?.data as unknown) as RewardItemData[] || []).filter(
-        reward => reward.reward_section === section.name
-      );
+      const sectionRewards = (
+        (listRewards?.data?.data as unknown as RewardItemData[]) || []
+      ).filter((reward) => reward.reward_section === section.name);
       acc[section.name] = sectionRewards;
       return acc;
     }, {} as Record<string, any>);
 
   const openReward = (reward: RewardItemData) => {
     setSelectedReward(reward);
-  }
+  };
 
   const handleSwiperChange = (e, sectionName: string) => {
-    setCurrentSlides(prev => ({
+    setCurrentSlides((prev) => ({
       ...prev,
-      [sectionName]: e.detail.current
+      [sectionName]: e.detail.current,
     }));
   };
 
@@ -110,13 +134,16 @@ const TukarHadiah = () => {
                   src={StampIcon32}
                   style={{
                     width: "32px",
-                    height: "32px"
+                    height: "32px",
                   }}
                 />
                 <Text className="text-[20px] font-bold">3920</Text>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-grey">Berlaku sampai: <strong className="font-semibold">31 Maret 2025</strong></span>
+                <span className="text-xs text-grey">
+                  Berlaku sampai:{" "}
+                  <strong className="font-semibold">31 Maret 2025</strong>
+                </span>
               </div>
             </div>
 
@@ -124,7 +151,11 @@ const TukarHadiah = () => {
               <Button
                 style="secondary"
                 label="Riwayat"
-                onClick={() => { handleNavigate('/subpackages/subpackage7/pages/RiwayatTukarHadiah/index') }}
+                onClick={() => {
+                  handleNavigate(
+                    "/subpackages/subpackage7/pages/RiwayatTukarHadiah/index"
+                  );
+                }}
                 className="!max-h-[34px] !text-xs font-semibold leading-4"
                 icon={<img src={ClockIcon} className="w-4 h-4 ml-[2px]" />}
               />
@@ -132,7 +163,9 @@ const TukarHadiah = () => {
           </div>
 
           {/* Rewards Sections */}
-          {((rewardSections?.data?.data as unknown) as RewardSectionData[] || []).map((section, idx) => (
+          {(
+            (rewardSections?.data?.data as unknown as RewardSectionData[]) || []
+          ).map((section, idx) => (
             <View key={idx} className="mb-4">
               <p className="text-[16px] font-bold text-black mb-4">
                 {section.name}
@@ -163,19 +196,28 @@ const TukarHadiah = () => {
                   {groupedRewards?.[section.name]?.map((_, index) => (
                     <View
                       key={index}
-                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${(currentSlides[section.name] || 0) === index ? "bg-white w-4 h-1" : "bg-[#FFFFFF99] w-1 h-1"
-                        }`}
+                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+                        (currentSlides[section.name] || 0) === index
+                          ? "bg-white w-4 h-1"
+                          : "bg-[#FFFFFF99] w-1 h-1"
+                      }`}
                     ></View>
                   ))}
                 </View>
               </View>
             </View>
           ))}
-
         </div>
       </View>
 
-      <BottomSheet open={selectedReward !== null} onClose={handleCloseSheet} containerClassname={`p-4 ${selectedReward?.type !== 'voucher' ? 'h-[90vh]' : ''}`} withoutPadding>
+      <BottomSheet
+        open={selectedReward !== null}
+        onClose={handleCloseSheet}
+        containerClassname={`p-4 ${
+          selectedReward?.type !== "voucher" ? "h-[90vh]" : ""
+        }`}
+        withoutPadding
+      >
         <View className="flex flex-col w-full">
           <p className="text-[16px] font-bold text-black mb-4 text-center">
             Mau tukar stamp dengan hadiah ini?
@@ -192,37 +234,48 @@ const TukarHadiah = () => {
             </div>
           )}
 
-          {selectedReward?.type === 'voucher' ? (
+          {selectedReward?.type === "voucher" ? (
             <p className="text-sm text-grey mt-4 text-center">
-              Tukarkan {selectedReward.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
+              Tukarkan {selectedReward.redeem_nominal} stamp untuk mendapatkan
+              hadiah ini sekarang!
             </p>
           ) : (
             <div>
               <p className="text-sm font-semibold mb-2">Deskripsi</p>
               <div className="w-full max-h-[30vh] bg-inactiveGrey overflow-y-auto rounded-lg mb-4">
                 <p className="text-sm text-grey p-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a ex eu lorem lacinia interdum a in mauris. Integer imperdiet congue metus nec scelerisque. Quisque eget tellus sed mi mattis consectetur. Proin felis mi, dignissim ac vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a ex eu lorem lacinia interdum a in mauris. Integer imperdiet congue metus nec scelerisque. Quisque eget tellus sed mi mattis consectetur. Proin felis mi, dignissim ac vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aliquam a ex eu lorem lacinia interdum a in mauris. Integer
+                  imperdiet congue metus nec scelerisque. Quisque eget tellus
+                  sed mi mattis consectetur. Proin felis mi, dignissim ac
+                  vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce
+                  lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aliquam a ex eu lorem lacinia interdum a in mauris. Integer
+                  imperdiet congue metus nec scelerisque. Quisque eget tellus
+                  sed mi mattis consectetur. Proin felis mi, dignissim ac
+                  vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce
+                  lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
                 </p>
               </div>
             </div>
           )}
         </View>
 
-        <Button label="Tukar Sekarang" onClick={handleCloseSheet} className="mb-1" />
+        <Button
+          label="Tukar Sekarang"
+          onClick={handleCloseSheet}
+          className="mb-1"
+        />
         <Button
           label="Nanti Saja"
           onClick={handleCloseSheet}
           style="secondary"
-        // className="mb-8"
+          // className="mb-8"
         />
       </BottomSheet>
     </View>
-
-  )
-
-}
-
-
+  );
+};
 
 export default TukarHadiah;

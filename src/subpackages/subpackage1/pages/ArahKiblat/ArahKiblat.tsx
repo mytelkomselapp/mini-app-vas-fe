@@ -13,6 +13,7 @@ import greenRectangle from "../../../../assets/green-rectangle.svg";
 import { cn } from "../../../../lib/utils";
 import BottomSheet from "../../../../components/BottomSheet";
 import Button from "../../../../components/Button";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const ArahKiblat: React.FC = () => {
   const [angle, setAngle] = useState(0);
@@ -30,7 +31,7 @@ const ArahKiblat: React.FC = () => {
   const labelCity = city?.city + ", " + city?.province + ", " + city?.country;
   const previousAngle = useRef(0);
   const fluctuations = useRef(0);
-
+  useTaroNavBar();
   useEffect(() => {
     Taro.getLocation({
       type: "wgs84",
