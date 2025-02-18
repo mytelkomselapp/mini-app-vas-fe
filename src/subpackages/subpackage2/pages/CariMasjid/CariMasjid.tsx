@@ -167,39 +167,43 @@ const CariMasjid: React.FC = () => {
     const longitude = Number(selectedMosque?.longitude);
 
     if (type === "maps") {
-      Taro.navigateTo({
-        url:
-          "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(
-            `https://maps.apple.com/?ll=${latitude},${longitude}`
-          ),
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: `https://maps.apple.com/?ll=${latitude},${longitude}`,
+        },
+        success: function (res: any) {
+          console.log("invokeNativePlugin success", res);
+        },
+        fail: function (err: any) {
+          console.error("invokeNativePlugin fail", err);
+        },
       });
-      
     } else if (type === "google") {
-      if (isIOS) {
-        Taro.navigateTo({
-          url:
-            "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(
-              `https://www.google.com/maps?q=${latitude},${longitude}`
-            ),
-        });
-      } else {
-        Taro.navigateTo({
-          url:
-            "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(
-              `https://www.google.com/maps?q=${latitude},${longitude}`
-            ),
-        });
-      }
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: `https://www.google.com/maps?q=${latitude},${longitude}`,
+        },
+        success: function (res: any) {
+          console.log("invokeNativePlugin success", res);
+        },
+        fail: function (err: any) {
+          console.error("invokeNativePlugin fail", err);
+        },
+      });
     } else if (type === "waze") {
-      Taro.navigateTo({
-        url:
-          "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(
-            `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`
-          ),
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`,
+        },
+        success: function (res: any) {
+          console.log("invokeNativePlugin success", res);
+        },
+        fail: function (err: any) {
+          console.error("invokeNativePlugin fail", err);
+        },
       });
     }
   };
