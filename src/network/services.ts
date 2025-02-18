@@ -32,6 +32,7 @@ import {
   DzikirCMSResponse,
   RewardSectionResponse,
   RewardItemResponse,
+  MerchandiseRewardResponse
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -51,7 +52,10 @@ import {
   StampMissionSummaryPayloadProps,
   StampMissionSubmitPayloadProps,
   StampHistoryPayloadProps,
+  MerchandisePayloadProps
 } from "./types/request-payload";
+import { createJWT, verifyJWT } from "../lib/utils";
+import { REDEMPTION_SECRET } from "../core/env";
 
 /**
  * Example
@@ -265,3 +269,23 @@ export const getRewardSections = (): RewardSectionResponse => {
 export const getListRewards = (): RewardItemResponse => {
   return http.get(endpoints?.getListRewards);
 };
+
+
+
+export const postRedeemMerchandise = (payload: MerchandisePayloadProps, userId: string): MerchandiseRewardResponse => {
+  const exp = Math.floor(Date.now() / 1000) + 60;
+  const jwtPayload = {
+    user_id: userId,
+    exp
+  };
+  
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || '');
+
+  const headers = {
+    "SecureToken": token
+  };
+  
+  return http.post(endpoints?.postRedeemReward, payload, undefined, undefined, headers);
+};
+
+

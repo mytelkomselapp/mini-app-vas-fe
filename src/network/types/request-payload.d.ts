@@ -111,3 +111,15 @@ export interface StampMissionSubmitPayloadProps {
   category_id: string;
   mission_id: string;
 }
+
+export interface MerchandisePayloadProps {
+  reward_id: string;
+  full_name: string;
+  phone_number: string;
+  province: string;
+  city: string;
+  subdistrict: string;
+  zipcode: string;
+  address: string;
+  qty: number;
+}

@@ -119,7 +119,8 @@ export const post = <T extends string | ArrayBuffer = any>(
   },
   body?: Record<string, any>,
   queryParam: any = {},
-  config?: Taro.request.Option
+  config?: Taro.request.Option,
+  headers?: Record<string, any>
 ) => {
   /**
    * Url endpoint
@@ -133,11 +134,12 @@ export const post = <T extends string | ArrayBuffer = any>(
   }
 
   const bearerToken = `Bearer ${generateToken(endpoint?.source)}`;
-
+  console.log(headers, "headers");
   return Taro.request<T>({
     url,
     ...config,
     header: {
+      ...headers,
       "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
