@@ -3,6 +3,7 @@ import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
+import { KJUR } from 'jsrsasign';
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -350,4 +351,39 @@ export const detectPlatform = () => {
     return "android";
   }
   return "unknown";
+};
+
+export const getTimezone = () => {
+  const currentDate = new Date();
+  const offset = currentDate.getTimezoneOffset() / -60; // Convert to positive hours
+  switch (offset) {
+    case 8:
+      return 'WITA';
+    case 9:
+      return 'WIT';
+    default:
+      return 'WIB';
+  }
+};
+
+export const createJWT = (payload: any, secret: string) => {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const sHeader = JSON.stringify(header);
+  const sPayload = JSON.stringify(payload);
+  // Convert secret to hex using string manipulation
+  const hexSecret = secret.split('')
+    .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
+    .join('');
+  const sJWT = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, { hex: hexSecret });
+  return sJWT;
+};
+
+export const verifyJWT = (token: string, secret: string) => {
+  const encoder = new TextEncoder();
+  const secretBytes = encoder.encode(secret);
+  const hexSecret = Array.from(secretBytes)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  const isValid = KJUR.jws.JWS.verifyJWT(token, { hex: hexSecret }, { alg: ['HS256'] });
+  return isValid;
 };

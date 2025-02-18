@@ -7,8 +7,13 @@ import iconStamp from "../../../../assets/icon-stamp-gamehub-32.svg";
 import iconInfo from "../../../../assets/ico_info.svg";
 import { View } from "@tarojs/components";
 import Button from "../../../../components/Button";
-import { handleNavigate } from "../../../../lib/utils";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import {
+  formatDateToIndonesian,
+  getTimezone,
+  handleNavigate,
+} from "../../../../lib/utils";
+import Taro from "@tarojs/taro";
 
 const Redemption: React.FC = () => {
   useTaroNavBar();
@@ -29,10 +34,22 @@ const Redemption: React.FC = () => {
       };
     }
   };
+  const searchParams = Taro.getCurrentInstance().router?.params;
+
+  const resultStatus = searchParams?.status || "";
+  const stampAmount = searchParams?.stampAmount || "";
+
+  const currentDate = new Date();
+  const time = `${String(currentDate.getHours()).padStart(2, "0")}:${String(
+    currentDate.getMinutes()
+  ).padStart(2, "0")} ${getTimezone()}`;
+  const formattedDate = formatDateToIndonesian(new Date());
+  const finalDate = `${formattedDate.day} ${formattedDate.monthName}, ${formattedDate.year}`;
+
   const handleOpenHistory = () => {
     handleNavigate("/subpackages/subpackage7/pages/RiwayatTukarHadiah/index");
   };
-  const { image, title, status, color } = getStats("failed");
+  const { image, title, status, color } = getStats(resultStatus);
   return (
     <div className="bg-inactiveGrey p-4 pb-10 h-screen">
       <div className="mt-4 h-[50vh]">
@@ -67,18 +84,20 @@ const Redemption: React.FC = () => {
             </div>
             <div className="flex justify-between text-grey">
               <span>Waktu</span>
-              <span>12:57 WIB</span>
+              <span>{time}</span>
             </div>
             <div className="flex justify-between text-grey !mb-4">
               <span>Tanggal</span>
-              <span>15 Mei 2024</span>
+              <span>{finalDate}</span>
             </div>
             <View className="h-[1px] bg-dividerGrey w-full mr-2" />
             <div className="flex justify-between text-grey !mt-4">
               <span>Jumlah</span>
               <div className="justify-end flex items-center">
                 <img src={iconStamp} className="w-4 h-4 mr-2" />
-                <span className="text-solidRed font-semibold">3290 Stamp</span>
+                <span className="text-solidRed font-semibold">
+                  {stampAmount} Stamp
+                </span>
               </div>
             </div>
           </div>

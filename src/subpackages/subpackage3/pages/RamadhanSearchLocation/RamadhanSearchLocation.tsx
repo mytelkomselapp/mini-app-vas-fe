@@ -35,8 +35,6 @@ const RamadhanSearchLocation = () => {
   useTaroNavBar();
   const dataPreviousCity = state?.data;
 
-  console.log({ dataPreviousCity });
-
   const {
     data: searchCityData,
     isLoading: isLoadingSearchCity,

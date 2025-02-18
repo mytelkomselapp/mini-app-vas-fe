@@ -1,0 +1,8 @@
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-60px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}

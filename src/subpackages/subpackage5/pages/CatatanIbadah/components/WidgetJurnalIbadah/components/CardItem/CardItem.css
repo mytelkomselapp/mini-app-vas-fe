@@ -1,0 +1,36 @@
+.hide-card {
+  opacity: 0;
+  animation: hideCard 1.5s ease-out;
+}
+
+.slide-up {
+  transform: translateY(-64px);
+  animation-name: slideUp;
+  animation-duration: 1.5s;
+  animation-delay: 1.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes hideCard {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-32px);
+  }
+  100% {
+    transform: translateY(-64px);
+  }
+}

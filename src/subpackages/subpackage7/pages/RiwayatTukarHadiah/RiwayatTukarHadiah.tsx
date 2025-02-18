@@ -1,6 +1,7 @@
 import { View, Text } from "@tarojs/components";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import { handleNavigate } from "../../../../lib/utils";
 
 type RewardStatus = "standby" | "pending" | "failed" | "success" | "preview";
 
@@ -61,6 +62,9 @@ const RiwayatTukarHadiah = () => {
           originalStamps={item.originalStamp}
           discountedStamps={item.currentStamp}
           status={item.status}
+          onClick={() => {
+            handleNavigate("/subpackages/subpackage7/pages/DetailHadiah/index");
+          }}
         />
       ))}
     </View>

@@ -9,18 +9,20 @@ import useToggle from "../../../../hooks/useToggle";
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import { useState } from "react";
-import { useEffect } from "react";
-import { handleNavigate } from "../../../../lib/utils";
+import { formatDateToIndonesian, handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 import {
   useFetchListRewards,
   useFetchRewardSections,
+  useFetchUserStamp,
 } from "../../../../network/resolvers";
 import {
   RewardSectionData,
   RewardItemData,
 } from "../../../../network/types/response-props";
+import { useCurrentSelectedReward } from "../../../../store/ramadhan";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+
 interface RewardItemProps {
   title: string;
   originalStamp: number;
@@ -28,6 +30,7 @@ interface RewardItemProps {
   type: string;
   imageUrl: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const RewardItem: React.FC<RewardItemProps> = ({
@@ -37,7 +40,9 @@ const RewardItem: React.FC<RewardItemProps> = ({
   type,
   imageUrl,
   onClick,
+  disabled,
 }) => {
+  useTaroNavBar();
   return (
     <div
       className="bg-white rounded-xl overflow-hidden mx-auto max-w-[165.5px] h-auto"
@@ -77,6 +82,7 @@ const RewardItem: React.FC<RewardItemProps> = ({
           label="Tukar"
           onClick={onClick}
           className="!min-h-[34px] !max-h-[34px]"
+          disabled={disabled}
         />
       </div>
     </div>
@@ -87,10 +93,16 @@ const TukarHadiah = () => {
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
     {}
   );
-  const [selectedReward, setSelectedReward] = useState<RewardItemData | null>(
-    null
-  );
-  useTaroNavBar();
+  const { data: dataUserStampRaw } = useFetchUserStamp();
+  const dataUserStamp = dataUserStampRaw?.data?.data;
+  const totalStamp = dataUserStamp?.total_stamp ?? 0;
+  const validUntil = dataUserStamp?.valid_until ?? "";
+
+  const formattedValidUntil = formatDateToIndonesian(new Date(validUntil));
+  const finalValidUntil = `${formattedValidUntil.day} ${formattedValidUntil.monthName}, ${formattedValidUntil.year}`;
+
+  const { currentSelectedReward, setCurrentSelectedReward } =
+    useCurrentSelectedReward();
   const { data: rewardSections, isLoading } = useFetchRewardSections();
   const { data: listRewards, isLoading: isLoadingListRewards } =
     useFetchListRewards(!!rewardSections?.data);
@@ -108,7 +120,7 @@ const TukarHadiah = () => {
     }, {} as Record<string, any>);
 
   const openReward = (reward: RewardItemData) => {
-    setSelectedReward(reward);
+    setCurrentSelectedReward(reward);
   };
 
   const handleSwiperChange = (e, sectionName: string) => {
@@ -119,7 +131,15 @@ const TukarHadiah = () => {
   };
 
   const handleCloseSheet = () => {
-    setSelectedReward(null);
+    setCurrentSelectedReward(null);
+  };
+
+  const handleCheckout = () => {
+    if (currentSelectedReward?.type === "merchandise") {
+      handleNavigate(
+        "/subpackages/subpackage7/pages/CheckoutMerchandise/index"
+      );
+    }
   };
 
   return (
@@ -137,12 +157,12 @@ const TukarHadiah = () => {
                     height: "32px",
                   }}
                 />
-                <Text className="text-[20px] font-bold">3920</Text>
+                <Text className="text-[20px] font-bold">{totalStamp}</Text>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-grey">
                   Berlaku sampai:{" "}
-                  <strong className="font-semibold">31 Maret 2025</strong>
+                  <strong className="font-semibold">{finalValidUntil}</strong>
                 </span>
               </div>
             </div>
@@ -186,35 +206,38 @@ const TukarHadiah = () => {
                       type={item.type}
                       imageUrl={item.image}
                       onClick={() => openReward(item)}
+                      disabled={item.redeem_nominal > totalStamp}
                     />
                   </SwiperItem>
                 ))}
               </Swiper>
               {/* Dot Indicator */}
-              <View className="flex justify-center">
-                <View className="flex justify-center bg-[#00000040] rounded-2xl w-min mx-auto p-[2px]">
-                  {groupedRewards?.[section.name]?.map((_, index) => (
-                    <View
-                      key={index}
-                      className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
-                        (currentSlides[section.name] || 0) === index
-                          ? "bg-white w-4 h-1"
-                          : "bg-[#FFFFFF99] w-1 h-1"
-                      }`}
-                    ></View>
-                  ))}
+              {rewardSections?.data?.data?.length > 2 && (
+                <View className="flex justify-center">
+                  <View className="flex justify-center rounded-2xl w-min mx-auto p-[2px]">
+                    {groupedRewards?.[section.name]?.map((_, index) => (
+                      <View
+                        key={index}
+                        className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+                          (currentSlides[section.name] || 0) === index
+                            ? "bg-[#001A41] w-4 h-1"
+                            : "bg-[#001A41] w-1 h-1"
+                        }`}
+                      ></View>
+                    ))}
+                  </View>
                 </View>
-              </View>
+              )}
             </View>
           ))}
         </div>
       </View>
 
       <BottomSheet
-        open={selectedReward !== null}
+        open={!!currentSelectedReward}
         onClose={handleCloseSheet}
         containerClassname={`p-4 ${
-          selectedReward?.type !== "voucher" ? "h-[90vh]" : ""
+          currentSelectedReward?.type !== "voucher" ? "max-h-[90vh]" : ""
         }`}
         withoutPadding
       >
@@ -223,39 +246,28 @@ const TukarHadiah = () => {
             Mau tukar stamp dengan hadiah ini?
           </p>
 
-          {selectedReward && (
+          {currentSelectedReward && (
             <div className="w-full">
               <HorizontalStampCard
-                imageUrl={selectedReward.image}
-                title={selectedReward.reward_name_id}
-                originalStamps={selectedReward.redeem_nominal}
-                discountedStamps={selectedReward.redeem_nominal}
+                imageUrl={currentSelectedReward.image}
+                title={currentSelectedReward.reward_name_id}
+                originalStamps={currentSelectedReward.redeem_nominal}
+                discountedStamps={currentSelectedReward.redeem_nominal}
               />
             </div>
           )}
 
-          {selectedReward?.type === "voucher" ? (
-            <p className="text-sm text-grey mt-4 text-center">
-              Tukarkan {selectedReward.redeem_nominal} stamp untuk mendapatkan
-              hadiah ini sekarang!
+          {currentSelectedReward?.type === "voucher" ? (
+            <p className="text-sm text-grey mt-4 text-center mb-2">
+              Tukarkan {currentSelectedReward.redeem_nominal} stamp untuk
+              mendapatkan hadiah ini sekarang!
             </p>
           ) : (
             <div>
               <p className="text-sm font-semibold mb-2">Deskripsi</p>
               <div className="w-full max-h-[30vh] bg-inactiveGrey overflow-y-auto rounded-lg mb-4">
                 <p className="text-sm text-grey p-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aliquam a ex eu lorem lacinia interdum a in mauris. Integer
-                  imperdiet congue metus nec scelerisque. Quisque eget tellus
-                  sed mi mattis consectetur. Proin felis mi, dignissim ac
-                  vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce
-                  lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aliquam a ex eu lorem lacinia interdum a in mauris. Integer
-                  imperdiet congue metus nec scelerisque. Quisque eget tellus
-                  sed mi mattis consectetur. Proin felis mi, dignissim ac
-                  vehicula non, varius vel ante. Vivamus vel nibh sapien. Fusce
-                  lobortis mollis ipsum, quis dignissim ante tincidunt mollis.
+                  {currentSelectedReward?.reward_desc_id}
                 </p>
               </div>
             </div>
@@ -264,8 +276,8 @@ const TukarHadiah = () => {
 
         <Button
           label="Tukar Sekarang"
-          onClick={handleCloseSheet}
-          className="mb-1"
+          onClick={handleCheckout}
+          className="mb-2"
         />
         <Button
           label="Nanti Saja"

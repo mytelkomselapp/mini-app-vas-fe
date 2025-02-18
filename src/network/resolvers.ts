@@ -38,6 +38,7 @@ import {
   postTrackingFlight,
   postUploadETicketFile,
   userUpdateCity,
+  postRedeemMerchandise,
 } from "./services";
 import {
   GetETicketPayloadProps,
@@ -48,6 +49,7 @@ import {
   StampHistoryPayloadProps,
   StampMissionListPayloadProps,
   StampMissionSummaryPayloadProps,
+  MerchandisePayloadProps
 } from "./types/request-payload";
 import { useMemo, useState } from "react";
 
@@ -378,4 +380,10 @@ export const useFetchListRewards = (enabled: boolean = true) => {
   return useQuery(["Fetch List Rewards"], getListRewards, {
     enabled,
   });
+};
+
+export const usePostRedeemMerchandise = (userId: string) => {
+  return useMutation(
+    ["Post Redeem Merchandise"], 
+    (payload: MerchandisePayloadProps) => postRedeemMerchandise(payload, userId));
 };

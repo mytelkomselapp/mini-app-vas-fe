@@ -13,7 +13,6 @@ const Promo = ({
   data: PromoTypes[];
   header: HeaderSection;
 }) => {
-  console.log({ header });
   const [current, setCurrent] = useState(0);
   const promos = [
     {

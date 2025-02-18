@@ -17,6 +17,7 @@ import {
   useRamadhanSearchLocation,
 } from "../../store/ramadhan";
 import { RamadhanSearchLocationProps } from "@/network/types/response-props";
+import WidgetJurnalIbadah from "../../subpackages/subpackage5/pages/CatatanIbadah/components/WidgetJurnalIbadah";
 import Show from "../../components/Show";
 import LoadingScreen from "../../components/LoadingScreen";
 import useTaroNavBar from "../../hooks/useTaroNavBar";
@@ -34,7 +35,6 @@ const LandingPageRamadan = () => {
   const { data: dataRawLandingPageCMS, isLoading: isLoadingLandingPageCMS } =
     useFetchLandingPageCMS();
 
-  console.log({ dataRawLandingPageCMS });
   const {
     mutateAsync: doRegisterUser,
     isLoading: isLoadingRegisterUser,
@@ -273,6 +273,7 @@ const LandingPageRamadan = () => {
       </div>
 
       <Promo data={promoSections} header={promoSectionsHeader} />
+      <WidgetJurnalIbadah />
       <View className="p-4 pl-0">
         <Text className="font-batikSans font-bold text-[14px] pl-4">
           {productSession1Header?.title}

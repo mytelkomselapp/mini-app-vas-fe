@@ -150,6 +150,10 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/stamp/reward",
     source: "gamification",
   },
+  postRedeemReward: {
+    endpoint: "/api/v1/stamp/redeem",
+    source: "gamification",
+  },
 };
 
 export default endpoints;
