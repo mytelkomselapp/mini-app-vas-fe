@@ -3,6 +3,7 @@ import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
+import { KJUR } from 'jsrsasign';
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -350,4 +351,30 @@ export const detectPlatform = () => {
     return "android";
   }
   return "unknown";
+};
+
+export const getTimezone = () => {
+  const currentDate = new Date();
+  const offset = currentDate.getTimezoneOffset() / -60; // Convert to positive hours
+  switch (offset) {
+    case 8:
+      return 'WITA';
+    case 9:
+      return 'WIT';
+    default:
+      return 'WIB';
+  }
+};
+
+export const createJWT = (payload, secret) => {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const sHeader = JSON.stringify(header);
+  const sPayload = JSON.stringify(payload);
+  const sJWT = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, secret);
+  return sJWT;
+};
+
+export const verifyJWT = (token, secret) => {
+  const isValid = KJUR.jws.JWS.verifyJWT(token, secret, { alg: ['HS256'] });
+  return isValid;
 };
