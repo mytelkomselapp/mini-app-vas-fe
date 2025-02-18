@@ -167,12 +167,14 @@ const CariMasjid: React.FC = () => {
     const longitude = Number(selectedMosque?.longitude);
 
     if (type === "maps") {
-      Taro.openLocation({
-        latitude,
-        longitude,
-        // name: selectedMosque?.name,
-        // address: selectedMosque?.city
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(
+            `https://maps.apple.com/?ll=${latitude},${longitude}`
+          ),
       });
+      
     } else if (type === "google") {
       if (isIOS) {
         Taro.navigateTo({
@@ -183,11 +185,12 @@ const CariMasjid: React.FC = () => {
             ),
         });
       } else {
-        Taro.openLocation({
-          latitude,
-          longitude,
-          // name: selectedMosque?.name,
-          // address: selectedMosque?.city
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(
+              `https://www.google.com/maps?q=${latitude},${longitude}`
+            ),
         });
       }
     } else if (type === "waze") {
