@@ -32,7 +32,8 @@ import {
   DzikirCMSResponse,
   RewardSectionResponse,
   RewardItemResponse,
-  MerchandiseRewardResponse
+  MerchandiseRewardResponse,
+  RedeemVoucherResponse
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -52,7 +53,8 @@ import {
   StampMissionSummaryPayloadProps,
   StampMissionSubmitPayloadProps,
   StampHistoryPayloadProps,
-  MerchandisePayloadProps
+  MerchandisePayloadProps,
+  RedeemVoucherPayloadProps
 } from "./types/request-payload";
 import { createJWT } from "../lib/utils";
 import { REDEMPTION_SECRET } from "../core/env";
@@ -287,5 +289,22 @@ export const postRedeemMerchandise = (payload: MerchandisePayloadProps, userId: 
   
   return http.post(endpoints?.postRedeemReward, payload, undefined, undefined, headers);
 };
+
+export const postRedeemVoucher = (payload: RedeemVoucherPayloadProps, userId: string): RedeemVoucherResponse => {
+  const exp = Math.floor(Date.now() / 1000) + 60;
+  const jwtPayload = {
+    user_id: userId,
+    exp
+  };
+  
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || '');
+
+  const headers = {
+    "SecureToken": token
+  };
+  
+  return http.post(endpoints?.postRedeemVoucher, payload, undefined, undefined, headers);
+};
+
 
 

@@ -123,3 +123,7 @@ export interface MerchandisePayloadProps {
   address: string;
   qty: number;
 }
+
+export interface RedeemVoucherPayloadProps {
+  reward_id: string;
+}
