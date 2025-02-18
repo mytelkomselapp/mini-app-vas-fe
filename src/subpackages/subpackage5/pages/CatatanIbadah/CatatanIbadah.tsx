@@ -12,6 +12,7 @@ import {
 } from "../../../../network";
 import moment from "moment";
 import { StampMissionSummaryData } from "../../../../network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import NotificationModal from "./components/NotificationModal";
 import Taro from "@tarojs/taro";
 import useToggle from "../../../../hooks/useToggle";
@@ -36,6 +37,7 @@ const CatatanIbadahPage = () => {
 
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
+  useTaroNavBar();
 
   const handleActivateNotification = () => {
     Taro.showModal({
