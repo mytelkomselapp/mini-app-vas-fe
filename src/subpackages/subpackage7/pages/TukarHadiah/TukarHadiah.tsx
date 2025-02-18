@@ -104,6 +104,10 @@ const TukarHadiah = () => {
   const { currentSelectedReward, setCurrentSelectedReward } =
     useCurrentSelectedReward();
   const { data: rewardSections, isLoading } = useFetchRewardSections();
+  const filteredRewardSections = rewardSections?.data?.data?.filter(
+    (section) => section.name.toLowerCase() !== 'merchandise'
+  );
+
   const { data: listRewards, isLoading: isLoadingListRewards } =
     useFetchListRewards(!!rewardSections?.data);
   // Group rewards by section and maintain section order
@@ -184,7 +188,7 @@ const TukarHadiah = () => {
 
           {/* Rewards Sections */}
           {(
-            (rewardSections?.data?.data as unknown as RewardSectionData[]) || []
+            (filteredRewardSections as unknown as RewardSectionData[]) || []
           ).map((section, idx) => (
             <View key={idx} className="mb-4">
               <p className="text-[16px] font-bold text-black mb-4">
@@ -212,7 +216,7 @@ const TukarHadiah = () => {
                 ))}
               </Swiper>
               {/* Dot Indicator */}
-              {rewardSections?.data?.data?.length > 2 && (
+              {groupedRewards?.[section.name]?.length > 2 && (
                 <View className="flex justify-center">
                   <View className="flex justify-center rounded-2xl w-min mx-auto p-[2px]">
                     {groupedRewards?.[section.name]?.map((_, index) => (
