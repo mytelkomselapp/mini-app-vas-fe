@@ -5,7 +5,10 @@ import ribbonTail from "../../../../assets/ribbon-tail.svg";
 import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
 import { useState } from "react";
-import { Product } from "../../../../network/types/response-props";
+import {
+  HeaderSection,
+  Product,
+} from "../../../../network/types/response-props";
 import Taro from "@tarojs/taro";
 // const packages = [
 //   {
@@ -34,7 +37,13 @@ import Taro from "@tarojs/taro";
 //   },
 //   // Add more packages as needed
 // ];
-const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
+const SpecialPackage = ({
+  data = [],
+  header,
+}: {
+  data: Product[];
+  header: HeaderSection;
+}) => {
   const groupedData: Product[][] = [];
   for (let i = 0; i < data.length; i += 3) {
     groupedData.push(data?.slice(i, i + 3));
@@ -46,6 +55,15 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
   const handleSwiperChange = (e) => {
     setCurrent(e.detail.current);
   };
+  const onNavigate = (targetUrl?: string) => {
+    if (targetUrl) {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(targetUrl),
+      });
+    }
+  };
 
   const PackageCard = ({
     title,
@@ -55,15 +73,6 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
     isFirstItem,
     linkTitle,
   }) => {
-    const onNavigate = (targetUrl?: string) => {
-      if (targetUrl) {
-        Taro.navigateTo({
-          url:
-            "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(targetUrl),
-        });
-      }
-    };
     return (
       <div
         className={cn(
@@ -130,7 +139,10 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
         <Text className="font-bold font-batikSans whitespace-pre-wrap text-[14px]">
           {"Rekomendasi Untukmu"}
         </Text>
-        <Text className="whitespace-pre-wrap text-xs text-grey ">
+        <Text
+          className="whitespace-pre-wrap text-xs text-grey"
+          onClick={() => onNavigate(String(header?.targetUrl))}
+        >
           {"Lihat Semua"}
         </Text>
       </View>

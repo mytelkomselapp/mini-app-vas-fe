@@ -69,6 +69,7 @@ const LandingPageRamadan = () => {
 
   const dataLandingPageCMS =
     dataRawLandingPageCMS?.data?.data?.ramadhanSections;
+
   const productSession1 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
         (section) =>
@@ -76,6 +77,21 @@ const LandingPageRamadan = () => {
           section?.id === 1
       )?.products || []
     : [];
+
+  const productSession1Header = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.product-section" &&
+          section?.id === 1
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
+
   const productSession2 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
         (section) =>
@@ -83,6 +99,19 @@ const LandingPageRamadan = () => {
           section?.id === 2
       )?.products || []
     : [];
+  const productSession2Header = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.product-section" &&
+          section?.id === 2
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
 
   const cardSession1 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
@@ -90,6 +119,18 @@ const LandingPageRamadan = () => {
           section.__component === "sections.card-section" && section?.id === 1
       )?.cards || []
     : [];
+  const cardSession1Header = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.card-section" && section?.id === 1
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
 
   const cardSession2 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
@@ -97,17 +138,52 @@ const LandingPageRamadan = () => {
           section.__component === "sections.card-section" && section?.id === 2
       )?.cards || []
     : [];
+  const cardSession2Header = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) =>
+          section.__component === "sections.card-section" && section?.id === 2
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
 
   const newsSession = dataLandingPageCMS
     ? dataLandingPageCMS.find(
         (section) => section.__component === "sections.news-section"
       )?.listNews || []
     : [];
+  const newsSessionHeader = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) => section.__component === "sections.news-section"
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
+
   const promoSections = dataLandingPageCMS
     ? dataLandingPageCMS.find(
         (section) => section.__component === "sections.promo-section"
       )?.promo || []
     : [];
+  const promoSectionsHeader = dataLandingPageCMS
+    ? dataLandingPageCMS.find(
+        (section) => section.__component === "sections.promo-section"
+      )?.headerSection || {
+        id: 0,
+        title: "",
+        linkTitle: "",
+        targetUrl: "",
+        slug: "",
+      }
+    : { id: 0, title: "", linkTitle: "", targetUrl: "", slug: "" };
   const dataRegisterUser = dataRawRegisterUser?.data?.data;
   const city = dataRegisterUser?.city?.city ?? "-";
   const nearestPrayerTime =
@@ -220,29 +296,56 @@ const LandingPageRamadan = () => {
         </div>
       </div>
 
-      <Promo data={promoSections} />
+      <Promo data={promoSections} header={promoSectionsHeader} />
       <View className="p-4 pl-0">
         <Text className="font-batikSans font-bold text-[14px] pl-4">
-          {"Spesial Ramadan Untuk Kamu"}
+          {productSession1Header?.title}
         </Text>
-        <SpecialCommerce data={productSession1} />
-        <SpecialPackage data={productSession2} />
+        <SpecialCommerce
+          data={productSession1}
+          header={productSession1Header}
+        />
+        <SpecialPackage data={productSession2} header={productSession2Header} />
         <View className="flex flex-row items-center pl-4 mt-14 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
-            {"Film & Series Ramadan"}
+            {cardSession1Header?.title}
           </Text>
-          <Text className="whitespace-pre-wrap text-xs text-grey ">
+          <Text
+            className="whitespace-pre-wrap text-xs text-grey"
+            onClick={() => {
+              const targetUrl = cardSession1Header?.targetUrl;
+              if (targetUrl) {
+                Taro.navigateTo({
+                  url:
+                    "/subpackages/subpackage9/pages/Webview/index?url=" +
+                    encodeURIComponent(targetUrl),
+                });
+              }
+            }}
+          >
             {"Lihat Semua"}
           </Text>
         </View>
 
-        <SpecialFilm data={cardSession1} />
+        <SpecialFilm data={cardSession1} header={cardSession1Header} />
 
         <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
-            {"Ngabuburit Makin Seru"}
+            {cardSession2Header?.title}
           </Text>
-          <Text className="whitespace-pre-wrap text-xs text-grey ">
+          <Text
+            className="whitespace-pre-wrap text-xs text-grey"
+            onClick={() => {
+              const targetUrl = cardSession2Header?.targetUrl;
+              if (targetUrl) {
+                Taro.navigateTo({
+                  url:
+                    "/subpackages/subpackage9/pages/Webview/index?url=" +
+                    encodeURIComponent(targetUrl),
+                });
+              }
+            }}
+          >
             {"Lihat Semua"}
           </Text>
         </View>
@@ -250,9 +353,21 @@ const LandingPageRamadan = () => {
 
         <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
           <Text className="font-batikSans font-bold text-[14px]">
-            {"Kepoin Info Seputar Ramadan"}
+            {newsSessionHeader?.title}
           </Text>
-          <Text className="whitespace-pre-wrap text-xs text-grey ">
+          <Text
+            className="whitespace-pre-wrap text-xs text-grey"
+            onClick={() => {
+              const targetUrl = newsSessionHeader?.targetUrl;
+              if (targetUrl) {
+                Taro.navigateTo({
+                  url:
+                    "/subpackages/subpackage9/pages/Webview/index?url=" +
+                    encodeURIComponent(targetUrl),
+                });
+              }
+            }}
+          >
             {"Lihat Semua"}
           </Text>
         </View>

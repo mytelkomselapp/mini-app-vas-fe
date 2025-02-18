@@ -1,10 +1,16 @@
 import { ScrollView, View } from "@tarojs/components";
 import chevronRight from "../../../../assets/chevron-right.svg";
-import { Product } from "@/network/types/response-props";
+import { HeaderSection, Product } from "@/network/types/response-props";
 import { formatNumberWithThousandSeparator } from "../../../../lib/utils";
 import Taro from "@tarojs/taro";
 
-const SpecialCommerce = ({ data = [] }: { data: Product[] }) => {
+const SpecialCommerce = ({
+  data = [],
+  header,
+}: {
+  data: Product[];
+  header: HeaderSection;
+}) => {
   const onNavigate = (targetUrl?: string) => {
     if (targetUrl) {
       Taro.navigateTo({
