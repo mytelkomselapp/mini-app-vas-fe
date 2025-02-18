@@ -1,6 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { View } from "@tarojs/components";
-import bgLanding from "../../../../assets/bg/bg-prayer-schedule.png";
 
 import bgSubuh from "../../../../assets/bg/bg-subuh.png";
 import bgZuhur from "../../../../assets/bg/bg-zuhur.png";
@@ -38,7 +37,6 @@ import {
   usePostRegisterUser,
 } from "../../../../network";
 import { PrayerCardProps } from "@/pages/LandingPageRamadan/components/PrayerCard";
-import { PrayerNotificationConfig } from "@/network/types/response-props";
 import LoadingScreen from "../../../../components/LoadingScreen";
 
 interface Prayer {

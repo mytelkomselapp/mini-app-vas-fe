@@ -3,7 +3,6 @@ import {
   DzikirCMSData,
   RamadhanSearchLocationProps,
   StampMissionListDataMission,
-  MerchandisePayloadProps,
   RewardItemData,
 } from "../network/types/response-props";
 import {
@@ -201,17 +200,8 @@ export interface MerchandiseFormState {
   resetMerchandiseForm: () => void;
 }
 
-export const useMerchandiseForm = create<MerchandiseFormState>()((set, get) => ({
-  fullName: "",
-  phoneNumber: "",
-  province: "",
-  city: "",
-  subdistrict: "",
-  zipcode: "",
-  address: "",
-  email: "",
-  labelAddress: "",
-  error: {
+export const useMerchandiseForm = create<MerchandiseFormState>()(
+  (set, get) => ({
     fullName: "",
     phoneNumber: "",
     province: "",
@@ -221,32 +211,7 @@ export const useMerchandiseForm = create<MerchandiseFormState>()((set, get) => (
     address: "",
     email: "",
     labelAddress: "",
-  },
-  getHasData: () => {
-    const state = get();
-    return !!(
-      state.fullName ||
-      state.phoneNumber ||
-      state.province ||
-      state.city ||
-      state.subdistrict ||
-      state.zipcode ||
-      state.address ||
-      state.email ||
-      state.labelAddress
-    );
-  },
-  setError: (error: MerchandiseFormError) => set(() => ({ error })),
-  setFullName: (fullName: string) => set(() => ({ fullName })),
-  setPhoneNumber: (phoneNumber: string) => set(() => ({ phoneNumber })),
-  setProvince: (province: string) => set(() => ({ province })),
-  setCity: (city: string) => set(() => ({ city })),
-  setSubdistrict: (subdistrict: string) => set(() => ({ subdistrict })),
-  setZipcode: (zipcode: string) => set(() => ({ zipcode })),
-  setAddress: (address: string) => set(() => ({ address })),
-  setEmail: (email: string) => set(() => ({ email })),
-  setLabelAddress: (labelAddress: string) => set(() => ({ labelAddress })),
-  resetMerchandiseForm: () => set(() => ({ 
+    error: {
       fullName: "",
       phoneNumber: "",
       province: "",
@@ -256,7 +221,33 @@ export const useMerchandiseForm = create<MerchandiseFormState>()((set, get) => (
       address: "",
       email: "",
       labelAddress: "",
-      error: {
+    },
+    getHasData: () => {
+      const state = get();
+      return !!(
+        state.fullName ||
+        state.phoneNumber ||
+        state.province ||
+        state.city ||
+        state.subdistrict ||
+        state.zipcode ||
+        state.address ||
+        state.email ||
+        state.labelAddress
+      );
+    },
+    setError: (error: MerchandiseFormError) => set(() => ({ error })),
+    setFullName: (fullName: string) => set(() => ({ fullName })),
+    setPhoneNumber: (phoneNumber: string) => set(() => ({ phoneNumber })),
+    setProvince: (province: string) => set(() => ({ province })),
+    setCity: (city: string) => set(() => ({ city })),
+    setSubdistrict: (subdistrict: string) => set(() => ({ subdistrict })),
+    setZipcode: (zipcode: string) => set(() => ({ zipcode })),
+    setAddress: (address: string) => set(() => ({ address })),
+    setEmail: (email: string) => set(() => ({ email })),
+    setLabelAddress: (labelAddress: string) => set(() => ({ labelAddress })),
+    resetMerchandiseForm: () =>
+      set(() => ({
         fullName: "",
         phoneNumber: "",
         province: "",
@@ -266,27 +257,41 @@ export const useMerchandiseForm = create<MerchandiseFormState>()((set, get) => (
         address: "",
         email: "",
         labelAddress: "",
-      },
-    })
-  ),
-}));
+        error: {
+          fullName: "",
+          phoneNumber: "",
+          province: "",
+          city: "",
+          subdistrict: "",
+          zipcode: "",
+          address: "",
+          email: "",
+          labelAddress: "",
+        },
+      })),
+  })
+);
 
 interface CurrentSelectedRewardState {
   currentSelectedReward?: RewardItemData;
   setCurrentSelectedReward: (reward: RewardItemData) => void;
 }
 
-export const useCurrentSelectedReward = create<CurrentSelectedRewardState>((set) => ({
-  setCurrentSelectedReward: (reward: RewardItemData) => {
-    set(() => ({ currentSelectedReward: reward }));
-    if (reward) {
-      useSelectedRewardList.getState().setSelectedRewardList([
-        ...useSelectedRewardList.getState().selectedRewardList,
-        reward
-      ]);
-    }
-  },
-}));
+export const useCurrentSelectedReward = create<CurrentSelectedRewardState>(
+  (set) => ({
+    setCurrentSelectedReward: (reward: RewardItemData) => {
+      set(() => ({ currentSelectedReward: reward }));
+      if (reward) {
+        useSelectedRewardList
+          .getState()
+          .setSelectedRewardList([
+            ...useSelectedRewardList.getState().selectedRewardList,
+            reward,
+          ]);
+      }
+    },
+  })
+);
 
 interface SelectedRewardListState {
   selectedRewardList: RewardItemData[];
@@ -295,5 +300,6 @@ interface SelectedRewardListState {
 
 export const useSelectedRewardList = create<SelectedRewardListState>((set) => ({
   selectedRewardList: [],
-  setSelectedRewardList: (rewardList: RewardItemData[]) => set(() => ({ selectedRewardList: rewardList })),
+  setSelectedRewardList: (rewardList: RewardItemData[]) =>
+    set(() => ({ selectedRewardList: rewardList })),
 }));

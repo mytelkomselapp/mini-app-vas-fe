@@ -74,6 +74,10 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     },
     mini: {
       debugReact: true,
+
+      imageUrlLoaderOption: {
+        url: "assets",
+      },
       postcss: {
         pxtransform: {
           enable: true,
@@ -88,18 +92,6 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
         },
       },
       webpackChain(chain) {
-        chain.optimization.usedExports(true); // Enable tree shaking
-        chain.optimization.minimize(true); // Enable minification
-        chain.plugin("clean").use(CleanWebpackPlugin);
-        chain.plugin("analyzer").use(BundleAnalyzerPlugin);
-        chain.plugin("compress").use(require("compression-webpack-plugin"), [
-          {
-            algorithm: "gzip", // Use gzip compression
-            test: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i,
-            threshold: 10240, // Compress files larger than 10KB
-            minRatio: 0.8,
-          },
-        ]);
         chain.plugin("define").use(DefinePlugin, [
           {
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
@@ -121,17 +113,6 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
             },
           },
         });
-        chain.module
-          .rule("svg")
-          .test(/\.svg$/)
-          .use("babel-loader")
-          .loader("babel-loader")
-          .end()
-          .use("@svgr/webpack")
-          .loader("@svgr/webpack")
-          .options({
-            svgo: false,
-          });
       },
     },
     h5: {
