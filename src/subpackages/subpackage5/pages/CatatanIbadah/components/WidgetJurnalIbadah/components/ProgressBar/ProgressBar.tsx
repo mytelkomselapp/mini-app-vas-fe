@@ -3,18 +3,17 @@ import BackdropStamp from "../../../../../../../../assets/backdrop-widget-stamp.
 import RewardGamehub from "../../../../../../../../assets/reward-gamehub.png";
 import IcoLightning from "../../../../../../../../assets/ico_lightning.svg";
 
-import { View } from "lucide-react";
-import { Text } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 
 import "../../../DaftarIbadah/DaftarIbadah.css";
 import CheckedProgressItem from "../CheckedProgressItem/CheckedProgressItem";
 import { useFetchStampMissionSummary } from "../../../../../../../../network";
-import moment from "moment";
+import { useDataCatatanIbadah } from "../../../../../../../../store/ramadhan";
 
 const ProgressBar = () => {
   const milestones = [70, 100, 140];
 
-  const currentDay = moment().format("YYYY-MM-DD");
+  const { currentDay } = useDataCatatanIbadah();
   const { data: dataUserStamp } = useFetchStampMissionSummary({
     date: currentDay,
   });

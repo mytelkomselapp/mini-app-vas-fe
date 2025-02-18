@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import CardItem from "../CardItem";
 
 import { Text, View } from "@tarojs/components";
@@ -10,13 +9,16 @@ import {
 } from "../../../../../../../../network";
 import DetailTaskIbadahModal from "../../../../modals";
 import useToggle from "../../../../../../../../hooks/useToggle";
-import { useDetailTaskRamadhan } from "../../../../../../../../store/ramadhan";
+import {
+  useDetailTaskRamadhan,
+  useDataCatatanIbadah,
+} from "../../../../../../../../store/ramadhan";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
 import NotificationToast from "../../../../../../../../components/NotificationToast";
 import CheckedGray from "../../../../../../../../assets/checked-mark-grey.svg";
 
 const CardList = () => {
-  const today = moment().format("YYYY-MM-DD");
+  const { currentDay } = useDataCatatanIbadah();
 
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
@@ -32,8 +34,8 @@ const CardList = () => {
 
   const { data: dataMissionPopupCMSRaw } = useFetchMissionPopupCMS();
   const { data: dataStampMissionListRaw } = useFetchStampMissionList(
-    { date: today },
-    !!today
+    { date: currentDay },
+    !!currentDay
   );
 
   const { mutateAsync: postSubmitMission, isLoading: loadingSubmitMission } =
@@ -87,7 +89,7 @@ const CardList = () => {
 
       /*  Refetch user stamp and stamp mission list */
       queryClient.invalidateQueries({
-        queryKey: ["Fetch Stamp Mission Summary", { date: today }],
+        queryKey: ["Fetch Stamp Mission Summary", { date: currentDay }],
       });
 
       toggleVisibleTaskModal();

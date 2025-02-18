@@ -66,7 +66,6 @@ const SpecialFilm = ({
     <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
       <View className="flex flex-row space-x-3">
         {data?.map((item, index) => {
-          console.log({ item });
           return <Movie key={index} item={item} />;
         })}
         <View className="w-4 text-transparent">{"A"}</View>
