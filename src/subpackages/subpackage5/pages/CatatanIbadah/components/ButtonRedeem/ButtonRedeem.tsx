@@ -5,11 +5,19 @@ import GoldReward from "../../../../../../assets/gold_rewards.svg";
 export interface ButtonRedeemProps {
   onClick: () => void;
   title: string;
+  customClassName?: string;
 }
 
-const ButtonRedeem: React.FC<ButtonRedeemProps> = ({ title = "", onClick }) => {
+const ButtonRedeem: React.FC<ButtonRedeemProps> = ({
+  title = "",
+  onClick,
+  customClassName,
+}) => {
   return (
-    <div onClick={onClick} className="flex h-[32px] w-auto">
+    <div
+      onClick={onClick}
+      className={`flex h-[32px] w-auto ${customClassName}`}
+    >
       <img
         src={GoldReward}
         className="z-[1] relative top-[-8px]"

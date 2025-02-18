@@ -11,6 +11,8 @@ import {
   useDataCatatanIbadah,
 } from "../../../../../../../../store/ramadhan";
 
+import "./CardTaskIbadah.css";
+
 import BackgroundSholat from "../../../../../../../../assets/bg/catatan-ibadah/bg-sholat.png";
 import BackgroundSahurBukaPuasa from "../../../../../../../../assets/bg/catatan-ibadah/bg-sahur.png";
 import BackgroundSedekah from "../../../../../../../../assets/bg/catatan-ibadah/bg-sedekah-subuh.png";
@@ -43,9 +45,21 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
 
   if (condition === "checked") {
     return (
-      <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#e5f4ee]">
-        <AsSVG src={CheckedMarkGreen} width="24px" height="24px" />
-        <p className="text-[10px] font-bold text-[#008e53]">
+      <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#e5f4ee] relative">
+        <div className="absolute flex justify-center items-center w-[0%] h-[0%] rounded-[16px] bg-[#008E53] animate-[shrink_1s_ease-out]" />
+        <div className="absolute flex opacity-0 justify-center items-center w-full h-full rounded-[16px] bg-transparent animate-[showText_1s_ease-out]">
+          <p className="text-[10px] font-bold text-white">
+            {data?.mission_name_id}
+          </p>
+        </div>
+
+        <AsSVG
+          src={CheckedMarkGreen}
+          width="24px"
+          height="24px"
+          className="animate-[iconScale_1.2s_ease-out_1s]"
+        />
+        <p className="text-[10px] font-bold text-[#008e53] animate-[textScale_1.2s_ease-out_1s]">
           {data?.mission_name_id}
         </p>
       </div>
