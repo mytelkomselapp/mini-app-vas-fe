@@ -5,7 +5,11 @@ import ribbonTail from "../../../../assets/ribbon-tail.svg";
 import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
 import { useState } from "react";
-import { Product } from "../../../../network/types/response-props";
+import {
+  HeaderSection,
+  Product,
+} from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 // const packages = [
 //   {
 //     title: "Super Seru",
@@ -33,7 +37,13 @@ import { Product } from "../../../../network/types/response-props";
 //   },
 //   // Add more packages as needed
 // ];
-const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
+const SpecialPackage = ({
+  data = [],
+  header,
+}: {
+  data: Product[];
+  header: HeaderSection;
+}) => {
   const groupedData: Product[][] = [];
   for (let i = 0; i < data.length; i += 3) {
     groupedData.push(data?.slice(i, i + 3));
@@ -45,8 +55,24 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
   const handleSwiperChange = (e) => {
     setCurrent(e.detail.current);
   };
+  const onNavigate = (targetUrl?: string) => {
+    if (targetUrl) {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(targetUrl),
+      });
+    }
+  };
 
-  const PackageCard = ({ title, size, duration, ribbonLabel, isFirstItem }) => {
+  const PackageCard = ({
+    title,
+    size,
+    duration,
+    ribbonLabel,
+    isFirstItem,
+    linkTitle,
+  }) => {
     return (
       <div
         className={cn(
@@ -91,7 +117,7 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
           <Button
             label="Beli"
             style="secondary"
-            onClick={handleClickAllOffer}
+            onClick={() => onNavigate(linkTitle)}
             className="mt-4 !min-h-[28px] h-[28px] !w-[80px] !px-0 !text-xs !font-semibold"
           />
         </div>
@@ -113,7 +139,10 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
         <Text className="font-bold font-batikSans whitespace-pre-wrap text-[14px]">
           {"Rekomendasi Untukmu"}
         </Text>
-        <Text className="whitespace-pre-wrap text-xs text-grey ">
+        <Text
+          className="whitespace-pre-wrap text-xs text-grey"
+          onClick={() => onNavigate(String(header?.targetUrl))}
+        >
           {"Lihat Semua"}
         </Text>
       </View>
@@ -136,6 +165,7 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
                 size={slide?.title?.split("|")?.[1]}
                 key={key}
                 isFirstItem={key === 0}
+                linkTitle={slide?.targetUrl || slide?.linkTitle}
               />
             </div>
           </SwiperItem>
