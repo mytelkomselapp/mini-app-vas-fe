@@ -1,10 +1,8 @@
-import * as React from "react";
 import { Text, View } from "@tarojs/components";
 import Header from "./components/Header";
 import ProgressBar from "./components/ProgressBar";
 import CardList from "./components/CardList";
 import { handleNavigate } from "../../../../../../lib/utils";
-import NotificationToast from "../../../../../../components/NotificationToast";
 
 const WidgetJurnalIbadah = () => {
   return (

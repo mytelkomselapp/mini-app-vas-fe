@@ -6,9 +6,10 @@ import StampIcon from "../../../../../../../../assets/stamp.svg";
 import ButtonRedeem from "../../../ButtonRedeem";
 import { handleNavigate } from "../../../../../../../../lib/utils";
 import { useFetchStampMissionSummary } from "../../../../../../../../network";
-import moment from "moment";
+import { useDataCatatanIbadah } from "../../../../../../../../store/ramadhan";
+
 const Header = () => {
-  const currentDay = moment().format("YYYY-MM-DD");
+  const { currentDay } = useDataCatatanIbadah();
   const { data: dataUserStamp } = useFetchStampMissionSummary({
     date: currentDay,
   });
