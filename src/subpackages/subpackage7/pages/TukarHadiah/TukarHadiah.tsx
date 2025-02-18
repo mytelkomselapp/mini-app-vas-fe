@@ -22,6 +22,7 @@ import { useCurrentSelectedReward } from "../../../../store/ramadhan";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import Taro from "@tarojs/taro";
 import NotificationToast from "../../../../components/NotificationToast";
+import useToggle from "../../../../hooks/useToggle";
 
 interface RewardItemProps {
   title: string;
@@ -90,8 +91,8 @@ const RewardItem: React.FC<RewardItemProps> = ({
 };
 
 const TukarHadiah = () => {
-  const [visibleNotificationToast, setVisibleNotificationToast] = useState(false);
-  
+  const { active: visibleNotificationToast, toggleActive: toggleVisibleNotificationToast } = useToggle();
+  console.log(visibleNotificationToast);
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
     {}
   );
@@ -223,7 +224,7 @@ const TukarHadiah = () => {
                       currentStamp={item.redeem_nominal}
                       type={item.type}
                       imageUrl={item.image}
-                      onClick={() => openReward(item)}
+                      onClick={() => toggleVisibleNotificationToast()}
                       disabled={item.redeem_nominal > totalStamp}
                     />
                   </SwiperItem>
@@ -310,7 +311,7 @@ const TukarHadiah = () => {
         description="Kamu sudah mengisi ibadah ini"
         duration={3000}
         show={visibleNotificationToast}
-        onClose={() => setVisibleNotificationToast(false)}
+        onClose={toggleVisibleNotificationToast}
       />
     </View>
   );

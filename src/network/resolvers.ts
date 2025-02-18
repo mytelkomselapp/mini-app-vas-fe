@@ -40,6 +40,7 @@ import {
   userUpdateCity,
   postRedeemMerchandise,
   postRedeemVoucher,
+  getRewardHistory,
 } from "./services";
 import {
   GetETicketPayloadProps,
@@ -392,4 +393,8 @@ export const usePostRedeemMerchandise = (userId: string) => {
 
 export const usePostRedeemVoucher = (userId: string) => {
   return useMutation(["Post Redeem Voucher"], (payload: RedeemVoucherPayloadProps) => postRedeemVoucher(payload, userId));
+};
+
+export const useFetchRewardHistory = () => {
+  return useQuery(["Fetch Reward History"], getRewardHistory);
 };

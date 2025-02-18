@@ -306,5 +306,10 @@ export const postRedeemVoucher = (payload: RedeemVoucherPayloadProps, userId: st
   return http.post(endpoints?.postRedeemVoucher, payload, undefined, undefined, headers);
 };
 
+export const getRewardHistory = (): RewardHistoryResponse => {
+  return http.get(endpoints?.getRewardHistory);
+};
+
+
 
 

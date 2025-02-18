@@ -3,55 +3,22 @@ import DashedDivider from "./components/DashedDivider";
 import Button from "../../../../components/Button";
 import CopyIcon from "../../../../assets/ico-copy.svg";
 import ChevronUpIcon from "../../../../assets/chevron-up.svg";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import Taro from "@tarojs/taro";
+import { getNavigateState } from "../../../../lib/utils";
+import { RewardHistory } from "../../../../network/types/response-props";
 
 const DetailHadiah = () => {
-  const status = "failed";
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);
   useTaroNavBar();
-  const statusBadgeConfig = {
-    pending: {
-      text: "Menunggu Konfirmasi",
-      className: "text-mustard bg-[#FFF5E6]",
-      description:
-        "Barang kamu sedang diproses oleh admin kami. Silakan cek secara berkala untuk dapat informasi pengiriman.",
-    },
-    failed: {
-      text: "Gagal",
-      className: "text-textError bg-[#FDDDD4]",
-      description: "",
-    },
-    standby: {
-      text: "Berlaku sampai 25 Desember",
-      className: "",
-      description: "",
-    },
-    success: {
-      text: "Berhasil",
-      className: "text-successGreen bg-[#E6F7EE]",
-      description: "Kurir: Pos Aja",
-    },
-  };
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isCaraPenukaranOpen, setIsCaraPenukaranOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
 
-  const statusConfig = statusBadgeConfig[status];
-
-  const buttonConfig = {
-    success: {
-      label: "1234534023203920396",
-      icon: <img src={CopyIcon} className="ml-2 w-4 h-4" />,
-      disabled: false,
-    },
-    pending: {
-      label: "Sedang Diproses",
-      disabled: true,
-    },
-    failed: {
-      label: "Gagal",
-      disabled: true,
-    },
-  };
+  const currentPath = Taro.getCurrentInstance().router?.path || "";
+  const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
+  const item = state?.item as RewardHistory;
+  const isAvailable = item.voucher_detail?.claim_status?.toLowerCase() === "available";
 
   return (
     <View className="bg-white min-h-screen">
@@ -71,7 +38,7 @@ const DetailHadiah = () => {
         {/* Top Section */}
         <View className="h-[184px] bg-[#F5FBFF]">
           <Image
-            src="https://cdndev.mytsel.id/cmsbucket/thubnail_1_6056087681_3e6c906f8b.png"
+            src={item.reward_image}
             className="w-full h-full"
             mode="aspectFill"
           />
@@ -84,51 +51,37 @@ const DetailHadiah = () => {
 
         {/* Bottom Section */}
         <View className="p-4 bg-white">
-          <View className="space-y-2 items-center text-center mb-2">
-            <View className="mb-2">
-              <Text className="text-lg font-semibold">Topi - Bucket Hat</Text>
-            </View>
-            <View className="flex flex-row items-center justify-center w-full">
-              <span
-                className={`text-xs leading-[16px] ${
-                  status !== "standby"
-                    ? "font-semibold px-2 py-1 rounded-full"
-                    : ""
-                } ${statusConfig.className}`}
-              >
-                {statusConfig.text}
-              </span>
+          <View className="space-y-2 items-center text-center">
+            <View className="flex flex-col mb-10">
+              <Text className="text-lg font-semibold mb-2">{item.reward_name}</Text>
+              <Text className="text-xs text-textSecondary">Berlaku sampai {' '}
+                <Text className="text-xs text-textSecondary font-semibold">{item.voucher_detail?.tgl_expired}</Text>
+              </Text>
             </View>
 
-            {status !== "failed" && (
-              <View>
-                <View
-                  className="h-[1px] bg-dividerGrey w-full"
-                  style={{ marginTop: 16, marginBottom: 16 }}
+            <View>
+              <View
+                className="h-[1px] bg-dividerGrey w-full"
+                style={{ marginTop: 16, marginBottom: 16 }}
+              />
+
+              <View className="items-center">
+                <Button
+                  label={isAvailable ? "Gunakan" : "Sudah Digunakan"}
+                  disabled={!isAvailable}
+                  onClick={() => {
+                    Taro.navigateTo({
+                      url:
+                        "/subpackages/subpackage9/pages/Webview/index?url=" +
+                        encodeURIComponent(
+                          item?.voucher_detail?.url
+                        ),
+                    });
+                   }}
+                  className="font-semibold"
                 />
-
-                <View className="space-y-1 items-center">
-                  <View className="flex flex-row items-center justify-center text-center mb-2">
-                    <Text className="text-xs text-textSecondary">
-                      No. Resi:
-                    </Text>
-                  </View>
-                  {status !== "standby" && (
-                    <Button
-                      {...buttonConfig[status]}
-                      onClick={() => {}}
-                      className="mb-4 font-semibold"
-                    />
-                  )}
-                </View>
-
-                {statusConfig.description && (
-                  <span className="text-xs text-textSecondary leading-[16px]">
-                    {statusConfig.description}
-                  </span>
-                )}
               </View>
-            )}
+            </View>
           </View>
         </View>
       </View>
@@ -147,7 +100,7 @@ const DetailHadiah = () => {
             className="flex flex-row justify-between p-4 items-center cursor-pointer"
             onClick={() => setIsDetailOpen(!isDetailOpen)}
           >
-            <Text className="text-lg font-semibold">Detail Merchandise</Text>
+            <Text className="text-lg font-semibold">Detail Voucher</Text>
             <Image
               className="w-4 h-4"
               src={ChevronUpIcon}
@@ -165,7 +118,36 @@ const DetailHadiah = () => {
           )}
         </View>
 
-        {/* <View className="mt-4 space-y-2"> */}
+        <View
+          className="mx-4 bg-white rounded-lg"
+          style={{
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "#EFF1F4",
+          }}
+        >
+          <View
+            className="flex flex-row justify-between p-4 items-center cursor-pointer"
+            onClick={() => setIsCaraPenukaranOpen(!isCaraPenukaranOpen)}
+          >
+            <Text className="text-lg font-semibold">Cara Penukaran</Text>
+            <Image
+              className="w-4 h-4"
+              src={ChevronUpIcon}
+              style={{
+                transform: `rotate(${isCaraPenukaranOpen ? "180deg" : "0deg"})`,
+              }}
+            />
+          </View>
+          {isCaraPenukaranOpen && (
+            <View className="px-4 pb-4">
+              <Text className="text-sm text-textSecondary">
+                Lorem ipsum dolor sit amet
+              </Text>
+            </View>
+          )}
+        </View>
+
         <View
           className="mx-4 bg-white rounded-lg"
           style={{
