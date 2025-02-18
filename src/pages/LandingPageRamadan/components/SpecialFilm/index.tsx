@@ -1,9 +1,25 @@
 import { ScrollView, Text, View } from "@tarojs/components";
 import maxStream from "../../../../assets/maxStream.png";
-import { Card } from "../../../../network/types/response-props";
+import { Card, HeaderSection } from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 
-const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
+const SpecialFilm = ({
+  data = [],
+  header,
+}: {
+  data: Card[];
+  header: HeaderSection;
+}) => {
   const Movie = ({ item }) => {
+    const onNavigate = (targetUrl?: string) => {
+      if (targetUrl) {
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(targetUrl),
+        });
+      }
+    };
     return (
       <View>
         <div
@@ -15,6 +31,7 @@ const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
           }}
+          onClick={() => onNavigate(String(item?.targetUrl))}
         >
           {/* Product Details */}
           <div className="flex-1">

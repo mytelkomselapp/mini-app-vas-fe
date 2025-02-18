@@ -24,7 +24,7 @@ import {
 } from "../../../../../../../../network/types/response-props";
 import { usePostSubmitMission } from "../../../../../../../../network";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
-import moment from "moment";
+import NotificationToast from "../../../../../../../../components/NotificationToast";
 
 export interface TaskIbadahProps {
   dataStampMissionListConfig: StampMissionListDataConfig[];
@@ -54,6 +54,10 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
 
   const { active: visibleTaskModal, toggleActive: toggleVisibleTaskModal } =
     useToggle();
+  const {
+    active: visibleNotificationToast,
+    toggleActive: toggleVisibleNotificationToast,
+  } = useToggle();
 
   const handleOpenTaskModal = (data: DataDetailTaskRamadhanProps) => {
     setData(data);
@@ -111,9 +115,8 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
       });
 
       toggleVisibleTaskModal();
-    } catch (error) {
-      /** TODO: Show Toast Error */
-      console.log("TOAST ERROR");
+    } catch (_) {
+      toggleVisibleNotificationToast();
     }
   };
 
@@ -176,8 +179,6 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
           <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
             {dataCardByActiveTab?.map((data, idx) => {
               const generateCondition = () => {
-                console.log({ activeTaskStatus, data });
-
                 if (activeTaskStatus === "today") {
                   if (data?.mission_status === 0) return "checked";
                   if (data?.mission_status === 1) return "active";
@@ -224,6 +225,12 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         onClose={toggleVisibleTaskModal}
         onSubmit={handleSubmitMission}
         submitLoading={loadingSubmitMission}
+      />
+      <NotificationToast
+        description="Kamu sudah mengisi ibadah ini"
+        duration={3000}
+        show={visibleNotificationToast}
+        onClose={toggleVisibleNotificationToast}
       />
     </View>
   );

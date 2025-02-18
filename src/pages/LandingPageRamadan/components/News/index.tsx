@@ -1,6 +1,7 @@
 import { View } from "@tarojs/components";
 import dummyProduct from "../../../../assets/dummy-product.png";
 import { News } from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 const newsData = [
   {
     id: 1,
@@ -30,10 +31,20 @@ const newsData = [
 ];
 
 const NewsCardList = ({ data = [] }: { data: News[] }) => {
+  const onNavigate = (targetUrl?: string) => {
+    console.log("onNavigate", targetUrl);
+    if (targetUrl) {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(targetUrl),
+      });
+    }
+  };
   return (
     <div className="space-y-4 mt-2">
       {data?.map((news, i) => (
-        <View key={i}>
+        <View key={i} onClick={() => onNavigate(String(news?.targetUrl))}>
           <div className="flex items-center bg-white px-4">
             {/* Content */}
             <div className="mr-4 flex-1">

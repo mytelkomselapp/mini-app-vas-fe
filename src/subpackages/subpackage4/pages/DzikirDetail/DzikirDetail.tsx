@@ -10,7 +10,7 @@ import { DzikirCMSData } from "@/network/types/response-props";
 const DzikirDetail = () => {
   const { data: dataDzikirList } = useDzikirDetail();
 
-  const [step, setStep] = useState(1); //ayat
+  const [firstLoad, setFirstLoad] = useState(true);
   const [readTimes, setReadTimes] = useState(1);
   const [dataDzikirDetail, setDataDzikirDetail] = useState({});
 
@@ -20,10 +20,11 @@ const DzikirDetail = () => {
 
   const category = searchParams?.category || "";
   const order = searchParams?.order || 0;
-
+  const [step, setStep] = useState(Number(order)); //ayat
   const dataDzikir = dataDzikirList?.find(
     (val) => val.category === category && String(val?.order) === String(step)
   );
+  console.log({ firstLoad });
 
   const totalSteps =
     dataDzikirList?.filter((val) => val?.category === category)?.length || 1; //total surah pages
@@ -35,14 +36,17 @@ const DzikirDetail = () => {
   const caption = `Dibaca ${readTotal}x`;
   useEffect(() => {
     Taro.setNavigationBarTitle({ title: `Dzikir ${category}` });
-    setStep(readTotal);
+
+    //setStep(readTotal);
   }, [period, order]);
   useEffect(() => {
     if (dataDzikir) {
       setDataDzikirDetail(dataDzikir as DzikirCMSData);
       setReadTimes(dataDzikir?.readCount || 1);
+      setFirstLoad(false);
     }
   }, [dataDzikir]);
+  console.log({ dataDzikirDetail, step, totalSteps });
   const handlePrevious = () => {
     if (readTimes < readTotal) {
       setReadTimes(readTimes + 1);
