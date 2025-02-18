@@ -8,36 +8,16 @@ interface HorizontalStampCardProps {
   discountedStamps: number;
   showHeader?: boolean;
   showFooter?: boolean;
-  status?: 'standby' | 'pending' | 'failed' | 'preview' | 'success';
+  expiredDate?: string;
   onClick?: () => void;
 }
-
-const STATUS_DISPLAY = {
-  preview: null, // handled separately due to different structure
-  pending: {
-    text: 'Menunggu Konfirmasi',
-    className: 'text-mustard bg-[#FFF5E6]'
-  },
-  failed: {
-    text: 'Gagal',
-    className: 'text-textError bg-[#FDDDD4]'
-  },
-  standby: {
-    text: 'Berlaku sampai 25 Desember',
-    className: 'text-textSecondary'
-  },
-  success: {
-    text: 'Berhasil',
-    className: 'text-successGreen bg-[#E6F7EE]'
-  }
-} as const;
 
 export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
   imageUrl,
   title,
   originalStamps,
   discountedStamps,
-  status = 'preview',
+  expiredDate,
   onClick
 }) => {
   return (
@@ -65,32 +45,9 @@ export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
 
 
             <div>
-              {status === 'preview' && (
-                <>
-                  <div className="flex gap-1 ml-[-2px]">
-                    <Image
-                      src={StampIcon}
-                      style={{
-                        width: "16px",
-                        height: "16px"
-                      }}
-                    />
-                    <span className="text-xs text-gray-400 line-through">
-                      {originalStamps} Stamp
-                    </span>
-                  </div>
-                  <span className="text-sm leading-[16px] text-red-500 font-semibold">
-                    {discountedStamps} Stamp
-                  </span>
-                </>
-              )}
-              {status !== 'preview' && STATUS_DISPLAY[status] && (
-                <span className={`text-xs leading-[16px] px-2 py-1 ${
-                  status !== 'standby' ? 'rounded-full font-semibold' : ''
-                } ${STATUS_DISPLAY[status].className}`}>
-                  {STATUS_DISPLAY[status].text}
-                </span>
-              )}
+              <span className={`text-xs leading-[16px] px-2 py-1 text-textSecondary`}>
+                Berlaku sampai {expiredDate}
+              </span>
             </div>
           </div>
         </div>

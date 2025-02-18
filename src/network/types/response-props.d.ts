@@ -563,6 +563,41 @@ export interface RedeemVoucherData {
   };
 }
 
+export interface RewardHistoryPagination {
+  current_page: number;
+  record_per_page: number;
+  total_page: number;
+  total_record: number;
+}
+
+export interface VoucherDetail {
+  id_voucher: string;
+  tgl_release: string;
+  tgl_expired: string;
+  tgl_claim: string;
+  claim_status: string;
+  url: string;
+}
+
+export interface RewardHistory {
+  id: string;
+  user_id: string;
+  transaction_date: string;
+  reward_id: string;
+  redeem_nominal: number;
+  qty: number;
+  reward_type: string;
+  reward_name: string;
+  reward_description: string;
+  reward_image: string;
+  voucher_detail: VoucherDetail;
+}
+
+export interface RewardHistoryData {
+  pagination: RewardHistoryPagination;
+  histories: RewardHistory[];
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -632,4 +667,5 @@ export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
 export type MerchandiseRewardResponse = HttpSuccessResponse<MerchandiseRewardData>;
-export type RedeemVoucherResponse = HttpSuccessResponse<RedeemVoucherData>; 
+export type RedeemVoucherResponse = HttpSuccessResponse<RedeemVoucherData>;
+export type RewardHistoryResponse = HttpSuccessResponse<RewardHistoryData>; 
