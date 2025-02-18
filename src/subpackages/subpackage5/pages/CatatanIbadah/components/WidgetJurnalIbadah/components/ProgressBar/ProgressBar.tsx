@@ -1,5 +1,5 @@
 import React from "react";
-import BackdropStamp from "../../../../../../../../assets/backdrop-widget-stamp.svg";
+import BackdropStamp from "../../../../../../../../assets/backdrop-widget-stamp.png";
 import RewardGamehub from "../../../../../../../../assets/reward-gamehub.png";
 import IcoLightning from "../../../../../../../../assets/ico_lightning.svg";
 
