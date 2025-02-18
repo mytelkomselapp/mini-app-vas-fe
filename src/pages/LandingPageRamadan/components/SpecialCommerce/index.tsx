@@ -2,14 +2,25 @@ import { ScrollView, View } from "@tarojs/components";
 import chevronRight from "../../../../assets/chevron-right.svg";
 import { Product } from "@/network/types/response-props";
 import { formatNumberWithThousandSeparator } from "../../../../lib/utils";
+import Taro from "@tarojs/taro";
 
 const SpecialCommerce = ({ data = [] }: { data: Product[] }) => {
+  const onNavigate = (targetUrl?: string) => {
+    if (targetUrl) {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(targetUrl),
+      });
+    }
+  };
   const ProductCard = ({ item }) => {
     return (
       <div
         className={
           "border border-solid border-gray-300 rounded-2xl p-4 bg-white shadow-sm flex items-center  w-[272px] min-w-[200px]"
         }
+        onClick={() => onNavigate(String(item?.targetUrl || item?.linkTitle))}
       >
         {/* Product Details */}
         <div className="flex-1">

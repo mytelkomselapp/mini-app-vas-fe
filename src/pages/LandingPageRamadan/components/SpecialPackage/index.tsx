@@ -6,6 +6,7 @@ import kv from "../../../../assets/specialPackageKv.png";
 import { cn } from "../../../../lib/utils";
 import { useState } from "react";
 import { Product } from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 // const packages = [
 //   {
 //     title: "Super Seru",
@@ -46,7 +47,23 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
     setCurrent(e.detail.current);
   };
 
-  const PackageCard = ({ title, size, duration, ribbonLabel, isFirstItem }) => {
+  const PackageCard = ({
+    title,
+    size,
+    duration,
+    ribbonLabel,
+    isFirstItem,
+    linkTitle,
+  }) => {
+    const onNavigate = (targetUrl?: string) => {
+      if (targetUrl) {
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(targetUrl),
+        });
+      }
+    };
     return (
       <div
         className={cn(
@@ -91,7 +108,7 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
           <Button
             label="Beli"
             style="secondary"
-            onClick={handleClickAllOffer}
+            onClick={() => onNavigate(linkTitle)}
             className="mt-4 !min-h-[28px] h-[28px] !w-[80px] !px-0 !text-xs !font-semibold"
           />
         </div>
@@ -136,6 +153,7 @@ const SpecialPackage = ({ data = [] }: { data: Product[] }) => {
                 size={slide?.title?.split("|")?.[1]}
                 key={key}
                 isFirstItem={key === 0}
+                linkTitle={slide?.targetUrl || slide?.linkTitle}
               />
             </div>
           </SwiperItem>
