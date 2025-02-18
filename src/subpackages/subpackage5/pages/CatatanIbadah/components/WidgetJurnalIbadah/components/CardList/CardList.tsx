@@ -134,6 +134,8 @@ const CardList = () => {
               return "no-animation";
             };
 
+            console.log({ animateType: generateAnimate(), index });
+
             return (
               <CardItem
                 key={data?.mission_id}
