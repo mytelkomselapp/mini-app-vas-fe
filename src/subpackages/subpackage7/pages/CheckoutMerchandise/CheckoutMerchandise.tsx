@@ -37,7 +37,7 @@ const CheckoutMerchandise = () => {
   const [requiredStamp, setRequiredStamp] = useState(1);
   const notEnoughStamp = requiredStamp > totalStamp;
 
-  const { mutate: redeemMerchandise, isLoading: isLoadingRedeemMerchandise } = usePostRedeemMerchandise(userId);
+  const { mutateAsync: redeemMerchandise, isLoading: isLoadingRedeemMerchandise } = usePostRedeemMerchandise(userId);
 
   // Add calculation helpers
   const calculateSubtotal = () => {
@@ -69,6 +69,7 @@ const CheckoutMerchandise = () => {
       qty: requiredStamp,
     });
 
+    console.log(result, "redemptionStatus result");
     const redemptionStatus = result?.data?.data?.redeem_result?.merchandise?.meta?.status === 'success' 
       ? 'success' 
       : 'failed';
