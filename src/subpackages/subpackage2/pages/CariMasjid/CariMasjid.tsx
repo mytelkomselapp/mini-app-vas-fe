@@ -56,6 +56,12 @@ const MosqueListItem: React.FC<MosqueListItemProps> = ({
 
 const SNAPPOINTS = [20, 35, 70, 85];
 
+const MAP_URLS = {
+  maps: (lat: number, lng: number) => `https://maps.apple.com/?ll=${lat},${lng}`,
+  google: (lat: number, lng: number) => `https://www.google.com/maps?q=${lat},${lng}`,
+  waze: (lat: number, lng: number) => `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`
+};
+
 const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
   const [latitude, setLatitude] = useState(0);
@@ -162,50 +168,18 @@ const CariMasjid: React.FC = () => {
     setSelectedMosque(mosque);
   };
 
-  const handleMapPress = (type: "maps" | "google" | "waze") => {
+  const handleMapPress = (type: keyof typeof MAP_URLS) => {
     const latitude = Number(selectedMosque?.latitude);
     const longitude = Number(selectedMosque?.longitude);
 
-    if (type === "maps") {
-      Taro.invokeNativePlugin({
-        api_name: "openWebView",
-        data: {
-          url: `https://maps.apple.com/?ll=${latitude},${longitude}`,
-        },
-        success: function (res: any) {
-          console.log("invokeNativePlugin success", res);
-        },
-        fail: function (err: any) {
-          console.error("invokeNativePlugin fail", err);
-        },
-      });
-    } else if (type === "google") {
-      Taro.invokeNativePlugin({
-        api_name: "openWebView",
-        data: {
-          url: `https://www.google.com/maps?q=${latitude},${longitude}`,
-        },
-        success: function (res: any) {
-          console.log("invokeNativePlugin success", res);
-        },
-        fail: function (err: any) {
-          console.error("invokeNativePlugin fail", err);
-        },
-      });
-    } else if (type === "waze") {
-      Taro.invokeNativePlugin({
-        api_name: "openWebView",
-        data: {
-          url: `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`,
-        },
-        success: function (res: any) {
-          console.log("invokeNativePlugin success", res);
-        },
-        fail: function (err: any) {
-          console.error("invokeNativePlugin fail", err);
-        },
-      });
-    }
+    Taro.invokeNativePlugin({
+      api_name: "openWebView",
+      data: {
+        url: MAP_URLS[type](latitude, longitude),
+      },
+      success: (res: any) => console.log("invokeNativePlugin success", res),
+      fail: (err: any) => console.error("invokeNativePlugin fail", err),
+    });
   };
 
   const showMapApps = selectedMosque !== null;
