@@ -12,9 +12,18 @@ import {
 } from "../../../../network";
 import moment from "moment";
 import { StampMissionSummaryData } from "../../../../network/types/response-props";
+import NotificationModal from "./components/NotificationModal";
+import Taro from "@tarojs/taro";
+import useToggle from "../../../../hooks/useToggle";
+import { useEffect } from "react";
 
 const CatatanIbadahPage = () => {
   const { data: dataUserStampRaw } = useFetchUserStamp();
+
+  const {
+    active: visibleNotificationModal,
+    toggleActive: toggleVisibleNotificationModal,
+  } = useToggle();
 
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
   const currentDayMoment = moment();
@@ -28,10 +37,34 @@ const CatatanIbadahPage = () => {
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
 
+  const handleActivateNotification = () => {
+    Taro.showModal({
+      title: "“MyTelkomsel” Would Like to Use Your Notification",
+      content:
+        "Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.",
+      confirmText: "Settings",
+      cancelText: "Ok",
+      success: (res) => {
+        if (res.confirm) {
+          Taro.openSetting();
+        }
+      },
+    });
+  };
+
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
+
+  useEffect(() => {
+    Taro.getSetting({
+      success: (res) => {
+        if (!res.authSetting["scope.subscribeMessage"])
+          toggleVisibleNotificationModal();
+      },
+    });
+  }, []);
 
   return (
     <View className="bg-white w-full min-h-full h-auto">
@@ -53,6 +86,8 @@ const CatatanIbadahPage = () => {
         </div>
       </BackgroundImage>
 
+      {/* <LottieOverlay /> */}
+
       <View className="bg-white rounded-t-[16px] relative top-[-20px] min-h-[100px]">
         <DateStamp
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
@@ -61,6 +96,11 @@ const CatatanIbadahPage = () => {
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
         />
       </View>
+      <NotificationModal
+        open={visibleNotificationModal}
+        onClose={toggleVisibleNotificationModal}
+        onClickCTA={handleActivateNotification}
+      />
     </View>
   );
 };

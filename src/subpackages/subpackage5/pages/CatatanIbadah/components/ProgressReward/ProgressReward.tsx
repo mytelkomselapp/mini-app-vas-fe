@@ -22,7 +22,7 @@ const ProgressReward: React.FC<ProgressRewardProps> = ({
   const handleProgress = (progress: number) => {
     const progressPercentage = (progress / 140) * 100;
     setTheProgress({
-      percentageProgress: Math.floor(progressPercentage - 2),
+      percentageProgress: Math.floor(progressPercentage - 12),
       actualProgress: progress,
     });
   };

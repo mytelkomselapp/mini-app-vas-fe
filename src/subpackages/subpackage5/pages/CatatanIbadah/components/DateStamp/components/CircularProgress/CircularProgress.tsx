@@ -56,8 +56,6 @@ const CircularProgress = ({
     progress > 0 ? filledSvgString : svgString
   );
 
-  console.log({ filledSvgString, progress });
-
   return (
     <div
       className={`flex flex-col pt-[6px] w-[42px] ${

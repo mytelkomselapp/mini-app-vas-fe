@@ -126,8 +126,6 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
                   moment(theDay)?.isSame(data?.date, "date")
                 )?.percentage_of_mission || 0;
 
-              console.log({ theDay, percentage });
-
               return (
                 <DayCard
                   key={i}
@@ -166,7 +164,7 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
                   moment(theDay)?.isSame(data?.date)
                 )?.percentage_of_mission || 0;
 
-              if (!isSameMonth) return <div></div>;
+              if (!isSameMonth) return <div key={i}></div>;
 
               return (
                 <DayCard
