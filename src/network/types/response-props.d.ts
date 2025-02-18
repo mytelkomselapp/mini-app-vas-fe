@@ -523,6 +523,26 @@ export interface RewardItemData {
   reward_category: string;
 }
 
+export interface MerchandiseRewardData {
+  stamp_summary: {
+    new_total_stamp: number;
+    today_earned_stamp: number;
+  };
+  redeem_result: {
+    merchandise: {
+      data: {
+        user_id: string;
+        redeem_id: string;
+        invoice_number: string;
+      };
+      meta: {
+        code: string;
+        status: string;
+      };
+    };
+  };
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -591,3 +611,4 @@ export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
 export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
+export type MerchandiseRewardResponse = HttpSuccessResponse<MerchandiseRewardData>;

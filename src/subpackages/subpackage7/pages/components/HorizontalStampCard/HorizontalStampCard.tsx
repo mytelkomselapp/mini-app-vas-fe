@@ -9,6 +9,7 @@ interface HorizontalStampCardProps {
   showHeader?: boolean;
   showFooter?: boolean;
   status?: 'standby' | 'pending' | 'failed' | 'preview' | 'success';
+  onClick?: () => void;
 }
 
 const STATUS_DISPLAY = {
@@ -37,9 +38,10 @@ export const HorizontalStampCard: React.FC<HorizontalStampCardProps> = ({
   originalStamps,
   discountedStamps,
   status = 'preview',
+  onClick
 }) => {
   return (
-    <View className="flex flex-col items-center text-center w-full mb-4">
+    <View className="flex flex-col items-center text-center w-full mb-4" onClick={onClick}>
       <div
         className="bg-white rounded-xl overflow-hidden w-full max-h-[165px]"
         style={{ 
