@@ -1,9 +1,19 @@
 import { ScrollView, Text, View } from "@tarojs/components";
 import maxStream from "../../../../assets/maxStream.png";
 import { Card } from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 
 const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
   const Movie = ({ item }) => {
+    const onNavigate = (targetUrl?: string) => {
+      if (targetUrl) {
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(targetUrl),
+        });
+      }
+    };
     return (
       <View>
         <div
@@ -15,6 +25,7 @@ const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
           }}
+          onClick={() => onNavigate(String(item?.targetUrl))}
         >
           {/* Product Details */}
           <div className="flex-1">
@@ -49,6 +60,7 @@ const SpecialFilm = ({ data = [] }: { data: Card[] }) => {
     <ScrollView className="overflow-x-scroll pl-4 pt-1 w-[100vw]" scrollX>
       <View className="flex flex-row space-x-3">
         {data?.map((item, index) => {
+          console.log({ item });
           return <Movie key={index} item={item} />;
         })}
         <View className="w-4 text-transparent">{"A"}</View>

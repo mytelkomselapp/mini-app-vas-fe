@@ -1,3 +1,4 @@
+import Taro from "@tarojs/taro";
 import { Card } from "../../../../network/types/response-props";
 import { ScrollView, Text, View } from "@tarojs/components";
 
@@ -5,6 +6,15 @@ import { ScrollView, Text, View } from "@tarojs/components";
 
 const SpecialGame = ({ data = [] }: { data: Card[] }) => {
   const Movie = ({ item }) => {
+    const onNavigate = (targetUrl?: string) => {
+      if (targetUrl) {
+        Taro.navigateTo({
+          url:
+            "/subpackages/subpackage9/pages/Webview/index?url=" +
+            encodeURIComponent(targetUrl),
+        });
+      }
+    };
     return (
       <View>
         <div
@@ -15,6 +25,7 @@ const SpecialGame = ({ data = [] }: { data: Card[] }) => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
           }}
+          onClick={() => onNavigate(String(item?.targetUrl))}
         />
         <View className="flex flex-col">
           <Text className="text-[12.8px] font-semibold">{item?.title}</Text>

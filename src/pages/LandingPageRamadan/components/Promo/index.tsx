@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
 import { Promo as PromoTypes } from "../../../../network/types/response-props";
+import Taro from "@tarojs/taro";
 
 const Promo = ({ data = [] }: { data: PromoTypes[] }) => {
   const [current, setCurrent] = useState(0);
@@ -97,6 +98,16 @@ const Promo = ({ data = [] }: { data: PromoTypes[] }) => {
     setCurrent(e.detail.current);
   };
 
+  const onNavigate = (targetUrl?: string) => {
+    if (targetUrl) {
+      Taro.navigateTo({
+        url:
+          "/subpackages/subpackage9/pages/Webview/index?url=" +
+          encodeURIComponent(targetUrl),
+      });
+    }
+  };
+
   return (
     <View className="relative">
       <View className="my-2 mx-4 flex items-center justify-between">
@@ -116,7 +127,10 @@ const Promo = ({ data = [] }: { data: PromoTypes[] }) => {
         onChange={handleSwiperChange}
       >
         {data?.map((slide, key) => (
-          <SwiperItem key={key}>
+          <SwiperItem
+            key={key}
+            onClick={() => onNavigate(String(slide?.targetUrl))}
+          >
             <div className={`w-full h-full flex items-center justify-center`}>
               <Image
                 src={slide?.image}

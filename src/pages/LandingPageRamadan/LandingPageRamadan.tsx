@@ -17,6 +17,8 @@ import {
   useRamadhanSearchLocation,
 } from "../../store/ramadhan";
 import { RamadhanSearchLocationProps } from "@/network/types/response-props";
+import Show from "../../components/Show";
+import LoadingScreen from "../../components/LoadingScreen";
 
 type Feature = {
   name: string;
@@ -189,6 +191,9 @@ const LandingPageRamadan = () => {
 
   return (
     <View className="bg-white h-full">
+      <Show when={isLoadingRegisterUser || isLoadingLandingPageCMS}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
       <View
         style={{ backgroundImage: `url(${bgLanding})` }}
         className="bg-cover bg-no-repeat bg-center "
