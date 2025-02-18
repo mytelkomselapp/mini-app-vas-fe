@@ -9,6 +9,7 @@ import Taro from "@tarojs/taro";
 import { useFetchDzikir } from "../../../../network";
 import { DzikirCMSData } from "../../../../network/types/response-props";
 import { useDzikirDetail } from "../../../../store/ramadhan";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 interface Surah {
   period: string;
@@ -24,7 +25,7 @@ const Dzikir = () => {
   const dzikirMalam =
     dataDzikir?.filter((item) => item?.category === "malam") ?? [];
   const [activeTab, setActiveTab] = useState("pagi");
-
+  useTaroNavBar();
   const dhikrList = activeTab === "pagi" ? dzikirPagi : dzikirMalam;
 
   const handleClick = (origin: DzikirCMSData) => {

@@ -6,6 +6,7 @@ import { Text, View } from "@tarojs/components";
 import BottomNavigation from "./components/BottomNavigation";
 import { useDzikirDetail } from "../../../../store/ramadhan";
 import { DzikirCMSData } from "@/network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const DzikirDetail = () => {
   const { data: dataDzikirList } = useDzikirDetail();
@@ -34,6 +35,7 @@ const DzikirDetail = () => {
   const title = decodeURIComponent(dataDzikir?.title || "");
   const readTotal = dataDzikir?.readCount || 1;
   const caption = `Dibaca ${readTotal}x`;
+  useTaroNavBar();
   useEffect(() => {
     Taro.setNavigationBarTitle({ title: `Dzikir ${category}` });
 
