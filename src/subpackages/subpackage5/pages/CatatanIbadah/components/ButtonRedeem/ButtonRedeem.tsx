@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import ChevronRight from "../../../../../../assets/chevron-right-white.svg";
 import GoldReward from "../../../../../../assets/gold_rewards.svg";
 

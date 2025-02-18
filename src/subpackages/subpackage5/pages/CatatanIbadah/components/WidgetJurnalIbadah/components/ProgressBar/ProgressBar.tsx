@@ -3,8 +3,7 @@ import BackdropStamp from "../../../../../../../../assets/backdrop-widget-stamp.
 import RewardGamehub from "../../../../../../../../assets/reward-gamehub.png";
 import IcoLightning from "../../../../../../../../assets/ico_lightning.svg";
 
-import { View } from "lucide-react";
-import { Text } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 
 import "../../../DaftarIbadah/DaftarIbadah.css";
 import CheckedProgressItem from "../CheckedProgressItem/CheckedProgressItem";

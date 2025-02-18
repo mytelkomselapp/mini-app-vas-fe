@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import BottomSheet from "../../../../../components/BottomSheet";
 import Button from "../../../../../components/Button";
 import { useDetailTaskRamadhan } from "../../../../../store/ramadhan";
