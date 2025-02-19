@@ -295,7 +295,7 @@ const LandingPageRamadan = () => {
                 Taro.invokeNativePlugin({
                   api_name: "openWebView",
                   data: {
-                    url: encodeURIComponent(targetUrl),
+                    url: targetUrl,
                   },
                   success: (res: any) =>
                     console.log("invokeNativePlugin success", res),
@@ -323,7 +323,7 @@ const LandingPageRamadan = () => {
                 Taro.invokeNativePlugin({
                   api_name: "openWebView",
                   data: {
-                    url: encodeURIComponent(targetUrl),
+                    url: targetUrl,
                   },
                   success: (res: any) =>
                     console.log("invokeNativePlugin success", res),

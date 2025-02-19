@@ -16,7 +16,7 @@ const SpecialCommerce = ({
       Taro.invokeNativePlugin({
         api_name: "openWebView",
         data: {
-          url: encodeURIComponent(targetUrl),
+          url: targetUrl,
         },
         success: (res: any) => console.log("invokeNativePlugin success", res),
         fail: (err: any) => console.error("invokeNativePlugin fail", err),
