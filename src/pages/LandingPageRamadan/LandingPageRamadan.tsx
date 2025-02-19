@@ -292,10 +292,15 @@ const LandingPageRamadan = () => {
             onClick={() => {
               const targetUrl = cardSession1Header?.targetUrl;
               if (targetUrl) {
-                Taro.navigateTo({
-                  url:
-                    "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    encodeURIComponent(targetUrl),
+                Taro.invokeNativePlugin({
+                  api_name: "openWebView",
+                  data: {
+                    url: encodeURIComponent(targetUrl),
+                  },
+                  success: (res: any) =>
+                    console.log("invokeNativePlugin success", res),
+                  fail: (err: any) =>
+                    console.error("invokeNativePlugin fail", err),
                 });
               }
             }}
@@ -315,10 +320,15 @@ const LandingPageRamadan = () => {
             onClick={() => {
               const targetUrl = cardSession2Header?.targetUrl;
               if (targetUrl) {
-                Taro.navigateTo({
-                  url:
-                    "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    encodeURIComponent(targetUrl),
+                Taro.invokeNativePlugin({
+                  api_name: "openWebView",
+                  data: {
+                    url: encodeURIComponent(targetUrl),
+                  },
+                  success: (res: any) =>
+                    console.log("invokeNativePlugin success", res),
+                  fail: (err: any) =>
+                    console.error("invokeNativePlugin fail", err),
                 });
               }
             }}
