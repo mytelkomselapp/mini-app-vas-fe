@@ -3,7 +3,7 @@ import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
-import sign from 'jwt-encode';
+import sign from "jwt-encode";
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -211,7 +211,7 @@ export const svgToBase64 = (svgString) => {
 export const getCurrentDayRamadhan = () => {
   return moment()?.isBefore("2025-02-01", "day")
     ? "2025-02-01"
-    : moment()?.format("YYYY-MM-DD");
+    : moment().add(1, "days")?.format("YYYY-MM-DD");
 };
 
 export const getCurrentWeekRamadhan = (currentDay: string) => {
@@ -343,7 +343,7 @@ export const detectPlatform = () => {
   const systemInfo = Taro.getSystemInfoSync();
   const system = systemInfo.system?.toLowerCase();
   console.log("systemInfo", systemInfo);
-    
+
   if (system?.includes("ios")) {
     return "ios";
   }
@@ -358,11 +358,11 @@ export const getTimezone = () => {
   const offset = currentDate.getTimezoneOffset() / -60; // Convert to positive hours
   switch (offset) {
     case 8:
-      return 'WITA';
+      return "WITA";
     case 9:
-      return 'WIT';
+      return "WIT";
     default:
-      return 'WIB';
+      return "WIB";
   }
 };
 

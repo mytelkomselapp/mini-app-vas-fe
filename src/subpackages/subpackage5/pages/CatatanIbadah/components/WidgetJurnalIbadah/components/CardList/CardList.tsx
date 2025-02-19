@@ -23,6 +23,8 @@ const CardList = () => {
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
   );
+  const [animateSubmittedMissionId, setAnimateSubmittedMissionId] =
+    React.useState<string[]>([]);
 
   const { setData } = useDetailTaskRamadhan();
   const { active: visibleTaskModal, toggleActive: toggleVisibleTaskModal } =
@@ -53,7 +55,8 @@ const CardList = () => {
           category_id: data?.category_id,
         })) || []
     )
-    ?.filter((data) => data?.mission_status === 1);
+    ?.filter((data) => data?.mission_status === 1)
+    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id));
 
   const indexHiddenCard = dataList
     ?.map((data, index) => {
@@ -94,6 +97,10 @@ const CardList = () => {
 
       toggleVisibleTaskModal();
       setSubmittedMissionId([...submittedMissionId, missionId]);
+
+      setTimeout(() => {
+        setAnimateSubmittedMissionId([...animateSubmittedMissionId, missionId]);
+      }, 1000);
     } catch (_) {
       /** TODO: Show Toast Error */
       toggleVisibleNotificationToast();
@@ -138,14 +145,14 @@ const CardList = () => {
               <CardItem
                 key={data?.mission_id}
                 data={data}
-                type={data?.category}
+                type={data?.category as "pagi" | "siang" | "malam"}
                 onClick={handleClick}
                 animate={generateAnimate()}
               />
             );
           })}
         </View>
-        <View className="p-[12px] flex gap-y-2 h-[15%]">
+        <View className="p-[12px] flex gap-y-2 h-[13%]">
           <Text className="text-[10px] relative top-[-6px] text-[#757f90]">
             +{remainingMissionText} kegiatan tersisa
           </Text>

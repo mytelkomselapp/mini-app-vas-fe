@@ -46,14 +46,6 @@ const CardItem: React.FC<CardItemProps> = ({
 
     return "#0b2661";
   };
-
-  const generateAnimation = () => {
-    if (animate === "hide") return "hide-card";
-    if (animate === "slide-up") return "slide-up";
-
-    return "";
-  };
-
   const generateImageUrl = () => {
     const mission = data?.mission_name_id;
 
@@ -73,7 +65,13 @@ const CardItem: React.FC<CardItemProps> = ({
   return (
     <View
       onClick={() => onClick(data)}
-      className={`flex w-full h-[56px] mb-[8px] rounded-[16px] flex-row justify-between ${generateAnimation()}`}
+      className={`flex w-full h-[56px] mb-[8px] rounded-[16px] flex-row justify-between ${
+        animate === "hide"
+          ? "animate-[hideCard_0.5s_ease-out] opacity-0"
+          : animate === "slide-up"
+          ? "animate-[slideUp_0.5s_ease-out_0.5s] slide-up"
+          : "opacity-100"
+      }`}
     >
       <BackgroundImage
         // onClick={() => handleClick(data)}
