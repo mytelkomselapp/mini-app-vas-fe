@@ -1,35 +1,45 @@
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
-import { formatDateToIndonesian, handleNavigate } from "../../../../lib/utils";
+import { handleNavigate } from "../../../../lib/utils";
 import { useFetchRewardHistory } from "../../../../network/resolvers";
-
-const formatValidUntil = (date: string | Date) => {
-  const formattedDate = formatDateToIndonesian(new Date(date));
-  return `${formattedDate.day} ${formattedDate.monthName} ${formattedDate.year}`;
-};
+import { formatValidUntil } from "../../../../lib/utils";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import Show from "../../../../components/Show";
 
 const RiwayatTukarHadiah = () => {
   useTaroNavBar();
 
   const { data, isLoading } = useFetchRewardHistory();
-  console.log(data);
-
+  const histories = data?.data?.data?.histories ?? [];
+  
   return (
-    <View className="flex flex-col gap-1 p-4">
-      {data?.data?.data?.histories?.map((item, index) => (
-        <HorizontalStampCard
-          key={index}
-          imageUrl={item.reward_image}
-          title={item.reward_name}
-          originalStamps={item.redeem_nominal}
-          discountedStamps={item.redeem_nominal}
-          expiredDate={item.voucher_detail?.tgl_expired ? formatValidUntil(item.voucher_detail.tgl_expired) : undefined}
-          onClick={() => {
-            handleNavigate("/subpackages/subpackage7/pages/DetailHadiah/index", undefined, { item });
-          }}
-        />
-      ))}
+    <View className="flex flex-col gap-4 p-4 min-h-screen">
+      <Show when={isLoading}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
+      {histories.length > 0 ? (
+        histories.map((item, index) => (
+          <HorizontalStampCard
+            key={index}
+            imageUrl={item.reward_image}
+            title={item.reward_name}
+            originalStamp={item.redeem_nominal}
+            discountedStamp={item.redeem_nominal}
+            expiredDate={item.voucher_detail?.tgl_expired ? formatValidUntil(item.voucher_detail.tgl_expired) : undefined}
+            onClick={() => {
+              handleNavigate("/subpackages/subpackage7/pages/DetailHadiah/index", undefined, { item });
+            }}
+            isHistory
+          />
+        ))
+      ) : (
+        !isLoading && (
+          <View className="flex flex-col items-center justify-center flex-1">
+            <Text className="text-center text-textSecondary">Tidak ada riwayat tukar hadiah</Text>
+          </View>
+        )
+      )}
     </View>
   );
 };

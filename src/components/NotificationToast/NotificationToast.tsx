@@ -36,7 +36,7 @@ const NotificationToast: React.FC<NotificationToastProps> = ({
   if (!isShow) return null;
 
   return (
-    <div className="absolute z-50 top-0 left-0 h-full w-[calc(100%-32px)]">
+    <div className="absolute top-0 left-0 h-full w-[calc(100%-32px)]" style={{ zIndex: 1001 }}>
       <div className="rounded-[100px] bg-white min-h-[58px] flex items-center gap-x-4 px-[16px] w-[90%] ml-[5%] animate-[slide-in-from-top_0.5s_ease-in-out_1_normal_backwards_running]">
         <img src={CancelBlack} alt="cancel" width="20px" height="20px" />
         <Text className="text-[12px] font-bold text-black">{description}</Text>

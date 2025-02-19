@@ -369,3 +369,8 @@ export const getTimezone = () => {
 export const createJWT = (payload: any, secret: string) => {
   return sign(payload, secret);
 };
+
+export const formatValidUntil = (date: string | Date) => {
+  const formattedDate = formatDateToIndonesian(new Date(date));
+  return `${formattedDate.day} ${formattedDate.monthName} ${formattedDate.year}`;
+};
