@@ -31,7 +31,7 @@ const NotificationModal: React.FC<Props> = ({ open, onClose, onClickCTA }) => {
               ibadahmu.
             </p>
           </div>
-          <div className="flex flex-col gap-y-2 w-full px-[16px]">
+          <div className="flex flex-col gap-y-2 w-full px-[16px] pb-[64px]">
             <Button
               onClick={handleClick}
               label="Ya, Aktifkan"
