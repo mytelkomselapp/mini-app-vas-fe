@@ -6,7 +6,7 @@ import ClockIcon from "../../../../assets/ico_clock.svg";
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import { useState } from "react";
-import { formatDateToIndonesian, handleNavigate } from "../../../../lib/utils";
+import { formatValidUntil, handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
 import {
   useFetchListRewards,
@@ -23,6 +23,9 @@ import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import Taro from "@tarojs/taro";
 import NotificationToast from "../../../../components/NotificationToast";
 import useToggle from "../../../../hooks/useToggle";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import Show from "../../../../components/Show";
+import Glitter from "../../../../assets/glitter.png";
 
 interface RewardItemProps {
   title: string;
@@ -101,12 +104,11 @@ const TukarHadiah = () => {
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
   const validUntil = dataUserStamp?.valid_until ?? "";
 
-  const formattedValidUntil = formatDateToIndonesian(new Date(validUntil));
-  const finalValidUntil = `${formattedValidUntil.day} ${formattedValidUntil.monthName}, ${formattedValidUntil.year}`;
+  const finalValidUntil = validUntil ? formatValidUntil(validUntil) : '-';
 
   const { currentSelectedReward, setCurrentSelectedReward } =
     useCurrentSelectedReward();
-  const { data: rewardSections, isLoading } = useFetchRewardSections();
+  const { data: rewardSections, isLoading: isLoadingRewardSections } = useFetchRewardSections();
   const filteredRewardSections = rewardSections?.data?.data?.filter(
     (section) => section.name.toLowerCase() !== 'merchandise'
   );
@@ -163,12 +165,28 @@ const TukarHadiah = () => {
 
   return (
     <View className="bg-[#D41F2C] w-full min-h-full h-auto">
+      <Show when={isLoadingRewardSections || isLoadingListRewards}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
       <View className="bg-white rounded-t-[16px] min-h-[100px]">
         <div className="p-4">
           {/* Header */}
           <div className="flex justify-between">
-            <div className="flex flex-col justify-between mb-6">
-              <div className="flex items-center gap-1">
+            <div className="relative flex flex-col justify-between mb-6">
+              <Image 
+                src={Glitter} 
+                style={{ 
+                  width: "220px", 
+                  height: "220px",
+                  position: "absolute",
+                  top: "-20px",
+                  left: "0",
+                  pointerEvents: "none",
+                  transform: "rotate(-14deg)",
+                  zIndex: 1,
+                }} 
+              />
+              <div className="flex items-center mb-2">
                 <Image
                   src={StampIcon32}
                   style={{
@@ -181,7 +199,7 @@ const TukarHadiah = () => {
               <div className="flex items-center gap-3">
                 <span className="text-xs text-grey">
                   Berlaku sampai:{" "}
-                  <strong className="font-semibold">{finalValidUntil}</strong>
+                  <strong className="font-semibold">{finalValidUntil || '-'}</strong>
                 </span>
               </div>
             </div>
@@ -195,7 +213,7 @@ const TukarHadiah = () => {
                     "/subpackages/subpackage7/pages/RiwayatTukarHadiah/index"
                   );
                 }}
-                className="!max-h-[34px] !text-xs font-semibold leading-4"
+                className="!text-xs font-semibold leading-[16px] !min-h-[34px] !max-h-[34px]"
                 icon={<img src={ClockIcon} className="w-4 h-4 ml-[2px]" />}
               />
             </div>
@@ -270,8 +288,9 @@ const TukarHadiah = () => {
               <HorizontalStampCard
                 imageUrl={currentSelectedReward.image}
                 title={currentSelectedReward.reward_name_id}
-                originalStamps={currentSelectedReward.redeem_nominal}
-                discountedStamps={currentSelectedReward.redeem_nominal}
+                originalStamp={currentSelectedReward.redeem_nominal}
+                discountedStamp={currentSelectedReward.redeem_nominal}
+                isHistory={false}
               />
             </div>
           )}
