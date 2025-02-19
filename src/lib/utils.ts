@@ -211,7 +211,7 @@ export const svgToBase64 = (svgString) => {
 export const getCurrentDayRamadhan = () => {
   return moment()?.isBefore("2025-02-01", "day")
     ? "2025-02-01"
-    : moment().add(1, "days")?.format("YYYY-MM-DD");
+    : moment()?.format("YYYY-MM-DD");
 };
 
 export const getCurrentWeekRamadhan = (currentDay: string) => {
