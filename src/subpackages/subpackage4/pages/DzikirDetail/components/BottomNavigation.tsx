@@ -21,9 +21,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   const progress = (Math.abs(readTotal - readTimes) / readTotal) * 100;
 
   return (
-    <View className="fixed bottom-0 left-0 right-0 bg-gray-100 shadow-lg flex justify-between items-center py-5 px-8 border-t border-gray-300">
+    <View className="fixed bottom-0 left-0 right-0 bg-gray-100 shadow-lg flex justify-between items-center py-2 px-8 border-t border-gray-300">
       <Text
-        className={`text-[14px] font-batikSans ${
+        className={`text-[14px] font-batikSans p-2 ${
           currentStep === 1 ? "text-gray-400" : "text-textError"
         }`}
         onClick={() => {
@@ -50,7 +50,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       </View>
 
       <Text
-        className={`text-[14px] font-batikSans ${
+        className={`text-[14px] font-batikSans p-2 ${
           currentStep === totalSteps ? "text-gray-400" : "text-textError"
         }`}
         onClick={() => {
