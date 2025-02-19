@@ -15,6 +15,8 @@ import Taro from "@tarojs/taro";
 import { useFetchNearestMosques } from "../../../../network/resolvers";
 import { detectPlatform } from "../../../../lib/utils";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import Show from "../../../../components/Show";
 
 interface MosqueListItemProps {
   name: string;
@@ -186,6 +188,9 @@ const CariMasjid: React.FC = () => {
 
   return (
     <View className="bg-white h-screen flex">
+      <Show when={isLoadingNearestMosques}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
       <Map
         setting={{
           enableZoom: true,
