@@ -372,14 +372,17 @@ const PrayerSchedule = () => {
           className="flex items-center gap-2"
           onClick={() =>
             handleNavigate(
-              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index",
+              "",
+              {
+                data: dataRamadhanSearchLocation,
+              }
             )
           }
         >
           <img src={Pin} style={{ width: "16px", height: "16px" }} />
           <span className="text-white text-[12px] line-clamp-1">
-            {/* {dataRamadhanSearchLocation?.city || "Pancoran"} */}
-            {city}
+            {dataRamadhanSearchLocation?.city || "Pancoran"}
           </span>
           <img
             src={ChevronDown}
