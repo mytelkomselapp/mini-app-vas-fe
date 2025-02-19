@@ -35,11 +35,13 @@ const PrayerCard = ({
   console.log({ dataRamadhanSearchLocation });
 
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
-  const nameTime = nearestPrayTime?.name_time;
+  const nameTime = nearestPrayTime?.name_time || null;
   const time =
-    nearestPrayTime?.pray_time +
-    " " +
-    convertTimezone(nearestPrayTime?.timezone);
+    nearestPrayTime?.pray_time && nearestPrayTime?.timezone
+      ? nearestPrayTime?.pray_time +
+        " " +
+        convertTimezone(nearestPrayTime?.timezone)
+      : null;
   const notificationText = notificationStatus
     ? "Notifikasi adzan telah Aktif"
     : "Notifikasi adzan belum Aktif";
