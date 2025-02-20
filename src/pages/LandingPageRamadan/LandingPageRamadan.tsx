@@ -11,7 +11,7 @@ import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
 import { useFetchLandingPageCMS, usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import {
   usePrayerNotification,
   useRamadhanSearchLocation,
@@ -204,9 +204,10 @@ const LandingPageRamadan = () => {
     }
   }, [dataLandingPageCMS]);
 
-  useEffect(() => {
+  useDidShow(() => {
+    //tr
     fetchLocation();
-  }, [isActive]);
+  });
 
   const fetchLocation = async () => {
     await getLocation();
