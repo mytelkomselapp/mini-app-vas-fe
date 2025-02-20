@@ -50,15 +50,25 @@ const DzikirDetail = () => {
   }, [dataDzikir]);
   console.log({ dataDzikirDetail, step, totalSteps });
   const handlePrevious = () => {
-    if (readTimes < readTotal) {
-      setReadTimes(readTimes + 1);
-    } else if (step > 1) {
-      setStep(step - 1);
-    }
+    setStep(step - 1);
+    // if (readTimes < readTotal) {
+    //   setReadTimes(readTimes + 1);
+    // } else if (step > 1) {
+    //   setStep(step - 1);
+    // }
   };
   console.log({ readTimes, readTotal });
 
   const handleNext = () => {
+    setStep(step + 1);
+    // if (readTimes > 1) {
+    //   setReadTimes(readTimes - 1);
+    // } else if (step < totalSteps) {
+    //   setStep(step + 1);
+    // }
+  };
+
+  const handleCount = () => {
     if (readTimes > 1) {
       setReadTimes(readTimes - 1);
     } else if (step < totalSteps) {
@@ -123,6 +133,7 @@ const DzikirDetail = () => {
         readTotal={readTotal}
         onPrevious={() => handlePrevious()}
         onNext={() => handleNext()}
+        onCount={handleCount}
       />
     </div>
   );

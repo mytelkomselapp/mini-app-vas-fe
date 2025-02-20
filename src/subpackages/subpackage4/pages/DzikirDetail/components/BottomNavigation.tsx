@@ -4,6 +4,7 @@ import { View, Text } from "@tarojs/components";
 interface BottomNavigationProps {
   onPrevious: () => void;
   onNext: () => void;
+  onCount: () => void;
   currentStep: number;
   totalSteps: number;
   readTimes: number;
@@ -17,6 +18,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   totalSteps,
   readTimes,
   readTotal,
+  onCount,
 }) => {
   const progress = (Math.abs(readTotal - readTimes) / readTotal) * 100;
 
@@ -33,7 +35,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
         Sebelumnya
       </Text>
 
-      <View className="absolute left-[40%] transform -translate-x-[40%] -top-4">
+      <View
+        className="absolute left-[40%] transform -translate-x-[40%] -top-4"
+        onClick={onCount}
+      >
         <View
           className="circular-progress"
           style={
