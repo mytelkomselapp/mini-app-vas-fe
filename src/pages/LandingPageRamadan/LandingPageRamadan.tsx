@@ -236,7 +236,7 @@ const LandingPageRamadan = () => {
     if (feature?.name.toLowerCase() === "kiblat") {
       paramsVal = dataRegisterUser?.city as any;
     }
-    if (!feature?.external) {
+    if (feature?.external) {
       Taro.invokeNativePlugin({
         api_name: "openWebView",
         data: {
