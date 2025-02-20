@@ -18,7 +18,8 @@ const DetailHadiah = () => {
   const currentPath = Taro.getCurrentInstance().router?.path || "";
   const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
   const item = state?.item as RewardHistory;
-  const isAvailable = item.voucher_detail?.claim_status?.toLowerCase() === "available";
+  const isAvailable =
+    item.voucher_detail?.claim_status?.toLowerCase() === "available";
 
   return (
     <View className="bg-white min-h-screen pb-8">
@@ -53,9 +54,14 @@ const DetailHadiah = () => {
         <View className="p-4 bg-white">
           <View className="space-y-2 items-center text-center">
             <View className="flex flex-col mb-10">
-              <Text className="text-lg font-semibold mb-2">{item.reward_name}</Text>
-              <Text className="text-xs text-textSecondary">Berlaku sampai {' '}
-                <Text className="text-xs text-textSecondary font-semibold">{item.voucher_detail?.tgl_expired}</Text>
+              <Text className="text-lg font-semibold mb-2">
+                {item.reward_name}
+              </Text>
+              <Text className="text-xs text-textSecondary">
+                Berlaku sampai{" "}
+                <Text className="text-xs text-textSecondary font-semibold">
+                  {item.voucher_detail?.tgl_expired}
+                </Text>
               </Text>
             </View>
 
@@ -70,14 +76,24 @@ const DetailHadiah = () => {
                   label={isAvailable ? "Gunakan" : "Sudah Digunakan"}
                   disabled={!isAvailable}
                   onClick={() => {
-                    Taro.navigateTo({
-                      url:
-                        "/subpackages/subpackage9/pages/Webview/index?url=" +
-                        encodeURIComponent(
-                          item?.voucher_detail?.url
-                        ),
+                    Taro.invokeNativePlugin({
+                      api_name: "openWebView",
+                      data: {
+                        url: item?.voucher_detail?.url,
+                      },
+                      success: (res: any) =>
+                        console.log("invokeNativePlugin success", res),
+                      fail: (err: any) =>
+                        console.error("invokeNativePlugin fail", err),
                     });
-                   }}
+                    // Taro.navigateTo({
+                    //   url:
+                    //     "/subpackages/subpackage9/pages/Webview/index?url=" +
+                    //     encodeURIComponent(
+                    //       item?.voucher_detail?.url
+                    //     ),
+                    // });
+                  }}
                   className="font-semibold"
                 />
               </View>
@@ -114,17 +130,29 @@ const DetailHadiah = () => {
               <View className="space-y-2">
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Released</Text>
-                  <Text className="text-sm text-textSecondary">{item.voucher_detail?.tgl_release ? formatValidUntil(item.voucher_detail.tgl_release) : '-'}</Text>
+                  <Text className="text-sm text-textSecondary">
+                    {item.voucher_detail?.tgl_release
+                      ? formatValidUntil(item.voucher_detail.tgl_release)
+                      : "-"}
+                  </Text>
                 </View>
                 <View className="h-[1px] bg-dividerGrey w-full" />
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Expired</Text>
-                  <Text className="text-sm text-textSecondary">{item.voucher_detail?.tgl_expired ? formatValidUntil(item.voucher_detail.tgl_expired) : '-'}</Text>
+                  <Text className="text-sm text-textSecondary">
+                    {item.voucher_detail?.tgl_expired
+                      ? formatValidUntil(item.voucher_detail.tgl_expired)
+                      : "-"}
+                  </Text>
                 </View>
                 <View className="h-[1px] bg-dividerGrey w-full" />
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Claimed</Text>
-                  <Text className="text-sm text-textSecondary">{item.voucher_detail?.tgl_claim ? formatValidUntil(item.voucher_detail.tgl_claim) : '-'}</Text>
+                  <Text className="text-sm text-textSecondary">
+                    {item.voucher_detail?.tgl_claim
+                      ? formatValidUntil(item.voucher_detail.tgl_claim)
+                      : "-"}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -173,19 +201,31 @@ const DetailHadiah = () => {
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">5.</Text>
-                  <Text>Masukkan nomor tujuan yang akan di top-up, kemudian klik tombol "Sign In"</Text>
+                  <Text>
+                    Masukkan nomor tujuan yang akan di top-up, kemudian klik
+                    tombol "Sign In"
+                  </Text>
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">6.</Text>
-                  <Text>Pastikan nomor dan nominal sudah sesuai, klik tombol "Ya" untuk melanjutkan</Text>
+                  <Text>
+                    Pastikan nomor dan nominal sudah sesuai, klik tombol "Ya"
+                    untuk melanjutkan
+                  </Text>
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">7.</Text>
-                  <Text>Hadiah akan segera diproses, mohon menunggu hingga masuk ke akun e-wallet Anda</Text>
+                  <Text>
+                    Hadiah akan segera diproses, mohon menunggu hingga masuk ke
+                    akun e-wallet Anda
+                  </Text>
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">8.</Text>
-                  <Text>Status akan berubah menjadi "Sukses" ketika hadiah telah berhasil dikirim</Text>
+                  <Text>
+                    Status akan berubah menjadi "Sukses" ketika hadiah telah
+                    berhasil dikirim
+                  </Text>
                 </View>
               </View>
             </View>
@@ -218,15 +258,22 @@ const DetailHadiah = () => {
               <View className="text-sm text-textSecondary">
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">1.</Text>
-                  <Text>Voucher tidak dapat diuangkan/ditukar dalam bentuk lain.</Text>
+                  <Text>
+                    Voucher tidak dapat diuangkan/ditukar dalam bentuk lain.
+                  </Text>
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">2.</Text>
-                  <Text>Voucher hanya dapat digunakan satu kali selama masa berlaku.</Text>
+                  <Text>
+                    Voucher hanya dapat digunakan satu kali selama masa berlaku.
+                  </Text>
                 </View>
                 <View className="flex flex-row mb-2">
                   <Text className="mr-2 min-w-[20px]">3.</Text>
-                  <Text>Pemenang ditentukan ketika event berakhir dan keputusan ini tidak dapat diganggu gugat.</Text>
+                  <Text>
+                    Pemenang ditentukan ketika event berakhir dan keputusan ini
+                    tidak dapat diganggu gugat.
+                  </Text>
                 </View>
               </View>
             </View>
