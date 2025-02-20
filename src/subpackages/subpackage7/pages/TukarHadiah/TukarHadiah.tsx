@@ -150,13 +150,23 @@ const TukarHadiah = () => {
     if (!id) return;
     const result = await redeemVoucher({ reward_id: id });
     if (result?.data?.meta?.status?.toLowerCase() === "success") {
-      Taro.navigateTo({
-        url:
-          "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(
-            result?.data?.data?.redeem_result?.voucher?.data?.url
-          ),
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: result?.data?.data?.redeem_result?.voucher?.data?.url,
+        },
+        success: (res: any) =>
+          console.log("invokeNativePlugin success", res),
+        fail: (err: any) =>
+          console.error("invokeNativePlugin fail", err),
       });
+      // Taro.navigateTo({
+      //   url:
+      //     "/subpackages/subpackage9/pages/Webview/index?url=" +
+      //     encodeURIComponent(
+      //       result?.data?.data?.redeem_result?.voucher?.data?.url
+      //     ),
+      // });
     } else {
       // setCurrentSelectedReward(null);
       toggleVisibleNotificationToast();
