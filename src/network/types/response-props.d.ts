@@ -598,6 +598,13 @@ export interface RewardHistoryData {
   histories: RewardHistory[];
 }
 
+export interface JurnalIbadahNotificationProps {
+  notification_status: "ON" | "OFF" | "NEW";
+}
+export interface PostJurnalIbadahNotificationProps {
+  notification_status: "ON" | "OFF" | "NEW";
+}
+
 export type CMSFlightLandingPageResponse =
   HttpSuccessResponse<CMSFlightLandingData>;
 export type FlightDetailResponse = HttpSuccessResponse<FlightDetailRawData>;
@@ -666,6 +673,11 @@ export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
 export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
-export type MerchandiseRewardResponse = HttpSuccessResponse<MerchandiseRewardData>;
+export type MerchandiseRewardResponse =
+  HttpSuccessResponse<MerchandiseRewardData>;
 export type RedeemVoucherResponse = HttpSuccessResponse<RedeemVoucherData>;
-export type RewardHistoryResponse = HttpSuccessResponse<RewardHistoryData>; 
+export type RewardHistoryResponse = HttpSuccessResponse<RewardHistoryData>;
+export type JurnalIbadahNotificationConfigResponse =
+  HttpSuccessResponse<JurnalIbadahNotificationProps>;
+export type PostJurnalIbadahNotificationConfigResponse =
+  HttpSuccessResponse<PostJurnalIbadahNotificationProps>;

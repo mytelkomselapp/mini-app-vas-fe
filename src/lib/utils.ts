@@ -4,6 +4,7 @@ import moment from "moment";
 import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
 import sign from "jwt-encode";
+import { START_RAMADHAN_DATE } from "../core/env";
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -209,8 +210,8 @@ export const svgToBase64 = (svgString) => {
 };
 
 export const getCurrentDayRamadhan = () => {
-  return moment()?.isBefore("2025-02-01", "day")
-    ? "2025-02-01"
+  return moment()?.isBefore(START_RAMADHAN_DATE, "day")
+    ? START_RAMADHAN_DATE
     : moment()?.format("YYYY-MM-DD");
 };
 

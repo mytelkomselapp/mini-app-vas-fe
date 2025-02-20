@@ -86,6 +86,10 @@ export interface UserNotificationPayloadConfig {
   pre_notification_time: number; // (0, 5, 10, 15)
 }
 
+export interface JurnalIbadahNotificationPayloadProps {
+  notification_status: "ON" | "OFF";
+}
+
 export interface StampMissionListPayloadProps {
   date: string;
 }

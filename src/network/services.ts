@@ -33,7 +33,9 @@ import {
   RewardSectionResponse,
   RewardItemResponse,
   MerchandiseRewardResponse,
-  RedeemVoucherResponse
+  RedeemVoucherResponse,
+  JurnalIbadahNotificationConfigResponse,
+  PostJurnalIbadahNotificationConfigResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -54,7 +56,8 @@ import {
   StampMissionSubmitPayloadProps,
   StampHistoryPayloadProps,
   MerchandisePayloadProps,
-  RedeemVoucherPayloadProps
+  RedeemVoucherPayloadProps,
+  JurnalIbadahNotificationPayloadProps,
 } from "./types/request-payload";
 import { createJWT } from "../lib/utils";
 import { REDEMPTION_SECRET } from "../core/env";
@@ -272,44 +275,67 @@ export const getListRewards = (): RewardItemResponse => {
   return http.get(endpoints?.getListRewards);
 };
 
-
-
-export const postRedeemMerchandise = (payload: MerchandisePayloadProps, userId: string): MerchandiseRewardResponse => {
+export const postRedeemMerchandise = (
+  payload: MerchandisePayloadProps,
+  userId: string
+): MerchandiseRewardResponse => {
   const exp = Math.floor(Date.now() / 1000) + 60;
   const jwtPayload = {
     user_id: userId,
-    exp
+    exp,
   };
-  
-  const token = createJWT(jwtPayload, REDEMPTION_SECRET || '');
+
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || "");
 
   const headers = {
-    "SecureToken": token
+    SecureToken: token,
   };
-  
-  return http.post(endpoints?.postRedeemReward, payload, undefined, undefined, headers);
+
+  return http.post(
+    endpoints?.postRedeemReward,
+    payload,
+    undefined,
+    undefined,
+    headers
+  );
 };
 
-export const postRedeemVoucher = (payload: RedeemVoucherPayloadProps, userId: string): RedeemVoucherResponse => {
+export const postRedeemVoucher = (
+  payload: RedeemVoucherPayloadProps,
+  userId: string
+): RedeemVoucherResponse => {
   const exp = Math.floor(Date.now() / 1000) + 60;
   const jwtPayload = {
     user_id: userId,
-    exp
+    exp,
   };
-  
-  const token = createJWT(jwtPayload, REDEMPTION_SECRET || '');
+
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || "");
 
   const headers = {
-    "SecureToken": token
+    SecureToken: token,
   };
-  
-  return http.post(endpoints?.postRedeemVoucher, payload, undefined, undefined, headers);
+
+  return http.post(
+    endpoints?.postRedeemVoucher,
+    payload,
+    undefined,
+    undefined,
+    headers
+  );
 };
 
 export const getRewardHistory = (): RewardHistoryResponse => {
   return http.get(endpoints?.getRewardHistory);
 };
 
+export const getNotificationConfigJurnalIbadah =
+  (): JurnalIbadahNotificationConfigResponse => {
+    return http.get(endpoints?.getNotificationJurnalIbadah);
+  };
 
-
-
+export const postNotificationJurnalIbadah = (
+  payload: JurnalIbadahNotificationPayloadProps
+): PostJurnalIbadahNotificationConfigResponse => {
+  return http.post(endpoints?.postNotificationJurnalIbadah, payload);
+};
