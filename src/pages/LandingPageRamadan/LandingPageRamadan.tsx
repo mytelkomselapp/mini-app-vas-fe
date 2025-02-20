@@ -26,6 +26,7 @@ type Feature = {
   name: string;
   icon?: string;
   path?: string;
+  external: boolean;
 };
 
 const LandingPageRamadan = () => {
@@ -180,6 +181,7 @@ const LandingPageRamadan = () => {
           .slice(0, 8)
           .map((app) => {
             let path = "";
+            let external = false;
             const title = app.title?.toLowerCase();
             if (title?.includes("masjid")) {
               path = "/subpackages/subpackage2/pages/CariMasjid/index";
@@ -191,11 +193,13 @@ const LandingPageRamadan = () => {
               path = "/subpackages/subpackage4/pages/Dzikir/index";
             } else {
               // Add more conditions as needed for other paths
-              path = "";
+              path = app?.targetUrl || "";
+              external = true;
             }
             return {
               name: app.title,
               icon: app.icon,
+              external,
               path,
             };
           });
@@ -232,8 +236,18 @@ const LandingPageRamadan = () => {
     if (feature?.name.toLowerCase() === "kiblat") {
       paramsVal = dataRegisterUser?.city as any;
     }
-
-    return handleNavigate(path, query, paramsVal);
+    if (!feature?.external) {
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: feature?.path,
+        },
+        success: (res: any) => console.log("invokeNativePlugin success", res),
+        fail: (err: any) => console.error("invokeNativePlugin fail", err),
+      });
+    } else {
+      return handleNavigate(path, query, paramsVal);
+    }
   };
 
   useEffect(() => {
