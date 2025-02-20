@@ -153,6 +153,7 @@ const CariMasjid: React.FC = () => {
 
   // Add marker click handler
   const handleMarkerTap = (e) => {
+    console.log('handleMarkerTap', e);
     const markerId = e.detail?.markerId;
     setSelectedMosqueId(markerId);
     setShowAllMosques(false);
@@ -196,8 +197,8 @@ const CariMasjid: React.FC = () => {
           enableZoom: true,
           enableScroll: true,
           enableRotate: true,
-          enableOverlooking: true,
-          enable3D: true,
+          enableOverlooking: false,
+          enable3D: false,
           showLocation: true,
         }}
         enableZoom
