@@ -59,12 +59,12 @@ const generateToken = (source: API_SOURCE) => {
   if (source === "api" || source === "gamification") {
     try {
       //comment this for DEV
-      // const value = Taro.getStorageSync("customParams");
-      // if (value) {
-      //   return value;
-      // }
+      const value = Taro.getStorageSync("customParams");
+      if (value) {
+        return value;
+      }
       //use this for DEV
-      return "1d23af96b21f90724050022fd15afaef-e7123f0b9108c4fef8886fc6eaa9e87fdd8ef7031c697cb84bbd266460efac8414943aa22df58013d5802e5d2cd6e60679a0c74eb9caffa3f12d247d5c30513ddbeed106294818791040edbf747ec46acd82b4d700562a4e00c0ff6987bbe09453f7ab71431f6fb5f3cd9f0ac8d493280e5616e3490a8668d0984411f1420bbc5706fea53e7dee94afde0ba7aafa97cb";
+      // return "1d23af96b21f90724050022fd15afaef-e7123f0b9108c4fef8886fc6eaa9e87fdd8ef7031c697cb84bbd266460efac8414943aa22df58013d5802e5d2cd6e60679a0c74eb9caffa3f12d247d5c30513ddbeed106294818791040edbf747ec46acd82b4d700562a4e00c0ff6987bbe09453f7ab71431f6fb5f3cd9f0ac8d493280e5616e3490a8668d0984411f1420bbc5706fea53e7dee94afde0ba7aafa97cb";
     } catch (e) {
       console.error(e);
       alert("Error: " + e);
