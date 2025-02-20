@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import compass from "../../../../assets/compass-new.svg";
 import compassActive from "../../../../assets/compass-active-new.svg";
 import kabahIndicator from "../../../../assets/kabah-indicator.svg";
+import compassCenter from "../../../../assets/compass-center.svg";
+import compassCenterActive from "../../../../assets/compass-center-active.svg";
 import bgLanding from "../../../../assets/backdrop-compass.png";
 import mapPinWhite from "../../../../assets/map-pin-white.svg";
 import calibrateIllustration from "../../../../assets/calibrate-illustration.svg";
@@ -124,7 +126,8 @@ const ArahKiblat: React.FC = () => {
           />
 
           <img
-            src={isAligned ? compassActive : compass}
+            // src={isAligned ? compassActive : compass}
+            src={compass}
             alt="Compass Background"
             className="absolute z-30 w-[250px] h-[250px] object-cover"
             style={{
@@ -141,14 +144,18 @@ const ArahKiblat: React.FC = () => {
           >
             <img src={kabahIndicator} alt="Ka`bah" className="w-8 h-8" />
           </div>
-
+          <img
+            src={isAligned ? compassCenterActive : compassCenter}
+            alt="Compass Center"
+            className="absolute z-50 w-[90px] h-[90px]"
+          />
           <div
             className={cn(
-              "absolute font-batikSans font-semibold z-30",
+              "absolute font-batikSans font-semibold z-[60]",
               isAligned ? "text-white" : "text-primaryBlack"
             )}
           >
-            <Text className="text-[16px]">{Math.round(angle)}°</Text>
+            <Text className="text-[16px]">{Math.round(295)}°</Text>
           </div>
         </div>
 
