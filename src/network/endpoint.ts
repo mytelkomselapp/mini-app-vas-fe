@@ -162,6 +162,14 @@ const endpoints: ENDPOINT_SOURCE = {
     endpoint: "/api/v1/stamp/redeem?_limit=999&_page=1",
     source: "gamification",
   },
+  getNotificationJurnalIbadah: {
+    endpoint: "/api/v1/user/user-notification-jurnal-ibadah",
+    source: "api",
+  },
+  postNotificationJurnalIbadah: {
+    endpoint: "/api/v1/user/user-notification-jurnal-ibadah",
+    source: "api",
+  },
 };
 
 export default endpoints;

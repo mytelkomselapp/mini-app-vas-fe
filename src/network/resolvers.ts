@@ -41,10 +41,11 @@ import {
   postRedeemMerchandise,
   postRedeemVoucher,
   getRewardHistory,
+  getNotificationConfigJurnalIbadah,
+  postNotificationJurnalIbadah,
 } from "./services";
 import {
   GetETicketPayloadProps,
-  GlobalNotificationPayloadProps,
   NearestCityPayloadProps,
   NearestMosquesPayloadProps,
   SearchCityPayloadProps,
@@ -52,9 +53,10 @@ import {
   StampMissionListPayloadProps,
   StampMissionSummaryPayloadProps,
   MerchandisePayloadProps,
-  RedeemVoucherPayloadProps
+  RedeemVoucherPayloadProps,
 } from "./types/request-payload";
 import { useMemo, useState } from "react";
+import { JurnalIbadahNotificationProps } from "./types/response-props";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -387,14 +389,40 @@ export const useFetchListRewards = (enabled: boolean = true) => {
 
 export const usePostRedeemMerchandise = (userId: string) => {
   return useMutation(
-    ["Post Redeem Merchandise"], 
-    (payload: MerchandisePayloadProps) => postRedeemMerchandise(payload, userId));
+    ["Post Redeem Merchandise"],
+    (payload: MerchandisePayloadProps) => postRedeemMerchandise(payload, userId)
+  );
 };
 
 export const usePostRedeemVoucher = (userId: string) => {
-  return useMutation(["Post Redeem Voucher"], (payload: RedeemVoucherPayloadProps) => postRedeemVoucher(payload, userId));
+  return useMutation(
+    ["Post Redeem Voucher"],
+    (payload: RedeemVoucherPayloadProps) => postRedeemVoucher(payload, userId)
+  );
 };
 
 export const useFetchRewardHistory = () => {
   return useQuery(["Fetch Reward History"], getRewardHistory);
+};
+
+export const useFetchNotificationJurnalIbadahConfig = (
+  successCallback: (data: JurnalIbadahNotificationProps) => void,
+  enabled: boolean = true
+) => {
+  return useQuery(
+    ["Fetch Notification Jurnal Ibadah Config"],
+    getNotificationConfigJurnalIbadah,
+    {
+      enabled,
+      refetchOnMount: true,
+      onSuccess: (data) => successCallback(data?.data?.data),
+    }
+  );
+};
+
+export const usePostNotificationJurnalIbadahConfig = () => {
+  return useMutation(
+    ["Post Notification Jurnal Ibadah Config"],
+    postNotificationJurnalIbadah
+  );
 };
