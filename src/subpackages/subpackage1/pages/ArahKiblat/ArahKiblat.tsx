@@ -1,21 +1,20 @@
-import { Text, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Qibla } from "qibla";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import compass from "../../../../assets/compass-new.svg";
-import compassActive from "../../../../assets/compass-active-new.svg";
 import kabahIndicator from "../../../../assets/kabah-indicator.svg";
 import compassCenter from "../../../../assets/compass-center.svg";
 import compassCenterActive from "../../../../assets/compass-center-active.svg";
 import bgLanding from "../../../../assets/backdrop-compass.png";
 import mapPinWhite from "../../../../assets/map-pin-white.svg";
-import calibrateIllustration from "../../../../assets/calibrate-illustration.svg";
 import iconPhoneRed from "../../../../assets/icon-phone-red.svg";
 import greenRectangle from "../../../../assets/green-rectangle.svg";
 import { cn } from "../../../../lib/utils";
 import BottomSheet from "../../../../components/BottomSheet";
 import Button from "../../../../components/Button";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import CalibrationGif from "../../../../assets/gif/calibration.gif";
 
 const ArahKiblat: React.FC = () => {
   const [angle, setAngle] = useState(0);
@@ -34,6 +33,7 @@ const ArahKiblat: React.FC = () => {
   const previousAngle = useRef(0);
   const fluctuations = useRef(0);
   useTaroNavBar();
+
   useEffect(() => {
     Taro.getLocation({
       type: "wgs84",
@@ -82,7 +82,7 @@ const ArahKiblat: React.FC = () => {
 
   const handleClose = () => setOpen(false);
   const isAligned = qibla === Math.round(angle);
-  console.log({ qibla, angle, isAligned });
+
   return (
     <View className="bg-white h-screen flex">
       <View
@@ -181,11 +181,7 @@ const ArahKiblat: React.FC = () => {
 
         <BottomSheet open={open} onClose={handleClose}>
           <View className="flex flex-col items-center">
-            <img
-              src={calibrateIllustration}
-              className="w-50 h-50"
-              alt="Calibration illustration"
-            />
+            <Image src={CalibrationGif} style={{ width: "80%" }} />
             <Text className="font-bold text-[15px] text-center mb-2">
               {"Miringkan dan gerakkan perangkat kamu"}
             </Text>
