@@ -6,9 +6,6 @@ import tailwindcss from "tailwindcss";
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from "weapp-tailwindcss/vite";
 import { DefinePlugin } from "webpack";
 const { UnifiedWebpackPluginV5 } = require("weapp-tailwindcss/webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const path = require("path");
@@ -74,7 +71,6 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     },
     mini: {
       debugReact: true,
-
       imageUrlLoaderOption: {
         url: "assets",
       },
