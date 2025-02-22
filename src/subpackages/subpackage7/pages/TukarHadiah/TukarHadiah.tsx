@@ -175,7 +175,7 @@ const TukarHadiah = () => {
 
   return (
     <View className="bg-[#D41F2C] w-full min-h-full h-auto">
-      <Show when={isLoadingRewardSections || isLoadingListRewards}>
+      <Show when={isLoadingRewardSections || isLoadingListRewards || isLoadingRedeemVoucher}>
         <LoadingScreen text="Loading" customClassName="mx-[20px]" />
       </Show>
       <View className="bg-white rounded-t-[16px] min-h-[100px]">
@@ -248,7 +248,7 @@ const TukarHadiah = () => {
                   <SwiperItem key={idx}>
                     <RewardItem
                       title={item.reward_name_id}
-                      originalStamp={item.redeem_nominal}
+                      originalStamp={item.strike_price}
                       currentStamp={item.redeem_nominal}
                       type={item.type}
                       imageUrl={item.image}
@@ -298,7 +298,7 @@ const TukarHadiah = () => {
               <HorizontalStampCard
                 imageUrl={currentSelectedReward.image}
                 title={currentSelectedReward.reward_name_id}
-                originalStamp={currentSelectedReward.redeem_nominal}
+                originalStamp={currentSelectedReward.strike_price}
                 discountedStamp={currentSelectedReward.redeem_nominal}
                 isHistory={false}
               />

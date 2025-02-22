@@ -521,6 +521,7 @@ export interface RewardItemData {
   is_recurring_stock: number;
   reward_section: string;
   reward_category: string;
+  strike_price: number;
 }
 
 export interface MerchandiseRewardData {
@@ -596,6 +597,15 @@ export interface RewardHistory {
 export interface RewardHistoryData {
   pagination: RewardHistoryPagination;
   histories: RewardHistory[];
+}
+
+export interface RewardHistoryDetail {
+  id_voucher: string;
+  tgl_release: string;
+  tgl_expired: string;
+  tgl_claim: string;
+  claim_status: string;
+  url: string;
 }
 
 export interface JurnalIbadahNotificationProps {
@@ -681,3 +691,5 @@ export type JurnalIbadahNotificationConfigResponse =
   HttpSuccessResponse<JurnalIbadahNotificationProps>;
 export type PostJurnalIbadahNotificationConfigResponse =
   HttpSuccessResponse<PostJurnalIbadahNotificationProps>;
+export type RewardHistoryDetailResponse =
+  HttpSuccessResponse<RewardHistoryDetail>;
