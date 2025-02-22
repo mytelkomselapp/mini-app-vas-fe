@@ -339,3 +339,12 @@ export const postNotificationJurnalIbadah = (
 ): PostJurnalIbadahNotificationConfigResponse => {
   return http.post(endpoints?.postNotificationJurnalIbadah, payload);
 };
+
+export const getRewardHistoryDetail = (
+  rewardId: string
+): RewardHistoryDetailResponse => {
+  return http.get({
+    endpoint: `${endpoints.getRewardHistoryDetail.endpoint}/${rewardId}`,
+    source: endpoints.getRewardHistoryDetail.source,
+  });
+};

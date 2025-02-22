@@ -43,6 +43,7 @@ import {
   getRewardHistory,
   getNotificationConfigJurnalIbadah,
   postNotificationJurnalIbadah,
+  getRewardHistoryDetail,
 } from "./services";
 import {
   GetETicketPayloadProps,
@@ -424,5 +425,14 @@ export const usePostNotificationJurnalIbadahConfig = () => {
   return useMutation(
     ["Post Notification Jurnal Ibadah Config"],
     postNotificationJurnalIbadah
+  );
+};
+
+export const useFetchRewardHistoryDetail = (rewardId: string, enabled: boolean = true) => {
+  console.log(rewardId, ' rewardId')
+  return useQuery(
+    ["Fetch Reward History Detail"], 
+    () => getRewardHistoryDetail(rewardId),
+    { enabled }
   );
 };

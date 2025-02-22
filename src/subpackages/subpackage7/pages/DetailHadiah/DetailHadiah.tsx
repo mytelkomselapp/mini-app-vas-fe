@@ -5,9 +5,12 @@ import CopyIcon from "../../../../assets/ico-copy.svg";
 import ChevronUpIcon from "../../../../assets/chevron-up.svg";
 import { useMemo, useState } from "react";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { formatValidUntil, getNavigateState } from "../../../../lib/utils";
 import { RewardHistory } from "../../../../network/types/response-props";
+import { useFetchRewardHistoryDetail } from "../../../../network/resolvers";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import Show from "../../../../components/Show";
 
 const DetailHadiah = () => {
   useTaroNavBar();
@@ -15,14 +18,29 @@ const DetailHadiah = () => {
   const [isCaraPenukaranOpen, setIsCaraPenukaranOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
+  
+
   const currentPath = Taro.getCurrentInstance().router?.path || "";
   const state = useMemo(() => getNavigateState(currentPath), [currentPath]);
-  const item = state?.item as RewardHistory;
-  const isAvailable =
-    item.voucher_detail?.claim_status?.toLowerCase() === "available";
+  const item = state?.item;
+  const id = item?.id;
+
+  const { data, isLoading, refetch } = useFetchRewardHistoryDetail(id);
+
+  useDidShow(() => {
+    console.log("useDidShow");
+    refetch();
+  });
+
+  const voucherData = data?.data?.data
+  const voucherDetail = data?.data?.data?.voucher_detail
+  const isAvailable = voucherDetail?.claim_status?.toLowerCase() === "available";
 
   return (
     <View className="bg-white min-h-screen pb-8">
+      <Show when={isLoading}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
       {/* Voucher Card */}
       <View
         className="mx-4 mt-4 bg-white rounded-lg relative overflow-hidden"
@@ -39,7 +57,7 @@ const DetailHadiah = () => {
         {/* Top Section */}
         <View className="h-[184px] bg-[#F5FBFF]">
           <Image
-            src={item.reward_image}
+            src={item?.reward_image}
             className="w-full h-full"
             mode="aspectFill"
           />
@@ -55,12 +73,12 @@ const DetailHadiah = () => {
           <View className="space-y-2 items-center text-center">
             <View className="flex flex-col mb-10">
               <Text className="text-lg font-semibold mb-2">
-                {item.reward_name}
+                {voucherData?.reward_name}
               </Text>
               <Text className="text-xs text-textSecondary">
                 Berlaku sampai{" "}
                 <Text className="text-xs text-textSecondary font-semibold">
-                  {item.voucher_detail?.tgl_expired}
+                  {voucherData?.tgl_expired}
                 </Text>
               </Text>
             </View>
@@ -79,7 +97,7 @@ const DetailHadiah = () => {
                     Taro.invokeNativePlugin({
                       api_name: "openWebView",
                       data: {
-                        url: item?.voucher_detail?.url,
+                        url: voucherDetail?.url,
                       },
                       success: (res: any) =>
                         console.log("invokeNativePlugin success", res),
@@ -131,8 +149,8 @@ const DetailHadiah = () => {
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Released</Text>
                   <Text className="text-sm text-textSecondary">
-                    {item.voucher_detail?.tgl_release
-                      ? formatValidUntil(item.voucher_detail.tgl_release)
+                    {voucherDetail?.tgl_release
+                      ? formatValidUntil(voucherDetail.tgl_release)
                       : "-"}
                   </Text>
                 </View>
@@ -140,8 +158,8 @@ const DetailHadiah = () => {
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Expired</Text>
                   <Text className="text-sm text-textSecondary">
-                    {item.voucher_detail?.tgl_expired
-                      ? formatValidUntil(item.voucher_detail.tgl_expired)
+                    {voucherDetail?.tgl_expired
+                      ? formatValidUntil(voucherDetail.tgl_expired)
                       : "-"}
                   </Text>
                 </View>
@@ -149,8 +167,8 @@ const DetailHadiah = () => {
                 <View className="flex flex-row justify-between items-center">
                   <Text className="text-sm text-textSecondary">Claimed</Text>
                   <Text className="text-sm text-textSecondary">
-                    {item.voucher_detail?.tgl_claim
-                      ? formatValidUntil(item.voucher_detail.tgl_claim)
+                    {voucherDetail?.tgl_claim
+                      ? formatValidUntil(voucherDetail.tgl_claim)
                       : "-"}
                   </Text>
                 </View>
