@@ -23,6 +23,13 @@ const CardList = () => {
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
   );
+  const [notificationToast, setNotificationToast] = React.useState<{
+    message: string;
+    type: "success" | "error";
+  }>({
+    message: "Test message",
+    type: "success",
+  });
   const [animateSubmittedMissionId, setAnimateSubmittedMissionId] =
     React.useState<string[]>([]);
 
@@ -88,7 +95,20 @@ const CardList = () => {
     };
 
     try {
-      await postSubmitMission(payload);
+      const postSubmission = await postSubmitMission(payload);
+
+      const earnedStamp = postSubmission?.data?.data?.today_earned_stamp || 0;
+      const isShowMilestoneToast = [70, 100, 140]?.some(
+        (data) => data === earnedStamp
+      );
+
+      if (isShowMilestoneToast) {
+        setNotificationToast({
+          message: `Selamat, kamu telah mendapatkan ${earnedStamp} stamp`,
+          type: "success",
+        });
+        toggleVisibleNotificationToast();
+      }
 
       /*  Refetch user stamp and stamp mission list */
       queryClient.invalidateQueries({
@@ -102,7 +122,10 @@ const CardList = () => {
         setAnimateSubmittedMissionId([...animateSubmittedMissionId, missionId]);
       }, 1000);
     } catch (_) {
-      /** TODO: Show Toast Error */
+      setNotificationToast({
+        message: "Kamu sudah mengisi ibadah ini",
+        type: "error",
+      });
       toggleVisibleNotificationToast();
     }
   };
@@ -166,8 +189,10 @@ const CardList = () => {
         submitLoading={loadingSubmitMission}
       />
       <NotificationToast
-        description="Kamu sudah mengisi ibadah ini"
+        type={notificationToast?.type}
+        description={notificationToast?.message}
         duration={3000}
+        fontWeight={notificationToast?.type === "error" ? "bold" : "normal"}
         show={visibleNotificationToast}
         onClose={toggleVisibleNotificationToast}
       />
