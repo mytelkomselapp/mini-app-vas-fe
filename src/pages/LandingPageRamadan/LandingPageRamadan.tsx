@@ -1,3 +1,5 @@
+declare const qq: any;
+
 import { Text, View } from "@tarojs/components";
 import bgLanding from "../../assets/bg/bg-ramadhan.svg";
 import { handleNavigate } from "../../lib/utils";
@@ -192,6 +194,35 @@ const LandingPageRamadan = () => {
 
   const { setData: setDataRamadhanSearchLocation } =
     useRamadhanSearchLocation();
+  useEffect(() => {
+    const packages = [
+      "subpackages/subpackage1",
+      "subpackages/subpackage2",
+      "subpackages/subpackage3",
+      "subpackages/subpackage4",
+      "subpackages/subpackage5",
+      "subpackages/subpackage6",
+      "subpackages/subpackage7",
+      "subpackages/subpackage8",
+      "subpackages/subpackage9",
+    ];
+
+    if (typeof qq !== "undefined" && qq.loadSubpackage) {
+      packages.forEach((pkgName) => {
+        qq.loadSubpackage({
+          name: pkgName,
+          success: (res) => {
+            console.log(`${pkgName} loaded successfully`, res);
+          },
+          fail: (err) => {
+            console.error(`Failed to load ${pkgName}`, err);
+          },
+        });
+      });
+    } else {
+      console.warn("qq.loadSubpackage is not available");
+    }
+  }, []);
 
   useEffect(() => {
     if (dataLandingPageCMS) {
