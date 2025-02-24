@@ -5,6 +5,10 @@ import CardList from "./components/CardList";
 import { handleNavigate } from "../../../../../../lib/utils";
 
 const WidgetJurnalIbadah = () => {
+  const handleClick = () => {
+    handleNavigate("/subpackages/subpackage5/pages/CatatanIbadah/index");
+  };
+
   return (
     <View className="px-4 mt-4">
       <View className="flex flex-row items-center mb-2 justify-between">
@@ -13,11 +17,7 @@ const WidgetJurnalIbadah = () => {
         </Text>
         <Text
           className="whitespace-pre-wrap text-xs text-grey "
-          onClick={() => {
-            handleNavigate(
-              "/subpackages/subpackage5/pages/CatatanIbadah/index"
-            );
-          }}
+          onClick={handleClick}
         >
           {"Lihat Semua"}
         </Text>

@@ -13,7 +13,7 @@ import SpecialGame from "./components/SpecialGame";
 import NewsCardList from "./components/News";
 import { useFetchLandingPageCMS, usePostRegisterUser } from "../../network";
 import { useEffect, useState } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import {
   usePrayerNotification,
   useRamadhanSearchLocation,
@@ -22,39 +22,15 @@ import { RamadhanSearchLocationProps } from "@/network/types/response-props";
 import WidgetJurnalIbadah from "../../subpackages/subpackage5/pages/CatatanIbadah/components/WidgetJurnalIbadah";
 import Show from "../../components/Show";
 import LoadingScreen from "../../components/LoadingScreen";
+import useTaroNavBar from "../../hooks/useTaroNavBar";
 
 type Feature = {
   name: string;
   icon?: string;
   path?: string;
+  external: boolean;
 };
 
-// const features: Feature[] = [
-//   {
-//     name: "Cari Masjid",
-//     icon: "🏰",
-//     path: "/subpackages/subpackage2/pages/CariMasjid/index",
-//   },
-//   {
-//     name: "Kiblat",
-//     icon: "🧭",
-//     path: "/subpackages/subpackage1/pages/ArahKiblat/index",
-//   },
-//   { name: "Zakat", icon: "💰" },
-//   { name: "Sedekah", icon: "❤️" },
-//   { name: "Kirim Parsel", icon: "🎁" },
-//   {
-//     name: "Catatan\nIbadah",
-//     icon: "📝",
-//     path: "/subpackages/subpackage5/pages/CatatanIbadah/index",
-//   },
-//   {
-//     name: "Dzikir",
-//     icon: "📖",
-//     path: "/subpackages/subpackage4/pages/Dzikir/index",
-//   },
-//   { name: "Kuis", icon: "❓" },
-// ];
 const LandingPageRamadan = () => {
   const [latitude, setLatitude] = useState("0");
   const [longitude, setLongitude] = useState("0");
@@ -68,6 +44,7 @@ const LandingPageRamadan = () => {
     data: dataRawRegisterUser,
   } = usePostRegisterUser();
   const { isActive } = usePrayerNotification();
+  useTaroNavBar();
 
   const dataLandingPageCMS =
     dataRawLandingPageCMS?.data?.data?.ramadhanSections;
@@ -235,6 +212,7 @@ const LandingPageRamadan = () => {
           .slice(0, 8)
           .map((app) => {
             let path = "";
+            let external = false;
             const title = app.title?.toLowerCase();
             if (title?.includes("masjid")) {
               path = "/subpackages/subpackage2/pages/CariMasjid/index";
@@ -246,11 +224,13 @@ const LandingPageRamadan = () => {
               path = "/subpackages/subpackage4/pages/Dzikir/index";
             } else {
               // Add more conditions as needed for other paths
-              path = "";
+              path = app?.targetUrl || "";
+              external = true;
             }
             return {
               name: app.title,
               icon: app.icon,
+              external,
               path,
             };
           });
@@ -259,9 +239,10 @@ const LandingPageRamadan = () => {
     }
   }, [dataLandingPageCMS]);
 
-  useEffect(() => {
+  useDidShow(() => {
+    //tr
     fetchLocation();
-  }, [isActive]);
+  });
 
   const fetchLocation = async () => {
     await getLocation();
@@ -286,8 +267,18 @@ const LandingPageRamadan = () => {
     if (feature?.name.toLowerCase() === "kiblat") {
       paramsVal = dataRegisterUser?.city as any;
     }
-
-    return handleNavigate(path, query, paramsVal);
+    if (feature?.external) {
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: feature?.path,
+        },
+        success: (res: any) => console.log("invokeNativePlugin success", res),
+        fail: (err: any) => console.error("invokeNativePlugin fail", err),
+      });
+    } else {
+      return handleNavigate(path, query, paramsVal);
+    }
   };
 
   useEffect(() => {
@@ -347,10 +338,15 @@ const LandingPageRamadan = () => {
             onClick={() => {
               const targetUrl = cardSession1Header?.targetUrl;
               if (targetUrl) {
-                Taro.navigateTo({
-                  url:
-                    "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    encodeURIComponent(targetUrl),
+                Taro.invokeNativePlugin({
+                  api_name: "openWebView",
+                  data: {
+                    url: targetUrl,
+                  },
+                  success: (res: any) =>
+                    console.log("invokeNativePlugin success", res),
+                  fail: (err: any) =>
+                    console.error("invokeNativePlugin fail", err),
                 });
               }
             }}
@@ -370,10 +366,15 @@ const LandingPageRamadan = () => {
             onClick={() => {
               const targetUrl = cardSession2Header?.targetUrl;
               if (targetUrl) {
-                Taro.navigateTo({
-                  url:
-                    "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    encodeURIComponent(targetUrl),
+                Taro.invokeNativePlugin({
+                  api_name: "openWebView",
+                  data: {
+                    url: targetUrl,
+                  },
+                  success: (res: any) =>
+                    console.log("invokeNativePlugin success", res),
+                  fail: (err: any) =>
+                    console.error("invokeNativePlugin fail", err),
                 });
               }
             }}

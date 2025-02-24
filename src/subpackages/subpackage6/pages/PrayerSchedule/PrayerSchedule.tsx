@@ -1,6 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { View } from "@tarojs/components";
-import bgLanding from "../../../../assets/bg/bg-prayer-schedule.png";
 
 import bgSubuh from "../../../../assets/bg/bg-subuh.png";
 import bgZuhur from "../../../../assets/bg/bg-zuhur.png";
@@ -38,7 +37,6 @@ import {
   usePostRegisterUser,
 } from "../../../../network";
 import { PrayerCardProps } from "@/pages/LandingPageRamadan/components/PrayerCard";
-import { PrayerNotificationConfig } from "@/network/types/response-props";
 import LoadingScreen from "../../../../components/LoadingScreen";
 
 interface Prayer {
@@ -374,14 +372,17 @@ const PrayerSchedule = () => {
           className="flex items-center gap-2"
           onClick={() =>
             handleNavigate(
-              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index"
+              "/subpackages/subpackage3/pages/RamadhanSearchLocation/index",
+              "",
+              {
+                data: dataRamadhanSearchLocation,
+              }
             )
           }
         >
           <img src={Pin} style={{ width: "16px", height: "16px" }} />
           <span className="text-white text-[12px] line-clamp-1">
-            {/* {dataRamadhanSearchLocation?.city || "Pancoran"} */}
-            {city}
+            {dataRamadhanSearchLocation?.city || "Pancoran"}
           </span>
           <img
             src={ChevronDown}

@@ -8,10 +8,13 @@ const SpecialGame = ({ data = [] }: { data: Card[] }) => {
   const Movie = ({ item }) => {
     const onNavigate = (targetUrl?: string) => {
       if (targetUrl) {
-        Taro.navigateTo({
-          url:
-            "/subpackages/subpackage9/pages/Webview/index?url=" +
-            encodeURIComponent(targetUrl),
+        Taro.invokeNativePlugin({
+          api_name: "openWebView",
+          data: {
+            url: targetUrl,
+          },
+          success: (res: any) => console.log("invokeNativePlugin success", res),
+          fail: (err: any) => console.error("invokeNativePlugin fail", err),
         });
       }
     };

@@ -521,6 +521,7 @@ export interface RewardItemData {
   is_recurring_stock: number;
   reward_section: string;
   reward_category: string;
+  strike_price: number;
 }
 
 export interface MerchandiseRewardData {
@@ -541,6 +542,77 @@ export interface MerchandiseRewardData {
       };
     };
   };
+}
+
+export interface RedeemVoucherData {
+  stamp_summary: {
+    new_total_stamp: number;
+    today_earned_stamp: number;
+  };
+  redeem_result: {
+    voucher: {
+      data: {
+        id_voucher: string;
+        tgl_expired: string;
+        url: string;
+      };
+      meta: {
+        code: string;
+        status: string;
+      };
+    };
+  };
+}
+
+export interface RewardHistoryPagination {
+  current_page: number;
+  record_per_page: number;
+  total_page: number;
+  total_record: number;
+}
+
+export interface VoucherDetail {
+  id_voucher: string;
+  tgl_release: string;
+  tgl_expired: string;
+  tgl_claim: string;
+  claim_status: string;
+  url: string;
+}
+
+export interface RewardHistory {
+  id: string;
+  user_id: string;
+  transaction_date: string;
+  reward_id: string;
+  redeem_nominal: number;
+  qty: number;
+  reward_type: string;
+  reward_name: string;
+  reward_description: string;
+  reward_image: string;
+  voucher_detail: VoucherDetail;
+}
+
+export interface RewardHistoryData {
+  pagination: RewardHistoryPagination;
+  histories: RewardHistory[];
+}
+
+export interface RewardHistoryDetail {
+  id_voucher: string;
+  tgl_release: string;
+  tgl_expired: string;
+  tgl_claim: string;
+  claim_status: string;
+  url: string;
+}
+
+export interface JurnalIbadahNotificationProps {
+  notification_status: "ON" | "OFF" | "NEW";
+}
+export interface PostJurnalIbadahNotificationProps {
+  notification_status: "ON" | "OFF" | "NEW";
 }
 
 export type CMSFlightLandingPageResponse =
@@ -611,4 +683,13 @@ export type MissionPopupCMSResponse = HttpSuccessResponse<MissionPopupCMSData>;
 export type DzikirCMSResponse = HttpSuccessResponse<DzikirCMSData[]>;
 export type RewardSectionResponse = HttpSuccessResponse<RewardSectionData[]>;
 export type RewardItemResponse = HttpSuccessResponse<RewardItemData[]>;
-export type MerchandiseRewardResponse = HttpSuccessResponse<MerchandiseRewardData>;
+export type MerchandiseRewardResponse =
+  HttpSuccessResponse<MerchandiseRewardData>;
+export type RedeemVoucherResponse = HttpSuccessResponse<RedeemVoucherData>;
+export type RewardHistoryResponse = HttpSuccessResponse<RewardHistoryData>;
+export type JurnalIbadahNotificationConfigResponse =
+  HttpSuccessResponse<JurnalIbadahNotificationProps>;
+export type PostJurnalIbadahNotificationConfigResponse =
+  HttpSuccessResponse<PostJurnalIbadahNotificationProps>;
+export type RewardHistoryDetailResponse =
+  HttpSuccessResponse<RewardHistoryDetail>;

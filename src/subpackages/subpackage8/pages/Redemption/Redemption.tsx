@@ -7,10 +7,16 @@ import iconStamp from "../../../../assets/icon-stamp-gamehub-32.svg";
 import iconInfo from "../../../../assets/ico_info.svg";
 import { View } from "@tarojs/components";
 import Button from "../../../../components/Button";
-import { formatDateToIndonesian, getTimezone, handleNavigate } from "../../../../lib/utils";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import {
+  formatDateToIndonesian,
+  getTimezone,
+  handleNavigate,
+} from "../../../../lib/utils";
 import Taro from "@tarojs/taro";
 
 const Redemption: React.FC = () => {
+  useTaroNavBar();
   const getStats = (stats: string) => {
     if (stats === "success") {
       return {
@@ -30,11 +36,13 @@ const Redemption: React.FC = () => {
   };
   const searchParams = Taro.getCurrentInstance().router?.params;
 
-  const resultStatus = searchParams?.status || ""; 
+  const resultStatus = searchParams?.status || "";
   const stampAmount = searchParams?.stampAmount || "";
 
   const currentDate = new Date();
-  const time = `${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')} ${getTimezone()}`;
+  const time = `${String(currentDate.getHours()).padStart(2, "0")}:${String(
+    currentDate.getMinutes()
+  ).padStart(2, "0")} ${getTimezone()}`;
   const formattedDate = formatDateToIndonesian(new Date());
   const finalDate = `${formattedDate.day} ${formattedDate.monthName}, ${formattedDate.year}`;
 
@@ -87,7 +95,9 @@ const Redemption: React.FC = () => {
               <span>Jumlah</span>
               <div className="justify-end flex items-center">
                 <img src={iconStamp} className="w-4 h-4 mr-2" />
-                <span className="text-solidRed font-semibold">{stampAmount} Stamp</span>
+                <span className="text-solidRed font-semibold">
+                  {stampAmount} Stamp
+                </span>
               </div>
             </div>
           </div>

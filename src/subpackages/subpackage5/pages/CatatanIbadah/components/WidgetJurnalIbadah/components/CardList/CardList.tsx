@@ -23,6 +23,15 @@ const CardList = () => {
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
   );
+  const [notificationToast, setNotificationToast] = React.useState<{
+    message: string;
+    type: "success" | "error";
+  }>({
+    message: "Test message",
+    type: "success",
+  });
+  const [animateSubmittedMissionId, setAnimateSubmittedMissionId] =
+    React.useState<string[]>([]);
 
   const { setData } = useDetailTaskRamadhan();
   const { active: visibleTaskModal, toggleActive: toggleVisibleTaskModal } =
@@ -53,7 +62,8 @@ const CardList = () => {
           category_id: data?.category_id,
         })) || []
     )
-    ?.filter((data) => data?.mission_status === 1);
+    ?.filter((data) => data?.mission_status === 1)
+    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id));
 
   const indexHiddenCard = dataList
     ?.map((data, index) => {
@@ -85,7 +95,20 @@ const CardList = () => {
     };
 
     try {
-      await postSubmitMission(payload);
+      const postSubmission = await postSubmitMission(payload);
+
+      const earnedStamp = postSubmission?.data?.data?.today_earned_stamp || 0;
+      const isShowMilestoneToast = [70, 100, 140]?.some(
+        (data) => data === earnedStamp
+      );
+
+      if (isShowMilestoneToast) {
+        setNotificationToast({
+          message: `Selamat, kamu telah mendapatkan ${earnedStamp} stamp`,
+          type: "success",
+        });
+        toggleVisibleNotificationToast();
+      }
 
       /*  Refetch user stamp and stamp mission list */
       queryClient.invalidateQueries({
@@ -94,8 +117,15 @@ const CardList = () => {
 
       toggleVisibleTaskModal();
       setSubmittedMissionId([...submittedMissionId, missionId]);
+
+      setTimeout(() => {
+        setAnimateSubmittedMissionId([...animateSubmittedMissionId, missionId]);
+      }, 1000);
     } catch (_) {
-      /** TODO: Show Toast Error */
+      setNotificationToast({
+        message: "Kamu sudah mengisi ibadah ini",
+        type: "error",
+      });
       toggleVisibleNotificationToast();
     }
   };
@@ -138,14 +168,14 @@ const CardList = () => {
               <CardItem
                 key={data?.mission_id}
                 data={data}
-                type={data?.category}
+                type={data?.category as "pagi" | "siang" | "malam"}
                 onClick={handleClick}
                 animate={generateAnimate()}
               />
             );
           })}
         </View>
-        <View className="p-[12px] flex gap-y-2 h-[15%]">
+        <View className="p-[12px] flex gap-y-2 h-[13%]">
           <Text className="text-[10px] relative top-[-6px] text-[#757f90]">
             +{remainingMissionText} kegiatan tersisa
           </Text>
@@ -159,8 +189,10 @@ const CardList = () => {
         submitLoading={loadingSubmitMission}
       />
       <NotificationToast
-        description="Kamu sudah mengisi ibadah ini"
+        type={notificationToast?.type}
+        description={notificationToast?.message}
         duration={3000}
+        fontWeight={notificationToast?.type === "error" ? "bold" : "normal"}
         show={visibleNotificationToast}
         onClose={toggleVisibleNotificationToast}
       />

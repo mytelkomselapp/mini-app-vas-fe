@@ -8,48 +8,76 @@ import DaftarIbadah from "./components/DaftarIbadah";
 import { generateArrayRangeDate, handleNavigate } from "../../../../lib/utils";
 import {
   useBulkFetchMissionSummary,
+  useFetchNotificationJurnalIbadahConfig,
   useFetchUserStamp,
+  usePostNotificationJurnalIbadahConfig,
 } from "../../../../network";
 import moment from "moment";
-import { StampMissionSummaryData } from "../../../../network/types/response-props";
+import {
+  JurnalIbadahNotificationProps,
+  StampMissionSummaryData,
+} from "../../../../network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import NotificationModal from "./components/NotificationModal";
-import Taro from "@tarojs/taro";
 import useToggle from "../../../../hooks/useToggle";
-import { useEffect } from "react";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import NotificationToast from "../../../../components/NotificationToast";
+import { START_RAMADHAN_DATE } from "../../../../core/env";
 
 const CatatanIbadahPage = () => {
-  const { data: dataUserStampRaw } = useFetchUserStamp();
-
-  const {
-    active: visibleNotificationModal,
-    toggleActive: toggleVisibleNotificationModal,
-  } = useToggle();
-
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
   const currentDayMoment = moment();
+  /** TODO: remove hardcoded rangeDate */
   const rangeDate = generateArrayRangeDate(
-    "2025-02-01",
+    START_RAMADHAN_DATE || "",
     currentDayMoment?.format("YYYY-MM-DD")
   );
 
-  const { data: dataMissionSummary } = useBulkFetchMissionSummary(rangeDate);
+  const {
+    active: visibleNotificationModal,
+    setActive: toggleVisibleNotificationModal,
+  } = useToggle();
+  const { active: visibleToast, toggleActive: toggleVisibleToast } =
+    useToggle();
+
+  const { data: dataUserStampRaw } = useFetchUserStamp();
+  const {
+    mutateAsync: postNotificationJurnalIbadah,
+    isLoading: loadingPostNotification,
+  } = usePostNotificationJurnalIbadahConfig();
+  const { data: dataMissionSummary, isLoading: loadingMissionSummary } =
+    useBulkFetchMissionSummary(rangeDate);
+
+  const handleSuccessFetchJurnalIbadahConfig = (
+    data: JurnalIbadahNotificationProps
+  ) => {
+    if (data?.notification_status === "NEW")
+      return toggleVisibleNotificationModal(true);
+  };
+
+  const { isFetching: fetchingNotification } =
+    useFetchNotificationJurnalIbadahConfig(
+      handleSuccessFetchJurnalIbadahConfig
+    );
 
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
 
-  const handleActivateNotification = () => {
-    Taro.showModal({
-      title: "“MyTelkomsel” Would Like to Use Your Notification",
-      content:
-        "Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.",
-      confirmText: "Settings",
-      cancelText: "Ok",
-      success: (res) => {
-        if (res.confirm) {
-          Taro.openSetting();
-        }
-      },
-    });
+  const isLoading = loadingMissionSummary || fetchingNotification;
+
+  const handleActivateNotification = async (answer: "ON" | "OFF") => {
+    try {
+      const postData = await postNotificationJurnalIbadah({
+        notification_status: answer,
+      });
+
+      if (postData) {
+        return toggleVisibleNotificationModal(false);
+      }
+    } catch (_) {
+      toggleVisibleToast();
+      toggleVisibleNotificationModal(false);
+    }
   };
 
   const handleGoToRedeemPage = () => {
@@ -57,14 +85,9 @@ const CatatanIbadahPage = () => {
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
 
-  useEffect(() => {
-    Taro.getSetting({
-      success: (res) => {
-        if (!res.authSetting["scope.subscribeMessage"])
-          toggleVisibleNotificationModal();
-      },
-    });
-  }, []);
+  useTaroNavBar();
+
+  if (isLoading) return <LoadingScreen text="Loading..." />;
 
   return (
     <View className="bg-white w-full min-h-full h-auto">
@@ -88,7 +111,13 @@ const CatatanIbadahPage = () => {
 
       {/* <LottieOverlay /> */}
 
-      <View className="bg-white rounded-t-[16px] relative top-[-20px] min-h-[100px]">
+      <View
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);",
+        }}
+        className="rounded-t-[16px] relative top-[-20px] min-h-[100px]"
+      >
         <DateStamp
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
         />
@@ -97,9 +126,16 @@ const CatatanIbadahPage = () => {
         />
       </View>
       <NotificationModal
+        isLoading={loadingPostNotification}
         open={visibleNotificationModal}
-        onClose={toggleVisibleNotificationModal}
+        onClose={() => toggleVisibleNotificationModal(false)}
         onClickCTA={handleActivateNotification}
+      />
+      <NotificationToast
+        duration={3000}
+        show={visibleToast}
+        onClose={toggleVisibleToast}
+        description="Error when activate notification"
       />
     </View>
   );

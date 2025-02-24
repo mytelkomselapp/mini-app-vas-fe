@@ -16,6 +16,7 @@ import Taro from "@tarojs/taro";
 import { useFetchSearchCity, useUserUpdateCity } from "../../../../network";
 import { queryClient } from "../../../../hoc/withProvider";
 import { getNavigateState } from "../../../../lib/utils";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const RamadhanSearchLocation = () => {
   const currentPath = Taro.getCurrentInstance().router?.path || "";
@@ -31,7 +32,7 @@ const RamadhanSearchLocation = () => {
 
   const { setData: setDataHistoryRamadhanSearchLocation } =
     useHistoryRamadhanSearchLocation();
-
+  useTaroNavBar();
   const dataPreviousCity = state?.data;
 
   const {

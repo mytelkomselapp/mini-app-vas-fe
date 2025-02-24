@@ -1,19 +1,31 @@
-import { DateStamp } from "../../../subpackage5/pages/CatatanIbadah/components";
-import DaftarIbadah from "../../../subpackage5/pages/CatatanIbadah/components/DaftarIbadah";
 import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
 import StampIcon from "../../../../assets/icon-stamp-gamehub.svg";
 import StampIcon32 from "../../../../assets/icon-stamp-gamehub-32.svg";
 import ClockIcon from "../../../../assets/ico_clock.svg";
-import useToggle from "../../../../hooks/useToggle";
 
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import { useState } from "react";
-import { formatDateToIndonesian, handleNavigate } from "../../../../lib/utils";
+import { formatValidUntil, handleNavigate } from "../../../../lib/utils";
 import HorizontalStampCard from "../components/HorizontalStampCard/HorizontalStampCard";
-import { useFetchListRewards, useFetchRewardSections, useFetchUserStamp } from "../../../../network/resolvers";
-import { RewardSectionData, RewardItemData } from "../../../../network/types/response-props";
+import {
+  useFetchListRewards,
+  useFetchRewardSections,
+  useFetchUserStamp,
+  usePostRedeemVoucher,
+} from "../../../../network/resolvers";
+import {
+  RewardSectionData,
+  RewardItemData,
+} from "../../../../network/types/response-props";
 import { useCurrentSelectedReward } from "../../../../store/ramadhan";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
+import Taro from "@tarojs/taro";
+import NotificationToast from "../../../../components/NotificationToast";
+import useToggle from "../../../../hooks/useToggle";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import Show from "../../../../components/Show";
+import Glitter from "../../../../assets/glitter.png";
 
 interface RewardItemProps {
   title: string;
@@ -25,18 +37,26 @@ interface RewardItemProps {
   disabled?: boolean;
 }
 
-const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentStamp, type, imageUrl, onClick, disabled }) => {
-
+const RewardItem: React.FC<RewardItemProps> = ({
+  title,
+  originalStamp,
+  currentStamp,
+  type,
+  imageUrl,
+  onClick,
+  disabled,
+}) => {
+  useTaroNavBar();
   return (
     <div
       className="bg-white rounded-xl overflow-hidden mx-auto max-w-[165.5px] h-auto"
-      style={{ border: '1px solid #EFF1F4' }}
+      style={{ border: "1px solid #EFF1F4" }}
     >
       <Image
         src={imageUrl}
         style={{
           width: "180px",
-          height: "165px"
+          height: "165px",
         }}
         mode="aspectFill"
       />
@@ -50,7 +70,7 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
               src={StampIcon}
               style={{
                 width: "16px",
-                height: "16px"
+                height: "16px",
               }}
             />
             <span className="text-xs text-gray-400 line-through mr-2">
@@ -62,45 +82,62 @@ const RewardItem: React.FC<RewardItemProps> = ({ title, originalStamp, currentSt
             {currentStamp} Stamp
           </span>
         </div>
-        <Button label="Tukar" onClick={onClick} className="!min-h-[34px] !max-h-[34px]" disabled={disabled} />
+        <Button
+          label="Tukar"
+          onClick={onClick}
+          className="!min-h-[34px] !max-h-[34px]"
+          disabled={disabled}
+        />
       </div>
     </div>
   );
 };
 
 const TukarHadiah = () => {
-  
-  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
+  const { active: visibleNotificationToast, toggleActive: toggleVisibleNotificationToast } = useToggle();
+
+  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
+    {}
+  );
   const { data: dataUserStampRaw } = useFetchUserStamp();
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
-  const validUntil = dataUserStamp?.valid_until ?? '';
+  const validUntil = dataUserStamp?.valid_until ?? "";
 
-  const formattedValidUntil = formatDateToIndonesian(new Date(validUntil));
-  const finalValidUntil = `${formattedValidUntil.day} ${formattedValidUntil.monthName}, ${formattedValidUntil.year}`;
+  const finalValidUntil = validUntil ? formatValidUntil(validUntil) : '-';
 
-  const { currentSelectedReward, setCurrentSelectedReward } = useCurrentSelectedReward();
-  const { data: rewardSections, isLoading } = useFetchRewardSections();
-  const { data: listRewards, isLoading: isLoadingListRewards } = useFetchListRewards(!!rewardSections?.data);
+  const { currentSelectedReward, setCurrentSelectedReward } =
+    useCurrentSelectedReward();
+  const { data: rewardSections, isLoading: isLoadingRewardSections } = useFetchRewardSections();
+  const filteredRewardSections = rewardSections?.data?.data?.filter(
+    (section) => section.name.toLowerCase() !== 'merchandise'
+  );
+
+  const { data: listRewards, isLoading: isLoadingListRewards } =
+    useFetchListRewards(!!rewardSections?.data);
   // Group rewards by section and maintain section order
-  const groupedRewards = ((rewardSections?.data?.data as unknown) as RewardSectionData[] || [])
+  const groupedRewards = (
+    (rewardSections?.data?.data as unknown as RewardSectionData[]) || []
+  )
     .sort((a, b) => Number(a.id) - Number(b.id))
     .reduce((acc, section) => {
-      const sectionRewards = ((listRewards?.data?.data as unknown) as RewardItemData[] || []).filter(
-        reward => reward.reward_section === section.name
-      );
+      const sectionRewards = (
+        (listRewards?.data?.data as unknown as RewardItemData[]) || []
+      ).filter((reward) => reward.reward_section === section.name);
       acc[section.name] = sectionRewards;
       return acc;
     }, {} as Record<string, any>);
 
+  const { mutateAsync: redeemVoucher, isLoading: isLoadingRedeemVoucher } = usePostRedeemVoucher(dataUserStamp?.user_id ?? '');
+
   const openReward = (reward: RewardItemData) => {
     setCurrentSelectedReward(reward);
-  }
+  };
 
   const handleSwiperChange = (e, sectionName: string) => {
-    setCurrentSlides(prev => ({
+    setCurrentSlides((prev) => ({
       ...prev,
-      [sectionName]: e.detail.current
+      [sectionName]: e.detail.current,
     }));
   };
 
@@ -108,31 +145,72 @@ const TukarHadiah = () => {
     setCurrentSelectedReward(null);
   };
 
-  const handleCheckout = () => {
-    if (currentSelectedReward?.type === 'merchandise') {
-      handleNavigate('/subpackages/subpackage7/pages/CheckoutMerchandise/index');
+  const handleCheckout = async () => {
+    const id = currentSelectedReward?.id;
+    if (!id) return;
+    const result = await redeemVoucher({ reward_id: id });
+    if (result?.data?.meta?.status?.toLowerCase() === "success") {
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: result?.data?.data?.redeem_result?.voucher?.data?.url,
+        },
+        success: (res: any) =>
+          console.log("invokeNativePlugin success", res),
+        fail: (err: any) =>
+          console.error("invokeNativePlugin fail", err),
+      });
+      // Taro.navigateTo({
+      //   url:
+      //     "/subpackages/subpackage9/pages/Webview/index?url=" +
+      //     encodeURIComponent(
+      //       result?.data?.data?.redeem_result?.voucher?.data?.url
+      //     ),
+      // });
+    } else {
+      // setCurrentSelectedReward(null);
+      toggleVisibleNotificationToast();
     }
-  }
+  };
 
   return (
     <View className="bg-[#D41F2C] w-full min-h-full h-auto">
+      <Show when={isLoadingRewardSections || isLoadingListRewards || isLoadingRedeemVoucher}>
+        <LoadingScreen text="Loading" customClassName="mx-[20px]" />
+      </Show>
       <View className="bg-white rounded-t-[16px] min-h-[100px]">
         <div className="p-4">
           {/* Header */}
           <div className="flex justify-between">
-            <div className="flex flex-col justify-between mb-6">
-              <div className="flex items-center gap-1">
+            <div className="relative flex flex-col justify-between mb-6">
+              <Image 
+                src={Glitter} 
+                style={{ 
+                  width: "220px", 
+                  height: "220px",
+                  position: "absolute",
+                  top: "-20px",
+                  left: "0",
+                  pointerEvents: "none",
+                  transform: "rotate(-14deg)",
+                  zIndex: 1,
+                }} 
+              />
+              <div className="flex items-center mb-2">
                 <Image
                   src={StampIcon32}
                   style={{
                     width: "32px",
-                    height: "32px"
+                    height: "32px",
                   }}
                 />
                 <Text className="text-[20px] font-bold">{totalStamp}</Text>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-grey">Berlaku sampai: <strong className="font-semibold">{finalValidUntil}</strong></span>
+                <span className="text-xs text-grey">
+                  Berlaku sampai:{" "}
+                  <strong className="font-semibold">{finalValidUntil || '-'}</strong>
+                </span>
               </div>
             </div>
 
@@ -140,15 +218,21 @@ const TukarHadiah = () => {
               <Button
                 style="secondary"
                 label="Riwayat"
-                onClick={() => { handleNavigate('/subpackages/subpackage7/pages/RiwayatTukarHadiah/index') }}
-                className="!max-h-[34px] !text-xs font-semibold leading-4"
+                onClick={() => {
+                  handleNavigate(
+                    "/subpackages/subpackage7/pages/RiwayatTukarHadiah/index"
+                  );
+                }}
+                className="!text-xs font-semibold leading-[16px] !min-h-[34px] !max-h-[34px]"
                 icon={<img src={ClockIcon} className="w-4 h-4 ml-[2px]" />}
               />
             </div>
           </div>
 
           {/* Rewards Sections */}
-          {((rewardSections?.data?.data as unknown) as RewardSectionData[] || []).map((section, idx) => (
+          {(
+            (filteredRewardSections as unknown as RewardSectionData[]) || []
+          ).map((section, idx) => (
             <View key={idx} className="mb-4">
               <p className="text-[16px] font-bold text-black mb-4">
                 {section.name}
@@ -164,7 +248,7 @@ const TukarHadiah = () => {
                   <SwiperItem key={idx}>
                     <RewardItem
                       title={item.reward_name_id}
-                      originalStamp={item.redeem_nominal}
+                      originalStamp={item.strike_price}
                       currentStamp={item.redeem_nominal}
                       type={item.type}
                       imageUrl={item.image}
@@ -175,23 +259,35 @@ const TukarHadiah = () => {
                 ))}
               </Swiper>
               {/* Dot Indicator */}
-              {rewardSections?.data?.data?.length > 2 && (
+              {groupedRewards?.[section.name]?.length > 2 && (
                 <View className="flex justify-center">
                   <View className="flex justify-center rounded-2xl w-min mx-auto p-[2px]">
                     {groupedRewards?.[section.name]?.map((_, index) => (
-                      <View key={index} className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${(currentSlides[section.name] || 0) === index ? "bg-[#001A41] w-4 h-1" : "bg-[#001A41] w-1 h-1"
-                        }`}></View>
+                      <View
+                        key={index}
+                        className={`rounded-[10px] mx-1 transition-all duration-300 mr-[2px] ${
+                          (currentSlides[section.name] || 0) === index
+                            ? "bg-[#001A41] w-4 h-1"
+                            : "bg-[#001A41] w-1 h-1"
+                        }`}
+                      ></View>
                     ))}
                   </View>
                 </View>
               )}
             </View>
           ))}
-
         </div>
       </View>
 
-      <BottomSheet open={!!currentSelectedReward} onClose={handleCloseSheet} containerClassname={`p-4 ${currentSelectedReward?.type !== 'voucher' ? 'max-h-[90vh]' : ''}`} withoutPadding>
+      <BottomSheet
+        open={!!currentSelectedReward}
+        onClose={handleCloseSheet}
+        containerClassname={`p-4 ${
+          currentSelectedReward?.type !== "voucher" ? "max-h-[90vh]" : ""
+        }`}
+        withoutPadding
+      >
         <View className="flex flex-col w-full">
           <p className="text-[16px] font-bold text-black mb-4 text-center">
             Mau tukar stamp dengan hadiah ini?
@@ -202,15 +298,17 @@ const TukarHadiah = () => {
               <HorizontalStampCard
                 imageUrl={currentSelectedReward.image}
                 title={currentSelectedReward.reward_name_id}
-                originalStamps={currentSelectedReward.redeem_nominal}
-                discountedStamps={currentSelectedReward.redeem_nominal}
+                originalStamp={currentSelectedReward.strike_price}
+                discountedStamp={currentSelectedReward.redeem_nominal}
+                isHistory={false}
               />
             </div>
           )}
 
-          {currentSelectedReward?.type === 'voucher' ? (
+          {currentSelectedReward?.type === "voucher" ? (
             <p className="text-sm text-grey mt-4 text-center mb-2">
-              Tukarkan {currentSelectedReward.redeem_nominal} stamp untuk mendapatkan hadiah ini sekarang!
+              Tukarkan {currentSelectedReward.redeem_nominal} stamp untuk
+              mendapatkan hadiah ini sekarang!
             </p>
           ) : (
             <div>
@@ -224,20 +322,28 @@ const TukarHadiah = () => {
           )}
         </View>
 
-        <Button label="Tukar Sekarang" onClick={handleCheckout} className="mb-2" />
+        <Button
+          disabled={isLoadingRedeemVoucher}
+          label="Tukar Sekarang"
+          onClick={handleCheckout}
+          className="mb-2"
+        />
         <Button
           label="Nanti Saja"
           onClick={handleCloseSheet}
           style="secondary"
-        // className="mb-8"
+          // className="mb-8"
         />
       </BottomSheet>
+
+      <NotificationToast
+        description="Terjadi kesalahan. Silakan coba lagi nanti."
+        duration={3000}
+        show={visibleNotificationToast}
+        onClose={toggleVisibleNotificationToast}
+      />
     </View>
-
-  )
-
-}
-
-
+  );
+};
 
 export default TukarHadiah;

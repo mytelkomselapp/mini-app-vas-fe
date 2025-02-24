@@ -37,6 +37,13 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
   dataStampMissionListConfig = [],
   dataMissionPopupCMS = [],
 }) => {
+  const [notificationToast, setNotificationToast] = React.useState<{
+    message: string;
+    type: "success" | "error";
+  }>({
+    message: "Test message",
+    type: "success",
+  });
   const [activeTab, setActiveTab] =
     React.useState<TaskIbadahActiveTabType>("morning");
 
@@ -71,7 +78,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
   const handleBackToToday = () => {
     const currentDay = getCurrentDayRamadhan();
 
-    setCurrentDay(currentDay);
+    setCurrentDay(currentDay as string);
   };
 
   const generateBorder = (isActive: boolean) => {
@@ -94,11 +101,24 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
 
   const handleSubmitMission = async (missionId: string) => {
     try {
-      await postSubmitMission({
+      const postSubmission = await postSubmitMission({
         mission_id: missionId,
         category: dataConfigItem?.category as any,
         category_id: dataConfigItem?.category_id as any,
       });
+
+      const earnedStamp = postSubmission?.data?.data?.today_earned_stamp || 0;
+      const isShowMilestoneToast = [70, 100, 140]?.some(
+        (data) => data === earnedStamp
+      );
+
+      if (isShowMilestoneToast) {
+        setNotificationToast({
+          message: `Selamat, kamu telah mendapatkan ${earnedStamp} stamp`,
+          type: "success",
+        });
+        toggleVisibleNotificationToast();
+      }
 
       /*  Refetch user stamp and stamp mission list */
       queryClient.invalidateQueries({
@@ -116,123 +136,132 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
 
       toggleVisibleTaskModal();
     } catch (_) {
+      setNotificationToast({
+        message: "Kamu sudah mengisi ibadah ini",
+        type: "error",
+      });
       toggleVisibleNotificationToast();
     }
   };
 
   return (
-    <View className="mt-1">
-      <div className="px-[20px] bg-white relative z-10 grid grid-cols-3">
-        <div
-          onClick={() => handleClick("morning")}
-          style={generateBorder(activeTab === "morning")}
-          className={generateClassname(activeTab === "morning")}
-        >
+    <React.Fragment>
+      <View className="mt-1">
+        <div className="px-[20px] bg-white relative z-10 grid grid-cols-3">
           <div
-            className={`flex justify-center items-center gap-x-1 ${
-              activeTab === "morning" ? "relative top-[-2px]" : ""
-            }`}
+            onClick={() => handleClick("morning")}
+            style={generateBorder(activeTab === "morning")}
+            className={generateClassname(activeTab === "morning")}
           >
-            <img width="20px" height="20px" src={MorningIcon} />
-            Pagi
+            <div
+              className={`flex justify-center items-center gap-x-1 ${
+                activeTab === "morning" ? "relative top-[-2px]" : ""
+              }`}
+            >
+              <img width="20px" height="20px" src={MorningIcon} />
+              Pagi
+            </div>
           </div>
-        </div>
-        <div
-          onClick={() => handleClick("afternoon")}
-          style={generateBorder(activeTab === "afternoon")}
-          className={generateClassname(activeTab === "afternoon")}
-        >
           <div
-            className={`flex justify-center items-center gap-x-1 ${
-              activeTab === "afternoon" ? "relative top-[-2px]" : ""
-            }`}
+            onClick={() => handleClick("afternoon")}
+            style={generateBorder(activeTab === "afternoon")}
+            className={generateClassname(activeTab === "afternoon")}
           >
-            <img width="20px" height="20px" src={AfternoonIcon} />
-            Siang
+            <div
+              className={`flex justify-center items-center gap-x-1 ${
+                activeTab === "afternoon" ? "relative top-[-2px]" : ""
+              }`}
+            >
+              <img width="20px" height="20px" src={AfternoonIcon} />
+              Siang
+            </div>
           </div>
-        </div>
-        <div
-          onClick={() => handleClick("night")}
-          style={generateBorder(activeTab === "night")}
-          className={generateClassname(activeTab === "night")}
-        >
           <div
-            className={`flex justify-center items-center gap-x-1 ${
-              activeTab === "night" ? "relative top-[-2px]" : ""
-            }`}
+            onClick={() => handleClick("night")}
+            style={generateBorder(activeTab === "night")}
+            className={generateClassname(activeTab === "night")}
           >
-            <img width="20px" height="20px" src={NightIcon} />
-            Malam
+            <div
+              className={`flex justify-center items-center gap-x-1 ${
+                activeTab === "night" ? "relative top-[-2px]" : ""
+              }`}
+            >
+              <img width="20px" height="20px" src={NightIcon} />
+              Malam
+            </div>
           </div>
         </div>
-      </div>
 
-      {["today", "past"]?.includes(activeTaskStatus) ? (
-        <div
-          style={{ borderTop: "2px solid #dae0e9" }}
-          className="w-full min-h-[150px] rounded-t-[16px] py-[12px]"
-        >
-          <p className="text-[12px] mb-2 px-[20px] text-[#757f90]">
-            Pilih kegiatan yang sudah kamu lakukan, yuk!
-          </p>
-
-          <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
-            {dataCardByActiveTab?.map((data, idx) => {
-              const generateCondition = () => {
-                if (activeTaskStatus === "today") {
-                  if (data?.mission_status === 0) return "checked";
-                  if (data?.mission_status === 1) return "active";
-                }
-
-                if (activeTaskStatus === "past") {
-                  if (data?.mission_status === 0) return "complete-disabled";
-                  if (data?.mission_status === 1) return "incomplete-disabled";
-                }
-              };
-
-              return (
-                <CardTaskIbadah
-                  data={data}
-                  condition={generateCondition() as any}
-                  key={idx}
-                  onClick={handleOpenTaskModal}
-                  type={dataConfigItem?.category as any}
-                />
-              );
-            })}
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{ borderTop: "2px solid #dae0e9" }}
-          className="h-[200px] flex flex-col items-center justify-center gap-y-2 rounded-t-[16px] py-[12px]"
-        >
-          <AsSvg src={IconSchedule} width="24px" height="24px" />
-          <p className="text-[12px] text-[#757f90] whitespace-pre text-center">{`Saat ini, kamu belum bisa mencatat ibadah untuk hari\nlain. Yuk, lanjutkan nanti!`}</p>
-
-          <button
-            onClick={handleBackToToday}
-            className="text-[12px] h-[35px] my-1 px-[16px] py-[8px] rounded-[40px] !bg-[#ed0226] text-white font-[600]"
+        {["today", "past"]?.includes(activeTaskStatus) ? (
+          <div
+            style={{ borderTop: "2px solid #dae0e9" }}
+            className="w-full min-h-[150px] rounded-t-[16px] py-[12px]"
           >
-            Kembali ke Hari Ini
-          </button>
-        </div>
-      )}
+            <p className="text-[12px] mb-2 px-[20px] text-[#757f90]">
+              Pilih kegiatan yang sudah kamu lakukan, yuk!
+            </p>
 
-      <DetailTaskIbadahModal
-        data={dataMissionPopupCMS}
-        visible={visibleTaskModal}
-        onClose={toggleVisibleTaskModal}
-        onSubmit={handleSubmitMission}
-        submitLoading={loadingSubmitMission}
-      />
+            <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
+              {dataCardByActiveTab?.map((data, idx) => {
+                const generateCondition = () => {
+                  if (activeTaskStatus === "today") {
+                    if (data?.mission_status === 0) return "checked";
+                    if (data?.mission_status === 1) return "active";
+                  }
+
+                  if (activeTaskStatus === "past") {
+                    if (data?.mission_status === 0) return "complete-disabled";
+                    if (data?.mission_status === 1)
+                      return "incomplete-disabled";
+                  }
+                };
+
+                return (
+                  <CardTaskIbadah
+                    data={data}
+                    condition={generateCondition() as any}
+                    key={idx}
+                    onClick={handleOpenTaskModal}
+                    type={dataConfigItem?.category as any}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{ borderTop: "2px solid #dae0e9" }}
+            className="h-[200px] flex flex-col items-center justify-center gap-y-2 rounded-t-[16px] py-[12px]"
+          >
+            <AsSvg src={IconSchedule} width="24px" height="24px" />
+            <p className="text-[12px] text-[#757f90] whitespace-pre text-center">{`Saat ini, kamu belum bisa mencatat ibadah untuk hari\nlain. Yuk, lanjutkan nanti!`}</p>
+
+            <button
+              onClick={handleBackToToday}
+              className="text-[12px] h-[35px] my-1 px-[16px] py-[8px] rounded-[40px] !bg-[#ed0226] text-white font-[600]"
+            >
+              Kembali ke Hari Ini
+            </button>
+          </div>
+        )}
+
+        <DetailTaskIbadahModal
+          data={dataMissionPopupCMS}
+          visible={visibleTaskModal}
+          onClose={toggleVisibleTaskModal}
+          onSubmit={handleSubmitMission}
+          submitLoading={loadingSubmitMission}
+        />
+      </View>
       <NotificationToast
-        description="Kamu sudah mengisi ibadah ini"
+        type={notificationToast?.type}
+        description={notificationToast?.message}
         duration={3000}
+        fontWeight={notificationToast?.type === "error" ? "bold" : "normal"}
         show={visibleNotificationToast}
         onClose={toggleVisibleNotificationToast}
       />
-    </View>
+    </React.Fragment>
   );
 };
 

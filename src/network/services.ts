@@ -32,7 +32,11 @@ import {
   DzikirCMSResponse,
   RewardSectionResponse,
   RewardItemResponse,
-  MerchandiseRewardResponse
+  MerchandiseRewardResponse,
+  RedeemVoucherResponse,
+  JurnalIbadahNotificationConfigResponse,
+  PostJurnalIbadahNotificationConfigResponse,
+  StampSubmissionResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -52,9 +56,11 @@ import {
   StampMissionSummaryPayloadProps,
   StampMissionSubmitPayloadProps,
   StampHistoryPayloadProps,
-  MerchandisePayloadProps
+  MerchandisePayloadProps,
+  RedeemVoucherPayloadProps,
+  JurnalIbadahNotificationPayloadProps,
 } from "./types/request-payload";
-import { createJWT, verifyJWT } from "../lib/utils";
+import { createJWT } from "../lib/utils";
 import { REDEMPTION_SECRET } from "../core/env";
 
 /**
@@ -236,7 +242,7 @@ export const getStampMissionSummary = (
 
 export const postSubmitMission = (
   payload: StampMissionSubmitPayloadProps
-): StampMissionSubmitResponse => {
+): StampSubmissionResponse => {
   return http.post(endpoints?.submitMission, payload);
 };
 
@@ -270,22 +276,76 @@ export const getListRewards = (): RewardItemResponse => {
   return http.get(endpoints?.getListRewards);
 };
 
-
-
-export const postRedeemMerchandise = (payload: MerchandisePayloadProps, userId: string): MerchandiseRewardResponse => {
+export const postRedeemMerchandise = (
+  payload: MerchandisePayloadProps,
+  userId: string
+): MerchandiseRewardResponse => {
   const exp = Math.floor(Date.now() / 1000) + 60;
   const jwtPayload = {
     user_id: userId,
-    exp
+    exp,
   };
-  
-  const token = createJWT(jwtPayload, REDEMPTION_SECRET || '');
+
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || "");
 
   const headers = {
-    "SecureToken": token
+    SecureToken: token,
   };
-  
-  return http.post(endpoints?.postRedeemReward, payload, undefined, undefined, headers);
+
+  return http.post(
+    endpoints?.postRedeemReward,
+    payload,
+    undefined,
+    undefined,
+    headers
+  );
 };
 
+export const postRedeemVoucher = (
+  payload: RedeemVoucherPayloadProps,
+  userId: string
+): RedeemVoucherResponse => {
+  const exp = Math.floor(Date.now() / 1000) + 60;
+  const jwtPayload = {
+    user_id: userId,
+    exp,
+  };
 
+  const token = createJWT(jwtPayload, REDEMPTION_SECRET || "");
+
+  const headers = {
+    SecureToken: token,
+  };
+
+  return http.post(
+    endpoints?.postRedeemVoucher,
+    payload,
+    undefined,
+    undefined,
+    headers
+  );
+};
+
+export const getRewardHistory = (): RewardHistoryResponse => {
+  return http.get(endpoints?.getRewardHistory);
+};
+
+export const getNotificationConfigJurnalIbadah =
+  (): JurnalIbadahNotificationConfigResponse => {
+    return http.get(endpoints?.getNotificationJurnalIbadah);
+  };
+
+export const postNotificationJurnalIbadah = (
+  payload: JurnalIbadahNotificationPayloadProps
+): PostJurnalIbadahNotificationConfigResponse => {
+  return http.post(endpoints?.postNotificationJurnalIbadah, payload);
+};
+
+export const getRewardHistoryDetail = (
+  rewardId: string
+): RewardHistoryDetailResponse => {
+  return http.get({
+    endpoint: `${endpoints.getRewardHistoryDetail.endpoint}/${rewardId}`,
+    source: endpoints.getRewardHistoryDetail.source,
+  });
+};

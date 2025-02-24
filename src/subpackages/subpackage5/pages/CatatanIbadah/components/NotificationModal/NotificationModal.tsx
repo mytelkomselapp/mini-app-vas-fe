@@ -1,19 +1,24 @@
 import * as React from "react";
-import SuccessHandsIllustrator from "../../assets/success-hands.svg";
 import { View } from "@tarojs/components";
 import BottomSheet from "../../../../../../components/BottomSheet";
 import Button from "../../../../../../components/Button";
 import NotificationClock from "../../../../../../assets/notification-clock.png";
 
 interface Props {
+  isLoading?: boolean;
   open: boolean;
   onClose: () => void;
-  onClickCTA: () => void;
+  onClickCTA: (answer: "ON" | "OFF") => void;
 }
 
-const NotificationModal: React.FC<Props> = ({ open, onClose, onClickCTA }) => {
-  const handleClick = () => {
-    onClickCTA?.();
+const NotificationModal: React.FC<Props> = ({
+  open,
+  onClose,
+  onClickCTA,
+  isLoading = false,
+}) => {
+  const handleClick = (answer: "ON" | "OFF") => {
+    onClickCTA?.(answer);
     onClose?.();
   };
 
@@ -31,13 +36,19 @@ const NotificationModal: React.FC<Props> = ({ open, onClose, onClickCTA }) => {
               ibadahmu.
             </p>
           </div>
-          <div className="flex flex-col gap-y-2 w-full px-[16px]">
+          <div className="flex flex-col gap-y-2 w-full px-[16px] pb-[42px]">
             <Button
-              onClick={handleClick}
+              disabled={isLoading}
+              onClick={() => handleClick("ON")}
               label="Ya, Aktifkan"
               style="primary"
             />
-            <Button onClick={onClose} label="Nanti Saja" style="secondary" />
+            <Button
+              disabled={isLoading}
+              onClick={() => handleClick("OFF")}
+              label="Nanti Saja"
+              style="secondary"
+            />
           </div>
         </div>
       </View>

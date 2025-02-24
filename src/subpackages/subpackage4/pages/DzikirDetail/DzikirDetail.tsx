@@ -6,6 +6,7 @@ import { Text, View } from "@tarojs/components";
 import BottomNavigation from "./components/BottomNavigation";
 import { useDzikirDetail } from "../../../../store/ramadhan";
 import { DzikirCMSData } from "@/network/types/response-props";
+import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 
 const DzikirDetail = () => {
   const { data: dataDzikirList } = useDzikirDetail();
@@ -34,6 +35,7 @@ const DzikirDetail = () => {
   const title = decodeURIComponent(dataDzikir?.title || "");
   const readTotal = dataDzikir?.readCount || 1;
   const caption = `Dibaca ${readTotal}x`;
+  useTaroNavBar();
   useEffect(() => {
     Taro.setNavigationBarTitle({ title: `Dzikir ${category}` });
 
@@ -48,15 +50,25 @@ const DzikirDetail = () => {
   }, [dataDzikir]);
   console.log({ dataDzikirDetail, step, totalSteps });
   const handlePrevious = () => {
-    if (readTimes < readTotal) {
-      setReadTimes(readTimes + 1);
-    } else if (step > 1) {
-      setStep(step - 1);
-    }
+    setStep(step - 1);
+    // if (readTimes < readTotal) {
+    //   setReadTimes(readTimes + 1);
+    // } else if (step > 1) {
+    //   setStep(step - 1);
+    // }
   };
   console.log({ readTimes, readTotal });
 
   const handleNext = () => {
+    setStep(step + 1);
+    // if (readTimes > 1) {
+    //   setReadTimes(readTimes - 1);
+    // } else if (step < totalSteps) {
+    //   setStep(step + 1);
+    // }
+  };
+
+  const handleCount = () => {
     if (readTimes > 1) {
       setReadTimes(readTimes - 1);
     } else if (step < totalSteps) {
@@ -121,6 +133,7 @@ const DzikirDetail = () => {
         readTotal={readTotal}
         onPrevious={() => handlePrevious()}
         onNext={() => handleNext()}
+        onCount={handleCount}
       />
     </div>
   );
