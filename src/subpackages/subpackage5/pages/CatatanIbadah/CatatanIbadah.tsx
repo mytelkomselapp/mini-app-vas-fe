@@ -111,7 +111,13 @@ const CatatanIbadahPage = () => {
 
       {/* <LottieOverlay /> */}
 
-      <View className="bg-white rounded-t-[16px] relative top-[-20px] min-h-[100px]">
+      <View
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);",
+        }}
+        className="rounded-t-[16px] relative top-[-20px] min-h-[100px]"
+      >
         <DateStamp
           dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
         />

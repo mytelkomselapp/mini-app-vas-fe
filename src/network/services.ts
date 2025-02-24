@@ -36,6 +36,7 @@ import {
   RedeemVoucherResponse,
   JurnalIbadahNotificationConfigResponse,
   PostJurnalIbadahNotificationConfigResponse,
+  StampSubmissionResponse,
 } from "./types/response-props";
 import endpoints from "./endpoint";
 import {
@@ -241,7 +242,7 @@ export const getStampMissionSummary = (
 
 export const postSubmitMission = (
   payload: StampMissionSubmitPayloadProps
-): StampMissionSubmitResponse => {
+): StampSubmissionResponse => {
   return http.post(endpoints?.submitMission, payload);
 };
 
