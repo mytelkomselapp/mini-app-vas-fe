@@ -33,7 +33,7 @@ const DetailHadiah = () => {
   });
 
   const voucherData = data?.data?.data
-  const voucherDetail = data?.data?.data?.voucher_detail
+  const voucherDetail = voucherData?.voucher_detail
   const isAvailable = voucherDetail?.claim_status?.toLowerCase() === "available";
 
   return (
@@ -73,12 +73,12 @@ const DetailHadiah = () => {
           <View className="space-y-2 items-center text-center">
             <View className="flex flex-col mb-10">
               <Text className="text-lg font-semibold mb-2">
-                {voucherData?.reward_name}
+                {item?.reward_name}
               </Text>
               <Text className="text-xs text-textSecondary">
                 Berlaku sampai{" "}
                 <Text className="text-xs text-textSecondary font-semibold">
-                  {voucherData?.tgl_expired}
+                  {voucherDetail?.tgl_expired}
                 </Text>
               </Text>
             </View>
@@ -90,30 +90,25 @@ const DetailHadiah = () => {
               />
 
               <View className="items-center">
-                <Button
-                  label={isAvailable ? "Gunakan" : "Sudah Digunakan"}
-                  disabled={!isAvailable}
-                  onClick={() => {
-                    Taro.invokeNativePlugin({
-                      api_name: "openWebView",
-                      data: {
-                        url: voucherDetail?.url,
-                      },
-                      success: (res: any) =>
-                        console.log("invokeNativePlugin success", res),
-                      fail: (err: any) =>
-                        console.error("invokeNativePlugin fail", err),
-                    });
-                    // Taro.navigateTo({
-                    //   url:
-                    //     "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    //     encodeURIComponent(
-                    //       item?.voucher_detail?.url
-                    //     ),
-                    // });
-                  }}
-                  className="font-semibold"
-                />
+                <Show when={!isLoading}>
+                  <Button
+                    label={isAvailable ? "Gunakan" : "Sudah Digunakan"}
+                    disabled={!isAvailable}
+                    onClick={() => {
+                      Taro.invokeNativePlugin({
+                        api_name: "openWebView",
+                        data: {
+                          url: voucherDetail?.url,
+                        },
+                        success: (res: any) =>
+                          console.log("invokeNativePlugin success", res),
+                        fail: (err: any) =>
+                          console.error("invokeNativePlugin fail", err),
+                      });
+                    }}
+                    className="font-semibold"
+                  />
+                </Show>
               </View>
             </View>
           </View>
