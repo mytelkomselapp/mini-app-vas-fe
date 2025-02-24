@@ -180,7 +180,6 @@ const LandingPageRamadan = () => {
       "subpackages/subpackage5",
       "subpackages/subpackage6",
       "subpackages/subpackage7",
-      "subpackages/subpackage8",
       "subpackages/subpackage9",
     ];
 
