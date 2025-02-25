@@ -96,7 +96,7 @@ const RamadhanSearchLocation = () => {
           onChange={handleChangeKeyword}
           onTyping={setIsTyping}
           isShowClearButton={false}
-          placeholder="Ketik lokasi kecamatan/kota kamu"
+          placeholder="Ketik lokasi kabupaten/kota kamu"
         />
       </div>
 
