@@ -34,11 +34,19 @@ const NewsCardList = ({ data = [] }: { data: News[] }) => {
   const onNavigate = (targetUrl?: string) => {
     console.log("onNavigate", targetUrl);
     if (targetUrl) {
-      Taro.navigateTo({
-        url:
-          "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(targetUrl),
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: targetUrl,
+        },
+        success: (res: any) => console.log("invokeNativePlugin success", res),
+        fail: (err: any) => console.error("invokeNativePlugin fail", err),
       });
+      // Taro.navigateTo({
+      //   url:
+      //     "/subpackages/subpackage9/pages/Webview/index?url=" +
+      //     encodeURIComponent(targetUrl),
+      // });
     }
   };
   return (
