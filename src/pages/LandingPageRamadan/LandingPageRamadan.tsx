@@ -287,93 +287,108 @@ const LandingPageRamadan = () => {
         </div>
       </div>
 
-      <Promo data={promoSections} header={promoSectionsHeader} />
+      <Show when={promoSections?.length > 0}>
+        <Promo data={promoSections} header={promoSectionsHeader} />
+      </Show>
+
       <WidgetJurnalIbadah />
+
       <View className="p-4 pl-0">
-        <Text className="font-batikSans font-bold text-[14px] pl-4">
-          {productSession1Header?.title}
-        </Text>
-        <SpecialCommerce
-          data={productSession1}
-          header={productSession1Header}
-        />
-        <SpecialPackage data={productSession2} header={productSession2Header} />
-        <View className="flex flex-row items-center pl-4 mt-14 mb-2 justify-between">
-          <Text className="font-batikSans font-bold text-[14px]">
-            {cardSession1Header?.title}
+        <Show when={productSession1?.length > 0}>
+          <Text className="font-batikSans font-bold text-[14px] pl-4">
+            {productSession1Header?.title}
           </Text>
-          <Text
-            className="whitespace-pre-wrap text-xs text-grey"
-            onClick={() => {
-              const targetUrl = cardSession1Header?.targetUrl;
-              if (targetUrl) {
-                Taro.invokeNativePlugin({
-                  api_name: "openWebView",
-                  data: {
-                    url: targetUrl,
-                  },
-                  success: (res: any) =>
-                    console.log("invokeNativePlugin success", res),
-                  fail: (err: any) =>
-                    console.error("invokeNativePlugin fail", err),
-                });
-              }
-            }}
-          >
-            {"Lihat Semua"}
-          </Text>
-        </View>
+          <SpecialCommerce
+            data={productSession1}
+            header={productSession1Header}
+          />
+        </Show>
+        <Show when={productSession2.length > 0}>
+          <SpecialPackage
+            data={productSession2}
+            header={productSession2Header}
+          />
+        </Show>
+        <Show when={cardSession1?.length > 0}>
+          <View className="flex flex-row items-center pl-4 mt-14 mb-2 justify-between">
+            <Text className="font-batikSans font-bold text-[14px]">
+              {cardSession1Header?.title}
+            </Text>
+            <Text
+              className="whitespace-pre-wrap text-xs text-grey"
+              onClick={() => {
+                const targetUrl = cardSession1Header?.targetUrl;
+                if (targetUrl) {
+                  Taro.invokeNativePlugin({
+                    api_name: "openWebView",
+                    data: {
+                      url: targetUrl,
+                    },
+                    success: (res: any) =>
+                      console.log("invokeNativePlugin success", res),
+                    fail: (err: any) =>
+                      console.error("invokeNativePlugin fail", err),
+                  });
+                }
+              }}
+            >
+              {"Lihat Semua"}
+            </Text>
+          </View>
 
-        <SpecialFilm data={cardSession1} header={cardSession1Header} />
-
-        <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
-          <Text className="font-batikSans font-bold text-[14px]">
-            {cardSession2Header?.title}
-          </Text>
-          <Text
-            className="whitespace-pre-wrap text-xs text-grey"
-            onClick={() => {
-              const targetUrl = cardSession2Header?.targetUrl;
-              if (targetUrl) {
-                Taro.invokeNativePlugin({
-                  api_name: "openWebView",
-                  data: {
-                    url: targetUrl,
-                  },
-                  success: (res: any) =>
-                    console.log("invokeNativePlugin success", res),
-                  fail: (err: any) =>
-                    console.error("invokeNativePlugin fail", err),
-                });
-              }
-            }}
-          >
-            {"Lihat Semua"}
-          </Text>
-        </View>
-        <SpecialGame data={cardSession2} />
-
-        <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
-          <Text className="font-batikSans font-bold text-[14px]">
-            {newsSessionHeader?.title}
-          </Text>
-          <Text
-            className="whitespace-pre-wrap text-xs text-grey"
-            onClick={() => {
-              const targetUrl = newsSessionHeader?.targetUrl;
-              if (targetUrl) {
-                Taro.navigateTo({
-                  url:
-                    "/subpackages/subpackage9/pages/Webview/index?url=" +
-                    encodeURIComponent(targetUrl),
-                });
-              }
-            }}
-          >
-            {"Lihat Semua"}
-          </Text>
-        </View>
-        <NewsCardList data={newsSession} />
+          <SpecialFilm data={cardSession1} header={cardSession1Header} />
+        </Show>
+        <Show when={cardSession2.length > 0}>
+          <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
+            <Text className="font-batikSans font-bold text-[14px]">
+              {cardSession2Header?.title}
+            </Text>
+            <Text
+              className="whitespace-pre-wrap text-xs text-grey"
+              onClick={() => {
+                const targetUrl = cardSession2Header?.targetUrl;
+                if (targetUrl) {
+                  Taro.invokeNativePlugin({
+                    api_name: "openWebView",
+                    data: {
+                      url: targetUrl,
+                    },
+                    success: (res: any) =>
+                      console.log("invokeNativePlugin success", res),
+                    fail: (err: any) =>
+                      console.error("invokeNativePlugin fail", err),
+                  });
+                }
+              }}
+            >
+              {"Lihat Semua"}
+            </Text>
+          </View>
+          <SpecialGame data={cardSession2} />
+        </Show>
+        <Show when={newsSession.length > 0}>
+          <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
+            <Text className="font-batikSans font-bold text-[14px]">
+              {newsSessionHeader?.title}
+            </Text>
+            <Text
+              className="whitespace-pre-wrap text-xs text-grey"
+              onClick={() => {
+                const targetUrl = newsSessionHeader?.targetUrl;
+                if (targetUrl) {
+                  Taro.navigateTo({
+                    url:
+                      "/subpackages/subpackage9/pages/Webview/index?url=" +
+                      encodeURIComponent(targetUrl),
+                  });
+                }
+              }}
+            >
+              {"Lihat Semua"}
+            </Text>
+          </View>
+          <NewsCardList data={newsSession} />
+        </Show>
       </View>
     </View>
   );
