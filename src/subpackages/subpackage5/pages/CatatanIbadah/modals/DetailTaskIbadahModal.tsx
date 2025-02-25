@@ -4,6 +4,11 @@ import Button from "../../../../../components/Button";
 import { useDetailTaskRamadhan } from "../../../../../store/ramadhan";
 import { MissionPopupCMSData } from "../../../../../network/types/response-props";
 import BackgroundImage from "../../../../../components/BackgroundImage";
+import { Image } from "@tarojs/components";
+import DividerAtau from "../../../../../assets/divider-atau.png";
+import { handleNavigate } from "../../../../../lib/utils";
+import { useFetchLandingPageCMS } from "../../../../../network";
+import Taro from "@tarojs/taro";
 
 export interface DetailTaskIbadahModalProps {
   submitLoading: boolean;
@@ -20,6 +25,17 @@ const DetailTaskIbadahModal: React.FC<DetailTaskIbadahModalProps> = ({
   onClose,
   submitLoading,
 }) => {
+  const { data: dataRawLandingPageCMS, isLoading: isLoadingLandingPageCMS } =
+    useFetchLandingPageCMS();
+
+  const dataLandingPage =
+    dataRawLandingPageCMS?.data?.data?.ramadhanSections ?? [];
+  const sedekahTargetUrl =
+    dataLandingPage
+      ?.find((data) => data?.headerSection?.title === "Apps Section")
+      ?.apps?.find((item) => item?.title?.toLowerCase() === "sedekah")
+      ?.targetUrl || "";
+
   const { data: dataTaskRamadhan } = useDetailTaskRamadhan();
 
   const title = String(dataTaskRamadhan?.mission_name_id ?? "")?.toLowerCase();
@@ -27,12 +43,37 @@ const DetailTaskIbadahModal: React.FC<DetailTaskIbadahModalProps> = ({
     (item) => item.mission_id === dataTaskRamadhan?.mission_id
   );
 
+  const isDzikir = /^dzikir (pagi|petang)$/.test(title);
+  const isSedekah = /^sedekah subuh$/.test(title);
+  const isDzikirOrSedekah = isDzikir || isSedekah;
+
   const handleClose = () => {
     onClose?.();
   };
 
   const handleSubmit = () => {
     onSubmit?.(activeDataTask?.mission_id ?? "");
+  };
+
+  const handleRedirect = () => {
+    if (isDzikir) {
+      handleNavigate("/subpackages/subpackage4/pages/Dzikir/index");
+    }
+
+    if (isSedekah) {
+      if (sedekahTargetUrl) {
+        Taro.invokeNativePlugin({
+          api_name: "openWebView",
+          data: {
+            url: sedekahTargetUrl,
+          },
+          success: (res: any) => console.log("invokeNativePlugin success", res),
+          fail: (err: any) => console.error("invokeNativePlugin fail", err),
+        });
+      }
+    }
+
+    onClose?.();
   };
 
   return (
@@ -65,6 +106,17 @@ const DetailTaskIbadahModal: React.FC<DetailTaskIbadahModalProps> = ({
             label="Belum"
             style="secondary"
           />
+          {isDzikirOrSedekah && (
+            <>
+              <Image src={DividerAtau} style={{ width: "100%", height: 20 }} />
+              <Button
+                disabled={submitLoading}
+                onClick={handleRedirect}
+                label={isDzikir ? "Buka Fitur Dzikir" : "Buka Fitur Sedekah"}
+                style="secondary"
+              />
+            </>
+          )}
         </div>
       </div>
     </BottomSheet>
