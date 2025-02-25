@@ -195,7 +195,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         {["today", "past"]?.includes(activeTaskStatus) ? (
           <div
             style={{ borderTop: "2px solid #dae0e9" }}
-            className="w-full min-h-[150px] rounded-t-[16px] py-[12px]"
+            className="w-full min-h-[260px] rounded-t-[16px] py-[12px]"
           >
             <p className="text-[12px] mb-2 px-[20px] text-[#757f90]">
               Pilih kegiatan yang sudah kamu lakukan, yuk!
