@@ -27,7 +27,7 @@ export default {
   ],
   preloadRule: {
     "pages/LandingPageRamadan/index": {
-      network: "all",
+      network: "Wifi",
       packages: [
         "subpackages/subpackage1",
         "subpackages/subpackage2",
@@ -46,7 +46,7 @@ export default {
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
-  lazyCodeLoading: "requiredComponents",
+  lazyCodeLoading: "all",
   requiredBackgroundModes: ["file"],
   permission: {
     "scope.userLocation": {
