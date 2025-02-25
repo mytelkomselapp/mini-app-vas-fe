@@ -43,9 +43,9 @@ const ReminderSetting = ({
     setSelectedOption(value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (id !== undefined) {
-      await doPostNotifConfig({
+      doPostNotifConfig({
         config_name: id?.name?.toLowerCase() + "_config",
         notification_status: selectedOption === "notifikasi" ? "ON" : "OFF",
         pre_notification_time: preNotificationTime,
