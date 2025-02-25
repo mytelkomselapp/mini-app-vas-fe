@@ -7,8 +7,8 @@ const projectConfig = require(projectConfigPath);
 const env = process.env.NODE_ENV;
 
 if (env === "production") {
-  projectConfig.appid = "mp3svesjvbm65na0";
-  projectConfig.TCMPPappid = "mp3svesjvbm65na0";
+  projectConfig.appid = "mpstin37uchpvihp";
+  projectConfig.TCMPPappid = "mpstin37uchpvihp";
 } else {
   projectConfig.appid = "mp3svesjvbm65na0";
   projectConfig.TCMPPappid = "mp3svesjvbm65na0";
