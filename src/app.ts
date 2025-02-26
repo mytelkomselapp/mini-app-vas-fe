@@ -13,7 +13,8 @@ const App = ({ children }: { children: React.ReactNode }) => {
     console.log({ extendData });
 
     Taro.setEnableDebug({
-      enableDebug: env === "development",
+      enableDebug: true,
+      // enableDebug: env === "development",
     });
 
     if (typeof extendData !== "object") {
