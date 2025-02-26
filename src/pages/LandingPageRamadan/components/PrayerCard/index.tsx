@@ -32,8 +32,6 @@ const PrayerCard = ({
 }) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
 
-  console.log({ dataRamadhanSearchLocation });
-
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
   const nameTime = nearestPrayTime?.name_time || null;
   const time =
