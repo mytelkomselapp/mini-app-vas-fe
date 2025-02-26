@@ -110,6 +110,7 @@ export interface RamadhanSearchLocationProps {
   country?: string;
   province?: string;
   timezone?: string;
+  type?: string;
 }
 
 export interface FlightSearchData {
