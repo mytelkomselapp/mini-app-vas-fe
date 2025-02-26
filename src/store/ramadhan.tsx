@@ -60,7 +60,9 @@ export interface DataCatatanIbadahProps {
 export const useDataCatatanIbadah = create<DataCatatanIbadahProps>()((set) => ({
   currentDay: getCurrentDayRamadhan() as string,
   currentView: "weekly",
-  currentWeek: getCurrentWeekRamadhan(getCurrentDayRamadhan()) as number,
+  currentWeek: getCurrentWeekRamadhan(
+    getCurrentDayRamadhan() as string
+  ) as number,
   setCurrentDay: (day: string) => set(() => ({ currentDay: day })),
   setCurrentView: (view: "all" | "weekly") =>
     set(() => ({ currentView: view })),

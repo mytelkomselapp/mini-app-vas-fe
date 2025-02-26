@@ -28,6 +28,7 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
   } = useDataCatatanIbadah();
 
   const listOfDay = generateCalendarByMonth(moment());
+
   const currentDayMoment = getCurrentDayRamadhan();
 
   /** get data of march  */
