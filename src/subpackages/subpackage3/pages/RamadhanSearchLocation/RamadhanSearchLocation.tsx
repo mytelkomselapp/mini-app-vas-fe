@@ -64,7 +64,7 @@ const RamadhanSearchLocation = () => {
     if (!data) return;
 
     queryClient.invalidateQueries(["Post Register User"]);
-    mutateUserUpdateCity({ city_id: data?.id });
+    mutateUserUpdateCity({ city_id: data?.id as number });
 
     setData(data);
     setDataHistoryRamadhanSearchLocation(data);
