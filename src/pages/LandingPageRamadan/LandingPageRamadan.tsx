@@ -291,7 +291,9 @@ const LandingPageRamadan = () => {
         </div>
       </div>
 
+      {/* @ts-ignore */}
       <Show when={promoSections?.length > 0}>
+        {/* @ts-ignore */}
         <Promo data={promoSections} header={promoSectionsHeader} />
       </Show>
 
