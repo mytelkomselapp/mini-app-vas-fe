@@ -121,10 +121,13 @@ const PrayerSchedule = () => {
   };
 
   const fetchLocation = async () => {
-    await getLocation();
+    const location = await getLocation();
     const resultNotif = await refetchNotificationConfig();
-
-    const result = await doRegisterUser({ latitude, longitude });
+    const { latitude, longitude } = location;
+    const result = await doRegisterUser({
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+    });
 
     if (!isLoadingRegisterUser) {
       getPrayerSchedule(result?.data?.data, resultNotif?.data?.data?.data);
@@ -256,14 +259,22 @@ const PrayerSchedule = () => {
   };
 
   const getLocation = () => {
-    Taro.getLocation({
-      type: "wgs84",
-      success: (res) => {
-        console.log({ res });
-        setLatitude(res?.latitude?.toString());
-        setLongitude(res?.longitude?.toString());
-      },
-    });
+    return new Promise<{ latitude: number; longitude: number }>(
+      (resolve, reject) => {
+        Taro.getLocation({
+          type: "wgs84",
+          success: (res) => {
+            resolve({
+              latitude: res.latitude,
+              longitude: res.longitude,
+            });
+          },
+          fail: (err) => {
+            reject(err);
+          },
+        });
+      }
+    );
   };
 
   const openReminderSetting = (
