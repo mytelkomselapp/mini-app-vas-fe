@@ -91,13 +91,19 @@ const SpecialPackage = ({
       >
         {/* Promo Label */}
         <div className="absolute -top-2 -left-[3px]">
-          <div className="bg-blueNavy text-white px-3 py-1 rounded-md text-[10px]">
-            {ribbonLabel}
-          </div>
-          <img
-            src={ribbonTail}
-            className="absolute top-[20px] left-0 w-2 h-[9.34px]"
-          />
+          {ribbonLabel ? (
+            <>
+              <div className="bg-blueNavy text-white px-3 py-1 rounded-md text-[10px]">
+                {ribbonLabel}
+              </div>
+              <img
+                src={ribbonTail}
+                className="absolute top-[20px] left-0 w-2 h-[9.34px]"
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </div>
 
         {/* Content */}
