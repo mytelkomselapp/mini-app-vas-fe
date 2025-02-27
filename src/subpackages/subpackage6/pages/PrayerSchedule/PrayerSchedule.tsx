@@ -318,9 +318,9 @@ const PrayerSchedule = () => {
       doGlobalNotificationConfig({
         notification: valueNotification,
       });
-      fetchLocation();
       setIsActive(true);
     }
+    fetchLocation();
   };
 
   const renderPrayerIconFromStatus = (status: string | undefined) => {
