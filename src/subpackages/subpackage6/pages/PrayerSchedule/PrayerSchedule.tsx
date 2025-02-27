@@ -237,11 +237,11 @@ const PrayerSchedule = () => {
         name: "Maghrib",
         time: prayerSchedule?.maghrib,
         status:
-          valNotif?.magrib?.notification_status === "ON"
+          valNotif?.maghrib?.notification_status === "ON"
             ? "notifikasi"
             : ("tidak-aktif" as PrayerStatus),
         isReminderActive: valNotif?.maghrib?.notification_status === "ON",
-        reminderTime: valNotif?.magrib?.pre_notification_time,
+        reminderTime: valNotif?.maghrib?.pre_notification_time,
       },
       {
         id: 6,
@@ -297,7 +297,7 @@ const PrayerSchedule = () => {
   const confirmDisableNotification = () => {
     if (pendingToggle !== null) {
       const valueNotification = "OFF";
-      console.log({ valueNotification });
+
       doGlobalNotificationConfig({
         notification: valueNotification,
       });
@@ -318,7 +318,7 @@ const PrayerSchedule = () => {
       doGlobalNotificationConfig({
         notification: valueNotification,
       });
-
+      fetchLocation();
       setIsActive(true);
     }
   };

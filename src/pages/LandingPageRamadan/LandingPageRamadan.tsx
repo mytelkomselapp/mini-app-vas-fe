@@ -49,7 +49,7 @@ const LandingPageRamadan = () => {
 
   const isShowJurnalIbadahMenu = !!dataLandingPageCMS
     ?.find((data) => data?.headerSection?.title === "Apps Section")
-    ?.apps?.find((item) => item?.title?.toLowerCase() === "jurnal ibadah");
+    ?.apps?.find((item) => item?.title?.toLowerCase()?.includes("ibadah"));
 
   const productSession1 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
