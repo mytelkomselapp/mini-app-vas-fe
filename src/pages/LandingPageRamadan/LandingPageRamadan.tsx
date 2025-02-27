@@ -214,19 +214,31 @@ const LandingPageRamadan = () => {
   });
 
   const fetchLocation = async () => {
-    await getLocation();
-    doRegisterUser({ latitude, longitude });
+    const location = await getLocation();
+    const { latitude, longitude } = location;
+    doRegisterUser({
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+    });
   };
 
   const getLocation = () => {
-    Taro.getLocation({
-      type: "wgs84",
-      success: (res) => {
-        console.log({ res });
-        setLatitude(res?.latitude?.toString());
-        setLongitude(res?.longitude?.toString());
-      },
-    });
+    return new Promise<{ latitude: number; longitude: number }>(
+      (resolve, reject) => {
+        Taro.getLocation({
+          type: "wgs84",
+          success: (res) => {
+            resolve({
+              latitude: res.latitude,
+              longitude: res.longitude,
+            });
+          },
+          fail: (err) => {
+            reject(err);
+          },
+        });
+      }
+    );
   };
   const onNavigate = (feature: Feature) => () => {
     const path = feature.path ?? "";
