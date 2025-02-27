@@ -47,6 +47,10 @@ const LandingPageRamadan = () => {
   const dataLandingPageCMS =
     dataRawLandingPageCMS?.data?.data?.ramadhanSections;
 
+  const isShowJurnalIbadahMenu = !!dataLandingPageCMS
+    ?.find((data) => data?.headerSection?.title === "Apps Section")
+    ?.apps?.find((item) => item?.title?.toLowerCase() === "jurnal ibadah");
+
   const productSession1 = dataLandingPageCMS
     ? dataLandingPageCMS.find(
         (section) =>
@@ -291,7 +295,9 @@ const LandingPageRamadan = () => {
         <Promo data={promoSections} header={promoSectionsHeader} />
       </Show>
 
-      <WidgetJurnalIbadah />
+      <Show when={isShowJurnalIbadahMenu}>
+        <WidgetJurnalIbadah />
+      </Show>
 
       <View className="p-4 pl-0">
         <Show when={productSession1?.length > 0}>
