@@ -69,8 +69,8 @@ const MAP_URLS = {
 
 const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
-  const [latitude, setLatitude] = useState(DEFAULT_LAT_LONG.latitude);
-  const [longitude, setLongitude] = useState(DEFAULT_LAT_LONG.longitude);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [mapHeight, setMapHeight] = useState("30%");
   const [showAllMosques, setShowAllMosques] = useState(false);
   const [selectedMosqueId, setSelectedMosqueId] = useState<string | null>(null);
@@ -98,6 +98,8 @@ const CariMasjid: React.FC = () => {
         setLongitude(res.longitude);
       },
       fail: (err) => {
+        setLatitude(DEFAULT_LAT_LONG.latitude);
+        setLongitude(DEFAULT_LAT_LONG.longitude);
         console.error("Failed to get location:", err);
       },
     });
