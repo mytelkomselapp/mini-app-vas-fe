@@ -27,7 +27,7 @@ export default {
   ],
   preloadRule: {
     "pages/LandingPageRamadan/index": {
-      network: "Wifi",
+      network: "all",
       packages: [
         "subpackages/subpackage1",
         "subpackages/subpackage2",
@@ -39,6 +39,7 @@ export default {
         "subpackages/subpackage9",
       ],
     },
+    timeout: 10000,
   },
   window: {
     backgroundTextStyle: "light",
