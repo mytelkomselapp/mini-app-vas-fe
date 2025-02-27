@@ -17,7 +17,6 @@ import { detectPlatform } from "../../../../lib/utils";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import Show from "../../../../components/Show";
-
 interface MosqueListItemProps {
   name: string;
   address: string;
@@ -57,6 +56,10 @@ const MosqueListItem: React.FC<MosqueListItemProps> = ({
 };
 
 const SNAPPOINTS = [20, 35, 70, 85];
+const DEFAULT_LAT_LONG = {
+  latitude: -6.175372,
+  longitude: 106.827194
+}
 
 const MAP_URLS = {
   maps: (lat: number, lng: number) => `https://maps.apple.com/?ll=${lat},${lng}`,
@@ -66,8 +69,8 @@ const MAP_URLS = {
 
 const CariMasjid: React.FC = () => {
   const { active: visibleSheet, setActive: setVisibleSheet } = useToggle(true);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(DEFAULT_LAT_LONG.latitude);
+  const [longitude, setLongitude] = useState(DEFAULT_LAT_LONG.longitude);
   const [mapHeight, setMapHeight] = useState("30%");
   const [showAllMosques, setShowAllMosques] = useState(false);
   const [selectedMosqueId, setSelectedMosqueId] = useState<string | null>(null);
@@ -187,6 +190,12 @@ const CariMasjid: React.FC = () => {
 
   const showMapApps = selectedMosque !== null;
 
+  const handleBack = () => {
+    setSelectedMosque(null);
+    setShowAllMosques(false);
+    handleSnapChange(0);
+  };
+
   return (
     <View className="bg-white h-screen flex">
       <Show when={isLoadingNearestMosques}>
@@ -235,10 +244,12 @@ const CariMasjid: React.FC = () => {
       >
         {showMapApps ? (
           <View className="flex flex-col p-4">
-            <Text className="text-[16px] leading-[24px] font-semibold mb-4 text-center">
-              Buka di aplikasi
-            </Text>
-            <View className="flex flex-row justify-center gap-8">
+            <View className="flex flex-row items-center justify-center gap-2 mb-4 ">
+              <Text className="text-[16px] leading-[24px] font-semibold text-center">
+                Buka di aplikasi
+              </Text>
+            </View>
+            <View className="flex flex-row justify-center gap-8 mb-8">
               {isIOS && (
                 <View
                   className="flex flex-col items-center"
@@ -309,6 +320,13 @@ const CariMasjid: React.FC = () => {
                   Waze
                 </Text>
               </View>
+            </View>
+            <View className="flex flex-row items-center justify-center">
+              <Button
+                  label="Kembali ke Daftar Masjid"
+                  onClick={handleBack}
+                  style="secondary"
+                />
             </View>
           </View>
         ) : (
