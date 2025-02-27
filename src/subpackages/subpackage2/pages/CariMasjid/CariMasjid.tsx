@@ -17,7 +17,6 @@ import { detectPlatform } from "../../../../lib/utils";
 import useTaroNavBar from "../../../../hooks/useTaroNavBar";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import Show from "../../../../components/Show";
-import ChevronLeft from "../../../../assets/chevron-left.svg";
 interface MosqueListItemProps {
   name: string;
   address: string;
@@ -246,7 +245,6 @@ const CariMasjid: React.FC = () => {
         {showMapApps ? (
           <View className="flex flex-col p-4">
             <View className="flex flex-row items-center justify-center gap-2 mb-4 ">
-              <Image src={ChevronLeft} className="w-5 h-5" onClick={handleBack} />
               <Text className="text-[16px] leading-[24px] font-semibold text-center">
                 Buka di aplikasi
               </Text>
