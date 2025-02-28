@@ -253,7 +253,7 @@ export const usePostRegisterUser = () => {
     retry: isRetry ? 3 : 0,
     retryDelay: 4_000,
     onSuccess: (data) => {
-      if (data?.data?.status === "success") {
+      if (String(data?.data?.meta?.code) === String(200)) {
         setIsRetry(false);
       }
     },
