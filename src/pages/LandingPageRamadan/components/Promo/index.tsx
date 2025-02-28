@@ -131,12 +131,12 @@ const Promo = ({
         <Text className="font-bold font-batikSans whitespace-pre-wrap text-[16px]">
           {header?.title}
         </Text>
-        <Text
+        {/* <Text
           className="whitespace-pre-wrap text-xs text-grey"
           onClick={() => onNavigate(String(header?.targetUrl))}
         >
           {"Lihat Semua"}
-        </Text>
+        </Text> */}
       </View>
 
       <Swiper
