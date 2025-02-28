@@ -74,6 +74,9 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
       imageUrlLoaderOption: {
         url: "assets",
       },
+      optimizeMainPackage: {
+        enable: true,
+      },
       postcss: {
         pxtransform: {
           enable: true,
@@ -88,6 +91,19 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
         },
       },
       webpackChain(chain) {
+        chain.optimization.splitChunks({
+          chunks: "all",
+          minSize: 10 * 1024,
+          maxSize: 100 * 1024,
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendor",
+              chunks: "all",
+              priority: 10,
+            },
+          },
+        });
         chain.plugin("define").use(DefinePlugin, [
           {
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),

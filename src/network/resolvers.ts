@@ -248,7 +248,16 @@ export const useFetchNearestCity = (
 };
 
 export const usePostRegisterUser = () => {
-  return useMutation(["Post Register User"], postRegisterUser);
+  const [isRetry, setIsRetry] = useState<boolean>(true);
+  return useMutation(["Post Register User"], postRegisterUser, {
+    retry: isRetry ? 3 : 0,
+    retryDelay: 4_000,
+    onSuccess: (data) => {
+      if (data?.data?.status === "success") {
+        setIsRetry(false);
+      }
+    },
+  });
 };
 
 export const useNotificationConfig = (enabled: boolean = true) => {
@@ -428,10 +437,13 @@ export const usePostNotificationJurnalIbadahConfig = () => {
   );
 };
 
-export const useFetchRewardHistoryDetail = (rewardId: string, enabled: boolean = true) => {
-  console.log(rewardId, ' rewardId')
+export const useFetchRewardHistoryDetail = (
+  rewardId: string,
+  enabled: boolean = true
+) => {
+  console.log(rewardId, " rewardId");
   return useQuery(
-    ["Fetch Reward History Detail"], 
+    ["Fetch Reward History Detail"],
     () => getRewardHistoryDetail(rewardId),
     { enabled }
   );

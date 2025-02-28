@@ -109,11 +109,19 @@ const Promo = ({
 
   const onNavigate = (targetUrl?: string) => {
     if (targetUrl) {
-      Taro.navigateTo({
-        url:
-          "/subpackages/subpackage9/pages/Webview/index?url=" +
-          encodeURIComponent(targetUrl),
+      Taro.invokeNativePlugin({
+        api_name: "openWebView",
+        data: {
+          url: targetUrl,
+        },
+        success: (res: any) => console.log("invokeNativePlugin success", res),
+        fail: (err: any) => console.error("invokeNativePlugin fail", err),
       });
+      // Taro.navigateTo({
+      //   url:
+      //     "/subpackages/subpackage9/pages/Webview/index?url=" +
+      //     encodeURIComponent(targetUrl),
+      // });
     }
   };
 
@@ -123,12 +131,12 @@ const Promo = ({
         <Text className="font-bold font-batikSans whitespace-pre-wrap text-[16px]">
           {header?.title}
         </Text>
-        <Text
+        {/* <Text
           className="whitespace-pre-wrap text-xs text-grey"
           onClick={() => onNavigate(String(header?.targetUrl))}
         >
           {"Lihat Semua"}
-        </Text>
+        </Text> */}
       </View>
 
       <Swiper

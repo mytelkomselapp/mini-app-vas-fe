@@ -27,23 +27,20 @@ export default {
   ],
   preloadRule: {
     "pages/LandingPageRamadan/index": {
-      network: "all",
-      packages: [
-        "subpackages/subpackage1",
-        "subpackages/subpackage2",
-        "subpackages/subpackage3",
-        "subpackages/subpackage4",
-        "subpackages/subpackage5",
-        "subpackages/subpackage6",
-        "subpackages/subpackage7",
-        "subpackages/subpackage9",
-      ],
+      packages: ["subpackages/subpackage1"], // Preload these subpackages
+      network: "all", // Load even on mobile data
+      complete: true, // Preload all pages in the subpackage
+    },
+    "pages/CatatanIbadah/index": {
+      packages: ["subpackages/subpackage7"], // Preload these subpackages
+      network: "all", // Load even on mobile data
+      complete: true, // Preload all pages in the subpackage
     },
     timeout: 10000,
   },
   window: {
     backgroundTextStyle: "light",
-    navigationBarTitleText: "Ramadan Fitri",
+    navigationBarTitleText: "Ramadan Corner",
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
