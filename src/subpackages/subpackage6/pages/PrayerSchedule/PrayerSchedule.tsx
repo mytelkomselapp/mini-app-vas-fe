@@ -304,6 +304,7 @@ const PrayerSchedule = () => {
 
       setIsActive(pendingToggle);
       setPendingToggle(null);
+      fetchLocation();
     }
     toggleDisabledConfirmation();
   };
@@ -319,8 +320,8 @@ const PrayerSchedule = () => {
         notification: valueNotification,
       });
       setIsActive(true);
+      fetchLocation();
     }
-    fetchLocation();
   };
 
   const renderPrayerIconFromStatus = (status: string | undefined) => {
