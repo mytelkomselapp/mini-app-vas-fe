@@ -36,10 +36,11 @@ export default {
       network: "all", // Load even on mobile data
       complete: true, // Preload all pages in the subpackage
     },
+    timeout: 10000,
   },
   window: {
     backgroundTextStyle: "light",
-    navigationBarTitleText: "Ramadan Fitri",
+    navigationBarTitleText: "Ramadan Corner",
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
