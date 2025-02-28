@@ -11,7 +11,6 @@ import moment, { Moment } from "moment";
 import DayCard from "./components/DayCard";
 import { useDataCatatanIbadah } from "../../../../../../store/ramadhan";
 import { StampMissionSummaryData } from "../../../../../..//network/types/response-props";
-import { START_RAMADHAN_DATE } from "../../../../../../core/env";
 
 export interface DateStampProps {
   dataMissionSummary: StampMissionSummaryData[];
@@ -159,10 +158,7 @@ const DateStamp: React.FC<DateStampProps> = ({ dataMissionSummary = [] }) => {
               </div>
             ))}
             {listOfDay.map((d: Moment, i: number) => {
-              const isSameMonth = moment(d)?.isSame(
-                START_RAMADHAN_DATE,
-                "month"
-              );
+              const isSameMonth = moment(d)?.isSame(currentDayMoment, "month");
               const theDay = moment(d)?.format("YYYY-MM-DD");
               const percentage =
                 dataMissionSummary?.find((data) =>
