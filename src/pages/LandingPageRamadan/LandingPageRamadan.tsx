@@ -246,7 +246,11 @@ const LandingPageRamadan = () => {
             });
           },
           fail: (err) => {
-            reject(err);
+            resolve({
+              latitude: 0,
+              longitude: 0,
+            });
+            //  reject(err);
           },
         });
       }
