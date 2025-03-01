@@ -64,6 +64,7 @@ const PrayerSchedule = () => {
   const [pendingToggle, setPendingToggle] = useState<boolean | null>(null);
   const [latitude, setLatitude] = useState<string>("0");
   const [longitude, setLongitude] = useState<string>("0");
+  const [hijrDate, setHijr] = useState<string>("");
   const [refresh, setRefresh] = useState(false);
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
   const {
@@ -79,7 +80,6 @@ const PrayerSchedule = () => {
   const { dayName, day, monthName, year } = formatDateToIndonesian(new Date()); // Format date in Indonesian
   // const currentDay = moment()?.format("dddd, DD MMMM YYYY");
   const currentDay = `${dayName}, ${day} ${monthName} ${year}`;
-  const hijrDate = gregorianToHijri(new Date());
 
   const {
     mutateAsync: doRegisterUser,
@@ -186,7 +186,7 @@ const PrayerSchedule = () => {
 
   const getPrayerSchedule = async (val, valNotif) => {
     const prayerSchedule = await val?.prayer_schedule;
-
+    setHijr(prayerSchedule?.islamic_date);
     const preprocessedPrayerSchedule = [
       {
         id: 1,
@@ -270,7 +270,11 @@ const PrayerSchedule = () => {
             });
           },
           fail: (err) => {
-            reject(err);
+            resolve({
+              latitude: 0,
+              longitude: 0,
+            });
+            // reject(err);
           },
         });
       }
@@ -493,7 +497,7 @@ const PrayerSchedule = () => {
                 </span>
 
                 <span className="text-primaryBlack text-[10px]">
-                  {hijrDate?.day + " " + hijrDate?.month + " " + hijrDate?.year}
+                  {hijrDate}
                 </span>
               </View>
               <View className="h-[1px] bg-dividerGrey w-[25%] ml-2" />
