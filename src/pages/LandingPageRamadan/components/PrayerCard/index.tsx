@@ -33,6 +33,7 @@ const PrayerCard = ({
 }) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
   const [tempTime, setTempTime] = useState("");
+  const [nearestPrayTextTemp, setNearestPrayTextTemp] = useState("");
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
   const nameTime = nearestPrayTime?.name_time || "";
   const time =
@@ -58,15 +59,13 @@ const PrayerCard = ({
   };
 
   useEffect(() => {
-    console.log({
-      nearestPrayTime,
-      apanih: nameTime + " " + time,
-      sama: tempTime,
-      emang: nameTime + " " + time === tempTime,
-    });
-    if (nearestPrayTime) {
-      if (nameTime + " " + time === tempTime) return;
-      else return setTempTime(nameTime + " " + time);
+    if (Object.keys(nearestPrayTime)?.length > 0) {
+      if (nameTime + " " + time !== tempTime) {
+        setTempTime(nameTime + " " + time);
+      }
+      if (nearestPrayText !== nearestPrayTextTemp) {
+        setNearestPrayTextTemp(nearestPrayText);
+      }
     }
   }, [nearestPrayTime]);
 
@@ -119,7 +118,7 @@ const PrayerCard = ({
               </div>
 
               {/* Countdown */}
-              {nearestPrayText && (
+              {nearestPrayTextTemp && (
                 <div className="text-[10px] font-normal bg-yellow-100 text-grey rounded-full px-4 py-1 inline-flex items-center mt-3">
                   <img
                     src={bedug}
@@ -129,7 +128,7 @@ const PrayerCard = ({
                         "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
                     }}
                   />
-                  {nearestPrayText}
+                  {nearestPrayTextTemp}
                 </div>
               )}
             </div>
