@@ -22,6 +22,7 @@ import NotificationModal from "./components/NotificationModal";
 import useToggle from "../../../../hooks/useToggle";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import NotificationToast from "../../../../components/NotificationToast";
+import Show from "../../../../components/Show";
 
 const CatatanIbadahPage = () => {
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
@@ -46,8 +47,7 @@ const CatatanIbadahPage = () => {
     mutateAsync: postNotificationJurnalIbadah,
     isLoading: loadingPostNotification,
   } = usePostNotificationJurnalIbadahConfig();
-  const { data: dataMissionSummary, isLoading: loadingMissionSummary } =
-    useBulkFetchMissionSummary(rangeDate);
+  const { data: dataMissionSummary } = useBulkFetchMissionSummary(rangeDate);
 
   const handleSuccessFetchJurnalIbadahConfig = (
     data: JurnalIbadahNotificationProps
@@ -64,7 +64,7 @@ const CatatanIbadahPage = () => {
   const dataUserStamp = dataUserStampRaw?.data?.data;
   const totalStamp = dataUserStamp?.total_stamp ?? 0;
 
-  const isLoading = loadingMissionSummary || fetchingNotification;
+  const isLoading = fetchingNotification;
 
   const handleActivateNotification = async (answer: "ON" | "OFF") => {
     try {
@@ -88,58 +88,60 @@ const CatatanIbadahPage = () => {
 
   useTaroNavBar();
 
-  if (isLoading)
-    return <LoadingScreen text="Loading..." customClassName="mx-[20px]" />;
-
   return (
-    <View className="bg-white w-full min-h-full h-auto">
-      <BackgroundImage
-        className="flex justify-between px-[20px] items-center w-full h-[116px]"
-        imageUrl={BackgroundCatatanIbadah}
-      >
-        <div className="flex flex-col items-start w-[50%]">
-          <p className="text-[12px] font-bold text-white">Total Stamp</p>
-          <div className="flex gap-x-[4px] items-center">
-            <div className="rounded-full w-[24px] h-[24px] ">
-              <img src={StampIcon} width="20px" height="20px" />
+    <>
+      <Show when={isLoading}>
+        <LoadingScreen text="Loading..." customClassName="mx-[20px]" />
+      </Show>
+      <View className="bg-white w-full min-h-full h-auto">
+        <BackgroundImage
+          className="flex justify-between px-[20px] items-center w-full h-[116px]"
+          imageUrl={BackgroundCatatanIbadah}
+        >
+          <div className="flex flex-col items-start w-[50%]">
+            <p className="text-[12px] font-bold text-white">Total Stamp</p>
+            <div className="flex gap-x-[4px] items-center">
+              <div className="rounded-full w-[24px] h-[24px] ">
+                <img src={StampIcon} width="20px" height="20px" />
+              </div>
+              <p className="text-[20px] font-bold text-white">{totalStamp}</p>
             </div>
-            <p className="text-[20px] font-bold text-white">{totalStamp}</p>
           </div>
-        </div>
-        <div className="flex justify-end pr-[20px] items-center w-[50%] h-auto">
-          <ButtonRedeem title="Tukar Hadiah" onClick={handleGoToRedeemPage} />
-        </div>
-      </BackgroundImage>
+          <div className="flex justify-end pr-[20px] items-center w-[50%] h-auto">
+            <ButtonRedeem title="Tukar Hadiah" onClick={handleGoToRedeemPage} />
+          </div>
+        </BackgroundImage>
 
-      {/* <LottieOverlay /> */}
+        {/* <LottieOverlay /> */}
 
-      <View
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);",
-        }}
-        className="rounded-t-[16px] relative top-[-20px] min-h-[100px]"
-      >
-        <DateStamp
-          dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+        <View
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);",
+          }}
+          className="rounded-t-[16px] relative top-[-20px] min-h-[100px]"
+        >
+          <DateStamp
+            dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+          />
+          <DaftarIbadah
+            dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+          />
+        </View>
+        <NotificationModal
+          isLoading={loadingPostNotification}
+          open={visibleNotificationModal}
+          onClose={() => toggleVisibleNotificationModal(false)}
+          onClickCTA={handleActivateNotification}
         />
-        <DaftarIbadah
-          dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
+        <NotificationToast
+          duration={3000}
+          show={visibleToast}
+          onClose={toggleVisibleToast}
+          description="Error when activate notification"
         />
       </View>
-      <NotificationModal
-        isLoading={loadingPostNotification}
-        open={visibleNotificationModal}
-        onClose={() => toggleVisibleNotificationModal(false)}
-        onClickCTA={handleActivateNotification}
-      />
-      <NotificationToast
-        duration={3000}
-        show={visibleToast}
-        onClose={toggleVisibleToast}
-        description="Error when activate notification"
-      />
-    </View>
+    </>
   );
 };
 
