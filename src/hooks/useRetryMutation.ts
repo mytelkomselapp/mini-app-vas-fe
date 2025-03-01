@@ -3,68 +3,64 @@ import { useMutation } from "react-query";
 export interface RetryMutationProps {
   retryMaxAttempt: number;
   retryInterval: number;
-  onSuccess: (data: any) => void;
-  onError: (error: any) => void;
   successStatusCode?: number[];
+  onSuccess?: (data: any) => void;
+  onError?: (error: any) => void;
 }
 
 const useRetryMutation = <TData, TVariables>(
+  mutationKey: string | string[],
   mutationFn: (variables: TVariables) => Promise<TData>,
   {
     retryMaxAttempt,
     retryInterval,
+    successStatusCode = [200],
     onSuccess,
     onError,
-    successStatusCode = [200],
   }: RetryMutationProps
 ) => {
-  const mutation = useMutation<TData, Error, TVariables>(
+  const mutation = useMutation<TData, Error, TVariables>({
     // @ts-ignore
-    async (variables) => {
+    mutationKey: mutationKey
+      ? Array.isArray(mutationKey)
+        ? mutationKey
+        : [mutationKey]
+      : undefined, // Set mutationKey
+    mutationFn: async (variables) => {
       let attempt = 0;
       while (attempt < retryMaxAttempt) {
         try {
           const response = await mutationFn(variables);
 
-          // Handle different response types
-          let statusCode;
-          if (
-            response &&
-            typeof response === "object" &&
-            "statusCode" in response
-          ) {
-            statusCode = (response as any).statusCode; // If the API returns statusCode in JSON
-          } else {
-            statusCode = 200; // Assume success if statusCode is not present
-          }
+          // Extract status code if available
+          const statusCode =
+            response && typeof response === "object" && "statusCode" in response
+              ? (response as any).statusCode
+              : 200; // Default to 200 if statusCode is missing
 
-          // Retry only if statusCode is not in successStatusCode
-          if (!successStatusCode?.includes(statusCode)) {
+          // Retry only if statusCode is NOT in successStatusCode
+          if (!successStatusCode.includes(statusCode)) {
             console.warn(`Attempt ${attempt + 1} failed. Retrying...`);
             attempt++;
             if (attempt >= retryMaxAttempt)
               throw new Error("Max retry attempts reached");
 
             await new Promise((resolve) => setTimeout(resolve, retryInterval));
-            continue; // Continue to the next attempt
+            continue;
           }
 
           return response;
         } catch (error) {
           console.error(`Error on attempt ${attempt + 1}:`, error);
           attempt++;
-          if (attempt >= retryMaxAttempt) {
-            throw error; // Final failure, throw error
-          }
+          if (attempt >= retryMaxAttempt) throw error;
           await new Promise((resolve) => setTimeout(resolve, retryInterval));
         }
       }
     },
-    {
-      onSuccess,
-      onError,
-    }
-  );
+    onSuccess,
+    onError,
+  });
 
   return mutation;
 };
