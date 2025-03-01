@@ -58,6 +58,7 @@ import {
 } from "./types/request-payload";
 import { useMemo, useState } from "react";
 import { JurnalIbadahNotificationProps } from "./types/response-props";
+import useRetryMutation from "../hooks/useRetryMutation";
 
 export const useFetchCMSLandingPage = (enabled: boolean = true) => {
   return useQuery(["Fetch CMS Landing Page"], getCMSFlightLandingPage, {
@@ -248,7 +249,11 @@ export const useFetchNearestCity = (
 };
 
 export const usePostRegisterUser = () => {
-  return useMutation(["Post Register User"], postRegisterUser);
+  return useRetryMutation(["Post Register User"], postRegisterUser, {
+    retryInterval: 4_000,
+    retryMaxAttempt: 4,
+    successStatusCode: [200], // if success will not retry mutation
+  });
 };
 
 export const useNotificationConfig = (enabled: boolean = true) => {

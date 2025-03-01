@@ -42,12 +42,7 @@ const LandingPageRamadan = () => {
     mutateAsync: doRegisterUser,
     isLoading: isLoadingRegisterUser,
     data: dataRawRegisterUser,
-  } = useRetryMutation(postRegisterUser, {
-    retryMaxAttempt: 3,
-    retryInterval: 4000, // 2 seconds between retries
-    onSuccess: (data) => console.log("Success:", data),
-    onError: (error) => console.error("Error:", error),
-  });
+  } = usePostRegisterUser();
 
   const { isActive } = usePrayerNotification();
   useTaroNavBar();
