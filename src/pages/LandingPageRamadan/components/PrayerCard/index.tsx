@@ -10,6 +10,7 @@ import convex from "../../../../assets/convex-masjid.svg";
 import { convertTimezone, handleNavigate } from "../../../../lib/utils";
 import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
 import { RamadhanSearchLocationProps } from "../../../../network/types/response-props";
+import { useEffect, useState } from "react";
 export interface PrayerCardProps {
   name_time: string;
   nearest_pray_info: string;
@@ -31,15 +32,15 @@ const PrayerCard = ({
   notificationStatus: boolean;
 }) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
-
+  const [tempTime, setTempTime] = useState("");
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
-  const nameTime = nearestPrayTime?.name_time || null;
+  const nameTime = nearestPrayTime?.name_time || "";
   const time =
     nearestPrayTime?.pray_time && nearestPrayTime?.timezone
       ? nearestPrayTime?.pray_time +
         " " +
         convertTimezone(nearestPrayTime?.timezone)
-      : null;
+      : "";
   const notificationText = notificationStatus
     ? "Notifikasi adzan telah Aktif"
     : "Notifikasi adzan belum Aktif";
@@ -55,6 +56,19 @@ const PrayerCard = ({
   const handleNavigatePrayerSetting = () => {
     handleNavigate("/subpackages/subpackage6/pages/PrayerSchedule/index");
   };
+
+  useEffect(() => {
+    console.log({
+      nearestPrayTime,
+      apanih: nameTime + " " + time,
+      sama: tempTime,
+      emang: nameTime + " " + time === tempTime,
+    });
+    if (nearestPrayTime) {
+      if (nameTime + " " + time === tempTime) return;
+      else return setTempTime(nameTime + " " + time);
+    }
+  }, [nearestPrayTime]);
 
   return (
     <>
@@ -101,7 +115,7 @@ const PrayerCard = ({
 
               {/* Prayer Time */}
               <div className="text-base font-semibold text-gray-900 font-sans">
-                {nameTime} {time}
+                {tempTime}
               </div>
 
               {/* Countdown */}
