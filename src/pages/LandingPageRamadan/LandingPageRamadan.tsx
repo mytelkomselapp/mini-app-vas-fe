@@ -21,6 +21,8 @@ import WidgetJurnalIbadah from "../../subpackages/subpackage5/pages/CatatanIbada
 import Show from "../../components/Show";
 import LoadingScreen from "../../components/LoadingScreen";
 import useTaroNavBar from "../../hooks/useTaroNavBar";
+import useRetryMutation from "../../hooks/useRetryMutation";
+import { postRegisterUser } from "../../network/services";
 
 type Feature = {
   name: string;
@@ -40,7 +42,13 @@ const LandingPageRamadan = () => {
     mutateAsync: doRegisterUser,
     isLoading: isLoadingRegisterUser,
     data: dataRawRegisterUser,
-  } = usePostRegisterUser();
+  } = useRetryMutation(postRegisterUser, {
+    retryMaxAttempt: 3,
+    retryInterval: 4000, // 2 seconds between retries
+    onSuccess: (data) => console.log("Success:", data),
+    onError: (error) => console.error("Error:", error),
+  });
+
   const { isActive } = usePrayerNotification();
   useTaroNavBar();
 

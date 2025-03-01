@@ -248,23 +248,7 @@ export const useFetchNearestCity = (
 };
 
 export const usePostRegisterUser = () => {
-  const [isRetry, setIsRetry] = useState<boolean>(false);
-  return useMutation(["Post Register User"], postRegisterUser, {
-    retry: isRetry ? 3 : 0,
-    retryDelay: 3_000,
-    onError: (error) => {
-      console.log(error);
-      setIsRetry(true);
-    },
-    onSuccess: (data) => {
-      console.log({ data: data });
-      if (String(data?.statusCode) === String(200)) {
-        setIsRetry(false);
-      } else {
-        setIsRetry(true);
-      }
-    },
-  });
+  return useMutation(["Post Register User"], postRegisterUser);
 };
 
 export const useNotificationConfig = (enabled: boolean = true) => {
