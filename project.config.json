@@ -1,71 +1,71 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "ramadanTaro",
-  "description": "",
-  "appid": "mpstin37uchpvihp",
-  "setting": {
-    "urlCheck": false,
-    "es6": false,
-    "enhance": false,
-    "compileHotReLoad": false,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "uploadWithSourceMap": true,
-    "uglifyFileName": true,
-    "remoteDebugLogEnable": false,
-    "prefetch": false
-  },
-  "compileType": "miniprogram",
-  "TCMPPappid": "mpstin37uchpvihp",
-  "scripts": {
-    "beforeCompile": "",
-    "beforePreview": "",
-    "beforeUpload": ""
-  },
-  "condition": {
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
-    "downloadFileDomain": [
-      "cdndev.mytsel.id"
-    ],
-    "miniprogram": {
-      "current": 0,
-      "list": [
-        {
-          "id": 0,
-          "name": "LandingPage",
-          "pathName": "pages/LandingPageRamadan/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 1,
-          "name": "SearchLocation",
-          "pathName": "subpackages/subpackage3/pages/RamadhanSearchLocation/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "Catatan Ibadah",
-          "pathName": "subpackages/subpackage5/pages/CatatanIbadah/index",
-          "query": "",
-          "scene": null
-        }
-      ]
-    }
-  }
+	"miniprogramRoot": "dist/",
+	"projectname": "ramadanTaro",
+	"description": "",
+	"appid": "mp3svesjvbm65na0",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"enhance": false,
+		"compileHotReLoad": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": true,
+		"remoteDebugLogEnable": false,
+		"prefetch": false
+	},
+	"compileType": "miniprogram",
+	"TCMPPappid": "mp3svesjvbm65na0",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"downloadFileDomain": [
+			"cdndev.mytsel.id"
+		],
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": 0,
+					"name": "LandingPage",
+					"pathName": "pages/LandingPageRamadan/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "SearchLocation",
+					"pathName": "subpackages/subpackage3/pages/RamadhanSearchLocation/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "Catatan Ibadah",
+					"pathName": "subpackages/subpackage5/pages/CatatanIbadah/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }
