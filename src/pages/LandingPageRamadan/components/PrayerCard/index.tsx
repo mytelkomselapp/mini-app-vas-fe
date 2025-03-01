@@ -10,6 +10,7 @@ import convex from "../../../../assets/convex-masjid.svg";
 import { convertTimezone, handleNavigate } from "../../../../lib/utils";
 import { useRamadhanSearchLocation } from "../../../../store/ramadhan";
 import { RamadhanSearchLocationProps } from "../../../../network/types/response-props";
+import { useEffect, useState } from "react";
 export interface PrayerCardProps {
   name_time: string;
   nearest_pray_info: string;
@@ -31,15 +32,16 @@ const PrayerCard = ({
   notificationStatus: boolean;
 }) => {
   const { data: dataRamadhanSearchLocation } = useRamadhanSearchLocation();
-
+  const [tempTime, setTempTime] = useState("");
+  const [nearestPrayTextTemp, setNearestPrayTextTemp] = useState("");
   const nearestPrayText = nearestPrayTime?.nearest_pray_info;
-  const nameTime = nearestPrayTime?.name_time || null;
+  const nameTime = nearestPrayTime?.name_time || "";
   const time =
     nearestPrayTime?.pray_time && nearestPrayTime?.timezone
       ? nearestPrayTime?.pray_time +
         " " +
         convertTimezone(nearestPrayTime?.timezone)
-      : null;
+      : "";
   const notificationText = notificationStatus
     ? "Notifikasi adzan telah Aktif"
     : "Notifikasi adzan belum Aktif";
@@ -55,6 +57,17 @@ const PrayerCard = ({
   const handleNavigatePrayerSetting = () => {
     handleNavigate("/subpackages/subpackage6/pages/PrayerSchedule/index");
   };
+
+  useEffect(() => {
+    if (Object.keys(nearestPrayTime)?.length > 0) {
+      if (nameTime + " " + time !== tempTime) {
+        setTempTime(nameTime + " " + time);
+      }
+      if (nearestPrayText !== nearestPrayTextTemp) {
+        setNearestPrayTextTemp(nearestPrayText);
+      }
+    }
+  }, [nearestPrayTime]);
 
   return (
     <>
@@ -101,11 +114,11 @@ const PrayerCard = ({
 
               {/* Prayer Time */}
               <div className="text-base font-semibold text-gray-900 font-sans">
-                {nameTime} {time}
+                {tempTime}
               </div>
 
               {/* Countdown */}
-              {nearestPrayText && (
+              {nearestPrayTextTemp && (
                 <div className="text-[10px] font-normal bg-yellow-100 text-grey rounded-full px-4 py-1 inline-flex items-center mt-3">
                   <img
                     src={bedug}
@@ -115,7 +128,7 @@ const PrayerCard = ({
                         "invert(41%) sepia(8%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)",
                     }}
                   />
-                  {nearestPrayText}
+                  {nearestPrayTextTemp}
                 </div>
               )}
             </div>

@@ -281,7 +281,7 @@ const LandingPageRamadan = () => {
 
   return (
     <View className="bg-white h-full">
-      <Show when={isLoadingRegisterUser || isLoadingLandingPageCMS}>
+      <Show when={isLoadingLandingPageCMS}>
         <LoadingScreen text="Loading" customClassName="mx-[20px]" />
       </Show>
       <View
