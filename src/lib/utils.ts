@@ -153,7 +153,7 @@ export const isValidEmail = (value: string) => {
 
 const fallbackHandleNavigate = (pathname: string, search: string = "") => {
   Taro.reLaunch({
-    url: "pages/LandingPageRamadan/index",
+    url: "/pages/LandingPageRamadan/index",
   }).then((_) => {
     Taro.navigateTo({
       url: pathname + search,
