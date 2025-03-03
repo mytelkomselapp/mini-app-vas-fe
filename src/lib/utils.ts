@@ -153,16 +153,17 @@ export const isValidEmail = (value: string) => {
 
 const fallbackHandleNavigate = (pathname: string, search: string = "") => {
   Taro.reLaunch({
-    url: "pages/LandingPageRamadan/index",
+    url: "/pages/LandingPageRamadan/index",
   }).then((_) => {
     Taro.navigateTo({
       url: pathname + search,
     }).catch((_err) => {
-      Taro.showToast({
-        title:
-          "Oops! Terjadi masalah pada aplikasi. Buka ulang aplikasi untuk memastikan semuanya berjalan lancar",
-        icon: "error",
-        duration: 3000,
+      Taro.showModal({
+        title: `Oops! Terjadi masalah pada aplikasi.`,
+        content:
+          "Buka ulang aplikasi untuk me-mastikan semuanya berjalan lancar",
+        showCancel: false,
+        confirmText: "Oke",
       });
     });
   });
