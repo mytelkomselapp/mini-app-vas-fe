@@ -27,7 +27,11 @@ export default {
   ],
   preloadRule: {
     "pages/LandingPageRamadan/index": {
-      packages: ["subpackages/subpackage1"], // Preload these subpackages
+      packages: [
+        "subpackages/subpackage1",
+        "subpackages/subpackage3",
+        "subpackages/subpackage6",
+      ], // Preload these subpackages
       network: "all", // Load even on mobile data
       complete: true, // Preload all pages in the subpackage
     },
