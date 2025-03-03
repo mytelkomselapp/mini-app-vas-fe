@@ -40,7 +40,12 @@ export default {
       network: "all", // Load even on mobile data
       complete: true, // Preload all pages in the subpackage
     },
-    timeout: 10000,
+  },
+  networkTimeout: {
+    request: 120000, // 120 seconds
+    connectSocket: 60000,
+    uploadFile: 60000,
+    downloadFile: 120000, // 120 seconds
   },
   window: {
     backgroundTextStyle: "light",
