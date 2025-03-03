@@ -20,6 +20,29 @@ const App = ({ children }: { children: React.ReactNode }) => {
     if (typeof extendData !== "object") {
       Taro.setStorageSync("customParams", extendData);
     }
+    Taro.onError((error) => {
+      console.error("Global error handler:", error);
+      Taro.showToast({
+        title: "Oops terjadi kesalahan, kembali ke menu utama.",
+        icon: "error",
+        duration: 3000,
+      });
+      Taro.reLaunch({
+        url: "/pages/LandingPageRamadan/index",
+      });
+    });
+    Taro.onPageNotFound((res) => {
+      console.error("Page not found:", res);
+      Taro.showToast({
+        title: "Oops terjadi kesalahan, kembali ke menu utama.",
+        icon: "error",
+        duration: 3000,
+      });
+      // Redirect to home page or any other page
+      Taro.reLaunch({
+        url: "/pages/LandingPageRamadan/index",
+      });
+    });
     // Taro.showToast({
     //   title: JSON.stringify(extendData, null, 4),
     //   icon: "none", // You can use 'success', 'loading', 'none', etc.
