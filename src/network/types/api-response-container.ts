@@ -11,6 +11,7 @@ interface ApiSuccessResponse<T> {
   meta: FlightAPIMeta;
   message: string;
   status: string;
+  statusCode: number;
 }
 
 export type HttpSuccessResponse<T> = Promise<
