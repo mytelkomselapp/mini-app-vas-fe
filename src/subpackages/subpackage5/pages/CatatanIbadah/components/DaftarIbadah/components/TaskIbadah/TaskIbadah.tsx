@@ -106,35 +106,49 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         category: dataConfigItem?.category as any,
         category_id: dataConfigItem?.category_id as any,
       });
+      // @ts-ignore
+      const statusCode = postSubmission?.statusCode;
+      const isSuccess = statusCode == 200;
 
-      const earnedStamp = postSubmission?.data?.data?.today_earned_stamp || 0;
-      const isShowMilestoneToast = [70, 100, 140]?.some(
-        (data) => data === earnedStamp
-      );
+      if (isSuccess) {
+        const earnedStamp = postSubmission?.data?.data?.today_earned_stamp || 0;
+        const isShowMilestoneToast = [70, 100, 140]?.some(
+          (data) => data === earnedStamp
+        );
 
-      if (isShowMilestoneToast) {
-        setNotificationToast({
-          message: `Selamat, kamu telah mendapatkan ${earnedStamp} stamp`,
-          type: "success",
+        if (isShowMilestoneToast) {
+          setNotificationToast({
+            message: `Selamat, kamu telah mendapatkan ${earnedStamp} stamp`,
+            type: "success",
+          });
+          toggleVisibleNotificationToast();
+        }
+
+        /*  Refetch user stamp and stamp mission list */
+        queryClient.invalidateQueries({
+          queryKey: ["Fetch User Stamp"],
         });
-        toggleVisibleNotificationToast();
+        queryClient.invalidateQueries({
+          queryKey: `Fetch Mission Summary - ${currentDay}`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["Fetch Stamp Mission Summary", { date: currentDay }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["Fetch Stamp Mission List", { date: currentDay }],
+        });
+
+        toggleVisibleTaskModal();
+      } else {
+        if (statusCode === 429) {
+          setNotificationToast({
+            message: "Tunggu sebentar, checklist sebelumnya",
+            type: "error",
+          });
+          toggleVisibleNotificationToast();
+          toggleVisibleTaskModal();
+        }
       }
-
-      /*  Refetch user stamp and stamp mission list */
-      queryClient.invalidateQueries({
-        queryKey: ["Fetch User Stamp"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: `Fetch Mission Summary - ${currentDay}`,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["Fetch Stamp Mission Summary", { date: currentDay }],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["Fetch Stamp Mission List", { date: currentDay }],
-      });
-
-      toggleVisibleTaskModal();
     } catch (_) {
       setNotificationToast({
         message: "Kamu sudah mengisi ibadah ini",
@@ -257,7 +271,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
         type={notificationToast?.type}
         description={notificationToast?.message}
         duration={3000}
-        fontWeight={notificationToast?.type === "error" ? "bold" : "normal"}
+        fontWeight={"normal"}
         show={visibleNotificationToast}
         onClose={toggleVisibleNotificationToast}
       />

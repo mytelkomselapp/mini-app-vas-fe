@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "ramadanTaro",
 	"description": "",
-	"appid": "mp3svesjvbm65na0",
+	"appid": "mpstin37uchpvihp",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,
@@ -19,7 +19,7 @@
 		"prefetch": false
 	},
 	"compileType": "miniprogram",
-	"TCMPPappid": "mp3svesjvbm65na0",
+	"TCMPPappid": "mpstin37uchpvihp",
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
@@ -42,7 +42,7 @@
 			"cdndev.mytsel.id"
 		],
 		"miniprogram": {
-			"current": 2,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,

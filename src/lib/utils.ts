@@ -151,6 +151,23 @@ export const isValidEmail = (value: string) => {
   return false;
 };
 
+const fallbackHandleNavigate = (pathname: string, search: string = "") => {
+  Taro.reLaunch({
+    url: "pages/LandingPageRamadan/index",
+  }).then((_) => {
+    Taro.navigateTo({
+      url: pathname + search,
+    }).catch((_err) => {
+      Taro.showToast({
+        title:
+          "Oops! Terjadi masalah pada aplikasi. Buka ulang aplikasi untuk memastikan semuanya berjalan lancar",
+        icon: "error",
+        duration: 3000,
+      });
+    });
+  });
+};
+
 export const handleNavigate = (
   pathname: string,
   search: string = "",
@@ -161,6 +178,9 @@ export const handleNavigate = (
   }
   Taro.navigateTo({
     url: pathname + search,
+  }).catch((err) => {
+    console.error("Navigation to subpackage failed:", err);
+    fallbackHandleNavigate(pathname, search);
   });
 };
 
