@@ -396,3 +396,33 @@ export const formatValidUntil = (date: string | Date) => {
   const formattedDate = formatDateToIndonesian(new Date(date));
   return `${formattedDate.day} ${formattedDate.monthName} ${formattedDate.year}`;
 };
+
+export const getLatestUpdateVersion = () => {
+  console.log("checking update availability...");
+  const updateManager = Taro.getUpdateManager();
+  updateManager.onCheckForUpdate(function (res) {
+    // Callback after requesting the new version information
+    console.log("has Update?", res.hasUpdate);
+  });
+  updateManager.onUpdateReady(function () {
+    Taro.showModal({
+      showCancel: false,
+      title: "New version available",
+      content: "You can apply the update now. Restart the app?",
+      success(res) {
+        if (res.confirm) {
+          // The new version has been downloaded. Call 'applyUpdate to apply it and restart the app.
+          updateManager.applyUpdate();
+        }
+      },
+    });
+  });
+
+  updateManager.onUpdateFailed(function () {
+    // New version download failed
+    Taro.showToast({
+      title: "Update failed. Please try again later.",
+      icon: "none",
+    });
+  });
+};
