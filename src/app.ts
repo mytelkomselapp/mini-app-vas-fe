@@ -3,6 +3,7 @@ import Taro, { useLaunch } from "@tarojs/taro";
 import { withProvider } from "./hoc";
 import "./index.css";
 import "./app.scss";
+import { getLatestUpdateVersion } from "./lib/utils";
 
 const env = process.env.NODE_ENV;
 
@@ -11,7 +12,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
     const launchOptions = Taro.getLaunchOptionsSync();
     const extendData = options?.extendData ?? {};
     console.log({ extendData });
-
+    getLatestUpdateVersion();
     // Taro.setEnableDebug({
     //   enableDebug: true,
     //   // enableDebug: env === "development",
