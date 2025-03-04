@@ -133,6 +133,11 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
           });
       },
     },
+    qq: {
+      webpackChain(chain) {
+        chain.output.set('hashFunction', 'xxhash64');
+      }
+    }
   };
 
   // Merge the base config with environment-specific configs
