@@ -5,6 +5,7 @@ import {
   BASE_CMS_API_URL,
   BASE_CMS_TOKEN,
   BASE_GAMIFICATION_API_URL,
+  GAMIFICATION_API_KEY,
 } from "./env";
 import { AxiosHTTPError } from "../network/types/api-response-container";
 import { serializeParam } from "./serializeParam";
@@ -101,7 +102,7 @@ export const get = <T extends string | ArrayBuffer = any>(
     url,
     ...config,
     header: {
-      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
+      "X-Api-Key": GAMIFICATION_API_KEY, // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -140,7 +141,7 @@ export const post = <T extends string | ArrayBuffer = any>(
     ...config,
     header: {
       ...headers,
-      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
+      "X-Api-Key": GAMIFICATION_API_KEY, // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -173,7 +174,7 @@ export const uploadFile = <T extends string | ArrayBuffer = any>(
     filePath, // Path to the file
     name: "files", // Form field name for the file
     header: {
-      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
+      "X-Api-Key": GAMIFICATION_API_KEY, // temporary will be move to env
       Authorization: bearerToken,
     },
   });
@@ -210,7 +211,7 @@ export const apiDelete = (
     url,
     ...config,
     header: {
-      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
+      "X-Api-Key": GAMIFICATION_API_KEY, // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },
@@ -248,7 +249,7 @@ export const patch = (
     url,
     ...config,
     header: {
-      "X-Api-Key": "861b3773-5a8f-43a4-858e-6f87d13c4880", // temporary will be move to env
+      "X-Api-Key": GAMIFICATION_API_KEY, // temporary will be move to env
       Authorization: bearerToken,
       "content-type": "application/json",
     },

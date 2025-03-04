@@ -26,8 +26,8 @@ const SearchResult: React.FC<Props> = ({
   };
 
   const cityAddress = (data: RamadhanSearchLocationProps) => {
-    if (data?.city && data?.province && data?.country) {
-      return `${data?.city}, ${data?.province}, ${data?.country}`;
+    if (data?.city && data?.province && data?.country && data?.type) {
+      return `${data?.type} ${data?.city}, ${data?.province}, ${data?.country}`;
     }
 
     return "-";

@@ -22,15 +22,16 @@ import NotificationModal from "./components/NotificationModal";
 import useToggle from "../../../../hooks/useToggle";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import NotificationToast from "../../../../components/NotificationToast";
-import { START_RAMADHAN_DATE } from "../../../../core/env";
 
 const CatatanIbadahPage = () => {
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
-  const currentDayMoment = moment();
+  const currentDayMoment = moment()?.format("YYYY-MM-DD");
+  const startOfMonth = moment()?.startOf("month")?.format("YYYY-MM-DD");
+
   /** TODO: remove hardcoded rangeDate */
   const rangeDate = generateArrayRangeDate(
-    START_RAMADHAN_DATE || "",
-    currentDayMoment?.format("YYYY-MM-DD")
+    startOfMonth || "",
+    currentDayMoment
   );
 
   const {
@@ -87,7 +88,8 @@ const CatatanIbadahPage = () => {
 
   useTaroNavBar();
 
-  if (isLoading) return <LoadingScreen text="Loading..." />;
+  if (isLoading)
+    return <LoadingScreen text="Loading..." customClassName="mx-[20px]" />;
 
   return (
     <View className="bg-white w-full min-h-full h-auto">
