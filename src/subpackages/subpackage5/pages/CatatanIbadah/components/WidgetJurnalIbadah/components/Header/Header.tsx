@@ -29,7 +29,9 @@ const Header = () => {
       className="flex justify-between rounded-t-[16px] p-[12px] h-[48px] relative"
     >
       <div className="flex flex-col items-start w-[50%]">
-        <Text className="text-[12px] font-bold text-white">Total Stamp</Text>
+        <Text className="text-[12px] font-bold text-white">
+          Total Stamp Hari Ini
+        </Text>
         <div className="flex gap-x-[4px] items-center">
           <div className="rounded-full w-[24px] h-[24px] ">
             <img src={StampIcon} width="20px" height="20px" />
