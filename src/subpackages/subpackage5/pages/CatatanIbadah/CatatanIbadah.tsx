@@ -23,11 +23,17 @@ import useToggle from "../../../../hooks/useToggle";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import NotificationToast from "../../../../components/NotificationToast";
 import Show from "../../../../components/Show";
+import Button from "../../../../components/Button";
+import { useEffect } from "react";
+import Taro from "@tarojs/taro";
+import { useDataCatatanIbadah } from "../../../../store/ramadhan";
 
 const CatatanIbadahPage = () => {
   /* why need new current day variable because currentDay from state is for selected date, currentDayMoment for fetch data until today */
   const currentDayMoment = moment()?.format("YYYY-MM-DD");
   const startOfMonth = moment()?.startOf("month")?.format("YYYY-MM-DD");
+
+  const { selectedTab } = useDataCatatanIbadah();
 
   /** TODO: remove hardcoded rangeDate */
   const rangeDate = generateArrayRangeDate(
@@ -81,10 +87,30 @@ const CatatanIbadahPage = () => {
     }
   };
 
+  const generateGradientColor = () => {
+    if (selectedTab === "pagi")
+      return "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);";
+    if (selectedTab === "siang")
+      return "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(173, 96, 0, 0.3) 100%);";
+
+    return "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(7, 36, 92, 0.35) 100%);";
+  };
+
   const handleGoToRedeemPage = () => {
     /** TODO: Navigate Redeem Page */
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
+
+  const handleShare = () => {
+    Taro.setClipboardData({
+      data: "test",
+    });
+    // Taro.showShareMenu({});
+    // wx.shareAppMessage
+    // console.log(globalThis.qq);
+  };
+
+  useEffect(() => {}, []);
 
   useTaroNavBar();
 
@@ -116,14 +142,16 @@ const CatatanIbadahPage = () => {
 
         <View
           style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,1) 81%, rgba(2,127,210,0.3) 100%);",
+            background: generateGradientColor(),
           }}
           className="rounded-t-[16px] relative top-[-20px] min-h-[100px]"
         >
           <DateStamp
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />
+          <View className="mx-[20px]">
+            <Button label="Share" onClick={handleShare} />
+          </View>
           <DaftarIbadah
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />

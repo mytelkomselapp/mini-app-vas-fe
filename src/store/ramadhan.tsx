@@ -52,14 +52,17 @@ export interface DataCatatanIbadahProps {
   currentDay: string;
   currentView: "all" | "weekly";
   currentWeek: number;
+  selectedTab: "pagi" | "siang" | "malam";
   setCurrentDay: (day: string) => void;
   setCurrentView: (view: "all" | "weekly") => void;
   setCurrentWeek: (value: number) => void;
+  setSelectedTab: (value: "pagi" | "siang" | "malam") => void;
 }
 
 export const useDataCatatanIbadah = create<DataCatatanIbadahProps>()((set) => ({
   currentDay: getCurrentDayRamadhan() as string,
   currentView: "weekly",
+  selectedTab: "pagi",
   currentWeek: getCurrentWeekRamadhan(
     getCurrentDayRamadhan() as string
   ) as number,
@@ -67,6 +70,8 @@ export const useDataCatatanIbadah = create<DataCatatanIbadahProps>()((set) => ({
   setCurrentView: (view: "all" | "weekly") =>
     set(() => ({ currentView: view })),
   setCurrentWeek: (value: number) => set(() => ({ currentWeek: value })),
+  setSelectedTab: (value: "pagi" | "siang" | "malam") =>
+    set(() => ({ selectedTab: value })),
 }));
 
 export type PrayerStatus = "adzan" | "bedug" | "notifikasi" | "tidak-aktif";

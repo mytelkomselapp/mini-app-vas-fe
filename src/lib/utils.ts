@@ -440,18 +440,18 @@ export const isTaskIbadahEnabledByTimeRules = (
   switch (category) {
     case "pagi":
       return {
-        isEnable: currentHours < 12,
-        message: `Misi ${taskName} bisa di checklist antara pukul 00:00 hingga pukul 11.59`,
+        isEnable: currentHours >= 0 && currentHours < 12,
+        message: `Kegiatan pagi ini hanya dapat dicatat pukul 00:00 - 11:59.`,
       };
     case "siang":
       return {
         isEnable: currentHours >= 12 && currentHours < 18,
-        message: `Misi ${taskName} bisa di checklist antara pukul 12:00 hingga pukul 17.59`,
+        message: `Kegiatan siang ini hanya dapat dicatat pukul 12:00 - 17:59. Coba lagi nanti, ya!`,
       };
     case "malam":
       return {
         isEnable: currentHours >= 18,
-        message: `Misi ${taskName} bisa di checklist antara jam 18:00 hingga pukul 23:59`,
+        message: `Kegiatan siang ini hanya dapat dicatat pukul 18:00 - 23:59. Coba lagi nanti, ya!`,
       };
     default:
       return {
@@ -459,4 +459,31 @@ export const isTaskIbadahEnabledByTimeRules = (
         message: "",
       };
   }
+};
+
+export const currentTimeCategory = (): "pagi" | "siang" | "malam" => {
+  const currentHours = moment().hours();
+
+  if (currentHours >= 0 && currentHours < 12) return "pagi";
+  if (currentHours >= 12 && currentHours < 18) return "siang";
+
+  return "malam";
+};
+
+export const isPastOrPresent = (
+  category: "pagi" | "siang" | "malam",
+  currentCategory: "pagi" | "siang" | "malam"
+) => {
+  const order = { pagi: 0, siang: 1, malam: 2 };
+  const categoryIndex = order?.[category];
+  /** From Active Tab */
+  const currentCategoryIndex = order?.[currentCategory];
+
+  return categoryIndex > currentCategoryIndex ? "past" : "present";
+};
+
+export const isToday = (currentDay: string) => {
+  const today = moment()?.format("YYYY-MM-DD");
+
+  return moment(currentDay)?.isSame(today, "date");
 };
