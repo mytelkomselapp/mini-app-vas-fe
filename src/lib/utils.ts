@@ -5,6 +5,10 @@ import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
 import sign from "jwt-encode";
 import { END_RAMADHAN_DATE } from "../core/env";
+import {
+  StampMissionListDataConfig,
+  StampMissionListDataMission,
+} from "../network/types/response-props";
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -425,4 +429,34 @@ export const getLatestUpdateVersion = () => {
       icon: "none",
     });
   });
+};
+
+export const isTaskIbadahEnabledByTimeRules = (
+  category: "pagi" | "siang" | "malam",
+  taskName: string
+): { isEnable: boolean; message: string } => {
+  const currentHours = moment().hours();
+
+  switch (category) {
+    case "pagi":
+      return {
+        isEnable: currentHours < 12,
+        message: `Misi ${taskName} bisa di checklist antara pukul 00:00 hingga pukul 11.59`,
+      };
+    case "siang":
+      return {
+        isEnable: currentHours >= 12 && currentHours < 18,
+        message: `Misi ${taskName} bisa di checklist antara pukul 12:00 hingga pukul 17.59`,
+      };
+    case "malam":
+      return {
+        isEnable: currentHours >= 18,
+        message: `Misi ${taskName} bisa di checklist antara jam 18:00 hingga pukul 23:59`,
+      };
+    default:
+      return {
+        isEnable: false,
+        message: "",
+      };
+  }
 };

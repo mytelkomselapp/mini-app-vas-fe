@@ -14,6 +14,7 @@ import {
 import {
   getCurrentDayRamadhan,
   getCurrentTaskStatus,
+  isTaskIbadahEnabledByTimeRules,
   translateTaskType,
 } from "../../../../../../../../lib/utils";
 import IconSchedule from "../../../../../../../../assets/ico_schedule.svg";
@@ -67,8 +68,21 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
   } = useToggle();
 
   const handleOpenTaskModal = (data: DataDetailTaskRamadhanProps) => {
-    setData(data);
-    toggleVisibleTaskModal();
+    const configTimelimit = isTaskIbadahEnabledByTimeRules(
+      dataConfigItem?.category as any,
+      data?.mission_name_id
+    );
+
+    if (!configTimelimit?.isEnable) {
+      setNotificationToast({
+        type: "error",
+        message: configTimelimit?.message,
+      });
+      toggleVisibleNotificationToast();
+    } else {
+      setData(data);
+      toggleVisibleTaskModal();
+    }
   };
 
   const handleClick = (activeTab: "morning" | "afternoon" | "night") => {
