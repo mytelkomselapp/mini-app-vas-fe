@@ -9,16 +9,17 @@ import {
 } from "../../../../../../../../network";
 import DetailTaskIbadahModal from "../../../../modals";
 import useToggle from "../../../../../../../../hooks/useToggle";
-import {
-  useDetailTaskRamadhan,
-  useDataCatatanIbadah,
-} from "../../../../../../../../store/ramadhan";
+import { useDetailTaskRamadhan } from "../../../../../../../../store/ramadhan";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
 import NotificationToast from "../../../../../../../../components/NotificationToast";
 import CheckedGray from "../../../../../../../../assets/checked-mark-grey.svg";
+import {
+  getCurrentDayRamadhan,
+  isTaskIbadahEnabledByTimeRules,
+} from "../../../../../../../../lib/utils";
 
 const CardList = () => {
-  const { currentDay } = useDataCatatanIbadah();
+  const currentDay = getCurrentDayRamadhan() ?? "";
 
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
@@ -63,7 +64,15 @@ const CardList = () => {
         })) || []
     )
     ?.filter((data) => data?.mission_status === 1)
-    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id));
+    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id))
+    ?.filter((data) => {
+      const configTimelimit = isTaskIbadahEnabledByTimeRules(
+        data?.category as any,
+        data?.mission_name_id
+      );
+
+      return configTimelimit?.isEnable;
+    });
 
   const indexHiddenCard = dataList
     ?.map((data, index) => {
