@@ -102,12 +102,9 @@ const CatatanIbadahPage = () => {
   };
 
   const handleShare = () => {
-    Taro.setClipboardData({
-      data: "test",
+    Taro.showShareImageMenu({
+      path: "https://picsum.photos/id/1/200/300",
     });
-    // Taro.showShareMenu({});
-    // wx.shareAppMessage
-    // console.log(globalThis.qq);
   };
 
   useEffect(() => {}, []);
