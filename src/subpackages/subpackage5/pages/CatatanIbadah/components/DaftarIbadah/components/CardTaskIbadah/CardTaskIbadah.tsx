@@ -43,6 +43,12 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
     return "rgba(7, 36, 92, 0.65)";
   };
 
+  const handleClick = (data: DataDetailTaskRamadhanProps) => {
+    if (["past", "present"]?.includes(activeTaskStatus)) return;
+
+    onClick?.(data);
+  };
+
   if (condition === "checked") {
     return (
       <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#e5f4ee] relative">
@@ -68,7 +74,10 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
 
   if (condition === "incomplete-disabled") {
     return (
-      <div className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#dae0e9]">
+      <div
+        onClick={() => handleClick(data)}
+        className="flex flex-col gap-y-2 justify-center items-center h-[108px] w-[108px] rounded-[16px] bg-[#dae0e9]"
+      >
         <AsSVG src={CancelMarkGrey} width="24px" height="24px" />
         <p className="text-[10px] font-bold text-[#9ca9c9]">
           {data?.mission_name_id}
@@ -98,12 +107,6 @@ const CardTaskIbadah: React.FC<CardTaskIbadahProps> = ({
       return BackgroundSholat;
 
     return BackgroundSahurBukaPuasa;
-  };
-
-  const handleClick = (data: DataDetailTaskRamadhanProps) => {
-    if (["past", "present"]?.includes(activeTaskStatus)) return;
-
-    onClick?.(data);
   };
 
   return (
