@@ -98,12 +98,6 @@ const CatatanIbadahPage = () => {
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
 
-  // const handleShare = () => {
-  //   Taro.showShareImageMenu({
-  //     path: "https://picsum.photos/id/1/200/300",
-  //   });
-  // };
-
   useTaroNavBar();
 
   return (
@@ -141,9 +135,6 @@ const CatatanIbadahPage = () => {
           <DateStamp
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />
-          {/* <View className="mx-[20px]">
-            <Button label="Share" onClick={handleShare} />
-          </View> */}
           <DaftarIbadah
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />
