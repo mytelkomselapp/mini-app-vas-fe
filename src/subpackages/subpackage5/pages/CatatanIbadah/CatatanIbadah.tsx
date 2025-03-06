@@ -23,9 +23,6 @@ import useToggle from "../../../../hooks/useToggle";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import NotificationToast from "../../../../components/NotificationToast";
 import Show from "../../../../components/Show";
-import Button from "../../../../components/Button";
-import { useEffect } from "react";
-import Taro from "@tarojs/taro";
 import { useDataCatatanIbadah } from "../../../../store/ramadhan";
 
 const CatatanIbadahPage = () => {
@@ -101,13 +98,11 @@ const CatatanIbadahPage = () => {
     handleNavigate("/subpackages/subpackage7/pages/TukarHadiah/index");
   };
 
-  const handleShare = () => {
-    Taro.showShareImageMenu({
-      path: "https://picsum.photos/id/1/200/300",
-    });
-  };
-
-  useEffect(() => {}, []);
+  // const handleShare = () => {
+  //   Taro.showShareImageMenu({
+  //     path: "https://picsum.photos/id/1/200/300",
+  //   });
+  // };
 
   useTaroNavBar();
 
@@ -146,9 +141,9 @@ const CatatanIbadahPage = () => {
           <DateStamp
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />
-          <View className="mx-[20px]">
+          {/* <View className="mx-[20px]">
             <Button label="Share" onClick={handleShare} />
-          </View>
+          </View> */}
           <DaftarIbadah
             dataMissionSummary={dataMissionSummary as StampMissionSummaryData[]}
           />
