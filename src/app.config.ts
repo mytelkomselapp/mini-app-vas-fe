@@ -50,6 +50,7 @@ export default {
     uploadFile: 60000,
     downloadFile: 120000, // 120 seconds
   },
+  enableShareAppMessage: true,
   window: {
     backgroundTextStyle: "light",
     navigationBarTitleText: "Ramadan Corner",

@@ -1,4 +1,4 @@
-import { Canvas, Image, View } from "@tarojs/components";
+import { Button, Canvas, Image, View } from "@tarojs/components";
 import BgShare from "../../../../../../assets/bg/share/bg-share.png";
 import LogoMyTsel from "../../../../../../assets/bg/share/logo-mytsel.png";
 import RekapRamadhan from "../../../../../../assets/bg/share/rekap_ramadan.png";
@@ -6,33 +6,32 @@ import TotalIbadahIcon from "../../../../../../assets/bg/share/total-ibadah-icon
 import StampIcon from "../../../../../../assets/bg/share/icon-stamp-gamehub.png";
 import RafiIcon from "../../../../../../assets/bg/share/icon-rafi.png";
 import QRCode from "../../../../../../assets/bg/share/QR-fita.png";
-import Taro, { useReady } from "@tarojs/taro";
+import Taro, { useReady, useShareAppMessage } from "@tarojs/taro";
 import {
   drawBottomRoundedRect,
   drawFlippedBackground,
   drawRoundedRect,
   drawTopRoundedRect,
 } from "../../../../../../lib/utils";
+import { useEffect, useState } from "react";
+import LoadingScreen from "../../../../../../components/LoadingScreen";
+import useTaroNavBar from "../../../../../../hooks/useTaroNavBar";
 
 export interface SharedCardProps {}
 
 const SharedCard: React.FC<SharedCardProps> = ({}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imagePath, setImagePath] = useState<string>("");
+
   const handleBack = () => {
     Taro.navigateBack();
   };
 
-  const shareImage = (filePath: string) => {
-    Taro.showShareImageMenu({
-      path: filePath,
-      success: () =>
-        Taro.showToast({ title: "Success share content", icon: "success" }),
-      fail: (err) => console.error("Failed to share content:", err),
-    });
-  };
-
+  useShareAppMessage;
+  useTaroNavBar();
   useReady(() => {});
 
-  const handleShare = () => {
+  const captureImage = () => {
     // Load custom font
     Taro.loadFontFace({
       family: "Sans",
@@ -115,12 +114,52 @@ const SharedCard: React.FC<SharedCardProps> = ({}) => {
       Taro.canvasToTempFilePath({
         canvasId: "shareCanvas",
         success: (res) => {
-          shareImage(res.tempFilePath);
+          setImagePath(res.tempFilePath);
         },
         fail: (err) => console.error("Capture failed", err),
       });
     });
   };
+
+  const preloadImages = async () => {
+    try {
+      await Taro.getImageInfo({ src: BgShare });
+      await Taro.getImageInfo({ src: LogoMyTsel });
+      await Taro.getImageInfo({ src: StampIcon });
+      await Taro.getImageInfo({ src: RafiIcon });
+      await Taro.getImageInfo({ src: QRCode });
+      await Taro.getImageInfo({ src: TotalIbadahIcon });
+    } catch (err) {
+      console.error("Image preload failed:", err);
+    }
+  };
+
+  useEffect(() => {
+    preloadImages().then(() => {
+      setIsLoaded(true);
+      captureImage();
+    });
+  }, []);
+
+  useShareAppMessage(() => {
+    if (!imagePath) {
+      Taro.showToast({
+        title: "Shareable content not ready",
+        duration: 3000,
+      });
+
+      return {};
+    }
+
+    return {
+      title: "Check out this awesome Ramadan tracker!",
+      path: Taro.getCurrentInstance().router?.path || "", // Target page
+      imageUrl: imagePath, // Share thumbnail
+    };
+  });
+
+  if (!isLoaded)
+    return <LoadingScreen text="Loading..." customClassName="mx-[20px]" />;
 
   return (
     <>
@@ -221,12 +260,12 @@ const SharedCard: React.FC<SharedCardProps> = ({}) => {
       />
 
       <View className="flex flex-col gap-4 mx-[16px] my-8">
-        <div
-          onClick={handleShare}
-          className="cursor-pointer rounded-[40px] bg-white flex justify-center items-center h-[48px]"
+        <Button
+          openType="share"
+          className="cursor-pointer rounded-[40px] bg-white flex w-[100vw - 40px] justify-center items-center h-[48px]"
         >
           <p className="text-[16px] text-[#ed0226] font-semibold">Bagikan</p>
-        </div>
+        </Button>
         <div
           onClick={handleBack}
           className="cursor-pointer rounded-[40px] bg-transparent flex justify-center items-center h-[40px]"
