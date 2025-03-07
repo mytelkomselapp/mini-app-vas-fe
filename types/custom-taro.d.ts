@@ -11,5 +11,10 @@ declare const TaroCustom: CustomTaroStatic;
 declare module "@tarojs/taro" {
   interface TaroStatic {
     invokeNativePlugin: (opts: any) => any;
+    shareAppMessage: (opts: {
+      title: string;
+      path: string;
+      imageUrl: string;
+    }) => any;
   }
 }

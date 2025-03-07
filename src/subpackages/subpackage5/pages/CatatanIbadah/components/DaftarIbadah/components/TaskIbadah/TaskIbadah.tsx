@@ -12,8 +12,12 @@ import {
   useDetailTaskRamadhan,
 } from "../../../../../../../../store/ramadhan";
 import {
+  currentTimeCategory,
   getCurrentDayRamadhan,
   getCurrentTaskStatus,
+  isPastOrPresent,
+  isTaskIbadahEnabledByTimeRules,
+  isToday,
   translateTaskType,
 } from "../../../../../../../../lib/utils";
 import IconSchedule from "../../../../../../../../assets/ico_schedule.svg";
@@ -25,6 +29,7 @@ import {
 import { usePostSubmitMission } from "../../../../../../../../network";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
 import NotificationToast from "../../../../../../../../components/NotificationToast";
+import WarningTaskIbadahModal from "../../../WarningTaskIbadahModal";
 
 export interface TaskIbadahProps {
   dataStampMissionListConfig: StampMissionListDataConfig[];
@@ -44,6 +49,16 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
     message: "Test message",
     type: "success",
   });
+  const [warningTaskModal, setWarningTaskModal] = React.useState<{
+    visible: boolean;
+    message: string;
+    type: "past" | "present";
+  }>({
+    visible: false,
+    message: "",
+    type: "present",
+  });
+
   const [activeTab, setActiveTab] =
     React.useState<TaskIbadahActiveTabType>("morning");
 
@@ -51,7 +66,7 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
     usePostSubmitMission();
 
   const { setData } = useDetailTaskRamadhan();
-  const { currentDay, setCurrentDay } = useDataCatatanIbadah();
+  const { currentDay, setCurrentDay, setSelectedTab } = useDataCatatanIbadah();
   const activeTaskStatus = getCurrentTaskStatus(currentDay);
 
   const dataConfigItem = [...dataStampMissionListConfig]?.find(
@@ -67,12 +82,29 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
   } = useToggle();
 
   const handleOpenTaskModal = (data: DataDetailTaskRamadhanProps) => {
-    setData(data);
-    toggleVisibleTaskModal();
+    const configTimelimit = isTaskIbadahEnabledByTimeRules(
+      dataConfigItem?.category as any,
+      data?.mission_name_id
+    );
+
+    if (!configTimelimit?.isEnable) {
+      setWarningTaskModal({
+        type: isPastOrPresent(
+          currentTimeCategory(),
+          translateTaskType(activeTab)
+        ),
+        visible: true,
+        message: configTimelimit?.message,
+      });
+    } else {
+      setData(data);
+      toggleVisibleTaskModal();
+    }
   };
 
   const handleClick = (activeTab: "morning" | "afternoon" | "night") => {
     setActiveTab(activeTab);
+    setSelectedTab(translateTaskType(activeTab));
   };
 
   const handleBackToToday = () => {
@@ -92,11 +124,34 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
     return {};
   };
 
+  const renderTitle = () => {
+    const today = isToday(currentDay);
+    const category = currentTimeCategory();
+    const categoryFromActiveTab = translateTaskType(activeTab);
+    const isInTimeCategory = category === categoryFromActiveTab;
+
+    if (activeTaskStatus === "past") {
+      return "Kamu tidak bisa mencatat ibadah di waktu ini lagi, ya.";
+    }
+
+    return today && isInTimeCategory
+      ? "Pilih kegiatan yang sudah kamu lakukan, yuk!"
+      : "Kamu tidak bisa mencatat ibadah di waktu ini lagi, ya.";
+  };
+
   const generateClassname = (isActive: boolean) => {
     if (isActive)
       return `text-[16px] text-center flex justify-center items-center relative top-[2px] gap-x-1 h-[40px] font-bold text-black rounded-t-[16px]`;
 
     return `text-[16px] text-center flex justify-center items-center gap-x-1 h-[40px] font-bold text-[#757F90]`;
+  };
+
+  const handleCloseWarningTaskModal = () => {
+    setWarningTaskModal({
+      visible: false,
+      message: "",
+      type: "present",
+    });
   };
 
   const handleSubmitMission = async (missionId: string) => {
@@ -212,13 +267,19 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
             className="w-full min-h-[260px] rounded-t-[16px] py-[12px]"
           >
             <p className="text-[12px] mb-2 px-[20px] text-[#757f90]">
-              Pilih kegiatan yang sudah kamu lakukan, yuk!
+              {renderTitle()}
             </p>
 
             <div className="grid grid-cols-3 px-[20px] gap-x-2 gap-y-2">
               {dataCardByActiveTab?.map((data, idx) => {
                 const generateCondition = () => {
+                  const timeLimitation = isPastOrPresent(
+                    currentTimeCategory(),
+                    translateTaskType(activeTab)
+                  );
                   if (activeTaskStatus === "today") {
+                    if (timeLimitation === "past") return "incomplete-disabled";
+
                     if (data?.mission_status === 0) return "checked";
                     if (data?.mission_status === 1) return "active";
                   }
@@ -265,6 +326,13 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
           onClose={toggleVisibleTaskModal}
           onSubmit={handleSubmitMission}
           submitLoading={loadingSubmitMission}
+        />
+        <WarningTaskIbadahModal
+          type={warningTaskModal?.type}
+          open={warningTaskModal?.visible}
+          message={warningTaskModal?.message}
+          onClickCTA={() => {}}
+          onClose={handleCloseWarningTaskModal}
         />
       </View>
       <NotificationToast

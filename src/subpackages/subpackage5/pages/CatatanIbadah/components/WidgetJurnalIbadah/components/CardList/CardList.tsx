@@ -9,16 +9,19 @@ import {
 } from "../../../../../../../../network";
 import DetailTaskIbadahModal from "../../../../modals";
 import useToggle from "../../../../../../../../hooks/useToggle";
-import {
-  useDetailTaskRamadhan,
-  useDataCatatanIbadah,
-} from "../../../../../../../../store/ramadhan";
+import { useDetailTaskRamadhan } from "../../../../../../../../store/ramadhan";
 import { queryClient } from "../../../../../../../../hoc/withProvider";
 import NotificationToast from "../../../../../../../../components/NotificationToast";
-import CheckedGray from "../../../../../../../../assets/checked-mark-grey.svg";
+import CheckedMarkGreen from "../../../../../../../../assets/checked-mark-green.svg";
+import {
+  currentTimeCategory,
+  getCurrentDayRamadhan,
+  isTaskIbadahEnabledByTimeRules,
+} from "../../../../../../../../lib/utils";
+import Show from "../../../../../../../../components/Show";
 
 const CardList = () => {
-  const { currentDay } = useDataCatatanIbadah();
+  const currentDay = getCurrentDayRamadhan() ?? "";
 
   const [submittedMissionId, setSubmittedMissionId] = React.useState<string[]>(
     []
@@ -63,7 +66,15 @@ const CardList = () => {
         })) || []
     )
     ?.filter((data) => data?.mission_status === 1)
-    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id));
+    ?.filter((data) => !animateSubmittedMissionId?.includes(data?.mission_id))
+    ?.filter((data) => {
+      const configTimelimit = isTaskIbadahEnabledByTimeRules(
+        data?.category as any,
+        data?.mission_name_id
+      );
+
+      return configTimelimit?.isEnable;
+    });
 
   const indexHiddenCard = dataList
     ?.map((data, index) => {
@@ -130,13 +141,31 @@ const CardList = () => {
     }
   };
 
+  const renderTextActualMission = () => {
+    const category = currentTimeCategory();
+
+    if (category === "pagi") {
+      return "Kamu sudah menyelesaikan kegiatan ibadah pagi hari ini. Kembali lagi nanti siang ya!";
+    }
+
+    if (category === "siang") {
+      return "Kamu sudah menyelesaikan kegiatan ibadah siang hari ini. Kembali lagi nanti malam ya!";
+    }
+
+    return "Kamu sudah menyelesaikan semua ibadah dalam hari ini, silakan kembali lagi besok!";
+  };
+
   if (actualRemainingMission <= 0) {
     return (
       <View className="flex flex-col justify-center items-center h-[242px] gap-y-2 px-[16px]">
-        <img src={CheckedGray} alt="CheckMark" width="24px" height="24px" />
+        <img
+          src={CheckedMarkGreen}
+          alt="CheckMark"
+          width="24px"
+          height="24px"
+        />
         <Text className="text-[12px] text-[#9ca9b9] text-center">
-          Kamu sudah menyelesaikan semua ibadah dalam hari ini, silakan kembali
-          lagi besok!
+          {renderTextActualMission()}
         </Text>
       </View>
     );
@@ -175,11 +204,13 @@ const CardList = () => {
             );
           })}
         </View>
-        <View className="p-[12px] flex gap-y-2 h-[13%]">
-          <Text className="text-[10px] relative top-[-6px] text-[#757f90]">
-            +{remainingMissionText} kegiatan tersisa
-          </Text>
-        </View>
+        <Show when={remainingMissionText > 0}>
+          <View className="p-[12px] flex gap-y-2 h-[13%]">
+            <Text className="text-[10px] relative top-[-6px] text-[#757f90]">
+              +{remainingMissionText} kegiatan tersisa
+            </Text>
+          </View>
+        </Show>
       </View>
       <DetailTaskIbadahModal
         data={dataMissionPopupCMS}

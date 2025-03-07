@@ -5,6 +5,10 @@ import { twMerge } from "tailwind-merge";
 import { StateStorage } from "zustand/middleware";
 import sign from "jwt-encode";
 import { END_RAMADHAN_DATE } from "../core/env";
+import {
+  StampMissionListDataConfig,
+  StampMissionListDataMission,
+} from "../network/types/response-props";
 
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = [
@@ -241,6 +245,10 @@ export const getCurrentWeekRamadhan = (currentDay: string) => {
   return Math.floor(days / 7) + 1;
 };
 
+export const getCurrentDate = () => {
+  return moment()?.date();
+};
+
 export const getCurrentTaskStatus = (stateCurrentDay: string) => {
   const currentDay = moment()?.format("YYYY-MM-DD");
 
@@ -425,4 +433,116 @@ export const getLatestUpdateVersion = () => {
       icon: "none",
     });
   });
+};
+
+export const isTaskIbadahEnabledByTimeRules = (
+  category: "pagi" | "siang" | "malam",
+  taskName: string
+): { isEnable: boolean; message: string } => {
+  const currentHours = moment().hours();
+
+  switch (category) {
+    case "pagi":
+      return {
+        isEnable: currentHours >= 0 && currentHours < 12,
+        message: `Kegiatan pagi ini hanya dapat dicatat pukul 00:00 - 11:59.`,
+      };
+    case "siang":
+      return {
+        isEnable: currentHours >= 12 && currentHours < 18,
+        message: `Kegiatan siang ini hanya dapat dicatat pukul 12:00 - 17:59. Coba lagi nanti, ya!`,
+      };
+    case "malam":
+      return {
+        isEnable: currentHours >= 18,
+        message: `Kegiatan siang ini hanya dapat dicatat pukul 18:00 - 23:59. Coba lagi nanti, ya!`,
+      };
+    default:
+      return {
+        isEnable: false,
+        message: "",
+      };
+  }
+};
+
+export const currentTimeCategory = (): "pagi" | "siang" | "malam" => {
+  const currentHours = moment().hours();
+
+  if (currentHours >= 0 && currentHours < 12) return "pagi";
+  if (currentHours >= 12 && currentHours < 18) return "siang";
+
+  return "malam";
+};
+
+export const isPastOrPresent = (
+  category: "pagi" | "siang" | "malam",
+  currentCategory: "pagi" | "siang" | "malam"
+) => {
+  const order = { pagi: 0, siang: 1, malam: 2 };
+  const categoryIndex = order?.[category];
+  /** From Active Tab */
+  const currentCategoryIndex = order?.[currentCategory];
+
+  return categoryIndex > currentCategoryIndex ? "past" : "present";
+};
+
+export const isToday = (currentDay: string) => {
+  const today = moment()?.format("YYYY-MM-DD");
+
+  return moment(currentDay)?.isSame(today, "date");
+};
+
+export const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y); // Move to top-left corner
+  ctx.lineTo(x + width - radius, y); // Top edge
+  ctx.arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0); // Top-right corner
+  ctx.lineTo(x + width, y + height - radius); // Right edge
+  ctx.arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2); // Bottom-right corner
+  ctx.lineTo(x + radius, y + height); // Bottom edge
+  ctx.arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI); // Bottom-left corner
+  ctx.lineTo(x, y + radius); // Left edge
+  ctx.arc(x + radius, y + radius, radius, Math.PI, (Math.PI * 3) / 2); // Top-left corner
+  ctx.closePath();
+};
+
+export const drawFlippedBackground = (ctx, imageSrc, x, y, width, height) => {
+  ctx.save(); // Save the current state
+
+  ctx.scale(-1, 1); // Flip horizontally
+
+  // Draw the image at a negative x position to correct flipping
+  ctx.drawImage(imageSrc, -x - width, y, width, height);
+
+  ctx.restore(); // Restore the canvas state
+};
+
+export const drawBottomRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x, y); // Start at top-left corner
+  ctx.lineTo(x + width, y); // Draw straight line to top-right corner
+  ctx.lineTo(x + width, y + height - radius); // Move down to start rounding
+
+  // Bottom-right corner
+  ctx.arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
+
+  ctx.lineTo(x + radius, y + height); // Move left to start rounding
+
+  // Bottom-left corner
+  ctx.arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
+
+  ctx.lineTo(x, y); // Close path
+  ctx.closePath();
+};
+
+export const drawTopRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y); // Start at top-left with radius
+  ctx.lineTo(x + width - radius, y); // Draw straight top line
+  ctx.arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0); // Top-right curve
+  ctx.lineTo(x + width, y + height); // Straight down to bottom-right
+  ctx.lineTo(x, y + height); // Straight to bottom-left
+  ctx.lineTo(x, y + radius); // Move up to start top-left curve
+  ctx.arc(x + radius, y + radius, radius, Math.PI, -Math.PI / 2); // Top-left curve
+  ctx.closePath();
 };
