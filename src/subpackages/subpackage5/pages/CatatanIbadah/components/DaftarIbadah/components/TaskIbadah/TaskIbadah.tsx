@@ -139,21 +139,6 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
       : "Kamu tidak bisa mencatat ibadah di waktu ini lagi, ya.";
   };
 
-  const renderFooter = () => {
-    if (activeTaskStatus === "today") {
-      const category = translateTaskType(activeTab);
-
-      if (category === "pagi")
-        return "Kamu hanya dapat mencatat kegiatan pagi ini pada pukul 00:00 - 11:59 saja, ya!";
-      if (category === "siang")
-        return "Kamu hanya dapat mencatat kegiatan siang ini pada pukul 12:00 - 17:59 saja, ya!";
-
-      return "Kamu hanya dapat mencatat kegiatan malam ini pada pukul 18:00 - 23:59 saja, ya!";
-    }
-
-    return "";
-  };
-
   const generateClassname = (isActive: boolean) => {
     if (isActive)
       return `text-[16px] text-center flex justify-center items-center relative top-[2px] gap-x-1 h-[40px] font-bold text-black rounded-t-[16px]`;
@@ -317,10 +302,6 @@ const TaskIbadah: React.FC<TaskIbadahProps> = ({
                 );
               })}
             </div>
-
-            <p className="text-center text-[10px] text-[#757f90] mt-4 mb-4 w-[80%] ml-[10%]">
-              {renderFooter()}
-            </p>
           </div>
         ) : (
           <div

@@ -245,6 +245,10 @@ export const getCurrentWeekRamadhan = (currentDay: string) => {
   return Math.floor(days / 7) + 1;
 };
 
+export const getCurrentDate = () => {
+  return moment()?.date();
+};
+
 export const getCurrentTaskStatus = (stateCurrentDay: string) => {
   const currentDay = moment()?.format("YYYY-MM-DD");
 
@@ -486,4 +490,59 @@ export const isToday = (currentDay: string) => {
   const today = moment()?.format("YYYY-MM-DD");
 
   return moment(currentDay)?.isSame(today, "date");
+};
+
+export const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y); // Move to top-left corner
+  ctx.lineTo(x + width - radius, y); // Top edge
+  ctx.arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0); // Top-right corner
+  ctx.lineTo(x + width, y + height - radius); // Right edge
+  ctx.arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2); // Bottom-right corner
+  ctx.lineTo(x + radius, y + height); // Bottom edge
+  ctx.arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI); // Bottom-left corner
+  ctx.lineTo(x, y + radius); // Left edge
+  ctx.arc(x + radius, y + radius, radius, Math.PI, (Math.PI * 3) / 2); // Top-left corner
+  ctx.closePath();
+};
+
+export const drawFlippedBackground = (ctx, imageSrc, x, y, width, height) => {
+  ctx.save(); // Save the current state
+
+  ctx.scale(-1, 1); // Flip horizontally
+
+  // Draw the image at a negative x position to correct flipping
+  ctx.drawImage(imageSrc, -x - width, y, width, height);
+
+  ctx.restore(); // Restore the canvas state
+};
+
+export const drawBottomRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x, y); // Start at top-left corner
+  ctx.lineTo(x + width, y); // Draw straight line to top-right corner
+  ctx.lineTo(x + width, y + height - radius); // Move down to start rounding
+
+  // Bottom-right corner
+  ctx.arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
+
+  ctx.lineTo(x + radius, y + height); // Move left to start rounding
+
+  // Bottom-left corner
+  ctx.arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
+
+  ctx.lineTo(x, y); // Close path
+  ctx.closePath();
+};
+
+export const drawTopRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y); // Start at top-left with radius
+  ctx.lineTo(x + width - radius, y); // Draw straight top line
+  ctx.arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0); // Top-right curve
+  ctx.lineTo(x + width, y + height); // Straight down to bottom-right
+  ctx.lineTo(x, y + height); // Straight to bottom-left
+  ctx.lineTo(x, y + radius); // Move up to start top-left curve
+  ctx.arc(x + radius, y + radius, radius, Math.PI, -Math.PI / 2); // Top-left curve
+  ctx.closePath();
 };

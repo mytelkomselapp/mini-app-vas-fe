@@ -25,6 +25,9 @@
     "beforePreview": "",
     "beforeUpload": ""
   },
+  "assets": [
+    "assets/fonts/TelkomselBatikSans-Regular.ttf"
+  ],
   "condition": {
     "plugin": {
       "current": -1,
@@ -62,6 +65,13 @@
           "id": -1,
           "name": "Catatan Ibadah",
           "pathName": "subpackages/subpackage5/pages/CatatanIbadah/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "Share Page",
+          "pathName": "subpackages/subpackage5/pages/WeeklySummary/index",
           "query": "",
           "scene": null
         }

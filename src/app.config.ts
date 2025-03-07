@@ -13,7 +13,10 @@ export default {
       root: "subpackages/subpackage4",
       pages: ["pages/Dzikir/index", "pages/DzikirDetail/index"],
     },
-    { root: "subpackages/subpackage5", pages: ["pages/CatatanIbadah/index"] },
+    {
+      root: "subpackages/subpackage5",
+      pages: ["pages/CatatanIbadah/index", "pages/WeeklySummary/index"],
+    },
     { root: "subpackages/subpackage6", pages: ["pages/PrayerSchedule/index"] },
     {
       root: "subpackages/subpackage7",
@@ -47,6 +50,7 @@ export default {
     uploadFile: 60000,
     downloadFile: 120000, // 120 seconds
   },
+  enableShareAppMessage: true,
   window: {
     backgroundTextStyle: "light",
     navigationBarTitleText: "Ramadan Corner",
