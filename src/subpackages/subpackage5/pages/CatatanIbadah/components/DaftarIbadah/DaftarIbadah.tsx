@@ -13,7 +13,7 @@ import {
   useFetchMissionPopupCMS,
   useFetchStampMissionList,
 } from "../../../../../../network";
-import WeeklySummaryBanner from "../WeeklySummaryBanner";
+// import WeeklySummaryBanner from "../WeeklySummaryBanner";
 
 export interface DaftarIbadahProps {
   dataMissionSummary: StampMissionSummaryData[];
@@ -44,7 +44,7 @@ const DaftarIbadah: React.FC<DaftarIbadahProps> = ({ dataMissionSummary }) => {
     <React.Fragment>
       <View className="p-[20px]">
         {/* Rekap Mingguan */}
-        <WeeklySummaryBanner />
+        {/* <WeeklySummaryBanner /> */}
 
         <p className="text-[16px] font-bold text-black">
           Daftar Ibadah - {moment(currentDay)?.date() || "{current_day}"}{" "}
