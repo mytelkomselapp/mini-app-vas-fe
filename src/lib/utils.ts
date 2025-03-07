@@ -455,7 +455,7 @@ export const isTaskIbadahEnabledByTimeRules = (
     case "malam":
       return {
         isEnable: currentHours >= 18,
-        message: `Kegiatan siang ini hanya dapat dicatat pukul 18:00 - 23:59. Coba lagi nanti, ya!`,
+        message: `Kegiatan malam ini hanya dapat dicatat pukul 18:00 - 23:59. Coba lagi nanti, ya!`,
       };
     default:
       return {
