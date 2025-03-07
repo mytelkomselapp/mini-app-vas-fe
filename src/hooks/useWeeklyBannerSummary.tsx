@@ -16,8 +16,6 @@ const useWeeklyBannerSummary = (): WeeklyBannerSummaryData => {
     getCurrentDayRamadhan() as string
   ) as number;
 
-  console.log({ currentDate, currentWeek });
-
   return {
     visible: [8, 15, 22, 29]?.includes(currentDate),
     currentWeek: currentWeek - 1,
