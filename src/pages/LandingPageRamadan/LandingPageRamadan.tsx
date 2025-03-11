@@ -368,7 +368,7 @@ const LandingPageRamadan = () => {
             <Text className="font-batikSans font-bold text-[14px]">
               {cardSession2Header?.title}
             </Text>
-            <Text
+            {/* <Text
               className="whitespace-pre-wrap text-xs text-grey"
               onClick={() => {
                 const targetUrl = cardSession2Header?.targetUrl;
@@ -387,7 +387,7 @@ const LandingPageRamadan = () => {
               }}
             >
               {"Lihat Semua"}
-            </Text>
+            </Text> */}
           </View>
           <SpecialGame data={cardSession2} />
         </Show>
@@ -395,31 +395,6 @@ const LandingPageRamadan = () => {
           <View className="flex flex-row items-center pl-4 mt-8 mb-2 justify-between">
             <Text className="font-batikSans font-bold text-[14px]">
               {newsSessionHeader?.title}
-            </Text>
-            <Text
-              className="whitespace-pre-wrap text-xs text-grey"
-              onClick={() => {
-                const targetUrl = newsSessionHeader?.targetUrl;
-                if (targetUrl) {
-                  Taro.invokeNativePlugin({
-                    api_name: "openWebView",
-                    data: {
-                      url: targetUrl,
-                    },
-                    success: (res: any) =>
-                      console.log("invokeNativePlugin success", res),
-                    fail: (err: any) =>
-                      console.error("invokeNativePlugin fail", err),
-                  });
-                  // Taro.navigateTo({
-                  //   url:
-                  //     "/subpackages/subpackage9/pages/Webview/index?url=" +
-                  //     encodeURIComponent(targetUrl),
-                  // });
-                }
-              }}
-            >
-              {"Lihat Semua"}
             </Text>
           </View>
           <NewsCardList data={newsSession} />
