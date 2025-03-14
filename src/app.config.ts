@@ -15,11 +15,4 @@ export default {
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
-
-  //  requiredBackgroundModes: ["file"],
-  // permission: {
-  //   "scope.userLocation": {
-  //     desc: "Enable User Location in order to get the best feature",
-  //   },
-  // }, // Background modes required
 };
