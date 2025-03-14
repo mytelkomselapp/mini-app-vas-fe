@@ -1,67 +1,25 @@
 export default {
-  pages: [
-    "pages/LandingPageRamadan/index", //Main Page as the first order
-  ],
-  subPackages: [
-    { root: "subpackages/subpackage1", pages: ["pages/ArahKiblat/index"] },
-    { root: "subpackages/subpackage2", pages: ["pages/CariMasjid/index"] },
-    {
-      root: "subpackages/subpackage3",
-      pages: ["pages/RamadhanSearchLocation/index"],
-    },
-    {
-      root: "subpackages/subpackage4",
-      pages: ["pages/Dzikir/index", "pages/DzikirDetail/index"],
-    },
-    {
-      root: "subpackages/subpackage5",
-      pages: ["pages/CatatanIbadah/index", "pages/WeeklySummary/index"],
-    },
-    { root: "subpackages/subpackage6", pages: ["pages/PrayerSchedule/index"] },
-    {
-      root: "subpackages/subpackage7",
-      pages: [
-        "pages/TukarHadiah/index",
-        "pages/RiwayatTukarHadiah/index",
-        "pages/DetailHadiah/index",
-      ],
-    },
-    { root: "subpackages/subpackage9", pages: ["pages/Webview/index"] },
-  ],
-  preloadRule: {
-    "pages/LandingPageRamadan/index": {
-      packages: [
-        //   "subpackages/subpackage1",
-        "subpackages/subpackage3",
-        // "subpackages/subpackage6",
-      ], // Preload these subpackages
-      network: "all", // Load even on mobile data
-      complete: true, // Preload all pages in the subpackage
-    },
-    "pages/CatatanIbadah/index": {
-      packages: ["subpackages/subpackage7"], // Preload these subpackages
-      network: "all", // Load even on mobile data
-      complete: true, // Preload all pages in the subpackage
-    },
-  },
+  pages: ["pages/ContentDetail/index"],
+  subPackages: [],
+  preloadRule: {},
   networkTimeout: {
     request: 120000, // 120 seconds
     connectSocket: 60000,
     uploadFile: 60000,
     downloadFile: 120000, // 120 seconds
   },
-  enableShareAppMessage: true,
+
   window: {
     backgroundTextStyle: "light",
-    navigationBarTitleText: "Ramadan Corner",
+    navigationBarTitleText: "VAS",
     navigationBarBackgroundColor: "#d41f2c",
     navigationBarTextStyle: "white",
   },
 
-  requiredBackgroundModes: ["file"],
-  permission: {
-    "scope.userLocation": {
-      desc: "Enable User Location in order to get the best feature",
-    },
-  }, // Background modes required
+  //  requiredBackgroundModes: ["file"],
+  // permission: {
+  //   "scope.userLocation": {
+  //     desc: "Enable User Location in order to get the best feature",
+  //   },
+  // }, // Background modes required
 };

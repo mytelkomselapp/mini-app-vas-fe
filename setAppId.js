@@ -7,11 +7,11 @@ const projectConfig = require(projectConfigPath);
 const env = process.env.NODE_ENV;
 
 if (env === "production") {
-  projectConfig.appid = "mpstin37uchpvihp";
-  projectConfig.TCMPPappid = "mpstin37uchpvihp";
+  projectConfig.appid = "mp7vumyeycsvi5ve"; //change this into your production appid
+  projectConfig.TCMPPappid = "mp7vumyeycsvi5ve"; //change this into your production appid
 } else {
-  projectConfig.appid = "mp3svesjvbm65na0";
-  projectConfig.TCMPPappid = "mp3svesjvbm65na0";
+  projectConfig.appid = "mp7vumyeycsvi5ve"; //change this into your dev appid
+  projectConfig.TCMPPappid = "mp7vumyeycsvi5ve"; //change this into your dev appid
 }
 
 fs.writeFileSync(

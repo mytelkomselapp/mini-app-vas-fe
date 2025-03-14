@@ -21,7 +21,6 @@ const Index = () => {
           path="../PreviewImageDocs/index"
           element={<PreviewImageDocs />}
         />
-        {/* <Route path="../ArahKiblat/index" element={<ArahKiblat />} /> */}
       </Routes>
     </>
   );

@@ -28,9 +28,9 @@ const App = ({ children }: { children: React.ReactNode }) => {
         icon: "error",
         duration: 3000,
       });
-      Taro.reLaunch({
-        url: "/pages/LandingPageRamadan/index",
-      });
+      // Taro.reLaunch({
+      //   url: "/pages/LandingPageRamadan/index",
+      // });
     });
     Taro.onPageNotFound((res) => {
       console.error("Page not found:", res);
@@ -40,9 +40,9 @@ const App = ({ children }: { children: React.ReactNode }) => {
         duration: 3000,
       });
       // Redirect to home page or any other page
-      Taro.reLaunch({
-        url: "/pages/LandingPageRamadan/index",
-      });
+      // Taro.reLaunch({
+      //   url: "/pages/LandingPageRamadan/index",
+      // });
     });
     // Taro.showToast({
     //   title: JSON.stringify(extendData, null, 4),

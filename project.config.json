@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "ramadanTaro",
+  "projectname": "ramadanTaroVAS",
   "description": "",
   "appid": "mp3svesjvbm65na0",
   "setting": {
@@ -50,7 +50,7 @@
         {
           "id": 0,
           "name": "LandingPage",
-          "pathName": "pages/LandingPageRamadan/index",
+          "pathName": "pages/ContentDetail/index",
           "query": "",
           "scene": null
         },
