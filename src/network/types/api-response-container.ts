@@ -1,14 +1,14 @@
 import { RequestTask } from "@tarojs/taro";
 import { AxiosError, AxiosResponse } from "axios";
 
-export interface FlightAPIMeta {
+export interface APIMeta {
   message: string;
   code: string;
   status: string;
 }
 interface ApiSuccessResponse<T> {
   data: T;
-  meta: FlightAPIMeta;
+  meta: APIMeta;
   message: string;
   status: string;
   statusCode: number;

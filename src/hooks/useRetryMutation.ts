@@ -1,13 +1,31 @@
 import { useMutation } from "react-query";
 
+/**
+ * Interface for retry mutation properties.
+ */
 export interface RetryMutationProps {
+  /** Maximum number of retry attempts */
   retryMaxAttempt: number;
+  /** Interval (in milliseconds) between retry attempts */
   retryInterval: number;
+  /** Array of HTTP status codes considered successful (default: [200]) */
   successStatusCode?: number[];
+  /** Callback function triggered on success */
   onSuccess?: (data: any) => void;
+  /** Callback function triggered on error */
   onError?: (error: any) => void;
 }
 
+/**
+ * Custom hook for handling mutations with retry logic.
+ *
+ * @template TData - The type of data returned from the mutation function.
+ * @template TVariables - The type of variables passed to the mutation function.
+ * @param {string | string[]} mutationKey - Unique key or array of keys for the mutation.
+ * @param {(variables: TVariables) => Promise<TData>} mutationFn - Function that performs the mutation.
+ * @param {RetryMutationProps} options - Configuration options for retry behavior.
+ * @returns {import("react-query").UseMutationResult<TData, Error, TVariables>} - The mutation object.
+ */
 const useRetryMutation = <TData, TVariables>(
   mutationKey: string | string[],
   mutationFn: (variables: TVariables) => Promise<TData>,

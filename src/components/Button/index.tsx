@@ -1,5 +1,5 @@
 // src/components/Button.tsx
-import { cn } from "../../lib/utils";
+import { cn } from "../../lib/string.utils";
 import React from "react";
 
 type ButtonStyle = "primary" | "secondary";

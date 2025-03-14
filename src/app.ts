@@ -1,22 +1,15 @@
+import "./index.css";
+import "./app.scss";
 import * as React from "react";
 import Taro, { useLaunch } from "@tarojs/taro";
 import { withProvider } from "./hoc";
-import "./index.css";
-import "./app.scss";
-import { getLatestUpdateVersion } from "./lib/utils";
-
-const env = process.env.NODE_ENV;
+import { getLatestUpdateVersion } from "./lib/device-system-utils";
 
 const App = ({ children }: { children: React.ReactNode }) => {
   useLaunch((options?: any) => {
     const launchOptions = Taro.getLaunchOptionsSync();
     const extendData = options?.extendData ?? {};
-    console.log({ extendData });
     getLatestUpdateVersion();
-    // Taro.setEnableDebug({
-    //   enableDebug: true,
-    //   // enableDebug: env === "development",
-    // });
 
     if (typeof extendData !== "object") {
       Taro.setStorageSync("customParams", extendData);
@@ -39,17 +32,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
         icon: "error",
         duration: 3000,
       });
-      // Redirect to home page or any other page
-      // Taro.reLaunch({
-      //   url: "/pages/LandingPageRamadan/index",
-      // });
     });
-    // Taro.showToast({
-    //   title: JSON.stringify(extendData, null, 4),
-    //   icon: "none", // You can use 'success', 'loading', 'none', etc.
-    //   duration: 10000, // Duration in milliseconds
-    // });
-    // Perform initialization logic here
     if (launchOptions?.query) {
       console.log("Query parameters:", launchOptions.query);
     }
