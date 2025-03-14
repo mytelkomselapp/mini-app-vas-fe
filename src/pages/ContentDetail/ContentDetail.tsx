@@ -11,6 +11,11 @@ import { useState } from "react";
 import BottomSheet from "../../components/BottomSheet";
 import Button from "../../components/Button";
 import upgradeIllustration from "../../assets/upgrade-illustration.svg";
+import durationIcon from "../../assets/duration.svg";
+import giftIcon from "../../assets/gift.svg";
+import premiumBadge from "../../assets/premium-badge.svg";
+import monetaryIcon from "../../assets/monetary.svg";
+import rewardIllustration from "../../assets/reward-quota.svg";
 
 const bulletPoints = [
   "Harga belum termasuk pajak dan biaya lainnya.",
@@ -29,7 +34,142 @@ const ContentDetail = () => {
     package2: false, // Third package card
     additionalInfo: false, // Additional information section
   });
-  const [packageDetailOpen, setPackageDetailOpen] = useState(false);
+  const [packageDetailOpen, setPackageDetailOpen] = useState({
+    state: false,
+    type: "package0",
+  });
+
+  const PackageContent = () => {
+    const isSubscription = packageDetailOpen?.type === "package0";
+    const title = isSubscription
+      ? "Mulai Berlangganan Paket Ini"
+      : "Beli Sekarang Paket Ini";
+    const labelButton = isSubscription ? "Langganan Sekarang" : "Beli Sekarang";
+    return (
+      <>
+        <View className="flex flex-col w-full items-center justify-center text-center mb-4">
+          <Image
+            src={upgradeIllustration}
+            className="w-[100px] h-[100px] mb-2"
+          />
+          <Text className="text-[16px] font-semibold">{title}</Text>
+          <Text className={`text-xs mt-2 text-textSecondary text-center`}>
+            Konfirmasi ulang pembelian paket kamu
+          </Text>
+        </View>
+        <View>
+          <div className="space-y-4">
+            {/* Subscription Feature 1 */}
+            <div className="flex items-center space-x-3">
+              <Image
+                src={premiumBadge}
+                className="w-[40px] h-[35px] mr-[11px]"
+              />
+
+              <p className="text-sm text-blueNavy">
+                {isSubscription ? "Langganan" + " " : "Beli" + " "}
+                {"Konten Premium Semua Member JKT48"}
+              </p>
+            </div>
+
+            {/* Subscription Feature 2 */}
+            <div className="flex items-center space-x-3">
+              <div className="bg-gray-200 rounded-full w-[32px] h-[32px] flex items-center justify-center">
+                <Image src={giftIcon} className="w-5 h-5" />
+              </div>
+              <p className="text-sm text-blueNavy">
+                Masa berlaku konten 90 hari
+              </p>
+            </div>
+
+            {/* Subscription Feature 3 */}
+            <div className="flex items-center space-x-3">
+              <div className="bg-gray-200 rounded-full w-[32px] h-[32px] flex items-center justify-center">
+                <Image src={monetaryIcon} className="w-5 h-5" />
+              </div>
+              <p className="text-sm text-blueNavy">
+                Biaya update konten Rp 5.500 /update
+              </p>
+            </div>
+
+            {/* Subscription Feature 4 */}
+            <div className="flex items-center space-x-3">
+              <div className="bg-gray-200 rounded-full w-[32px] h-[32px] flex items-center justify-center">
+                <Image src={durationIcon} className="w-5 h-5" />
+              </div>
+              <p className="text-sm text-blueNavy">
+                Peluang memenangkan hadiah spesial
+              </p>
+            </div>
+          </div>
+        </View>
+        <Button
+          label={labelButton}
+          className="mt-6 mb-1 text-[16px] font-semibold"
+          onClick={() => {
+            console.log({ labelButton });
+          }}
+        />
+        <Button
+          className="border-none text-[#757F90]"
+          label="Batalkan"
+          onClick={() => {
+            setPackageDetailOpen({ state: false, type: "" });
+          }}
+          style="secondary"
+          // className="mb-8"
+        />
+      </>
+    );
+  };
+
+  const RewardContent = () => {
+    const bulletPoints = [
+      "Dapatkan poin yang bisa ditukar / diskon tertentu",
+      "Ajak teman/bagikan untuk mendapatkan point",
+      "Poin lebih banyak khusus pengguna VIP Membership",
+    ];
+    return (
+      <>
+        <View className="flex flex-col w-full items-center justify-center text-center mb-4">
+          <Image
+            src={rewardIllustration}
+            className="w-[100px] h-[100px] mb-2"
+          />
+          <Text className="text-[16px] font-semibold">Program Hadiah</Text>
+          <Text className={`text-xs mt-2 text-textSecondary text-center`}>
+            Detail program hadiah
+          </Text>
+        </View>
+        <View>
+          <div className="space-y-4">
+            {bulletPoints.length > 0 && (
+              <View className="text-xs  flex flex-col gap-1 bg-[#eff1f4b3] rounded-lg p-4">
+                <View className="pl-3">
+                  {bulletPoints.map((point, index) => (
+                    <View key={index} className="relative mb-2">
+                      <Text className="absolute left-[-12px] top-0">•</Text>
+                      <Text>{point}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            )}
+          </div>
+        </View>
+
+        <Button
+          className="border-none text-[#757F90] mt-4"
+          label="Kembali"
+          onClick={() => {
+            setPackageDetailOpen({ state: false, type: "" });
+          }}
+          style="secondary"
+          // className="mb-8"
+        />
+      </>
+    );
+  };
   // Helper function to toggle a specific card's expanded state
   const toggleExpanded = (key: keyof typeof expandedStates) => {
     setExpandedStates((prev) => ({
@@ -40,9 +180,7 @@ const ContentDetail = () => {
   const handleClickMerchandise = () => {
     console.log("Clicked merchandise");
   };
-  const handleOpenPackage = () => {
-    setPackageDetailOpen(true);
-  };
+
   return (
     <View className="flex flex-col bg-[#181c21] min-h-[screen]">
       <View className="flex flex-col items-center px-4 py-6">
@@ -145,7 +283,9 @@ const ContentDetail = () => {
                   "Kesempatan dapatkan hadiah menarik",
                 ]}
                 onToggleExpand={() => toggleExpanded("package0")}
-                onButtonClick={() => setPackageDetailOpen(true)}
+                onButtonClick={() =>
+                  setPackageDetailOpen({ state: true, type: "package0" })
+                }
               />
 
               {!expandedStates.additionalInfo && (
@@ -176,7 +316,9 @@ const ContentDetail = () => {
                   isExpanded={expandedStates.package1}
                   promo="Promo"
                   onToggleExpand={() => toggleExpanded("package1")}
-                  onButtonClick={() => setPackageDetailOpen(true)}
+                  onButtonClick={() =>
+                    setPackageDetailOpen({ state: true, type: "package1" })
+                  }
                 />
 
                 <PackageCard
@@ -188,7 +330,9 @@ const ContentDetail = () => {
                   isExpanded={expandedStates.package2}
                   promo="Promo"
                   onToggleExpand={() => toggleExpanded("package2")}
-                  onButtonClick={() => setPackageDetailOpen(true)}
+                  onButtonClick={() =>
+                    setPackageDetailOpen({ state: true, type: "package2" })
+                  }
                 />
               </View>
 
@@ -229,39 +373,19 @@ const ContentDetail = () => {
         </View>
       </View>
       <BottomSheet
-        open={packageDetailOpen}
+        open={packageDetailOpen?.state}
         onClose={() => {
-          setPackageDetailOpen(false);
+          setPackageDetailOpen({ state: false, type: "" });
         }}
         containerClassname="p-4"
         withoutPadding
+        withFloatingCloseButton
       >
-        <View className="flex flex-col w-full items-center justify-center text-center mb-4">
-          <Image
-            src={upgradeIllustration}
-            className="w-[100px] h-[100px] mb-2"
-          />
-          <Text className="text-[16px] font-semibold">
-            Mulai Berlangganan Paket Ini
-          </Text>
-          <Text className={`text-xs mt-2 text-textSecondary text-center`}>
-            Konfirmasi ulang pembelian paket kamu
-          </Text>
-        </View>
-
-        <Button
-          label="Langganan Sekarang"
-          className="mb-1 text-[16px] font-semibold"
-        />
-        <Button
-          className="border-none text-[#757F90]"
-          label="Batalkan"
-          onClick={() => {
-            setPackageDetailOpen(false);
-          }}
-          style="secondary"
-          // className="mb-8"
-        />
+        {packageDetailOpen?.type === "package2" ? (
+          <RewardContent />
+        ) : (
+          <PackageContent />
+        )}
       </BottomSheet>
     </View>
   );
