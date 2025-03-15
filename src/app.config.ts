@@ -1,5 +1,8 @@
 export default {
-  pages: ["pages/ContentDetail/index"],
+  pages: [
+    "pages/ContentDetail/index",
+    "pages/CollectionContentDetail/index",
+  ],
   subPackages: [],
   preloadRule: {},
   networkTimeout: {

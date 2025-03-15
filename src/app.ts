@@ -3,7 +3,7 @@ import "./app.scss";
 import * as React from "react";
 import Taro, { useLaunch } from "@tarojs/taro";
 import { withProvider } from "./hoc";
-import { getLatestUpdateVersion } from "./lib/device-system-utils";
+import { getLatestUpdateVersion } from "./lib/system.utils";
 
 const App = ({ children }: { children: React.ReactNode }) => {
   useLaunch((options?: any) => {
