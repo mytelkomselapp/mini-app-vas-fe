@@ -49,8 +49,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={!disabled ? onClick : () => {}}
       className={cn(
         disabled ? getButtonStyle("disabled") : getButtonStyle(style),
-        className,
-        "justify-center items-center flex text-base font-sans"
+        "justify-center items-center flex text-base font-sans",
+        className
       )}
     >
       {label}

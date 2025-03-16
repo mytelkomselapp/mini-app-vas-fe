@@ -1,6 +1,7 @@
 export default {
   pages: [
     "pages/ContentDetail/index",
+    "pages/MyCollection/index",
     "pages/CollectionContentDetail/index",
   ],
   subPackages: [],
