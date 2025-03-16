@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "ramadanTaroVAS",
   "description": "",
-  "appid": "mp3svesjvbm65na0",
+  "appid": "mp7vumyeycsvi5ve",
   "setting": {
     "urlCheck": false,
     "es6": false,
@@ -19,7 +19,7 @@
     "prefetch": false
   },
   "compileType": "miniprogram",
-  "TCMPPappid": "mp3svesjvbm65na0",
+  "TCMPPappid": "mp7vumyeycsvi5ve",
   "scripts": {
     "beforeCompile": "",
     "beforePreview": "",
@@ -44,34 +44,21 @@
     "downloadFileDomain": [
       "cdndev.mytsel.id"
     ],
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
     "miniprogram": {
       "current": 0,
       "list": [
         {
-          "id": 0,
-          "name": "LandingPage",
-          "pathName": "pages/ContentDetail/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 1,
-          "name": "SearchLocation",
-          "pathName": "subpackages/subpackage3/pages/RamadhanSearchLocation/index",
-          "query": "",
-          "scene": null
-        },
-        {
           "id": -1,
-          "name": "Catatan Ibadah",
-          "pathName": "subpackages/subpackage5/pages/CatatanIbadah/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 3,
-          "name": "Share Page",
-          "pathName": "subpackages/subpackage5/pages/WeeklySummary/index",
+          "name": "My Collection",
+          "pathName": "pages/MyCollection/index",
           "query": "",
           "scene": null
         }

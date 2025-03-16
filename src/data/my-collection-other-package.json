@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Langganan Premium JKT48",
+    "subscription_update_status": "Update 2 Hari Sekali",
+    "is_promo": true,
+    "price": 100000,
+    "after_discount_price": 75000
+  },
+  {
+    "title": "Langganan Eksklusif Team J",
+    "subscription_update_status": "Update 1 Minggu Sekali",
+    "is_promo": false,
+    "price": 85000,
+    "after_discount_price": 85000
+  },
+  {
+    "title": "Paket Spesial Meet & Greet",
+    "subscription_update_status": "Update Setiap Hari",
+    "is_promo": true,
+    "price": 200000,
+    "after_discount_price": 150000
+  },
+  {
+    "title": "Akses Konten VIP",
+    "subscription_update_status": "Update 3 Hari Sekali",
+    "is_promo": false,
+    "price": 120000,
+    "after_discount_price": 120000
+  }
+]
