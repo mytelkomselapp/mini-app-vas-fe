@@ -1,12 +1,14 @@
-import { Image, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import { Card, RoundedIcon, Pill, Show } from "../../../../components";
 import SubscribeIcon from "../../../../assets/subscribe-icon.png";
 import ImageIcon from "../../../../assets/ico_image.png";
+import ImageNotFound from "../../../../assets/not_found.png";
 
 export interface PackageProps {
   imageThumbnail: string;
   title: string;
   subscription_status: string;
+  subscription_status_text: string;
   subscription_count: number;
   subscription_update_status: string;
   active_status: string;
@@ -21,6 +23,24 @@ const PackageList: React.FC<PackageListProps> = ({ data = [], onClick }) => {
   const handleClick = (data: PackageProps) => {
     onClick?.(data);
   };
+
+  if (data?.length <= 0) {
+    return (
+      <View className="flex flex-col justify-center items-center gap-y-4 w-full h-[240px]">
+        <Image
+          src={ImageNotFound}
+          mode="aspectFit"
+          className="w-[120px] h-[120px]"
+        />
+        <Text className="text-[16px] font-semibold text-primaryBlack text-center">
+          Belum ada koleksi konten
+        </Text>
+        <Text className="text-[14px] text-[#353941] text-center">
+          Kamu belum ada koleksi konten, yuk mulai berlangganan konten premium
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex flex-col gap-y-2 px-[16px]">
@@ -39,9 +59,9 @@ const PackageList: React.FC<PackageListProps> = ({ data = [], onClick }) => {
           <View className="flex flex-col justify-between overflow-hidden w-[80%] gap-y-2">
             <View className="flex justify-between items-center">
               <View className="w-[92%] overflow-hidden">
-                <p className="text-[12px] font-[600] text-[#181C21] text-ellipsis whitespace-nowrap overflow-hidden">
+                <Text className="text-[12px] font-[600] text-[#181C21] text-ellipsis whitespace-nowrap overflow-hidden">
                   {val?.title}
-                </p>
+                </Text>
               </View>
               {Boolean(val?.subscription_count > 0) && (
                 <View className="text-center flex justify-center items-center h-[14px] w-[14px] rounded-full bg-[#ff0025] text-[10px] text-[white] font-[600]">
@@ -57,9 +77,9 @@ const PackageList: React.FC<PackageListProps> = ({ data = [], onClick }) => {
                   iconHeight={10}
                   iconWidth={10}
                 />
-                <p className="text-[10px] text-[#181c21]">
-                  {val?.subscription_status}
-                </p>
+                <Text className="text-[10px] text-[#181c21]">
+                  {val?.subscription_status_text}
+                </Text>
               </View>
               <View className="flex items-center gap-x-1">
                 <RoundedIcon
@@ -67,9 +87,9 @@ const PackageList: React.FC<PackageListProps> = ({ data = [], onClick }) => {
                   iconHeight={10}
                   iconWidth={10}
                 />
-                <p className="text-[10px] text-[#181c21]">
+                <Text className="text-[10px] text-[#181c21]">
                   {val?.subscription_update_status}
-                </p>
+                </Text>
               </View>
             </View>
 

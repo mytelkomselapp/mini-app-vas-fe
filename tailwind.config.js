@@ -72,7 +72,7 @@ module.exports = {
         bannerImage: "100% 190px",
       },
       colors: {
-        primaryBlack: "#181C21",
+        primaryBlack: "#181c21",
         grey: "#757F90",
         shadesGrey: "#EDECF0",
         shadesBlack: "#001122",
@@ -87,7 +87,7 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        solidRed: "#ED0226",
+        solidRed: "#ed0226",
         successGreen: "#008E53",
         mustard: "#FDA22B",
         primary: {
