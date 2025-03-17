@@ -2,9 +2,37 @@
   {
     "imageThumbnail": "https://picsum.photos/200/300",
     "title": "Langganan Konten Premium Semua Member JKT48",
-    "subscription_status": "Berlangganan",
+    "subscription_status": "berlangganan",
+    "subscription_status_text": "Berlangganan",
     "subscription_count": 0,
     "subscription_update_status": "Update 2 Hari Sekali",
+    "active_status": "inactive"
+  },
+  {
+    "imageThumbnail": "https://picsum.photos/200/300",
+    "title": "Langganan Spesial Team K3",
+    "subscription_status": "berlangganan",
+    "subscription_status_text": "Berlangganan",
+    "subscription_count": 0,
+    "subscription_update_status": "Update 1 Minggu Sekali",
+    "active_status": "inactive"
+  },
+  {
+    "imageThumbnail": "https://picsum.photos/200/300",
+    "title": "Langganan Eksklusif JKT48 Academy",
+    "subscription_status": "updated",
+    "subscription_status_text": "Berlangganan",
+    "subscription_count": 0,
+    "subscription_update_status": "Update 3 Hari Sekali",
+    "active_status": "inactive"
+  },
+  {
+    "imageThumbnail": "https://picsum.photos/200/300",
+    "title": "Langganan VIP Member",
+    "subscription_status": "berlangganan",
+    "subscription_status_text": "Berlangganan",
+    "subscription_count": 1,
+    "subscription_update_status": "Update Setiap Hari",
     "active_status": "inactive"
   }
 ]

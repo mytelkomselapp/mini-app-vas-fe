@@ -33,3 +33,19 @@ export const detectPlatform = () => {
   }
   return "unknown";
 };
+
+const getElementSize = (selector: string): Promise<any> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      Taro.createSelectorQuery()
+        .select(selector)
+        .boundingClientRect((res) => {
+          console.log({ res, selector });
+          resolve(res || null);
+        })
+        .exec();
+    }, 200);
+  });
+};
+
+export default getElementSize;

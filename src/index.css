@@ -112,6 +112,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .no-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @font-face {
@@ -130,20 +134,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: conic-gradient(
-    white var(--progress, 0%),
-    #FF0025 0
-  );
-  box-shadow: 0px 4px 10px 0px #FF002526; /* Add drop shadow */
+  background: conic-gradient(white var(--progress, 0%), #ff0025 0);
+  box-shadow: 0px 4px 10px 0px #ff002526; /* Add drop shadow */
 }
 
 .circular-progress::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 5px;
   left: 5px;
   right: 5px;
   bottom: 5px;
   border-radius: 50%;
-  background: var(--bg-color, #FF0025); /* Default background color */
+  background: var(--bg-color, #ff0025); /* Default background color */
 }
