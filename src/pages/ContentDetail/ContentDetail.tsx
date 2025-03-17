@@ -16,6 +16,7 @@ import giftIcon from "../../assets/gift.svg";
 import premiumBadge from "../../assets/premium-badge.svg";
 import monetaryIcon from "../../assets/monetary.svg";
 import rewardIllustration from "../../assets/reward-quota.svg";
+import { useNavigate } from "../../hooks";
 
 const bulletPoints = [
   "Harga belum termasuk pajak dan biaya lainnya.",
@@ -26,6 +27,7 @@ const bulletPoints = [
 ];
 
 const ContentDetail = () => {
+  const { navigate } = useNavigate();
   // Replace single state with an object to track expanded state for each card
   const [expandedStates, setExpandedStates] = useState({
     info: false, // For "Informasi Penting & Highlight" section
@@ -181,6 +183,10 @@ const ContentDetail = () => {
     console.log("Clicked merchandise");
   };
 
+  const handleNavigateToCollection = () => {
+    navigate("/pages/MyCollection/index");
+  };
+
   return (
     <View className="flex flex-col bg-[#181c21] min-h-[screen]">
       <View className="flex flex-col items-center px-4 py-6">
@@ -204,7 +210,7 @@ const ContentDetail = () => {
             background:
               "linear-gradient(77deg, #B90024 15.71%, #FF0025 68.97%, #FD195E 94.61%)",
           }}
-          onClick={() => console.log("Lihat koleksi saya")}
+          onClick={handleNavigateToCollection}
         >
           <Text className="text-[12px] font-semibold text-white">
             Lihat Koleksi Saya
