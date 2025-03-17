@@ -10,7 +10,7 @@ const MyCollection = () => {
   };
 
   return (
-    <View className="overflow-y-auto min-h-[95vh] pt-[20px] bg-[#eaeef1]">
+    <View className="overflow-y-auto min-h-[95vh] bg-[#eaeef1]">
       <Tabs
         tabList={[
           {
