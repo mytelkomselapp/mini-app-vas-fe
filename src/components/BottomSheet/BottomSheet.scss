@@ -72,5 +72,6 @@
 
 .sheet-content-without-padding {
   overflow-y: auto;
+  flex-grow: 1;
   -webkit-overflow-scrolling: touch;
 }

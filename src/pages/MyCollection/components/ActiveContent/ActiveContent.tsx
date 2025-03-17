@@ -17,8 +17,8 @@ const ActiveContent = () => {
   const [dataPackage, setDataPackage] =
     React.useState<PackageProps[]>(DataMyCollection);
 
-  const handleClickPackage = () => {
-    navigate("/pages/CollectionContentDetail/index");
+  const handleClickPackage = (val: PackageProps) => {
+    navigate(`/pages/CollectionContentDetail/index?type=${val?.subscription_status}`);
   };
 
   const countPackageData = {
