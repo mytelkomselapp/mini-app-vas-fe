@@ -15,4 +15,5 @@ export interface FilterChipsProps {
   filterList: FilterChipItemProps[];
   onClick?: (data: FilterChipItemProps) => void;
   className?: string;
+  containerClassName?: string;
 }

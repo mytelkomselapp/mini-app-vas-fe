@@ -8,6 +8,7 @@ const FilterChips: React.FC<FilterChipsProps> = ({
   filterList = [],
   onClick,
   className = "",
+  containerClassName = "",
 }) => {
   const scrollableContainerRef = useRef();
   const [chipActiveIndex, setChipActiveIndex] =
@@ -55,7 +56,7 @@ const FilterChips: React.FC<FilterChipsProps> = ({
       scrollLeft={scrollLeft}
       className={`overflow-x-auto no-scrollbar ${className}`}
     >
-      <View className="flex gap-x-2 whitespace-nowrap flex-nowrap py-1">
+      <View className={`flex gap-x-2 whitespace-nowrap flex-nowrap py-1 ${containerClassName}`}>
         {filterList?.map((data, idx) => {
           const isActive = chipActiveIndex === idx;
           const chipBgColor = isActive ? "bg-[#001a41]" : "bg-white";

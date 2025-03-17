@@ -1,0 +1,36 @@
+[
+  {
+    "imageThumbnail": "https://placehold.co/80x80/ff69b4/ff69b4",
+    "type": "video",
+    "title": "Langganan Konten Premium Semua Member JKT48",
+    "description": "Langganan Konten Premium Semua Member JKT48",
+    "duration": "1:30",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "status": "eligible",
+    "order": 1
+  },
+  {
+    "imageThumbnail": "https://placehold.co/80x80/ff69b4/ff69b4",
+    "type": "image",
+    "title": "Langganan Konten Premium Semua Member JKT48",
+    "description": "Langganan Konten Premium Semua Member JKT48",
+    "status": "eligible",
+    "order": 2
+  },
+  {
+    "imageThumbnail": "https://placehold.co/80x80/ff69b4/ff69b4",
+    "type": "image",
+    "title": "Langganan Konten Premium Semua Member JKT48",
+    "description": "Langganan Konten Premium Semua Member JKT48",
+    "status": "eligible",
+    "order": 3
+  },
+  {
+    "imageThumbnail": "https://placehold.co/80x80/ff69b4/ff69b4",
+    "type": "image",
+    "title": "Langganan Konten Premium Semua Member JKT48",
+    "description": "Langganan Konten Premium Semua Member JKT48",
+    "status": "eligible",
+    "order": 4
+  }
+]
