@@ -52,17 +52,16 @@ const PackageList: React.FC<PackageListProps> = ({ data = [], onClick }) => {
           border={val?.active_status === "inactive" ? "1px solid #9ca9b9" : ""}
         >
           <Image
-            src="https://picsum.photos/200/300"
+            src={val?.imageThumbnail}
             className="h-[78px] w-[78px] rounded-[8px]"
             mode="aspectFill"
           />
           <View className="flex flex-col justify-between overflow-hidden w-[80%] gap-y-2">
             <View className="flex justify-between items-center">
-              <View className="w-[92%] overflow-hidden">
-                <Text className="text-[12px] font-[600] text-[#181C21] text-ellipsis whitespace-nowrap overflow-hidden">
-                  {val?.title}
-                </Text>
+              <View className="w-[90%] overflow-hidden text-ellipsis whitespace-nowrap text-[12px] font-[600] text-[#181C21]">
+                {val?.title}
               </View>
+
               {Boolean(val?.subscription_count > 0) && (
                 <View className="text-center flex justify-center items-center h-[14px] w-[14px] rounded-full bg-[#ff0025] text-[10px] text-[white] font-[600]">
                   {val?.subscription_count}
