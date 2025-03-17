@@ -49,9 +49,9 @@ const CollectionContentDetail = () => {
 
   // @ts-ignore
   const dummyData: ContentProps[] = type === 'berlangganan' ? CollectionDataSubs : CollectionDataOneTime;
-  const [isFullLoading, setIsFullLoading] = useState(false);
+  const [isFullLoading, setIsFullLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
   const [collectionData, setCollectionData] = useState<ContentProps[]>(dummyData);
