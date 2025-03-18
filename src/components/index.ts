@@ -12,3 +12,4 @@ export { default as Tabs } from "./Tabs";
 export { default as Pill } from "./Pill";
 export { default as FilterChips } from "./FilterChips";
 export { default as Stories } from "./Stories";
+export { default as ZoomableImage } from "./ZoomableImage";
