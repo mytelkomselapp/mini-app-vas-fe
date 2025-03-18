@@ -74,6 +74,11 @@ const CollectionContentDetail = () => {
     if (isVideo) {
       const url = "https://www.w3schools.com/html/mov_bbb.mp4"; //must be mp4 format
       navigate(`/pages/VideoContent/index?url=${url}&title=${data?.title}`);
+    } else {
+      Taro.previewImage({
+        current: data?.imageThumbnail, // current image URL
+        urls: [data?.imageThumbnail, "https://placehold.co/80x80/"], // array of all image URLs for gallery
+      });
     }
   };
   return (
