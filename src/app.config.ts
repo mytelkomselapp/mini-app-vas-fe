@@ -4,8 +4,15 @@ export default {
     "pages/MyCollection/index",
     "pages/CollectionContentDetail/index",
   ],
-  subPackages: [],
-  preloadRule: {},
+  subPackages: [
+    { root: "subpackages/subpackage1", pages: ["pages/DummyScreen/index"] },
+  ],
+  preloadRule: {
+    "pages/ContentDetail/index": {
+      network: "all",
+      packages: ["subpackages/subpackage1"], //will load subpackage1 when ContentDetail is loaded
+    },
+  },
   networkTimeout: {
     request: 120000, // 120 seconds
     connectSocket: 60000,

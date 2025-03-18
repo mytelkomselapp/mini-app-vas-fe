@@ -185,6 +185,9 @@ const ContentDetail = () => {
 
   const handleNavigateToCollection = () => {
     navigate("/pages/MyCollection/index");
+
+    //dummy navigation to subpackage1
+    // navigate("/subpackages/subpackage1/pages/DummyScreen/index");
   };
 
   return (
