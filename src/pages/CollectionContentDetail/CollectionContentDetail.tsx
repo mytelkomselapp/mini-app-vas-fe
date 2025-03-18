@@ -68,6 +68,14 @@ const CollectionContentDetail = () => {
     }
   };
 
+  const handleViewItem = (data: ContentProps) => {
+    const isVideo = data?.type === "video";
+    console.log({ data });
+    if (isVideo) {
+      const url = "https://www.w3schools.com/html/mov_bbb.mp4"; //must be mp4 format
+      navigate(`/pages/VideoContent/index?url=${url}&title=${data?.title}`);
+    }
+  };
   return (
     <>
       {isError && <ErrorScreen onRefresh={() => setIsError(false)} />}
@@ -116,7 +124,11 @@ const CollectionContentDetail = () => {
 
         <View className="grid grid-cols-3 gap-[3px] p-[12px]">
           {collectionData.map((data, key) => (
-            <FeedItem key={key} data={data} />
+            <FeedItem
+              key={key}
+              data={data}
+              onClick={() => handleViewItem(data)}
+            />
           ))}
         </View>
 
