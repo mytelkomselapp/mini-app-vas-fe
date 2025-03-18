@@ -11,3 +11,4 @@ export { default as Card } from "./Card";
 export { default as Tabs } from "./Tabs";
 export { default as Pill } from "./Pill";
 export { default as FilterChips } from "./FilterChips";
+export { default as Stories } from "./Stories";
