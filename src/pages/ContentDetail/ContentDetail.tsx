@@ -383,7 +383,7 @@ const ContentDetail = () => {
         onClose={() => {
           setPackageDetailOpen({ state: false, type: "" });
         }}
-        containerClassname="p-4"
+        containerClassname="p-4 pb-8 !h-fit"
         withoutPadding
         withFloatingCloseButton
       >
