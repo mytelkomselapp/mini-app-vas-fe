@@ -10,10 +10,10 @@ import CollectionDataSubs from "../../data/my-collection-detail-subs.json";
 import CollectionDataOneTime from "../../data/my-collection-detail-one-time.json";
 import Taro from "@tarojs/taro";
 import UtilityBottomSheet from "./components/UtilityBottomSheet";
-import { FeedItem } from './components/FeedItem'
+import { FeedItem } from "./components/FeedItem";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorScreen from "../../components/ErrorScreen";
-
+import { useNavigate } from "../../hooks";
 
 interface ContentProps {
   imageThumbnail: string;
@@ -43,26 +43,25 @@ const filterOptions: FilterChipItemProps[] = [
 ];
 
 const CollectionContentDetail = () => {
+  const { navigate } = useNavigate();
   const searchParams = Taro.getCurrentInstance().router?.params;
   const type = searchParams?.type;
-  console.log(type, 'type');
 
   // @ts-ignore
-  const dummyData: ContentProps[] = type === 'berlangganan' ? CollectionDataSubs : CollectionDataOneTime;
+  const dummyData: ContentProps[] =
+    type === "berlangganan" ? CollectionDataSubs : CollectionDataOneTime;
   const [isFullLoading, setIsFullLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
-  const [collectionData, setCollectionData] = useState<ContentProps[]>(dummyData);
+  const [collectionData, setCollectionData] =
+    useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
-
     const filterType = data?.slug;
     if (filterType !== "semua-konten") {
       setCollectionData(
-        [...dummyData]?.filter(
-          (data) => data.type === filterType
-        )
+        [...dummyData]?.filter((data) => data.type === filterType)
       );
     } else {
       setCollectionData(dummyData);
@@ -84,7 +83,11 @@ const CollectionContentDetail = () => {
               />
             </View>
             <View className="absolute bottom-0 right-0 w-[28px] h-[28px]">
-              <Image src={premiumBadge} className="w-full h-full" onClick={() => setUtilityOpen(true)} />
+              <Image
+                src={premiumBadge}
+                className="w-full h-full"
+                onClick={() => setUtilityOpen(true)}
+              />
             </View>
           </View>
           <Text className="mb-1 text-lg font-semibold text-primaryBlack">
@@ -93,7 +96,9 @@ const CollectionContentDetail = () => {
           <View className="flex flex-row items-center">
             <Text className="text-xs text-textSecondary">Durasi 90 hari</Text>
             <View className="w-1 h-1 mx-2 rounded-full bg-textSecondary" />
-            <Text className="text-xs text-textSecondary">Update 2 hari sekali</Text>
+            <Text className="text-xs text-textSecondary">
+              Update 2 hari sekali
+            </Text>
           </View>
         </View>
 
@@ -107,10 +112,7 @@ const CollectionContentDetail = () => {
           />
         </View>
 
-
-        <View className="flex flex-row justify-center items-center py-[6px] w-full">
-
-        </View>
+        <View className="flex flex-row justify-center items-center py-[6px] w-full"></View>
 
         <View className="grid grid-cols-3 gap-[3px] p-[12px]">
           {collectionData.map((data, key) => (
@@ -125,6 +127,10 @@ const CollectionContentDetail = () => {
         />
         <SubscriptionBottomSheet
           open={subscriptionOpen}
+          onConfirm={() => {
+            setSubscriptionOpen(false);
+          }}
+          onCancel={() => navigate(`/pages/MyCollection/index?order=1`)}
           onClose={() => setSubscriptionOpen(false)}
         />
       </View>
@@ -132,4 +138,4 @@ const CollectionContentDetail = () => {
   );
 };
 
-export default CollectionContentDetail; 
+export default CollectionContentDetail;
