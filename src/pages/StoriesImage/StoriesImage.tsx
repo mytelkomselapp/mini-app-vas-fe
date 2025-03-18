@@ -1,8 +1,18 @@
 import React from "react";
 import { Stories } from "../../components";
 import { Image } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 
 const StoriesImage = () => {
+  const searchParams = Taro.getCurrentInstance().router?.params;
+  const storiesTitle = searchParams?.title || "Image Content";
+
+  React.useEffect(() => {
+    Taro.setNavigationBarTitle({
+      title: storiesTitle,
+    });
+  }, [storiesTitle]);
+
   return (
     <React.Fragment>
       <Stories

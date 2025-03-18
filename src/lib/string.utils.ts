@@ -40,7 +40,6 @@ const getElementSize = (selector: string): Promise<any> => {
       Taro.createSelectorQuery()
         .select(selector)
         .boundingClientRect((res) => {
-          console.log({ res, selector });
           resolve(res || null);
         })
         .exec();

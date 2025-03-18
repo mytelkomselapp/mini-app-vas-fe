@@ -37,20 +37,20 @@ const Stories: React.FC<StoriesProps> = ({
   }, [defaultStory]);
 
   return (
-    <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-auto">
+    <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-hidden">
       {/* Clickable Area */}
-      <View className="flex px-[16px] justify-between items-center absolute top-[-30px] bottom-0 left-0 right-0">
+      <View className="flex z-20 px-[16px] justify-between items-center absolute top-[-30px] bottom-0 left-0 right-0">
         <View
           onClick={handleBack}
           style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-          className="flex relative z-20 justify-center items-center blur-[24px] rounded-full h-[56px] w-[56px]"
+          className="flex justify-center items-center blur-[24px] rounded-full h-[56px] w-[56px]"
         >
           <Image src={ChevronLeft} className="w-[24px] h-24px]" />
         </View>
         <View
           onClick={handleNext}
           style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-          className="flex relative z-20 justify-center items-center blur-[24px] rounded-full h-[56px] w-[56px]"
+          className="flex justify-center items-center blur-[24px] rounded-full h-[56px] w-[56px]"
         >
           <Image src={ChevronRight} className="w-[24px] h-[24px]" />
         </View>
@@ -63,13 +63,16 @@ const Stories: React.FC<StoriesProps> = ({
       {/* Indicator Wrapper */}
       <View className="flex items-center justify-center absolute z-20 w-[100%] h-[60px] bottom-0 left-0 right-0">
         <View
-          className={`w-[100%] px-[16px] grid grid-cols-${totalStory} gap-2 max-w-md`}
+          className="w-[100%] px-[16px] grid gap-2 max-w-md"
+          style={{
+            gridTemplateColumns: `repeat(${totalStory}, minmax(0, 1fr))`,
+          }}
         >
           {stories.map((_, idx) => (
             <View
               id={`story-${idx}`}
               key={`story-${idx}`}
-              className={`h-[4px] w-full rounded-full transition-all ${
+              className={`h-[4px] w-full rounded-full ${
                 idx <= activeStory ? "bg-white" : "bg-gray-500"
               }`}
             />
