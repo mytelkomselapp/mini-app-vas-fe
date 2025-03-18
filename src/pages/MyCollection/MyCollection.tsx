@@ -3,8 +3,11 @@ import { View } from "@tarojs/components";
 import Tabs, { TabItemProps, TabsItem } from "../../components/Tabs";
 import ActiveContent from "./components/ActiveContent";
 import EndedContent from "./components/EndedContent";
+import Taro from "@tarojs/taro";
 
 const MyCollection = () => {
+  const searchParams = Taro.getCurrentInstance().router?.params;
+  const order = Number(searchParams?.order || 0);
   const onChangeTab = (tab: TabItemProps) => {
     /** TODO: can refetch endpoint etc */
   };
@@ -23,7 +26,7 @@ const MyCollection = () => {
           },
         ]}
         onChangeTab={onChangeTab}
-        defaultIndex={0}
+        defaultIndex={order}
       >
         {({ tabIndex }) => (
           <React.Fragment>
