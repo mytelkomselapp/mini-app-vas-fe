@@ -5,6 +5,7 @@ export default {
     "pages/CollectionContentDetail/index",
     "pages/StoriesImage/index",
     "pages/VideoContent/index",
+    "pages/HelpCenter/index",
   ],
   subPackages: [
     { root: "subpackages/subpackage1", pages: ["pages/DummyScreen/index"] },

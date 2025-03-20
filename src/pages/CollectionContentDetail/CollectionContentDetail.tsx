@@ -14,7 +14,9 @@ import { FeedItem } from "./components/FeedItem";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorScreen from "../../components/ErrorScreen";
 import { useNavigate } from "../../hooks";
-
+import iconCS from '../../assets/ico-customer-service.svg'
+import iconBroken from '../../assets/ico-broken-image.svg'
+import HelpCenterBottomSheet from "./components/HelpCenterBottomSheet";
 interface ContentProps {
   imageThumbnail: string;
   type: "video" | "image";
@@ -55,6 +57,7 @@ const CollectionContentDetail = () => {
   const [isError, setIsError] = useState(false);
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
+  const [helpCenterOpen, setHelpCenterOpen] = useState(false);
   const [collectionData, setCollectionData] =
     useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
@@ -77,6 +80,20 @@ const CollectionContentDetail = () => {
       navigate(`/pages/StoriesImage/index?title=${data?.title}`);
     }
   };
+
+  const utilityItems = [
+    {
+      icon: iconCS,
+      label: 'Pusat Bantuan',
+      onClick: () => setHelpCenterOpen(true)
+    },
+    {
+      icon: iconBroken,
+      label: 'Berhenti berlang...',
+      onClick: () => setSubscriptionOpen(true)
+    }
+  ]
+
   return (
     <>
       {isError && <ErrorScreen onRefresh={() => setIsError(false)} />}
@@ -136,7 +153,7 @@ const CollectionContentDetail = () => {
         <UtilityBottomSheet
           open={utilityOpen}
           onClose={() => setUtilityOpen(false)}
-          onUnsubscribe={() => setSubscriptionOpen(true)}
+          utilityItems={utilityItems}
         />
         <SubscriptionBottomSheet
           open={subscriptionOpen}
@@ -145,6 +162,10 @@ const CollectionContentDetail = () => {
           }}
           onCancel={() => navigate(`/pages/MyCollection/index?order=1`)}
           onClose={() => setSubscriptionOpen(false)}
+        />
+        <HelpCenterBottomSheet
+          open={helpCenterOpen}
+          onClose={() => setHelpCenterOpen(false)}
         />
       </View>
     </>
