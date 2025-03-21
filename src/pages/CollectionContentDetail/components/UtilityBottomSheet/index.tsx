@@ -5,14 +5,42 @@ import iconRight from "../../../../assets/ico-chevron-right-16.svg";
 import iconCS from "../../../../assets/ico-customer-service.svg";
 import iconBroken from "../../../../assets/ico-broken-image.svg";
 import Button from "../../../../components/Button";
+
+interface UtilityItemProps {
+  icon: string;
+  label: string;
+  onClick?: () => void;
+}
+
 interface UtilityBottomSheetProps {
   open: boolean;
   onClose: () => void;
-  onUnsubscribe: () => void;
+  utilityItems: UtilityItemProps[];
 }
 
-// TBC
-const UtilityBottomSheet = ({ open, onClose, onUnsubscribe }: UtilityBottomSheetProps) => {
+const UtilityItem = ({ icon, label, onClick }: UtilityItemProps) => {
+  return (
+    <View className="flex flex-col items-center gap-[8px] w-[52px] text-center" onClick={onClick}>
+      <View className="w-[52px] h-[52px] bg-white rounded-[10px] flex items-center justify-center">
+        <Image
+          src={icon}
+          style={{
+            width: "24px",
+            height: "24px",
+          }}
+        />
+      </View>
+      <Text className="text-xs text-primaryBlack">{label}</Text>
+    </View>
+
+  );
+};
+
+const UtilityBottomSheet: React.FC<UtilityBottomSheetProps> = ({
+  open,
+  onClose,
+  utilityItems
+}) => {
   return (
     <BottomSheet
       open={open}
@@ -41,30 +69,14 @@ const UtilityBottomSheet = ({ open, onClose, onUnsubscribe }: UtilityBottomSheet
 
       <View className="flex flex-col items-center gap-[12px] p-4 bg-inactiveGrey">
         <View className="flex flex-row gap-[12px] w-full">
-          <View className="flex flex-col items-center gap-[8px] w-[52px] text-center">
-            <View className="w-[52px] h-[52px] bg-white rounded-[10px] flex items-center justify-center">
-              <Image
-                src={iconCS}
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            </View>
-            <Text className="text-xs text-primaryBlack">Pusat Bantuan</Text>
-          </View>
-          <View className="flex flex-col items-center gap-[8px] w-[52px] text-center" onClick={onUnsubscribe}>
-            <View className="w-[52px] h-[52px] bg-white rounded-[10px] flex items-center justify-center">
-              <Image
-                src={iconBroken}
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            </View>
-            <Text className="text-xs text-primaryBlack">Berhenti berlang...</Text>
-          </View>
+          {utilityItems.map((item, index) => (
+            <UtilityItem
+              key={index}
+              icon={item.icon}
+              label={item.label}
+              onClick={item.onClick}
+            />
+          ))}
         </View>
         <View className="w-full items-center">
           <Button

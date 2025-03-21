@@ -70,7 +70,7 @@ const FilterChips: React.FC<FilterChipsProps> = ({
                 style={{ border: isActive ? "" : "1px solid #dae0e9" }}
                 className={`flex items-center justify-center rounded-full px-4 py-2 cursor-pointer transition-all no-highlight ${chipBgColor}`}
               >
-                <Text className={`text-sm ${chipTextColor}`}>{data.title}</Text>
+                <Text className={`text-xs ${chipTextColor}`}>{data.title}</Text>
               </View>
             </React.Fragment>
           );
