@@ -68,7 +68,7 @@ const CollectionContentDetail = () => {
     useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
     if (data?.slug === "more") {
-      setHelpCenterOpen(true);
+      setUtilityOpen(true);
     } else {
       const filterType = data?.slug;
       if (filterType !== "semua-konten") {
