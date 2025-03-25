@@ -96,16 +96,50 @@ const CollectionContentDetail = () => {
     }
   };
 
+  const openBottomSheet = (sheetName: 'utility' | 'subscription' | 'helpCenter') => {
+    setUtilityOpen(false);
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(true);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(true);
+        break;
+      case 'utility':
+        setUtilityOpen(true);
+        break;
+    }
+  };
+
+  const closeBottomSheet = (sheetName: 'subscription' | 'helpCenter', shouldOpenUtility = true) => {
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(false);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(false);
+        break;
+    }
+    if (shouldOpenUtility) {
+      setUtilityOpen(true);
+    }
+  };
+
+  const handleSubscriptionCancel = () => {
+    closeBottomSheet('subscription', false);
+    navigate(`/pages/MyCollection/index?order=1`);
+  };
+
   const utilityItems = [
     {
       icon: iconCS,
       label: "Pusat Bantuan",
-      onClick: () => setHelpCenterOpen(true),
+      onClick: () => openBottomSheet('helpCenter'),
     },
     {
       icon: iconBroken,
       label: "Berhenti berlang...",
-      onClick: () => setSubscriptionOpen(true),
+      onClick: () => openBottomSheet('subscription'),
     },
   ];
 
@@ -168,15 +202,13 @@ const CollectionContentDetail = () => {
         />
         <SubscriptionBottomSheet
           open={subscriptionOpen}
-          onConfirm={() => {
-            setSubscriptionOpen(false);
-          }}
-          onCancel={() => navigate(`/pages/MyCollection/index?order=1`)}
-          onClose={() => setSubscriptionOpen(false)}
+          onConfirm={() => closeBottomSheet('subscription')}
+          onCancel={handleSubscriptionCancel}
+          onClose={() => closeBottomSheet('subscription')}
         />
         <HelpCenterBottomSheet
           open={helpCenterOpen}
-          onClose={() => setHelpCenterOpen(false)}
+          onClose={() => closeBottomSheet('helpCenter')}
         />
       </View>
     </>
