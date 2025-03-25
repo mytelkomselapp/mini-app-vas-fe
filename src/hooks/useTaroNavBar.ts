@@ -6,10 +6,13 @@ import { useEffect } from "react";
  *
  * @param {string} [backgroundColor="#d41f2c"] - The background color of the navigation bar.
  */
-export default function useTaroNavBar(backgroundColor: string = "#d41f2c") {
+export default function useTaroNavBar(
+  backgroundColor: string = "#d41f2c",
+  frontColor: string = "#ffffff"
+) {
   useEffect(() => {
     Taro.setNavigationBarColor({
-      frontColor: "#ffffff", // Text color
+      frontColor,
       backgroundColor, // Background color
       animation: {
         duration: 0,

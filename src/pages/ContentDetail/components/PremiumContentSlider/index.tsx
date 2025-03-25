@@ -1,6 +1,7 @@
 import { Image, Swiper, SwiperItem, View } from "@tarojs/components";
 import premiumBadge from "../../../../assets/premium-badge-white.svg";
 import { useState } from "react";
+import { useNavigate } from "../../../../hooks";
 
 interface SwiperChangeEvent {
   detail: {
@@ -8,6 +9,7 @@ interface SwiperChangeEvent {
   };
 }
 
+const { navigate } = useNavigate();
 const dummyData = new Array(4).fill(0);
 const groupedData = new Array(Math.ceil(dummyData?.length - 2)).fill(0);
 
@@ -16,6 +18,10 @@ const PremiumContentSlider = () => {
 
   const handleSwiperChange = (e: SwiperChangeEvent) => {
     setCurrent(e.detail.current);
+  };
+
+  const handleClick = () => {
+    navigate(`/pages/StoriesImage/index?title=Image Content`);
   };
 
   return (
@@ -27,7 +33,7 @@ const PremiumContentSlider = () => {
         onChange={handleSwiperChange}
       >
         {dummyData?.map((_, key) => (
-          <SwiperItem key={key} className="">
+          <SwiperItem key={key} className="" onClick={() => handleClick()}>
             <div className="h-full pr-3 flex relative">
               <Image
                 src="https://placehold.co/236x354"
