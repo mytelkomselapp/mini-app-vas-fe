@@ -65,6 +65,7 @@ const CollectionContentDetail = () => {
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
   const [helpCenterOpen, setHelpCenterOpen] = useState(false);
+  const [wasUtilityOpen, setWasUtilityOpen] = useState(false);
   const [collectionData, setCollectionData] =
     useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
@@ -96,16 +97,66 @@ const CollectionContentDetail = () => {
     }
   };
 
+  // Handler for when other sheets open - store utility state and close it
+  const handleOtherSheetOpen = () => {
+    if (utilityOpen) {
+      setWasUtilityOpen(true);
+      setUtilityOpen(false);
+    }
+  };
+
+  // Handler for when other sheets close - restore utility state if it was open
+  const handleOtherSheetClose = () => {
+    if (!subscriptionOpen && !helpCenterOpen && wasUtilityOpen) {
+      setUtilityOpen(true);
+      setWasUtilityOpen(false);
+    }
+  };
+
+  const openBottomSheet = (sheetName: 'utility' | 'subscription' | 'helpCenter') => {
+    setUtilityOpen(false);
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(true);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(true);
+        break;
+      case 'utility':
+        setUtilityOpen(true);
+        break;
+    }
+  };
+
+  const closeBottomSheet = (sheetName: 'subscription' | 'helpCenter', shouldOpenUtility = true) => {
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(false);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(false);
+        break;
+    }
+    if (shouldOpenUtility) {
+      setUtilityOpen(true);
+    }
+  };
+
+  const handleSubscriptionCancel = () => {
+    closeBottomSheet('subscription', false);
+    navigate(`/pages/MyCollection/index?order=1`);
+  };
+
   const utilityItems = [
     {
       icon: iconCS,
       label: "Pusat Bantuan",
-      onClick: () => setHelpCenterOpen(true),
+      onClick: () => openBottomSheet('helpCenter'),
     },
     {
       icon: iconBroken,
       label: "Berhenti berlang...",
-      onClick: () => setSubscriptionOpen(true),
+      onClick: () => openBottomSheet('subscription'),
     },
   ];
 
@@ -168,15 +219,13 @@ const CollectionContentDetail = () => {
         />
         <SubscriptionBottomSheet
           open={subscriptionOpen}
-          onConfirm={() => {
-            setSubscriptionOpen(false);
-          }}
-          onCancel={() => navigate(`/pages/MyCollection/index?order=1`)}
-          onClose={() => setSubscriptionOpen(false)}
+          onConfirm={() => closeBottomSheet('subscription')}
+          onCancel={handleSubscriptionCancel}
+          onClose={() => closeBottomSheet('subscription')}
         />
         <HelpCenterBottomSheet
           open={helpCenterOpen}
-          onClose={() => setHelpCenterOpen(false)}
+          onClose={() => closeBottomSheet('helpCenter')}
         />
       </View>
     </>
