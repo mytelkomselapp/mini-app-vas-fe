@@ -131,8 +131,8 @@ npm run dev:qq-production
 - **`npm run dev:qq-production`**: Run locally dev env
 
 
-- **`npm run build:qq`**: Run locally production env
-- **`npm run build:qq-production`**: Run locally production env
+- **`npm run build:qq`**: build dev env
+- **`npm run build:qq-production`**: build production env
 
 
 ---
