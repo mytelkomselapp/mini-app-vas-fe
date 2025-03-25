@@ -65,7 +65,6 @@ const CollectionContentDetail = () => {
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
   const [helpCenterOpen, setHelpCenterOpen] = useState(false);
-  const [wasUtilityOpen, setWasUtilityOpen] = useState(false);
   const [collectionData, setCollectionData] =
     useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
@@ -94,22 +93,6 @@ const CollectionContentDetail = () => {
       }
     } else {
       console.warn("Pulsa tidak mencukupi");
-    }
-  };
-
-  // Handler for when other sheets open - store utility state and close it
-  const handleOtherSheetOpen = () => {
-    if (utilityOpen) {
-      setWasUtilityOpen(true);
-      setUtilityOpen(false);
-    }
-  };
-
-  // Handler for when other sheets close - restore utility state if it was open
-  const handleOtherSheetClose = () => {
-    if (!subscriptionOpen && !helpCenterOpen && wasUtilityOpen) {
-      setUtilityOpen(true);
-      setWasUtilityOpen(false);
     }
   };
 
