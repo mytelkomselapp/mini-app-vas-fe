@@ -15,8 +15,9 @@ This repository showcases a Taro.js miniapp built using React and styled with Ta
 
 ## Prerequisites
 
-Make sure you have the following tools installed:
+- In Every Page make sure use **useTaroNavbar()** to make sure navbar color and title color works as expected
 
+Make sure you have the following tools installed:
 - [Node.js](https://nodejs.org/) (version >= 14)
 - [Taro CLI](https://taro-docs.jd.com/docs/cli/installation)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
@@ -45,11 +46,11 @@ yarn install
 ### Run the Development Server
 
 ```bash
-# For WeChat Mini Program
-npm run dev:weapp
+# For qq dev
+npm run dev:qq
 
-# Or for another platform (e.g., Alipay, H5, etc.)
-npm run dev:h5
+# For qq production
+npm run dev:qq-production
 ```
 
 ---
@@ -126,12 +127,6 @@ npm run dev:h5
 
 ## Available Scripts
 
-- **`npm run dev:weapp`**: Run the app in development mode for WeChat Mini Program.
-- **`npm run dev:h5`**: Run the app in development mode for H5.
-- **`npm run build:weapp`**: Build the app for WeChat Mini Program.
-- **`npm run build:h5`**: Build the app for H5.
-
-
 - **`npm run dev:qq`**: Run locally dev env
 - **`npm run dev:qq-production`**: Run locally dev env
 
@@ -162,20 +157,15 @@ src/
 Build your miniapp for production:
 
 ```bash
-# WeChat Mini Program
-npm run build:weapp
+# qq DEV
+npm run build:qq 
 
-# H5 Platform
-npm run build:h5
+# qq production
+npm run build:qq-production 
 ```
 
 Deploy the generated files from the `dist` directory to your desired platform.
 
 ---
 
-## Contributing
-
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
----
 
