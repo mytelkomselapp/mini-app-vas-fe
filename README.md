@@ -131,6 +131,15 @@ npm run dev:h5
 - **`npm run build:weapp`**: Build the app for WeChat Mini Program.
 - **`npm run build:h5`**: Build the app for H5.
 
+
+- **`npm run dev:qq`**: Run locally dev env
+- **`npm run dev:qq-production`**: Run locally dev env
+
+
+- **`npm run build:qq`**: Run locally production env
+- **`npm run build:qq-production`**: Run locally production env
+
+
 ---
 
 ## Project Structure
