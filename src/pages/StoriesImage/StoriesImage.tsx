@@ -3,7 +3,10 @@ import { Stories, ZoomableImage } from "../../components";
 import { Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 
+import { useTaroNavbar } from "../../hooks";
+
 const StoriesImage = () => {
+  useTaroNavbar("#272e36");
   const searchParams = Taro.getCurrentInstance().router?.params;
   const storiesTitle = searchParams?.title || "Image Content";
 

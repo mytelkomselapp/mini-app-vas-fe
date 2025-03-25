@@ -13,7 +13,10 @@ import UtilityBottomSheet from "./components/UtilityBottomSheet";
 import { FeedItem } from "./components/FeedItem";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorScreen from "../../components/ErrorScreen";
-import { useNavigate } from "../../hooks";
+import { useNavigate, useTaroNavbar } from "../../hooks";
+import iconCS from "../../assets/ico-customer-service.svg";
+import iconBroken from "../../assets/ico-broken-image.svg";
+import HelpCenterBottomSheet from "./components/HelpCenterBottomSheet";
 
 interface ContentProps {
   imageThumbnail: string;
@@ -40,9 +43,15 @@ const filterOptions: FilterChipItemProps[] = [
     slug: "video",
     title: `Video`,
   },
+  {
+    index: 3,
+    slug: "more",
+    title: `•••`,
+  },
 ];
 
 const CollectionContentDetail = () => {
+  useTaroNavbar("#ffffff", "#000000");
   const { navigate } = useNavigate();
   const searchParams = Taro.getCurrentInstance().router?.params;
   const type = searchParams?.type;
@@ -55,28 +64,85 @@ const CollectionContentDetail = () => {
   const [isError, setIsError] = useState(false);
   const [utilityOpen, setUtilityOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
+  const [helpCenterOpen, setHelpCenterOpen] = useState(false);
   const [collectionData, setCollectionData] =
     useState<ContentProps[]>(dummyData);
   const handleClickFilter = (data: FilterChipItemProps) => {
-    const filterType = data?.slug;
-    if (filterType !== "semua-konten") {
-      setCollectionData(
-        [...dummyData]?.filter((data) => data.type === filterType)
-      );
+    if (data?.slug === "more") {
+      setUtilityOpen(true);
     } else {
-      setCollectionData(dummyData);
+      const filterType = data?.slug;
+      if (filterType !== "semua-konten") {
+        setCollectionData(
+          [...dummyData]?.filter((data) => data.type === filterType)
+        );
+      } else {
+        setCollectionData(dummyData);
+      }
     }
   };
 
   const handleViewItem = (data: ContentProps) => {
     const isVideo = data?.type === "video";
-    if (isVideo) {
-      const url = "https://www.w3schools.com/html/mov_bbb.mp4"; //must be mp4 format
-      navigate(`/pages/VideoContent/index?url=${url}&title=${data?.title}`);
+    if (data?.status === "eligible") {
+      if (isVideo) {
+        const url = "https://www.w3schools.com/html/mov_bbb.mp4"; //must be mp4 format
+        navigate(`/pages/VideoContent/index?url=${url}&title=${data?.title}`);
+      } else {
+        navigate(`/pages/StoriesImage/index?title=${data?.title}`);
+      }
     } else {
-      navigate(`/pages/StoriesImage/index?title=${data?.title}`);
+      console.warn("Pulsa tidak mencukupi");
     }
   };
+
+  const openBottomSheet = (sheetName: 'utility' | 'subscription' | 'helpCenter') => {
+    setUtilityOpen(false);
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(true);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(true);
+        break;
+      case 'utility':
+        setUtilityOpen(true);
+        break;
+    }
+  };
+
+  const closeBottomSheet = (sheetName: 'subscription' | 'helpCenter', shouldOpenUtility = true) => {
+    switch (sheetName) {
+      case 'subscription':
+        setSubscriptionOpen(false);
+        break;
+      case 'helpCenter':
+        setHelpCenterOpen(false);
+        break;
+    }
+    if (shouldOpenUtility) {
+      setUtilityOpen(true);
+    }
+  };
+
+  const handleSubscriptionCancel = () => {
+    closeBottomSheet('subscription', false);
+    navigate(`/pages/MyCollection/index?order=1`);
+  };
+
+  const utilityItems = [
+    {
+      icon: iconCS,
+      label: "Pusat Bantuan",
+      onClick: () => openBottomSheet('helpCenter'),
+    },
+    {
+      icon: iconBroken,
+      label: "Berhenti berlang...",
+      onClick: () => openBottomSheet('subscription'),
+    },
+  ];
+
   return (
     <>
       {isError && <ErrorScreen onRefresh={() => setIsError(false)} />}
@@ -92,11 +158,7 @@ const CollectionContentDetail = () => {
               />
             </View>
             <View className="absolute bottom-0 right-0 w-[28px] h-[28px]">
-              <Image
-                src={premiumBadge}
-                className="w-full h-full"
-                onClick={() => setUtilityOpen(true)}
-              />
+              <Image src={premiumBadge} className="w-full h-full" />
             </View>
           </View>
           <Text className="mb-1 text-lg font-semibold text-primaryBlack">
@@ -136,15 +198,17 @@ const CollectionContentDetail = () => {
         <UtilityBottomSheet
           open={utilityOpen}
           onClose={() => setUtilityOpen(false)}
-          onUnsubscribe={() => setSubscriptionOpen(true)}
+          utilityItems={utilityItems}
         />
         <SubscriptionBottomSheet
           open={subscriptionOpen}
-          onConfirm={() => {
-            setSubscriptionOpen(false);
-          }}
-          onCancel={() => navigate(`/pages/MyCollection/index?order=1`)}
-          onClose={() => setSubscriptionOpen(false)}
+          onConfirm={() => closeBottomSheet('subscription')}
+          onCancel={handleSubscriptionCancel}
+          onClose={() => closeBottomSheet('subscription')}
+        />
+        <HelpCenterBottomSheet
+          open={helpCenterOpen}
+          onClose={() => closeBottomSheet('helpCenter')}
         />
       </View>
     </>

@@ -15,7 +15,7 @@ const Stories: React.FC<StoriesProps> = ({
   const totalStory = stories?.length;
 
   const handleNext = () => {
-    if (activeStory >= totalStory) return;
+    if (activeStory + 1 >= totalStory) return;
     const currentStory = activeStory + 1;
 
     setActiveStory(currentStory);
