@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { API_SOURCE } from "./types";
+import { API_SOURCE } from "./http/types";
 import { BASE_API_URL, BASE_CMS_API_URL, BASE_CMS_TOKEN } from "./http/env";
 
 /**
