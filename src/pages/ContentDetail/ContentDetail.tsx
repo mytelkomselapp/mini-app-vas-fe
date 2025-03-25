@@ -16,7 +16,7 @@ import giftIcon from "../../assets/gift.svg";
 import premiumBadge from "../../assets/premium-badge.svg";
 import monetaryIcon from "../../assets/monetary.svg";
 import rewardIllustration from "../../assets/reward-quota.svg";
-import { useNavigate } from "../../hooks";
+import { useNavigate, useTaroNavbar } from "../../hooks";
 
 const bulletPoints = [
   "Harga belum termasuk pajak dan biaya lainnya.",
@@ -28,6 +28,7 @@ const bulletPoints = [
 
 const ContentDetail = () => {
   const { navigate } = useNavigate();
+  useTaroNavbar("#272e36");
   // Replace single state with an object to track expanded state for each card
   const [expandedStates, setExpandedStates] = useState({
     info: false, // For "Informasi Penting & Highlight" section

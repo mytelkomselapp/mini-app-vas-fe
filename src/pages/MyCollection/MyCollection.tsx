@@ -4,8 +4,10 @@ import Tabs, { TabItemProps, TabsItem } from "../../components/Tabs";
 import ActiveContent from "./components/ActiveContent";
 import EndedContent from "./components/EndedContent";
 import Taro from "@tarojs/taro";
+import { useTaroNavbar } from "../../hooks";
 
 const MyCollection = () => {
+  useTaroNavbar("#ffffff", "#000000");
   const searchParams = Taro.getCurrentInstance().router?.params;
   const order = Number(searchParams?.order || 0);
   const onChangeTab = (tab: TabItemProps) => {

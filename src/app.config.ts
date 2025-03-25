@@ -25,7 +25,7 @@ export default {
   window: {
     backgroundTextStyle: "light",
     navigationBarTitleText: "VAS",
-    navigationBarBackgroundColor: "#d41f2c",
+    navigationBarBackgroundColor: "#000000",
     navigationBarTextStyle: "white",
   },
 };

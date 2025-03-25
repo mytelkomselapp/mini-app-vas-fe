@@ -13,7 +13,7 @@ import UtilityBottomSheet from "./components/UtilityBottomSheet";
 import { FeedItem } from "./components/FeedItem";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorScreen from "../../components/ErrorScreen";
-import { useNavigate } from "../../hooks";
+import { useNavigate, useTaroNavbar } from "../../hooks";
 import iconCS from "../../assets/ico-customer-service.svg";
 import iconBroken from "../../assets/ico-broken-image.svg";
 import HelpCenterBottomSheet from "./components/HelpCenterBottomSheet";
@@ -51,6 +51,7 @@ const filterOptions: FilterChipItemProps[] = [
 ];
 
 const CollectionContentDetail = () => {
+  useTaroNavbar("#ffffff", "#000000");
   const { navigate } = useNavigate();
   const searchParams = Taro.getCurrentInstance().router?.params;
   const type = searchParams?.type;
