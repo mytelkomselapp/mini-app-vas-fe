@@ -2,7 +2,7 @@ import * as services from "./services";
 import { useMutation, useQuery } from "react-query";
 import { ExampleDataCollectionPayloadRequest } from "./types/request-payload";
 
-export const useFetchCMSLandingPage = (
+export const useFetchDataCollection = (
   payload: ExampleDataCollectionPayloadRequest,
   enabled: boolean = true
 ) => {
