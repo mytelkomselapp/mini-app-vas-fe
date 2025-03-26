@@ -21,9 +21,6 @@ const App = ({ children }: { children: React.ReactNode }) => {
         icon: "error",
         duration: 3000,
       });
-      // Taro.reLaunch({
-      //   url: "/pages/LandingPageRamadan/index",
-      // });
     });
     Taro.onPageNotFound((res) => {
       console.error("Page not found:", res);
