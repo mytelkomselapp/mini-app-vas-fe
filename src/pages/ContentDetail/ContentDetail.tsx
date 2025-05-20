@@ -17,6 +17,7 @@ import premiumBadge from "../../assets/premium-badge.svg";
 import monetaryIcon from "../../assets/monetary.svg";
 import rewardIllustration from "../../assets/reward-quota.svg";
 import { useNavigate, useTaroNavbar } from "../../hooks";
+import SubscriptionBottomSheet from "../CollectionContentDetail/components/SubscriptionBottomSheet";
 
 const bulletPoints = [
   "Harga belum termasuk pajak dan biaya lainnya.",
@@ -42,6 +43,12 @@ const ContentDetail = () => {
     type: "package0",
   });
 
+  const [subscriptionOpen, setSubscriptionOpen] = useState(false);
+
+  const handleSubscriptionCancel = () => {
+    setSubscriptionOpen(false);
+    navigate(`/pages/MyCollection/index?order=1`);
+  };
   const PackageContent = () => {
     const isSubscription = packageDetailOpen?.type === "package0";
     const title = isSubscription
@@ -371,7 +378,7 @@ const ContentDetail = () => {
               </View>
             </View>
 
-            <View className="my-6 text-xs text-gray-400">
+            <View className="my-1 text-xs text-gray-400">
               <Text>
                 Dengan memilih paket dan melakukan pembayaran, kamu setuju
                 dengan <Text className="text-blue-500">Syarat & Ketentuan</Text>{" "}
@@ -397,6 +404,22 @@ const ContentDetail = () => {
           <PackageContent />
         )}
       </BottomSheet>
+      <View className="mb-10 px-5">
+        <Button
+          label={"Berhenti Berlangganan"}
+          style="secondary"
+          className="text-[16px] font-semibold bg-transparent border-[#ED0226] text-[#ED0226]"
+          onClick={() => {
+            setSubscriptionOpen(true);
+          }}
+        />
+      </View>
+      <SubscriptionBottomSheet
+        open={subscriptionOpen}
+        onConfirm={() => setSubscriptionOpen(false)}
+        onCancel={handleSubscriptionCancel}
+        onClose={() => setSubscriptionOpen(false)}
+      />
     </View>
   );
 };
