@@ -4,6 +4,7 @@ import { Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 
 import { useTaroNavbar } from "../../hooks";
+import VideoPlayer from "../../components/VideoPlayer";
 
 const StoriesImage = () => {
   useTaroNavbar("#272e36");
@@ -58,6 +59,12 @@ const StoriesImage = () => {
                 className="w-full"
                 src="https://fastly.picsum.photos/id/996/370/500.jpg?blur=2&hmac=6fDfQS-VcylXv-FyXwcPCesse6u9jEvSqAGF8tEYd34"
               />
+            ),
+          },
+          {
+            index: 3,
+            component: (
+              <VideoPlayer src={"https://www.w3schools.com/html/mov_bbb.mp4"} />
             ),
           },
         ]}
