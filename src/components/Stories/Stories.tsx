@@ -38,8 +38,23 @@ const Stories: React.FC<StoriesProps> = ({
 
   return (
     <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-hidden">
-      {/* Clickable Area */}
-      <View className="flex z-20 px-[16px] justify-between items-center absolute top-[-30px] bottom-0 left-0 right-0">
+      {/* Clickable Area Previous */}
+      <View
+        onClick={handleBack}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto blur-[24px] rounded-full"
+      >
+        <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
+      </View>
+      {/* Clickable Area Next */}
+      <View
+        onClick={handleNext}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto blur-[24px] rounded-full"
+      >
+        <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
+      </View>
+      {/* <View className="flex z-20 px-[16px] justify-between items-center absolute top-[-30px] bottom-0 left-0 right-0 bg-red-200">
         <View
           onClick={handleBack}
           style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
@@ -54,7 +69,7 @@ const Stories: React.FC<StoriesProps> = ({
         >
           <Image src={ChevronRight} className="w-[24px] h-[24px]" />
         </View>
-      </View>
+      </View> */}
 
       <View className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack">
         {stories?.[activeStory]?.component}
