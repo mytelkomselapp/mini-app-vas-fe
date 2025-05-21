@@ -198,6 +198,10 @@ const ContentDetail = () => {
     // navigate("/subpackages/subpackage1/pages/DummyScreen/index");
   };
 
+  const handleClick = (type) => {
+    console.log("Clicked", type);
+  };
+
   return (
     <View className="flex flex-col bg-[#181c21] min-h-[screen]">
       <View className="flex flex-col items-center px-4 py-6">
@@ -378,13 +382,27 @@ const ContentDetail = () => {
               </View>
             </View>
 
-            <View className="my-1 text-xs text-gray-400">
-              <Text>
-                Dengan memilih paket dan melakukan pembayaran, kamu setuju
-                dengan <Text className="text-blue-500">Syarat & Ketentuan</Text>{" "}
-                dan <Text className="text-blue-500">Kebijakan Privasi</Text>{" "}
-                yang berlaku.
-              </Text>
+            <View className="my-6 text-xs text-gray-400">
+              <View className="flex flex-wrap ">
+                <Text>
+                  Dengan memilih paket dan melakukan pembayaran, kamu setuju
+                  dengan{" "}
+                </Text>
+                <Text
+                  className="text-blue-500"
+                  onClick={() => handleClick("syarat-ketentuan")}
+                >
+                  Syarat & Ketentuan
+                </Text>
+                <Text className="mx-1"> dan </Text>
+                <Text
+                  className="text-blue-500"
+                  onClick={() => handleClick("kebijakan-privasi")}
+                >
+                  Kebijakan Privasi
+                </Text>
+                <Text> yang berlaku.</Text>
+              </View>
             </View>
           </View>
         </View>
