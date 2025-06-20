@@ -41,26 +41,34 @@ const Stories: React.FC<StoriesProps> = ({
       {/* Clickable Area Previous */}
       <View
         onClick={handleBack}
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto blur-[24px] rounded-full"
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+        }}
+        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
       >
         <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
       </View>
       {/* Clickable Area Next */}
       <View
         onClick={handleNext}
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto blur-[24px] rounded-full"
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+        }}
+        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
       >
         <Image src={ChevronRight} className="w-[24px] h-[24px]" />
       </View>
 
-      <View className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack">
+      <View className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack z-10">
         {stories?.[activeStory]?.component}
       </View>
 
       {/* Indicator Wrapper */}
-      <View className="flex items-center justify-center absolute z-20 w-[100%] h-[60px] bottom-0 left-0 right-0">
+      <View className="flex items-center justify-center absolute z-30 w-[100%] h-[60px] bottom-0 left-0 right-0 pointer-events-none">
         <View
           className="w-[100%] px-[16px] grid gap-2 max-w-md"
           style={{
