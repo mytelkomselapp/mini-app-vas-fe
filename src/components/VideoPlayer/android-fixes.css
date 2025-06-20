@@ -1,0 +1,28 @@
+/* Platform-specific style overrides for Android */
+.stories-controls {
+  /* Make sure these controls are always visible on Android */
+  z-index: 9999 !important;
+}
+
+/* For Taro/WeChat Mini Program on Android */
+.taro-video {
+  z-index: 1 !important;
+}
+
+/* Force video to respect container size */
+#video1 {
+  max-height: 80vh !important;
+  z-index: 1 !important;
+}
+
+/* These selectors should help with Android specific WebView rendering */
+.video-container-wrap {
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+/* Make sure story navigation buttons are always on top */
+.story-nav-button {
+  z-index: 999 !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}

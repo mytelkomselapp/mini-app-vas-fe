@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View } from "@tarojs/components";
+import { View, CoverView, CoverImage } from "@tarojs/components";
 import { StoriesProps } from "./type";
 
 import ChevronLeft from "../../assets/ico_chevron_left.svg";
@@ -36,56 +36,99 @@ const Stories: React.FC<StoriesProps> = ({
     }
   }, [defaultStory]);
 
+  const navButtonStyle = {
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    position: "absolute" as const,
+    height: "56px",
+    width: "56px",
+    borderRadius: "28px",
+    zIndex: 9999,
+    display: "flex" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    top: "45%",
+  };
+
+  const indicatorContainerStyle = {
+    position: "absolute" as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "60px",
+    zIndex: 9999,
+    padding: "0 24px",
+  };
+
+  const indicatorRowStyle = {
+    width: "100%",
+    display: "flex" as const,
+    flexDirection: "row" as const,
+    justifyContent: "space-between" as const,
+    gap: "16px",
+    marginLeft: "4px",
+    marginRight: "4px",
+  };
+
   return (
     <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-hidden">
-      {/* Clickable Area Previous */}
-      <View
-        onClick={handleBack}
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
-      >
-        <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
-      </View>
-      {/* Clickable Area Next */}
-      <View
-        onClick={handleNext}
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
-      >
-        <Image src={ChevronRight} className="w-[24px] h-[24px]" />
-      </View>
-
-      <View className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack z-10">
+      {/* Content Container */}
+      <View className="flex items-center absolute inset-x-0 bottom-0 top-[-30px] bg-primaryBlack">
         {stories?.[activeStory]?.component}
       </View>
 
-      {/* Indicator Wrapper */}
-      <View className="flex items-center justify-center absolute z-30 w-[100%] h-[60px] bottom-0 left-0 right-0 pointer-events-none">
-        <View
-          className="w-[100%] px-[16px] grid gap-2 max-w-md"
+      {/* Clickable Area Previous - Using CoverView for overlay UI */}
+      <CoverView
+        onClick={handleBack}
+        style={{
+          ...navButtonStyle,
+          left: "20px",
+        }}
+      >
+        <CoverImage
+          src={ChevronLeft}
           style={{
-            gridTemplateColumns: `repeat(${totalStory}, minmax(0, 1fr))`,
+            width: "24px",
+            height: "24px",
           }}
-        >
+        />
+      </CoverView>
+
+      {/* Clickable Area Next - Using CoverView for overlay UI */}
+      <CoverView
+        onClick={handleNext}
+        style={{
+          ...navButtonStyle,
+          right: "20px",
+        }}
+      >
+        <CoverImage
+          src={ChevronRight}
+          style={{
+            width: "24px",
+            height: "24px",
+          }}
+        />
+      </CoverView>
+
+      {/* Indicator Wrapper - Using CoverView for overlay UI */}
+      <CoverView style={indicatorContainerStyle}>
+        <CoverView style={indicatorRowStyle}>
           {stories.map((_, idx) => (
-            <View
-              id={`story-${idx}`}
+            <CoverView
               key={`story-${idx}`}
-              className={`h-[4px] w-full rounded-full ${
-                idx <= activeStory ? "bg-white" : "bg-gray-500"
-              }`}
+              style={{
+                height: "4px",
+                flex: 1,
+                minWidth: "16px",
+                borderRadius: "9999px",
+                backgroundColor: idx <= activeStory ? "#ffffff" : "#6b7280",
+                marginLeft: "4px",
+                marginRight: "4px",
+              }}
             />
           ))}
-        </View>
-      </View>
+        </CoverView>
+      </CoverView>
     </View>
   );
 };
