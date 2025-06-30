@@ -53,12 +53,10 @@ const VideoWithThumbnail: React.FC<VideoWithThumbnailProps> = ({
         <Video
           id={videoId}
           src={src}
+          objectFit="contain"
           className={`absolute w-full h-full z-0 transition-opacity duration-500 opacity-100`}
-          showFullscreenBtn={false}
-          showCenterPlayBtn={false}
-          showPlayBtn={false}
           controls={true}
-          autoplay={false}
+          autoplay={true}
           muted={true}
           onLoadedData={() => {
             setVideoLoaded(true);
