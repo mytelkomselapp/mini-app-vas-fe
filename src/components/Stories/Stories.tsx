@@ -1,9 +1,10 @@
 import React from "react";
-import { Image, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import { StoriesProps } from "./type";
 
 import ChevronLeft from "../../assets/ico_chevron_left.svg";
 import ChevronRight from "../../assets/ico-chevron-right.svg";
+import Show from "../Show";
 
 const Stories: React.FC<StoriesProps> = ({
   stories = [],
@@ -14,6 +15,8 @@ const Stories: React.FC<StoriesProps> = ({
 
   const totalStory = stories?.length;
 
+  const storyType = stories?.[activeStory]?.type;
+
   const handleNext = () => {
     if (activeStory + 1 >= totalStory) return;
     const currentStory = activeStory + 1;
@@ -23,6 +26,7 @@ const Stories: React.FC<StoriesProps> = ({
   };
 
   const handleBack = () => {
+    console.log("TEST CLICK BACK");
     if (activeStory <= 0) return;
     const currentStory = activeStory - 1;
 
@@ -37,97 +41,143 @@ const Stories: React.FC<StoriesProps> = ({
   }, [defaultStory]);
 
   return (
-    <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-hidden">
+    <View className="relative bg-black w-[100vw] h-[100vh] overflow-x-hidden">
       {/* Story Content */}
       <View
-        className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack"
+        className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-black"
         style={{ zIndex: 1 }}
       >
         {stories?.[activeStory]?.component}
       </View>
 
       {/* Simple Fixed Position Navigation Buttons */}
-      <View
-        style={{
-          position: "fixed",
-          left: "20px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 999999,
-          width: "56px",
-          height: "56px",
-          borderRadius: "28px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-        onClick={handleBack}
-      >
-        <Image
-          src={ChevronLeft}
+      <Show when={storyType === "image"}>
+        <View
           style={{
-            width: "24px",
-            height: "24px",
-            filter: "brightness(0) invert(1)",
+            position: "fixed",
+            left: "20px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 999999,
+            width: "56px",
+            height: "56px",
+            borderRadius: "28px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
           }}
-        />
-      </View>
+          onClick={handleBack}
+        >
+          <Image
+            src={ChevronLeft}
+            style={{
+              width: "24px",
+              height: "24px",
+              filter: "brightness(0) invert(1)",
+            }}
+          />
+        </View>
+      </Show>
 
-      <View
-        style={{
-          position: "fixed",
-          right: "20px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 999999,
-          width: "56px",
-          height: "56px",
-          borderRadius: "28px",
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-        }}
-        onClick={handleNext}
-      >
-        <Image
-          src={ChevronRight}
+      <Show when={storyType === "image"}>
+        <View
           style={{
-            width: "24px",
-            height: "24px",
-            filter: "brightness(0) invert(1)",
+            position: "fixed",
+            right: "20px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 999999,
+            width: "56px",
+            height: "56px",
+            borderRadius: "28px",
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
           }}
-        />
-      </View>
+          onClick={handleNext}
+        >
+          <Image
+            src={ChevronRight}
+            style={{
+              width: "24px",
+              height: "24px",
+              filter: "brightness(0) invert(1)",
+            }}
+          />
+        </View>
+      </Show>
 
       {/* Indicator Wrapper */}
       <View
         className="flex items-center justify-center absolute w-[100%] h-[60px] bottom-0 left-0 right-0 pointer-events-none"
         style={{ zIndex: 99999 }}
       >
-        <View
-          className="w-[100%] px-[16px] grid gap-2 max-w-md"
-          style={{
-            gridTemplateColumns: `repeat(${totalStory}, minmax(0, 1fr))`,
-          }}
-        >
-          {stories.map((_, idx) => (
+        <Show
+          when={storyType === "image"}
+          fallbackComponent={
             <View
-              id={`story-${idx}`}
-              key={`story-${idx}`}
-              className={`h-[4px] w-full rounded-full ${
-                idx <= activeStory ? "bg-white" : "bg-gray-500"
-              }`}
-            />
-          ))}
-        </View>
+              onClick={() => console.log("TEST")}
+              className="flex w-full justify-between items-center bg-black px-[16px] relative z-10 pointer-events-auto"
+            >
+              <View
+                onClick={handleBack}
+                className="flex gap-x-1 items-center pointer-events-auto"
+              >
+                <Image
+                  src={ChevronLeft}
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                  }}
+                />
+                <Text className="text-[12px] text-[#9ca9b9]">Sebelumnya</Text>
+              </View>
+              <Text className="text-[12px] text-[#9ca9b9]">
+                <b>{activeStory + 1}</b>/{totalStory}
+              </Text>
+              <View
+                onClick={handleNext}
+                className="flex gap-x-1 items-center pointer-events-auto"
+              >
+                <Text className="text-[12px] flex gap-x-1 text-[#9ca9b9]">
+                  Selanjutnya
+                </Text>
+                <Image
+                  src={ChevronRight}
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                  }}
+                />
+              </View>
+            </View>
+          }
+        >
+          <View
+            className="w-[100%] px-[16px] grid gap-2 max-w-md"
+            style={{
+              gridTemplateColumns: `repeat(${totalStory}, minmax(0, 1fr))`,
+            }}
+          >
+            {stories.map((_, idx) => (
+              <View
+                id={`story-${idx}`}
+                key={`story-${idx}`}
+                className={`h-[4px] w-full rounded-full ${
+                  idx <= activeStory ? "bg-white" : "bg-gray-500"
+                }`}
+              />
+            ))}
+          </View>
+        </Show>
       </View>
     </View>
   );

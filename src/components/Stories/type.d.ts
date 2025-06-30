@@ -1,5 +1,6 @@
 export interface StoryProps {
   index: number;
+  type: "image" | "video";
   component: React.ReactNode;
 }
 
