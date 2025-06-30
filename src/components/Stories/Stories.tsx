@@ -141,7 +141,7 @@ const Stories: React.FC<StoriesProps> = ({
                 <Text className="text-[12px] text-[#9ca9b9]">Sebelumnya</Text>
               </View>
               <Text className="text-[12px] text-[#9ca9b9]">
-                <b>{activeStory + 1}</b>/{totalStory}
+                <b className="text-white">{activeStory + 1}</b>/{totalStory}
               </Text>
               <View
                 onClick={handleNext}
