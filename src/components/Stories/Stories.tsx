@@ -123,10 +123,7 @@ const Stories: React.FC<StoriesProps> = ({
         <Show
           when={storyType === "image"}
           fallbackComponent={
-            <View
-              onClick={() => console.log("TEST")}
-              className="flex w-full justify-between items-center bg-black px-[16px] relative z-10 pointer-events-auto"
-            >
+            <View className="flex w-full justify-between items-center bg-black px-[16px] relative z-10 pointer-events-auto">
               <View
                 onClick={handleBack}
                 className="flex gap-x-1 items-center pointer-events-auto"
@@ -134,11 +131,17 @@ const Stories: React.FC<StoriesProps> = ({
                 <Image
                   src={ChevronLeft}
                   style={{
-                    width: "12px",
-                    height: "12px",
+                    width: "14px",
+                    height: "14px",
                   }}
                 />
-                <Text className="text-[12px] text-[#9ca9b9]">Sebelumnya</Text>
+                <Text
+                  className={`text-[12px] flex gap-x-1 ${
+                    activeStory <= 0 ? "text-[#9ca9b9]" : "text-white"
+                  }`}
+                >
+                  Sebelumnya
+                </Text>
               </View>
               <Text className="text-[12px] text-[#9ca9b9]">
                 <b className="text-white">{activeStory + 1}</b>/{totalStory}
@@ -147,14 +150,20 @@ const Stories: React.FC<StoriesProps> = ({
                 onClick={handleNext}
                 className="flex gap-x-1 items-center pointer-events-auto"
               >
-                <Text className="text-[12px] flex gap-x-1 text-[#9ca9b9]">
+                <Text
+                  className={`text-[12px] flex gap-x-1 ${
+                    activeStory + 1 >= totalStory
+                      ? "text-[#9ca9b9]"
+                      : "text-white"
+                  }`}
+                >
                   Selanjutnya
                 </Text>
                 <Image
                   src={ChevronRight}
                   style={{
-                    width: "12px",
-                    height: "12px",
+                    width: "14px",
+                    height: "14px",
                   }}
                 />
               </View>
