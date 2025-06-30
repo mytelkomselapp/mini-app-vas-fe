@@ -38,37 +38,80 @@ const Stories: React.FC<StoriesProps> = ({
 
   return (
     <View className="relative bg-primaryBlack w-[100vw] h-[100vh] overflow-x-hidden">
-      {/* Clickable Area Previous */}
+      {/* Story Content */}
       <View
-        onClick={handleBack}
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
+        className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack"
+        style={{ zIndex: 1 }}
       >
-        <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
-      </View>
-      {/* Clickable Area Next */}
-      <View
-        onClick={handleNext}
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-        }}
-        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
-      >
-        <Image src={ChevronRight} className="w-[24px] h-[24px]" />
-      </View>
-
-      <View className="flex items-center absolute bottom-0 top-[-30px] left-0 right-0 bg-primaryBlack z-10">
         {stories?.[activeStory]?.component}
       </View>
 
+      {/* Simple Fixed Position Navigation Buttons */}
+      <View
+        style={{
+          position: "fixed",
+          left: "20px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 999999,
+          width: "56px",
+          height: "56px",
+          borderRadius: "28px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+        }}
+        onClick={handleBack}
+      >
+        <Image
+          src={ChevronLeft}
+          style={{
+            width: "24px",
+            height: "24px",
+            filter: "brightness(0) invert(1)",
+          }}
+        />
+      </View>
+
+      <View
+        style={{
+          position: "fixed",
+          right: "20px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 999999,
+          width: "56px",
+          height: "56px",
+          borderRadius: "28px",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+        }}
+        onClick={handleNext}
+      >
+        <Image
+          src={ChevronRight}
+          style={{
+            width: "24px",
+            height: "24px",
+            filter: "brightness(0) invert(1)",
+          }}
+        />
+      </View>
+
       {/* Indicator Wrapper */}
-      <View className="flex items-center justify-center absolute z-30 w-[100%] h-[60px] bottom-0 left-0 right-0 pointer-events-none">
+      <View
+        className="flex items-center justify-center absolute w-[100%] h-[60px] bottom-0 left-0 right-0 pointer-events-none"
+        style={{ zIndex: 99999 }}
+      >
         <View
           className="w-[100%] px-[16px] grid gap-2 max-w-md"
           style={{

@@ -1,6 +1,5 @@
 import React from "react";
 import { Stories, ZoomableImage } from "../../components";
-import { Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 
 import { useTaroNavbar } from "../../hooks";
@@ -64,7 +63,10 @@ const StoriesImage = () => {
           {
             index: 3,
             component: (
-              <VideoPlayer src={"https://www.w3schools.com/html/mov_bbb.mp4"} />
+              <VideoPlayer
+                src={"https://www.w3schools.com/html/mov_bbb.mp4"}
+                thumbnailSrc="https://placehold.co/600x400/orange/white"
+              />
             ),
           },
         ]}
