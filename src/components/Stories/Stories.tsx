@@ -46,7 +46,7 @@ const Stories: React.FC<StoriesProps> = ({
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
         }}
-        className="absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
+        className="pointer-events-auto absolute left-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
       >
         <Image src={ChevronLeft} className="w-[24px] h-[24px]" />
       </View>
@@ -58,7 +58,7 @@ const Stories: React.FC<StoriesProps> = ({
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
         }}
-        className="absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
+        className="pointer-events-auto absolute right-[20px] top-0 bottom-0 flex items-center justify-center h-[56px] w-[56px] z-20 m-auto rounded-full"
       >
         <Image src={ChevronRight} className="w-[24px] h-[24px]" />
       </View>

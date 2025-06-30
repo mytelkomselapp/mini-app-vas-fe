@@ -22,21 +22,20 @@ const VideoPlayer = ({ src }: { src: string }) => {
   return (
     <View
       id="video-container"
-      className="w-full h-full flex items-center justify-center relative z-0"
+      className="w-full h-full flex items-center justify-center"
     >
       <Video
         src={src}
-        controls={true}
-        autoplay={true}
+        controls
+        autoplay
         initialTime={0}
-        id="video1"
         loop={false}
         muted={false}
         objectFit="contain"
         className="w-full max-h-[80vh]"
         style={{
-          zIndex: 1,
-          position: "relative",
+          zIndex: 0,
+          position: "absolute",
         }}
       />
     </View>
