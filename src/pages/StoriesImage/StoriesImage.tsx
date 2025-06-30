@@ -22,6 +22,7 @@ const StoriesImage = () => {
         stories={[
           {
             index: 0,
+            type: "image",
             component: (
               <ZoomableImage
                 mode="aspectFill"
@@ -32,6 +33,7 @@ const StoriesImage = () => {
           },
           {
             index: 1,
+            type: "image",
             component: (
               <ZoomableImage
                 mode="aspectFill"
@@ -42,6 +44,7 @@ const StoriesImage = () => {
           },
           {
             index: 2,
+            type: "image",
             component: (
               <ZoomableImage
                 mode="aspectFill"
@@ -52,6 +55,7 @@ const StoriesImage = () => {
           },
           {
             index: 3,
+            type: "image",
             component: (
               <ZoomableImage
                 mode="aspectFill"
@@ -62,11 +66,9 @@ const StoriesImage = () => {
           },
           {
             index: 3,
+            type: "video",
             component: (
-              <VideoPlayer
-                src={"https://www.w3schools.com/html/mov_bbb.mp4"}
-                thumbnailSrc="https://placehold.co/600x400/orange/white"
-              />
+              <VideoPlayer src={"https://www.w3schools.com/html/mov_bbb.mp4"} />
             ),
           },
         ]}
