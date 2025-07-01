@@ -58,6 +58,7 @@ const VideoWithThumbnail: React.FC<VideoWithThumbnailProps> = ({
           controls={true}
           autoplay={true}
           muted={true}
+          direction={0}
           onLoadedData={() => {
             setVideoLoaded(true);
           }}
