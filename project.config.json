@@ -1,75 +1,75 @@
 {
-	"miniprogramRoot": "dist/",
-	"projectname": "ramadanTaroVAS",
-	"description": "",
-	"appid": "mp7vumyeycsvi5ve",
-	"setting": {
-		"urlCheck": false,
-		"es6": false,
-		"enhance": false,
-		"compileHotReLoad": false,
-		"postcss": true,
-		"minified": true,
-		"newFeature": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"uploadWithSourceMap": true,
-		"uglifyFileName": true,
-		"remoteDebugLogEnable": false,
-		"prefetch": false
-	},
-	"compileType": "miniprogram",
-	"TCMPPappid": "mp7vumyeycsvi5ve",
-	"scripts": {
-		"beforeCompile": "",
-		"beforePreview": "",
-		"beforeUpload": ""
-	},
-	"assets": [
-		"assets/fonts/TelkomselBatikSans-Regular.ttf"
-	],
-	"condition": {
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"current": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"downloadFileDomain": [
-			"cdndev.mytsel.id"
-		],
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 1,
-			"list": [
-				{
-					"id": -1,
-					"name": "My Collection",
-					"pathName": "pages/MyCollection/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "Stories Image",
-					"pathName": "pages/StoriesImage/index",
-					"query": "",
-					"scene": null
-				}
-			]
-		}
-	}
+  "miniprogramRoot": "dist/",
+  "projectname": "ramadanTaroVAS",
+  "description": "",
+  "appid": "mp7vumyeycsvi5ve",
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "enhance": false,
+    "compileHotReLoad": false,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "uploadWithSourceMap": true,
+    "uglifyFileName": true,
+    "remoteDebugLogEnable": false,
+    "prefetch": false
+  },
+  "compileType": "miniprogram",
+  "TCMPPappid": "mp7vumyeycsvi5ve",
+  "scripts": {
+    "beforeCompile": "",
+    "beforePreview": "",
+    "beforeUpload": ""
+  },
+  "assets": [
+    "assets/fonts/TelkomselBatikSans-Regular.ttf"
+  ],
+  "condition": {
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "current": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "downloadFileDomain": [
+      "cdndev.mytsel.id"
+    ],
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": 1,
+      "list": [
+        {
+          "id": -1,
+          "name": "My Collection",
+          "pathName": "pages/MyCollection/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "Stories Image",
+          "pathName": "pages/StoriesImage/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
 }
